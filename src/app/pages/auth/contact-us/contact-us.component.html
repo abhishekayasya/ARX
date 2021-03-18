@@ -1,0 +1,378 @@
+<div class="container-fluid contact-info-wrapper">
+  <div class="">
+    <div class="contact-info-container">
+      <div class="contact-info-title">
+        <h1 class="">Contact us</h1>
+        <p class="">
+          Submit this form and a member of our team will contact you shortly.
+        </p>
+      </div>
+
+      <form
+        #frm="ngForm"
+        novalidate
+        (ngSubmit)="submitContact(frm)"
+        autocomplete="off"
+      >
+        <div class="contact-info-describe-role">
+          <h2 class="">What best describes your role?</h2>
+
+          <div class="col-md-12 col-xs-12 col-sm-12 pl-0">
+            <fieldset class="mt-3">
+              <legend></legend>
+              <div
+                class="btn__radio"
+                *ngFor="let item of roles; let in = index"
+              >
+                <input
+                  id="radio-1"
+                  name="otpMethod"
+                  [value]="item.value"
+                  type="radio"
+                  [(ngModel)]="contactInfo.role"
+                  #role="ngModel"
+                  required
+                  [tabindex]="in"
+                />
+                <label for="radio-1">
+                  <span class="radio"></span>
+                  <span class="radio-fullwidth">{{ item.text }}</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="contact-none-of-these">
+          <p class="">
+            None of these?
+            <a (click)="redirectContact()">
+              <span class=""
+                >Contact us as a patient
+                <img class="arrow-img" [src]="iconRef" alt="right-arrow" />
+              </span>
+            </a>
+          </p>
+        </div>
+
+        <div class="contact-info-form-container">
+          <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-xs-12 contact-info-first-name">
+              <div class="form__input">
+                <span
+                  class="input__contain"
+                >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        firstname.invalid &&
+                        (firstname.touched || firstname.dirty)
+                    }"
+                    type="text"
+                    id="contactInfoFirstNm"
+                    name="contactInfoFirstNm"
+                    maxlength="40"
+                    (keypress)="omitSpecialCharacter($event)"
+                    [(ngModel)]="contactInfo.firstname"
+                    #firstname="ngModel"
+                    required
+                  />
+                  <label class="input__title" for="contactInfoFirstNm"
+                    >First name</label
+                  >
+                </span>
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    firstname.invalid && (firstname.touched || firstname.dirty)
+                  "
+                >
+                  <div class="icon hd_error_icon">
+                    <svg>
+                      <use
+                        _ngcontent-c3=""
+                        [attr.xlink:href]="iconAlert"
+                        class="__web-inspector-hide-shortcut__"
+                      ></use>
+                    </svg>
+                  </div>
+                  <span *ngIf="firstname.errors.required" class="err-text-align"
+                    ><span class="sr-only">Error </span>Please enter a first
+                    name.</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12 contact-info-Last-name">
+              <div class="form__input">
+                <span
+                  class="input__contain"
+                  >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        lastname.invalid && (lastname.touched || lastname.dirty)
+                    }"
+                    type="text"
+                    id="contactInfoLastNm"
+                    name="contactInfoLastNm"
+                    [(ngModel)]="contactInfo.lastname"
+                    #lastname="ngModel"
+                    (keypress)="omitSpecialCharacter($event)"
+                    maxlength="40"
+                    required
+                  />
+                  <label class="input__title" for="contactInfoLastNm"
+                    >Last name</label
+                  >
+                </span>
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    lastname.invalid && (lastname.touched || lastname.dirty)
+                  "
+                >
+                  <div class="icon hd_error_icon">
+                    <svg>
+                      <use
+                        _ngcontent-c3=""
+                        [attr.xlink:href]="iconAlert"
+                        class="__web-inspector-hide-shortcut__"
+                      ></use>
+                    </svg>
+                  </div>
+                  <span *ngIf="lastname.errors.required" class="err-text-align"
+                    ><span class="sr-only">Error </span>Please enter a last
+                    name.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form__input">
+            <span
+              class="input__contain"
+              >
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  input__error: email.invalid && (email.touched || email.dirty)
+                }"
+                type="email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                id="test1"
+                name="email"
+                id="email"
+                [(ngModel)]="contactInfo.email"
+                #email="ngModel"
+                required
+              />
+              <label class="input__title" for="test1">Contact email</label>
+            </span>
+
+            <div
+              class="input__error-text"
+              aria-live="assertive"
+              role="alert"
+              *ngIf="email.invalid && (email.touched || email.dirty)"
+            >
+              <div class="icon hd_error_icon">
+                <svg>
+                  <use
+                    _ngcontent-c3=""
+                    [attr.xlink:href]="iconAlert"
+                    class="__web-inspector-hide-shortcut__"
+                  ></use>
+                </svg>
+              </div>
+              <span *ngIf="email.errors.required" class="err-text-align"
+                ><span class="sr-only">Error </span>Email is required.</span
+              >
+
+              <span *ngIf="email.errors.pattern" class="err-text-align"
+                ><span class="sr-only">Error </span>Please enter a valid email
+                address.</span
+              >
+            </div>
+          </div>
+          <div class="form__input">
+            <span
+              class="input__contain"
+              >
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  input__error: phone.invalid && (phone.touched || phone.dirty)
+                }"
+                arxrfPhoneMaskSimple
+                type="text"
+                id="phone"
+                maxlength="12"
+                placeholder="___-___-____"
+                pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                name="phone"
+                [(ngModel)]="contactInfo.phone"
+                #phone="ngModel"
+                maxlength="12"
+                required
+              />
+              <label class="input__title" for="test2">Contact Phone</label>
+            </span>
+            <div
+              class="input__error-text"
+              aria-live="assertive"
+              role="alert"
+              *ngIf="phone.invalid && (phone.touched || phone.dirty)"
+            >
+              <div class="icon hd_error_icon">
+                <svg>
+                  <use
+                    _ngcontent-c3=""
+                    [attr.xlink:href]="iconAlert"
+                    class="__web-inspector-hide-shortcut__"
+                  ></use>
+                </svg>
+              </div>
+              <span
+                *ngIf="phone.errors.required || phone.errors.pattern"
+                class="err-text-align"
+                ><span class="sr-only">Error </span>Please enter a valid
+                10-digit phone number.</span
+              >
+            </div>
+          </div>
+          <div class="form__input">
+            <span
+              class="input__contain"
+              >
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  input__error:
+                    company.invalid && (company.touched || company.dirty)
+                }"
+                type="text"
+                id="company"
+                name="company"
+                id="company"
+                [(ngModel)]="contactInfo.company"
+                pattern="[^]{2,100}"
+                #company="ngModel"
+                maxlength="100"
+                required
+              />
+              <label class="input__title" for="company">Company</label>
+            </span>
+            <div
+              class="input__error-text"
+              aria-live="assertive"
+              role="alert"
+              *ngIf="company.invalid && (company.touched || company.dirty)"
+            >
+              <div class="icon hd_error_icon">
+                <svg>
+                  <use
+                    _ngcontent-c3=""
+                    [attr.xlink:href]="iconAlert"
+                    class="__web-inspector-hide-shortcut__"
+                  ></use>
+                </svg>
+              </div>
+              <span
+                *ngIf="company.errors.required || company.errors.pattern"
+                class="err-text-align"
+                ><span class="sr-only">Error </span>Please enter a company
+                name</span
+              >
+
+              <!-- <span *ngIf="company.errors.pattern" class="err-text-align"
+                ><span class="sr-only">Error </span>Data cannot be 1
+                alphabet</span
+              > -->
+            </div>
+          </div>
+
+          <div class="form__input">
+            <span class="input__contain">
+              <input
+                class="input__focus"
+                type="text"
+                id="position"
+                name="position"
+                maxlength="40"
+                #position="ngModel"
+                [(ngModel)]="contactInfo.position"
+              />
+              <label class="input__title" for="Company Position"
+                >Company Position(optional)</label
+              >
+            </span>
+          </div>
+
+          <div class="form__input">
+            <span class="input__contain">
+              <input
+                class="input__focus"
+                type="text"
+                id="address"
+                maxlength="100"
+                name="address"
+                #address="ngModel"
+                [(ngModel)]="contactInfo.address"
+              />
+              <label class="input__title contact-label" for="test1"
+                >company address(optional)</label
+              >
+            </span>
+          </div>
+          <div class="form__input">
+            <span class="input__text-area">
+              <textarea
+                id="message"
+                name="message"
+                maxlength="300"
+                #message="ngModel"
+                [(ngModel)]="contactInfo.message"
+                class="textarea-box contact-msg-opt"
+                placeholder="Message (optional)"
+              ></textarea>
+            </span>
+            <label
+              class="character-count"
+              *ngIf="contactInfo?.message?.length > 0"
+            >
+              {{ 300 - contactInfo.message.length }} characters remaining
+            </label>
+          </div>
+
+          <div class="row btn-container ml-0">
+            <div class="col-md-8 col-xl-8 col-xs-12 col-sm-12 pl-0 mb-3">
+              <p>
+                Note: Please do not submit confidential or sensitive information
+                on this form.
+              </p>
+            </div>
+
+            <div
+              class="col-md-4 col-xl-4 col-xs-12 col-sm-12 text-right pr-0 contact-btn"
+            >
+              <button 
+                class="btn" 
+                [ngClass]="frm.invalid ? 'btn__disabled' : 'btn_primary'" 
+                [disabled]="frm.invalid"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

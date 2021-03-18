@@ -1,0 +1,23 @@
+/* Footer */
+#footer {
+  @include themify($themes) {
+    background-color: themed("footer_fg");
+    color: themed("black_color");
+    
+    hr {
+      background-color: themed("footer_hr_bg");
+    }
+
+    p {
+      font-size: themed("footer_p_font_size");
+    }
+
+    h3 {
+      font-size: themed("footer_h3_font_size");
+    }
+
+    .footer-content ul li a {
+      font-size: themed("footer_li_font_size");
+    }
+  }
+}

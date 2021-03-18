@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 justify-content-center align-items-center">
+
+      <div class="col-md-6 offset-md-3">
+
+        <div class="sso__wait__container" *ngIf="ssoService.ssoWait">
+          <p class="text-center">Please wait while processing your request..</p>
+        </div>
+
+        <div class="sso__error__container" *ngIf="ssoService.ssoServiceError">
+          <p class="text-center input__error-text">{{ssoService.ssoFailMessage}}
+            <a href="/login">Login Here</a>
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+
+<div class="sso__screengrab__container" *ngIf="!ssoService.ssoWait && !ssoService.ssoServiceError">
+  <arxrf-login
+    [showArxLogo]="true" [ssoLogin]="true" [heading]="'Sync your account'"></arxrf-login>
+</div>
+
+<arxrf-modal [show]="ssoService.ssoData.isFirstTime" cssClasses="bg-white" [allowClose]="false">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="h1__page-title">Already a Walgreens customer?  </h1>
+        <div class="mt-4 mb-4">
+          <p>Walgreens.com and AllianceRx Walgreens Prime credentials are actually the same. Use them interchangeably.</p>
+        </div>
+      </div>
+    <div class="row model_footer-width">
+      <div class="col-md-6 col-12 mt-2">
+        <button class="btn btn__neutral fs-14" type="button" (click)="createAccountAction()">No, create an account</button>
+      </div>
+
+      <div class="col-md-6 col-12 mt-2">
+        <button class="btn btn_primary fs-14" type="button" (click)="useExistingAction()">Yes, use current account</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</arxrf-modal>

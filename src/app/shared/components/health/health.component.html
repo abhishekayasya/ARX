@@ -1,0 +1,211 @@
+<div class="account_health-container pt-0">
+  <div class="container no-container-mobile">
+    <div class="row">
+      <div class="col-12">
+
+        <div *ngIf="isBuyout">
+            <h1 class="heading">{{pageTitle}}</h1>
+            <p class="account_health-heading">Health History - Step 2 of 3</p>
+        </div>
+
+        <arxrf-loader [show]="loaderState" [loaderOverlay]="loaderOverlay"></arxrf-loader>
+
+        <div class="row" *ngIf="!isBuyout">
+          <div class="col-12 col-md-8">
+              <h1 class="heading">{{pageTitle}}</h1>
+          </div>
+          <div class="col-12 col-md-4" *ngIf="showMembersDD">
+            <div class="membersDD">
+              <arxrf-refill-members (onSelect)="updateMember($event)"></arxrf-refill-members>
+            </div>
+          </div>
+          <div class="col-12 mt-2">
+            <arxrf-message></arxrf-message>
+          </div>
+        </div>
+
+        <div class="row mt-4" *ngIf="mode == 'preview'">
+          <div class="col-12">
+            <h2>Health history for {{user | titlecase}}</h2>
+          </div>
+        </div>
+
+        <div class="row mt-4" *ngIf="mode == 'edit' && !isBuyout">
+          <div class="col-12">
+            <h2>Update Health history for {{user | titlecase}}</h2>
+          </div>
+        </div>
+
+        <div class="row mt-4" *ngIf="mode == 'edit' && isBuyout">
+          <div class="col-12">
+            <h2>Health history for {{user | titlecase}}</h2>
+          </div>
+        </div>
+
+        <div class="row mt-4 p-0" *ngIf="(!isBuyout || mode == 'edit') && !appContext.isSpsite">
+          <div class="col-12">
+            <div class="alert alert__info minimal">
+              <span class="alert__text-contain">
+                <span class="icon icon__info">
+                 <svg alt=""><use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"></use></svg>
+                </span>
+
+                <span>
+                  <p>
+                    <strong *ngIf="mode == 'preview'">We use this information for safety purposes only, like checking for adverse side effects.</strong>
+                    <strong *ngIf="mode == 'edit'">Any changes to your health history will also be applied to your Walgreens.com account.</strong>
+                  </p>
+                </span>
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row account_health-content" *ngIf="history">
+
+          <div class="col-12 account_health-item">
+            <h4>Medications</h4>
+            <p class="mt-3 mb-3" *ngIf="mode == 'edit'">Include all non-AllianceRx Walgreens Prime{{medText}} prescriptions, OTC medications, herbs & supplements.</p>
+            <ul *ngIf="history.additionalMeds && history.additionalMeds.length > 0; else no_medication">
+              <li *ngFor="let item of history.additionalMeds; let i = index">
+                <a href="javascript:void(0);" *ngIf="mode == 'edit' && !isBuyout" (click)="deleteHealthItem( item.drugId, 'Medications', i )">
+                  <span class="icon icon__dismiss">
+                    <svg>
+                      <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"></use>
+                    </svg>
+                  </span>
+                </a>
+                <p>{{item.drugName | uppercase }}</p>
+
+                <a href="javascript:void(0);" *ngIf="mode == 'edit' && isBuyout" (click)="deleteHealthItem( item.drugId, 'Medications', i )">
+                  <span class="icon icon__dismiss icon_dismiss_buyout">
+                    <svg>
+                      <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"></use>
+                    </svg>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <ng-template #no_medication><p> I have no known medications </p></ng-template>
+
+
+            <a href="javascript:void(0)" class="mt-3" *ngIf="mode == 'edit'" (click)="showMedicationsSearch = true">
+              <strong>Add Medications</strong>
+            </a>
+
+            <arxrf-checkout-drugsearch [show]="showMedicationsSearch"
+                                       heading="medications"
+                                       inputPrompt="Enter a medication"
+                                       type="Medications"
+                                       [showDelete]="true"
+                                       (close)="closeMedications($event)"
+                                       (update)="updateMedications($event)"></arxrf-checkout-drugsearch>
+
+          </div>
+
+          <div class="col-12 account_health-item">
+            <h4>Health conditions</h4>
+            <ul *ngIf="history.healthConditions && history.healthConditions.length > 0; else no_health_cond">
+              <li *ngFor="let item of history.healthConditions; let i = index">
+                <a href="javascript:void(0);" *ngIf="mode == 'edit' && !isBuyout" (click)="deleteHealthItem( item.healthConditionCd, 'Health Conditions', i )">
+                  <span class="icon icon__dismiss">
+                    <svg>
+                      <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"></use>
+                    </svg>
+                  </span>
+                </a>
+                <p>{{item.healthCondition | uppercase }}</p>
+
+                <a href="javascript:void(0);" *ngIf="mode == 'edit' && isBuyout" (click)="deleteHealthItem( item.healthConditionCd, 'Health Conditions', i )">
+                  <span class="icon icon__dismiss icon_dismiss_buyout">
+                    <svg>
+                      <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"></use>
+                    </svg>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <ng-template #no_health_cond> <p> I have no known health conditions</p> </ng-template>
+
+            <a href="javascript:void(0)" class="mt-3" *ngIf="mode == 'edit'" (click)="showConditionsSearch = true">
+              <strong>Add Health conditions</strong>
+            </a>
+
+            <arxrf-checkout-drugsearch [show]="showConditionsSearch"
+                                       heading="health conditions"
+                                       inputPrompt="Enter a health condition"
+                                       type="Health Conditions"
+                                       [showDelete]="true"
+                                       (close)="closeConditions($event)"
+                                       (update)="updateConditions($event)"></arxrf-checkout-drugsearch>
+          </div>
+
+
+          <div class="col-12 account_health-item">
+            <h4>Allergies</h4>
+            <ul *ngIf="history.drugAllergies && history.drugAllergies.length > 0; else no_allergies">
+              <li *ngFor="let item of history.drugAllergies; let i = index">
+                <a href="javascript:void(0);" *ngIf="mode == 'edit' && !isBuyout" (click)="deleteHealthItem( item.drugId, 'Drug Allergies', i, item.allergyCode )">
+                  <span class="icon icon__dismiss">
+                    <svg>
+                      <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"></use>
+                    </svg>
+                  </span>
+                </a>
+                <p>{{item.allergy | uppercase}}</p>
+
+                <a href="javascript:void(0);" *ngIf="mode == 'edit' && isBuyout" (click)="deleteHealthItem( item.drugId, 'Drug Allergies', i, item.allergyCode )">
+                  <span class="icon icon__dismiss icon_dismiss_buyout">
+                    <svg>
+                      <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"></use>
+                    </svg>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <ng-template #no_allergies><p>I have no known allergies </p></ng-template>
+
+            <a href="javascript:void(0)" class="mt-3" (click)="showAllergiesSearch = true" *ngIf="mode == 'edit'">
+             <strong>Add Allergies</strong>
+            </a>
+
+            <arxrf-checkout-drugsearch [show]="showAllergiesSearch"
+                                       heading="allergies"
+                                       inputPrompt="Enter an allergy"
+                                       type="Drug Allergies"
+                                       [showDelete]="true"
+                                       (close)="closeAllergies($event)"
+                                       (update)="updateAllergies($event)"></arxrf-checkout-drugsearch>
+          </div>
+
+          <div class="button_Edit col-12 mt-4" *ngIf="mode == 'preview'">
+            <button class="btn_primary btn" *ngIf="!isBuyout" type="button" (click)="mode = 'edit'">Edit</button>
+
+            <div class="insuranceInfo__addControls" *ngIf="isBuyout">
+                <span class="btn__pair row">
+                    <a href="javascript:void(0)" role="button" class="col-12 col-md-6 order-lg-2" (click)="buyoutContinue()"><span class="btn btn_primary">Continue</span></a>
+                    <a href="javascript:void(0)" class="secondary col-12 col-md-6 order-lg-1" (click)="mode = 'edit'">Edit</a>
+                  </span>
+              </div>
+          </div>
+
+          <div class="button_Update col-12 mt-4 account_health-editactions" *ngIf="mode == 'edit'">
+           <div class="button_Update col-12">
+              <button class="btn_primary btn" *ngIf="!isBuyout" type="button" (click)="onUpdateClick()">Update</button>
+
+              <div class="insuranceInfo__addControls" *ngIf="isBuyout">
+                <span class="btn__pair row">
+                    <a href="{{ROUTES.buyout.children.ppp_auth.absoluteRoute}}" role="button" class="col-12 col-md-6 order-lg-2"><span class="btn btn_primary">Continue</span></a>
+               </span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

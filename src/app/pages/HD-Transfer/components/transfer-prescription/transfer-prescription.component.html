@@ -1,0 +1,524 @@
+<div class="hd-transfer-rx-form-add-another-prescription">
+  <div class="formField">
+    <div class="row">
+      <h1 class="h1__page-title text-center col main_title">
+        Transfer Home Delivery Prescription
+      </h1>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <arxrf-message></arxrf-message>
+      </div>
+    </div>
+
+    <div class="row">
+      <arxrf-loader [show]="showLoader" [loaderOverlay]="true"></arxrf-loader>
+    </div>
+
+    <div class="mt-5">
+      <div *ngIf="showInsuranceMessage">
+        <arxrf-insurance-success
+          (closeInsuranceBanner)="onCloseBanner()"
+          [display]="displayInsuranceBanner"
+        ></arxrf-insurance-success>
+      </div>
+      <div *ngIf="buyOutUser">
+        <arxrf-buyout-prescription
+          (closeBuyoutBanner)="onCloseBuyoutBanner()"
+          [display]="displayBuyoutBanner"
+        ></arxrf-buyout-prescription>
+      </div>
+    </div>
+
+    <div class="row rx-notes">
+      <div class="col-12">
+        <p class="rx-notes1">
+          We'll use the information below to contact your previous pharmacy and
+          transfer your prescription to AllianceRx Walgreens Prime. Please use
+          one form per patient and pharmacy.
+        </p>
+      </div>
+    </div>
+
+    <div class="row warn-icon-con">
+      <div class="icon hd_warn_icon">
+        <svg>
+          <use
+            _ngcontent-c3=""
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+            class="__web-inspector-hide-shortcut__"
+          ></use>
+        </svg>
+      </div>
+      <div>
+        <p class="rx-notes2">
+          <strong
+            ><span
+              >Please do not use this form for Specialty Prescriptions.</span
+            ></strong
+          >
+        </p>
+      </div>
+    </div>
+
+    <form
+      [formGroup]="hdTransferRxForm"
+      class="form__on-light-bg"
+      autocomplete="off"
+    >
+      <div class="hdTransferRxForm">
+        <div class="flex-container hd_transfer_pharmacy_data">
+          <!--Patient Name-->
+          <div
+            class="item col-md-5 col-lg-4 col-sm-3 form__input dropdown-selection patientNameDataDropDown"
+            *ngIf="isHaveMembers"
+          >
+            <arxrf-refill-members
+              (onSelect)="updateMember($event)"
+              [isHdPrescription]="true"
+            ></arxrf-refill-members>
+          </div>
+          <div
+            class="item col-md-6 col-lg-5 col-sm-3 patientNameData"
+            *ngIf="!isHaveMembers"
+          >
+            <div *ngIf="!isHaveMember()">
+              <h2 class="h2_title patientname_title">Patient name:</h2>
+              <div>
+                {{ _userService.user.profile.basicProfile.firstName }}
+                {{ _userService.user.profile.basicProfile.lastName }}
+              </div>
+            </div>
+          </div>
+          <!--Patient Name-->
+
+          <!--Previous pharmacy Start-->
+          <div class="item col-md-6 col-lg-5 col-sm-3">
+            <h2 class="h2_title pre_pharmacy_title">Previous pharmacy</h2>
+            <fieldset>
+              <legend></legend>
+              <!--Pharmacy Name Start-->
+              <div class="form__input pharmacyNameField">
+                <span
+                  class="input__contain"
+                  >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        hdTransferRxForm.controls.pharmacyName.invalid &&
+                        (hdTransferRxForm.controls.pharmacyName.touched ||
+                          hdTransferRxForm.controls.pharmacyName.dirty)
+                    }"
+                    type="text"
+                    formControlName="pharmacyName"
+                    id="pharmacyName"
+                    maxlength="50"
+                    pattern="([^\s][A-z0-9\s]+)"
+                    required
+                  />
+                  <label class="input__title" for="pharmacyName"
+                    ><span>Pharmacy name</span></label
+                  >
+                </span>
+                <div
+                  class="input__error-text error_alert_box"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    hdTransferRxForm.controls.pharmacyName.invalid &&
+                    (hdTransferRxForm.controls.pharmacyName.touched ||
+                      hdTransferRxForm.controls.pharmacyName.dirty)
+                  "
+                >
+                  <div class="icon hd_error_icon">
+                    <svg>
+                      <use
+                        _ngcontent-c3=""
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                        class="__web-inspector-hide-shortcut__"
+                      ></use>
+                    </svg>
+                  </div>
+                  <span
+                    *ngIf="
+                      hdTransferRxForm.controls.pharmacyName.errors.required
+                    "
+                    class="err_msg_text"
+                    >Please enter previous pharmacy's name.</span
+                  >
+                  <span
+                    *ngIf="
+                      hdTransferRxForm.controls.pharmacyName.errors.pattern
+                    "
+                    class="err_msg_text"
+                    >Please enter a valid previous pharmacy's name.</span
+                  >
+                </div>
+              </div>
+            </fieldset>
+            <!--Pharmacy Name End-->
+
+            <!--phone number start-->
+            <fieldset>
+              <legend></legend>
+              <div class="form__input">
+                <span
+                  class="input__contain"
+                  >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        hdTransferRxForm.controls.phoneNumber.invalid &&
+                        (hdTransferRxForm.controls.phoneNumber.touched ||
+                          hdTransferRxForm.controls.phoneNumber.dirty)
+                    }"
+                    type="text"
+                    autocomplete="off"
+                    maxlength="12"
+                    arxrfPhoneMaskSimple
+                    placeholder="___-___-____"
+                    [formControl]="hdTransferRxForm.controls.phoneNumber"
+                    [specified-input]="hdTransferRxForm.controls.phoneNumber"
+                    pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                    formControlName="phoneNumber"
+                    id="phoneNumber"
+                    onpaste="return false;"
+                    required
+                  />
+                  <label class="input__title" for="phoneNumber"
+                    ><span>Pharmacy phone number</span></label
+                  >
+                </span>
+                <div
+                  class="input__error-text error_alert_box"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    hdTransferRxForm.controls.phoneNumber.invalid &&
+                    (hdTransferRxForm.controls.phoneNumber.touched ||
+                      hdTransferRxForm.controls.phoneNumber.dirty)
+                  "
+                >
+                  <div class="icon hd_error_icon">
+                    <svg>
+                      <use
+                        _ngcontent-c3=""
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                        class="__web-inspector-hide-shortcut__"
+                      ></use>
+                    </svg>
+                  </div>
+                  <span
+                    *ngIf="
+                      hdTransferRxForm.controls.phoneNumber.errors.required
+                    "
+                    class="err_msg_text"
+                    >Please enter a valid 10-digit phone number.</span
+                  >
+                  <span
+                    *ngIf="hdTransferRxForm.controls.phoneNumber.errors.pattern"
+                    class="err_msg_text"
+                    >Please enter a valid 10-digit phone number.</span
+                  >
+                </div>
+              </div>
+              <!--phone number end-->
+            </fieldset>
+          </div>
+          <!--Previous pharmacy End-->
+
+          <div class="item">
+            <h2 class="h2_title pres_details_title">Prescription details</h2>
+            <div
+              class="form__input"
+              *ngFor="let control of getControls(); let i = index"
+            >
+              <!--Prescription Name Start-->
+              <fieldset>
+                <legend></legend>
+                <div class="row rxNameField">
+                  <div class="col-md-8 col-lg-6">
+                    <div class="form__input">
+                      <span
+                        class="input__contain pres_name"
+                        >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              control.controls.rxName.invalid &&
+                              (control.controls.rxName.touched ||
+                                control.controls.rxName.dirty)
+                          }"
+                          #anotherHdRxName
+                          type="text"
+                          [formControl]="control.controls.rxName"
+                          name="rxName_{{ i }}"
+                          id="rxName_{{ i }}"
+                          [attr.data-rxName]="i"
+                          maxlength="100"
+                          (keyup)="getDrugs($event, control, i)"
+                          required
+                        />
+                        <label class="input__title" for="rxName_{{ i }}"
+                          ><span>Prescription name</span></label
+                        >
+                      </span>
+                    </div>
+                    <div
+                      class="dropdown"
+                      #dropdown
+                      [attr.data-rxNumber]="i"
+                      id="typeahead_{{ i }}"
+                      *ngIf="control.controls.rxName == typeaheadId"
+                    >
+                      <ul class="menu" [ngClass]="{ show: suggestions.length }">
+                        <li
+                          *ngFor="let item of suggestions"
+                          (click)="selectSuggestion(item, i, $event)"
+                        >
+                          {{ item.drugName }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        control.controls.rxName.invalid &&
+                        (control.controls.rxName.touched ||
+                          control.controls.rxName.dirty)
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span
+                        *ngIf="control.controls.rxName.errors.required"
+                        class="err_msg_text"
+                        >Please enter name and dosage of your
+                        prescription.</span
+                      >
+                      <span
+                        *ngIf="control.controls.rxName.errors.pattern"
+                        class="err_msg_text"
+                        >Please enter name and dosage of your
+                        prescription.</span
+                      >
+                    </div>
+                  </div>
+                  <div
+                    id="rxDelBtn_{{ i }}"
+                    class="remove-presc-div col-md-8 col-lg-6"
+                    [hidden]="isHideRxDelBtn"
+                  >
+                    <button
+                      class="deleteNumBtn"
+                      type="button"
+                      (click)="callRemoveRxDetailAction($event, i)"
+                    >
+                      <span class="remove_part mobile-hide desk-show remove_txt"
+                        >remove</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </fieldset>
+              <!--Prescription Name End-->
+
+              <!--Prescription Number-->
+              <fieldset class="pres_number_set">
+                <legend></legend>
+                <div class="row">
+                  <div class="col-md-8 col-lg-6">
+                    <div class="form__input">
+                      <span class="input__contain pres_number">
+                        <input
+                          class="input__focus"
+                          #anotherHdRxNumber
+                          type="text"
+                          [formControl]="control.controls.rxNumber"
+                          (focus)="emptySuggestions()"
+                          name="rxNumber_{{ i }}"
+                          id="rxNumber_{{ i }}"
+                          [attr.data-rxNumber]="i"
+                          maxlength="16"
+                          pattern="[a-zA-Z0-9-]+"
+                          required
+                        />
+                        <label class="input__title " for="rxNumber_{{i}"
+                          ><span>Prescription number (optional)</span></label
+                        >
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  id="rxDelBtn_{{ i }}"
+                  class="row remove-presc-div col-md-8 col-lg-6"
+                  [hidden]="isHideRxDelBtn"
+                >
+                  <button
+                    class="deleteBtnImage"
+                    type="button"
+                    (click)="callRemoveRxDetailAction($event, i)"
+                  >
+                    <span class="icon icon__trash mobile-show desk-hide">
+                      <svg alt="" alt="" class="remove-item">
+                        <use
+                          href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__trash"
+                        ></use>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </fieldset>
+              <!--Prescription Number-->
+
+              <div class="Line" *ngIf="!isHideRxDelBtn"></div>
+            </div>
+            <div class="row add-more-presc">
+              <div
+                class="col-12 col-sm-8 text-sm-left"
+                *ngIf="isNotReachedMaxRx()"
+              >
+                <a href="javascript:void(0);" (click)="addPrecriptionDetails()">
+                  <span class="icon icon__plus-add">
+                    <svg alt="" alt="">
+                      <use
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__plus-add"
+                      ></use>
+                    </svg>
+                  </span>
+                  <span class="add_another_rx_txt">
+                    <strong>add another prescription</strong>
+                  </span>
+                </a>
+              </div>
+              <div
+                class="col-12 col-sm-8 text-sm-left exceed-message"
+                *ngIf="!isNotReachedMaxRx()"
+              >
+                You have reached the limit of prescription transfers for this
+                order.
+              </div>
+            </div>
+          </div>
+          <div class="row noPrint flex-sm-row-reverse actionDiv">
+            <div class="col-12 col-md-3 p-0 ">
+              <button
+                class="btn btn_primary col-12"
+                (click)="redirectToHdTransferRxReview()"
+              >
+                Continue
+              </button>
+            </div>
+            <div
+              class="col-12 col-md-2 align-self-center text-center p-0 cancel_btn_div"
+            >
+              <a class="secondary cancel_btn" (click)="cancelAction()"
+                >Cancel</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row">
+    <div class="col-12 hd-container">
+      <div class="rx-review">
+        <arxrf-loader
+          [show]="loaderState"
+          [loaderOverlay]="loaderOverlay"
+        ></arxrf-loader>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cancer transfer prescription popup modal start-->
+  <arxrf-modal
+    [show]="showCancelOverlay"
+    cssClasses=""
+    class="cancelRxModal-con"
+    (update)="updateTransferRxModalState($event)"
+  >
+    <div class="cancelRxModal">
+      <div class="row ">
+        <div class="col-12"></div>
+        <div class="col-12 mt-3">
+          <p>
+            Are you sure you want to cancel this request to transfer a
+            prescription? Your information won’t be saved.
+          </p>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <span class="btn__pair col-12">
+          <div class="col-12">
+            <div class="buttonWrapper">
+              <a (click)="closeCancelModal($event, 'no')" class="secondary"
+                >No, go back</a
+              >
+              <a role="button" (click)="closeCancelModal($event, 'yes')"
+                ><span class="btn btn_primary">Yes, cancel request</span></a
+              >
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </arxrf-modal>
+  <!-- Cancer transfer prescription popup modal end-->
+
+  <!-- Remove prescription popup modal start-->
+  <arxrf-modal
+    [show]="showRemoveOverlay"
+    cssClasses=""
+    class="cancelRxModal-con"
+    (update)="updateDeleteRXDetailsModalState($event)"
+  >
+    <div class="cancelRxModal">
+      <div class="row ">
+        <div class="col-12"></div>
+        <div class="col-12 mt-3">
+          <p>
+            Are you sure you want to delete this prescription? Your information
+            won't be saved.
+          </p>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <span class="btn__pair col-12">
+          <div class="col-12">
+            <div class="buttonWrapper">
+              <a
+                (click)="deletePrecriptionDetail($event, 'no', curentindex)"
+                class="secondary"
+                >No</a
+              >
+              <a
+                role="button"
+                (click)="deletePrecriptionDetail($event, 'yes', curentindex)"
+                ><span class="btn btn_primary">Yes, delete</span></a
+              >
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </arxrf-modal>
+  <!-- Remove prescription popup modal end-->
+</div>

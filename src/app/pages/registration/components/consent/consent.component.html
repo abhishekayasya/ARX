@@ -1,0 +1,28 @@
+<h1 class="h1__page-title text-center reg-base mb-4" *ngIf="consent_content" [innerHTML]="consent_content.heading"></h1>
+
+<div class="container bg-white reg-form reg-sub-container"
+  [ngClass]="{'d-none': _registrationService.showCircularLoader | async}"
+>
+  <div class="row no-gutters form__on-light-bg reg-sub-section">
+    <div class="col-md-12">
+      <div class="consent-container" *ngIf="consent_content">
+        <p>
+          <span class="open_sans_bold consent_content_alignment" [innerHTML]="_common.decodeHtml(consent_content.part1)"></span>
+          
+          <span class="open_sans_regular consent_content_alignment" [innerHTML]="_common.decodeHtml(consent_content.part2)"></span>
+          
+          <span class="open_sans_bold" [innerHTML]="_common.decodeHtml(consent_content.part3)"></span>
+        </p>
+        <div class="row consent_buttons no-gutters btn__pair flex-sm-row-reverse">
+          <div class="col-12 col-sm-7 text-center p-sm-0 text-sm-right">
+            <button class="btn btn_primary fs-19 yesAllow" type="button" (click)="updateConsentForUser('A')" [innerHTML]="_common.decodeHtml(consent_content.continueButtonText)">Yes, allow calls and texts</button>
+          </div>
+
+          <div class="col-12 col-sm-5 text-center align-self-center p-sm-0 text-sm-left">
+            <a href="javascript:void(0)" class="font-weight-bold pl-sm-0 pt-sm-0 text-center dontAllow" (click)="updateConsentForUser('D')" [innerHTML]="_common.decodeHtml(consent_content.cancelButtonText)"><strong>No, don't allow</strong></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

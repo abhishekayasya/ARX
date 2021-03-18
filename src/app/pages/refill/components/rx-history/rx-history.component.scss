@@ -1,0 +1,89 @@
+.rx__history-container {
+    overflow: scroll;
+    max-height: 400px;
+    margin-left: 7%;
+    max-width: 600px;
+    margin-top: 11px;
+    @media screen and (max-width: 480px){
+        margin-left: 0;
+    }
+    p {
+      font-size: 16px;
+    }
+    span {
+      font-size: 16px;
+    }
+    font-size: 16px;
+    p:not(:first-child) {
+        margin-top: 10px;
+    }
+    .rx-info {
+        border-bottom: 1px solid #cfcfcf;
+        padding-bottom: 30px;
+        .print-icon {
+            display: table;
+            cursor: pointer;
+            span:last-child {
+                display: table-cell;
+                vertical-align: middle;
+                padding-left: 10px;
+                padding-top: 0;
+            }
+        }
+    }
+    .history {
+        overflow-y: visible;
+        .history-error {
+            margin: 15px auto 0;
+        }
+
+        .table {
+            margin: 0 auto;
+        }
+
+        @media screen and (max-width: 812px) {
+            .sm {
+              margin-top: 10px;
+            }
+          }
+    }
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px) {
+    .print_btn{
+        display: none;
+    }
+    .request_refill_btn_mobile{
+        display:none;
+    }
+    .p-3{
+        margin-left: -15px;
+    }
+    .btn_button {
+        margin: 0 auto;
+    }
+}
+
+.duped__container {
+  margin-top: 2em;
+  .duped__item {
+    padding: 1em 1em;
+    background: #fff;
+    margin-top: 1em;
+
+    img {
+        width: 75px;
+        height: 75px;
+    }
+  }
+}
+
+
+
+.err-msg {
+    font-family: 'HelveticaNeueLTW01-75Bold';
+    line-height: 24px;
+}
+

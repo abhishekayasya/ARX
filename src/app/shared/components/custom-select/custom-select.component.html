@@ -1,0 +1,41 @@
+<div class="form-group mt-4 mb-1 pt-1" [formGroup]="formgroup">
+  <label *ngIf="!!label" class="reg-form-label" for="{{controlName + '_' + randomNumber}}">{{label}}</label>
+  <!-- tabindex="0"  -->
+  <!-- (click)="toggleCustomSelectBox(true)" -->
+  <!-- @ng-select/ng-select: https://www.npmjs.com/package/@ng-select/ng-select -->
+  <div class="custom-dropdown" id="{{controlName + '_' + randomNumber +'_selectarea'}}" 
+    [ngClass]="{
+      'active': open_dropdown,
+      'disabled': disabled,
+      'ng-select-error': required && (current_error_status || innerBlurred) && !current_value
+    }"
+    #selectelementref
+  >
+    <ng-select
+      bindLabel="{{controlName}}"
+      autofocus
+      bindValue="{{controlName + '_' + randomNumber +'_selectarea'}}" 
+      formControlName="{{controlName}}"
+      [disabled]="disabled"
+      [notFoundText]="noOptionFoundText" 
+      placeholder={{placeholder}}
+      (blur)="handleblurred()"
+      >
+      <ng-option *ngFor="let dataiitem of dataList" [value]="dataiitem.key">{{dataiitem.value}}</ng-option>
+    </ng-select>
+
+    <div *ngIf="tooltipText.length && !innerBlurred" class="tooltip_container_select">
+      <div class="tooltip_triangle"></div>
+      <div class="tooltip_content">
+        {{tooltipText}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="input__error-text" aria-live="assertive" role="alert" *ngIf="required && (current_error_status || innerBlurred) && !current_value">
+  <span *ngIf="!!requiredMessage; else noselectmessage"><span class="sr-only">Error </span>{{requiredMessage}}</span>
+  <ng-template #noselectmessage>
+    <span><span class="sr-only">Error </span>Please select any option.</span>
+  </ng-template>
+</div>

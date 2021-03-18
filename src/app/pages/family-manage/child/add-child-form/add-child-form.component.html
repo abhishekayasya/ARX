@@ -1,0 +1,151 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="module__heading">Add a Child</div>
+    </div>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <p>Requirements:</p>
+      <ul class="instructions-list">
+        <li><p>Child must be under 18 years old.</p></li>
+        <li *ngIf='!appContext.isSpsite'><p>Child must have a Walgreens or AllianceRx Walgreens Prime prescription number from the past 15 months.</p></li>
+        <li *ngIf='appContext.isSpsite'><p>Child must have an AllianceRx Walgreens Prime prescription number from the past 15 months.</p></li>
+        <li><p>Children aged 13-17 who have an existing AllianceRx Walgreens Prime account must receive an invitation link from you, which will be generated through this form. If your child does not have an AllianceRx Walgreens Prime account, your child will be added automatically without an invitation.</p></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row fm__add-child-form">
+
+    <div class="col-md-6 mt-4">
+      <div class="fm__add-adult-info">
+        <form class="form__on-light-bg" [formGroup]="childInfoForm">
+
+          <!--first name-->
+          <div class="form__input">
+             <span class="input__contain">
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': childInfoForm.controls.firstName.invalid && (childInfoForm.controls.firstName.touched || childInfoForm.controls.firstName.dirty)
+                }"
+                type="text" 
+                formControlName="firstName" 
+                id="firstName" 
+                maxlength="20" 
+                pattern="^[a-zA-Z -]+(\s+[a-zA-Z]+)*$" 
+                required/>
+              <label class="input__title" for="firstName"><span>First Name</span></label>
+            </span>
+            <div class="input__error-text" aria-live="assertive" role="alert"
+                  *ngIf="childInfoForm.controls.firstName.invalid && (childInfoForm.controls.firstName.touched || childInfoForm.controls.firstName.dirty)">
+              <span *ngIf="childInfoForm.controls.firstName.errors.required"><span class="sr-only">Error </span>First Name is required.</span>
+              <span *ngIf="childInfoForm.controls.firstName.errors.pattern">Please enter valid First Name</span>
+            </div>
+          </div>
+         
+          <!--first name-->
+
+
+          <!--last name-->
+          <div class="form__input">
+            <span class="input__contain">
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': childInfoForm.controls.lastName.invalid && (childInfoForm.controls.lastName.touched || childInfoForm.controls.lastName.dirty)
+                }"
+                type="text" 
+                formControlName="lastName" 
+                id="lastName" 
+                maxlength="20" 
+                pattern="^[a-zA-Z -]+(\s+[a-zA-Z]+)*$" 
+                required>
+              <label class="input__title" for="lastName"><span>Last Name</span></label>
+            </span>
+          </div>
+          <div class="input__error-text" aria-live="assertive" role="alert"
+               *ngIf="childInfoForm.controls.lastName.invalid && (childInfoForm.controls.lastName.touched || childInfoForm.controls.lastName.dirty)">
+            <span *ngIf="childInfoForm.controls.lastName.errors.required"><span class="sr-only">Error </span>Last Name is required.</span>
+            <span *ngIf="childInfoForm.controls.lastName.errors.pattern">Please enter valid Last Name</span>
+          </div>
+          <!--last name-->
+
+          <!--date of birth-->
+          <div class="form__input">
+            <span class="input__contain" id="refill-datePicker">
+              <input
+                class="input__focus input__dates"
+                [ngClass]="{
+                  'input__error': childInfoForm.controls.dateOfBirth.invalid && (childInfoForm.controls.dateOfBirth.touched || childInfoForm.controls.dateOfBirth.dirty)
+                }"
+                type="text" 
+                formControlName="dateOfBirth" 
+                date-picker id="dateOfBirth" 
+                required placeholder="MM/DD/YYYY" 
+                maxlength="10">
+              <label class="input__title" for="dateOfBirth"><span>Date of Birth</span></label>
+            </span>
+          </div>
+
+          <div class="input__error-text" aria-live="assertive" role="alert"
+               *ngIf="childInfoForm.controls.dateOfBirth.invalid && (childInfoForm.controls.dateOfBirth.touched || childInfoForm.controls.dateOfBirth.dirty)">
+            <span *ngIf="childInfoForm.controls.dateOfBirth.errors.required"><span class="sr-only">Error </span>Date of Birth is required.</span>
+            <span *ngIf="childInfoForm.controls.dateOfBirth.errors.validDate">Please enter valid date.</span>
+          </div>
+          <!--date of birth-->
+
+          <!--Prescription number-->
+          <div class="form__input">
+            <span class="input__contain">
+              <input 
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': childInfoForm.controls.prescriptionNumber.invalid && (childInfoForm.controls.prescriptionNumber.touched || childInfoForm.controls.prescriptionNumber.dirty)
+                }"
+                type="text" 
+                minlength="12" 
+                aria-label="Prescription number" 
+                [specified-input]="childInfoForm.controls.prescriptionNumber" 
+                maxlength="13" 
+                formControlName="prescriptionNumber" 
+                id="prescriptionNumber" 
+                pattern="^[0-9\-]{12,13}$" 
+                required>
+              <label class="input__title" for="phoneNumber"><span>Prescription number</span></label>
+            </span>
+        </div>
+        <div class="input__error-text" aria-live="assertive" role="alert"
+             *ngIf="childInfoForm.controls.prescriptionNumber.invalid && (childInfoForm.controls.prescriptionNumber.touched || childInfoForm.controls.prescriptionNumber.dirty)">
+          <span *ngIf="childInfoForm.controls.prescriptionNumber.errors.required"><span class="sr-only">Error </span>Prescription number is required.</span>
+          <span *ngIf="childInfoForm.controls.prescriptionNumber.errors.pattern">Please enter valid Prescription Number</span>
+        </div>
+          <!--Prescription number-->
+
+        </form>
+      </div>
+    </div>
+
+    <div class="col-12 mt-3">
+      <div class="row">
+        <p *ngIf='!appContext.isSpsite' class="col-md-6">Enter a Walgreens or AllianceRx Walgreens Prime prescription number from the past 15 months.</p>
+        <p *ngIf='appContext.isSpsite' class="col-md-6">Enter an AllianceRx Walgreens Prime prescription number from the past 15 months.</p>     
+      </div>
+    </div>
+
+    <div class="col-12 mt-5">
+      <button class="btn btn_primary continueBtn" type="button" (click)="validateChild()">Continue</button>
+    </div>
+  </div>
+
+
+
+</div>

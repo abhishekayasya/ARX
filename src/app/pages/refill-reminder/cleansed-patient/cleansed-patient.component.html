@@ -1,0 +1,1152 @@
+<div
+  class="orders__cleansed-referral"
+  *ngFor="
+    let referral of (speciality?.patientsPayload)[payloadIndex]?.referrals;
+    let i = index
+  "
+>
+  <div class="meta-details">
+    <div class="row">
+      <div class="shipping-details col-md-6">
+        <div class="shipping-address">
+          <h2>Shipping address</h2>
+
+          <!--shpping address-->
+          <div *ngIf="referral.selectedAddress != undefined">
+            <p>
+              {{ referral.selectedAddress.firstName }}
+              {{ referral.selectedAddress.lastName }}
+            </p>
+            <p *ngIf="referral.selectedAddress.streetAddr == undefined">
+              {{ referral.selectedAddress.street1 }}
+            </p>
+            <p *ngIf="referral.selectedAddress.streetAddr != undefined">
+              {{ referral.selectedAddress.streetAddr }}
+            </p>
+            <p>
+              {{ referral.selectedAddress.city }},
+              {{ referral.selectedAddress.state }}
+              {{ referral.selectedAddress.zip }}
+            </p>
+          </div>
+
+          <p
+            class="input__error-text"
+            *ngIf="referral.selectedAddress == undefined"
+          >
+            No shipping address found, please provide an address.
+          </p>
+
+          <div class="mt-3 d-none d-md-block">
+            <a
+              href="javascript:void(0)"
+              (click)="
+                redirectToAddressBook(
+                  patientsPayload.scriptMedId,
+                  referral.referralId
+                )
+              "
+              ><strong>Edit Address</strong></a
+            >
+          </div>
+          <a
+            href="javascript:void(0);"
+            (click)="
+              redirectToAddressBook(
+                patientsPayload.scriptMedId,
+                referral.referralId
+              )
+            "
+            role="button"
+            class="btn_primary mt-3 editBtn"
+            ><span class="btn btn_primary d-md-none">Edit</span></a
+          >
+        </div>
+
+        <div class="shipping-method mt-4">
+          <h3>Delivery date</h3>
+
+          <div class="select-method">
+            <!--Availble shipping methods -->
+            <span
+              class="select__contain"
+              *ngIf="referral.boxDetails.shippingInfo.availableDates.length > 0"
+            >
+              <label for="{{ i }}__shippingdates">Delivery date</label>
+              <span class="icon icon__arrow-down">
+                <svg alt="">
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+              <select
+                id="{{ i }}__shippingdates"
+                name="{{ i }}__shippingdates"
+                [(ngModel)]="
+                  patientsPayload.boxDetails.shippingInfo.selectedDate
+                "
+              >
+                <option
+                  *ngFor="
+                    let date of referral.boxDetails.shippingInfo.availableDates
+                  "
+                  [ngValue]="date"
+                  >{{ date | slice: 0:10 | date: "EEE, LLL dd, yyyy" }}
+                </option>
+              </select>
+            </span>
+
+            <!-- Tool-Tip  -->
+            <div
+              [popper]="cleansedshippingTooltip"
+              [popperTrigger]="'click'"
+              [popperPlacement]="'right'"
+              [popperDelay]="300"
+              class="tool-tip tool-tip-custom"
+            >
+              <span
+                role="button"
+                class="tool-tip__trigger"
+                tabindex="0"
+                aria-describedby="tool-tip__text_cleansedshippingTooltip"
+              >
+                <span class="icon icon__question-mark">
+                  <svg alt="">
+                    <title>Help information</title>
+                    <use
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__question-mark"
+                    ></use>
+                  </svg>
+                </span>
+              </span>
+            </div>
+
+            <popper-content #cleansedshippingTooltip>
+              <div>
+                <p id="tool-tip__text_cleansedshippingTooltip">
+                  Delivery is available Monday–Friday except for refrigerated
+                  items, which can be delivered Tuesday–Friday. Your delivery
+                  date must be at least 3 business days from your order date.
+                </p>
+              </div>
+            </popper-content>
+            <!-- tool-tip  -->
+          </div>
+
+          <div class="check-box">
+            <input
+              type="checkbox"
+              id="{{ i }}_date_not_available"
+              name="{{ i }}_date_not_available"
+              (change)="shippingDateNotAvailable(i, $event)"
+            />
+            <label for="{{ i }}_date_not_available"
+              ><span class="check"></span
+              ><span>My preferred date is not available</span></label
+            >
+          </div>
+          <span
+            *ngIf="
+              patientsPayload.referrals != undefined &&
+              patientsPayload.referrals[i].callMeReasons.prefDelDtNotAvailable
+            "
+            >We'll contact you by the end of the next business day. Or, you can
+            also call us directly at 888-347-3416.</span
+          >
+          <span
+            *ngIf="
+              patientsPayload.referrals == undefined &&
+              patientsPayload.callMeReasons.prefDelDtNotAvailable
+            "
+            >We'll contact you by the end of the next business day. Or, you can
+            also call us directly at 888-347-3416.</span
+          >
+        </div>
+      </div>
+
+      <!--payment information-->
+      <div class="payment-details col-md-6">
+        <h2>Payment</h2>
+
+        <div class="row">
+          <div class="col-12">
+            <span class="icon icon__info" style="color: #02a0c0;">
+              <svg>
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                ></use>
+              </svg>
+            </span>
+            <p class="due_amount">
+              <span>
+                <strong>Due Now: ${{ referral.dueNow | price }}</strong>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="referral.missingCCCase">
+          <div class="col-12">
+            <p>{{ referral.missingCCMessage }}</p>
+          </div>
+        </div>
+
+        <div
+          class="row"
+          *ngIf="checkoutService.error_state.cleansed && !referral.noPaymentDue"
+        >
+          <div class="col-12">
+            <p class="input__error-text" *ngIf="countSelected(referral) == 0">
+              Please add payment information to your account
+            </p>
+          </div>
+        </div>
+
+        <!-- section in case no payment is due -->
+        <div class="row" *ngIf="referral.noPaymentDue">
+          <div class="col-12">
+            <p>
+              No payment is due at this time. Please continue and submit your
+              order without payment.
+            </p>
+          </div>
+        </div>
+
+        <!--payment and cc information-->
+        <div *ngIf="referral.boxDetails.shippingInfo.creditCard != undefined">
+          <div class="cc__options">
+            <div class="btn__radio mt-2">
+              <input
+                type="radio"
+                name="cc_option_1_{{
+                  speciality.patientsPayload[this.payloadIndex].scriptMedId
+                }}_{{ referral.referralId }}"
+                [checked]="referral.payBy == '1'"
+                value="1"
+                (change)="onPayByChange($event, referral)"
+              />
+              <label>
+                <span class="radio"></span>
+                <span>Pay on 1 card</span>
+              </label>
+            </div>
+
+            <div
+              *ngIf="referral?.boxDetails?.shippingInfo?.creditCard?.length > 1"
+              class="btn__radio mt-2"
+            >
+              <input
+                type="radio"
+                name="cc_option_2_{{
+                  speciality.patientsPayload[this.payloadIndex].scriptMedId
+                }}_{{ referral.referralId }}"
+                [checked]="referral.payBy == '2'"
+                value="2"
+                (change)="onPayByChange($event, referral)"
+              />
+              <label>
+                <span class="radio"></span>
+                <span>Pay on 2 cards</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="cc__listing mt-3">
+            <div
+              class="col-md-12 cc__listing-card"
+              *ngFor="
+                let card of referral.boxDetails.shippingInfo.creditCard;
+                let cardIndex = index
+              "
+            >
+              <div
+                class="row align-items-center"
+                [ngClass]="{
+                  ccDisabled: isCCExpired(card)
+                }"
+              >
+                <div class="col-4 p0">
+                  <!--card selection checkbox-->
+                  <div
+                    class="btn__radio mt-2 d-inline-block"
+                    *ngIf="referral.payBy == '1'"
+                  >
+                    <input
+                      type="radio"
+                      name="cc_selected_{{ cardIndex }}_{{
+                        speciality.patientsPayload[this.payloadIndex]
+                          .scriptMedId
+                      }}_{{ referral.referralId }}"
+                      [checked]="card.isSelected"
+                      value="{{ card.paymentMethodId }}"
+                      (change)="onCardSelect(i, cardIndex, $event)"
+                      [disabled]="isCCExpired(card)"
+                    />
+                    <label>
+                      <span class="radio"></span>
+                    </label>
+                  </div>
+                  <div
+                    class="check-box d-inline-block"
+                    [ngClass]="{
+                      disabled: isCCExpired(card)
+                    }"
+                    *ngIf="referral.payBy == '2'"
+                  >
+                    <input
+                      type="checkbox"
+                      id="{{ card.creditCardNumber }}"
+                      name="{{ card.paymentMethodId }}"
+                      value="{{ card.paymentMethodId }}"
+                      [checked]="card.isSelected"
+                      (change)="onCardSelect(i, cardIndex, $event)"
+                      [disabled]="
+                        cardStateCheck(card, referral) || isCCExpired(card)
+                      "
+                    />
+                    <label for="{{ card.creditCardNumber }}">
+                      <span class="check"></span>
+                      <span></span>
+                    </label>
+                  </div>
+
+                  <div
+                    class="card_icon d-inline-block"
+                    [cc-type]="card.creditCardType"
+                  ></div>
+                </div>
+                <div class="card_number col-2 pr-0">
+                  <p>*{{ card.creditCardNumber | ccnumber: "4" }}</p>
+                </div>
+                <div class="card_exp col-2 p0">
+                  <p *ngIf="!isCCExpired(card)">{{ card.expDate }}</p>
+                  <p *ngIf="isCCExpired(card)" class="input__error-text">
+                    Expired
+                  </p>
+                </div>
+                <div class="card_update col-4 pr-0 text-right">
+                  <div
+                    class="form__input amountContainer"
+                    [ngClass]="{
+                      input__error:
+                        card.dueNowValid != undefined && !card.dueNowValid
+                    }"
+                    *ngIf="
+                      card.isSelected &&
+                      referral.payBy == '2' &&
+                      countSelected(referral) > 0
+                    "
+                  >
+                    <span>$</span>
+                    <input
+                      type="text"
+                      specified-input
+                      invalidExp="[^0-9\d*(\.\d+)?$]"
+                      name="{{ card.paymentMethodId }}"
+                      class="cc__listing-amount-input"
+                      (keyup)="calculateAmount($event, i)"
+                      value="{{ card.dueNow }}"
+                      (focus)="calculateAmount($event, i)"
+                      (blur)="calculateAmount($event, i)"
+                    />
+                  </div>
+                  <a
+                    href="javascript:void(0)"
+                    *ngIf="
+                      referral.payBy == '1' ||
+                      (referral.payBy == '2' && countSelected(referral) < 1)
+                    "
+                    (click)="redirectToUpdateCard(card.paymentMethodId)"
+                    >Update</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--add new cc information -->
+        <div class="row" *ngIf="referral.noPaymentDue == undefined">
+          <div class="col-12 col-lg-6 mt-2">
+            <button
+              type="button"
+              class="btn btn_primary"
+              (click)="redirectToAddCard(referral)"
+            >
+              Add credit card
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--prescription listing-->
+    <div class="presc-summary">
+      <h2>Prescriptions</h2>
+      <ul class="drugs-list" *ngIf="!loaderState">
+        <li
+          *ngFor="
+            let prescription of referral.prescriptionList;
+            let pindex = index
+          "
+        >
+          <div class="row m-0">
+            <div class="m-0 col-md-10">
+              <div class="row orders__cleansed-patient-prescription-container">
+                <div class="col-md-12 orders__cleansed-patient-prescription">
+                  <div class="row">
+                    <div class="drug-icon col-3 col-md-2">
+                      <img
+                        *ngIf="!prescription?.drugImageURL"
+                        src="{{
+                          appContext.assetsHost || appContext.assetPrefix
+                        }}/images/IN1827/default_image_small.jpg"
+                        class="border__round"
+                        alt=""
+                        appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                      />
+                      <img
+                        *ngIf="
+                          appContext.assetPrefix != '' &&
+                          prescription?.drugImageURL
+                        "
+                        src="{{ appContext.assetPrefix }}{{
+                          prescription?.drugImageURL
+                        }}"
+                        class="border__round"
+                        alt="{{ prescription.drugName }}"
+                        appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                      />
+                      <img
+                        *ngIf="
+                          appContext.assetPrefix == '' &&
+                          prescription?.drugImageURL
+                        "
+                        src="{{ appContext.assetsHost }}{{
+                          prescription?.drugImageURL
+                        }}"
+                        class="border__round"
+                        alt="{{ prescription.drugName }}"
+                        appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                      />
+                    </div>
+                    <div class="drug-info col-9 col-md-10">
+                      <h1 class="h1__page-title">
+                        {{ prescription.drugName }}
+                      </h1>
+                      <div class="drug-details">
+                        <p>Qty: {{ prescription.qty }}</p>
+                        <p class="break-line"></p>
+                        <p>Rx: {{ prescription.rxNumber }}</p>
+                        <p class="break-line"></p>
+                        <p>{{ prescription.prescriber }}</p>
+                        <p
+                          class="break-line"
+                          *ngIf="prescription.prescriber"
+                        ></p>
+                        <p>{{ prescription.patientName }}</p>
+
+                        <!--prescription price-->
+                        <p class="float-right">
+                          ${{ prescription.cashPrice | price }}
+                        </p>
+
+                        <div class="check-box">
+                          <input
+                            type="checkbox"
+                            id="donotneed_{{ prescription.rxNumber }}"
+                            name="donotneed_{{ prescription.rxNumber }} "
+                            (change)="donotNeedItem(prescription, $event)"
+                          />
+                          <label
+                            *ngIf="patientsPayload.prescriptionList.length > 1"
+                            for="donotneed_{{ prescription.rxNumber }}"
+                            ><span class="check"></span
+                            ><span>I do not need this item</span></label
+                          >
+                        </div>
+                        <div
+                          class="check-box"
+                          *ngIf="prescription.isRequestToRemove == true"
+                        >
+                          <p class="text-warning">
+                            Your removal request has been sent and is pending
+                            review.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--action to remove referral-->
+            <div
+              *ngIf="prescription.isValidRx == 'true'"
+              class="m-0 col-md-2 text-center svgIconAlign"
+            >
+              <div class="col container__remove-cart-item">
+                <a
+                  href="javascript:void(0)"
+                  (click)="removeReferral(i, referral.referralId)"
+                >
+                  <span class="icon icon__dismiss">
+                    <svg alt="" alt="">
+                      <use
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"
+                      ></use>
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="row add-more-presc">
+        <div class="col-12 col-sm-5 estimated-price">
+          <span>* Estimated price</span>
+        </div>
+        <div *ngIf="showAddPricription" class="col-12 col-sm-7 text-sm-right">
+          <a [routerLink]="ROUTES.refill.absoluteRoute">
+            <span class="icon icon__plus-add">
+              <svg alt="" alt="">
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__plus-add"
+                ></use>
+              </svg>
+            </span>
+            <span>
+              <strong>add more prescriptions</strong>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--patient health information-->
+<div class="patient__healthinfo">
+  <h2>Please confirm your health information</h2>
+  <p *ngIf="!appContext.isSpsite">
+    (Non-Walgreens prescriptions, over-the-counter medications, herbs &
+    supplements)
+  </p>
+
+  <p *ngIf="appContext.isSpsite">
+    (Prescriptions from other pharmacies, over-the-counter medications, herbs &
+    supplements)
+  </p>
+
+  <arxrf-loader
+    [show]="loaderState"
+    [loaderOverlay]="loaderOverlay"
+  ></arxrf-loader>
+
+  <div class="patient__healthinfo-medication">
+    <div class="row">
+      <div class="col-md-7 col-lg-8">
+        <p class="text-danger" *ngIf="healthInfoServiceErr.addMedication">
+          {{ healthInfoServiceErr.errMessage }}
+        </p>
+        <h3>Additional medications you are taking:</h3>
+
+        <div
+          class="check-box mt-2"
+          *ngIf="
+            speciality.patientsPayload[payloadIndex].healthInfo == undefined ||
+            !speciality.patientsPayload[payloadIndex].healthInfo
+              .additionalMedication ||
+            speciality.patientsPayload[payloadIndex].healthInfo
+              .additionalMedication.length == 0
+          "
+        >
+          <input
+            type="checkbox"
+            id="no_additionalMedication-confirm"
+            name="no_additionalMedication-confirm_{{
+              speciality.patientsPayload[this.payloadIndex].patientId
+            }}"
+            (change)="speciality.savePatientContext(payloadIndex)"
+            [(ngModel)]="
+              speciality.patientsPayload[payloadIndex].noadditionalMedication
+            "
+          />
+
+          <label for="no_additionalMedication-confirm">
+            <span class="check"></span>
+            <span>I have no known Health Conditions.</span>
+          </label>
+        </div>
+
+        <div class="row" *ngIf="checkoutService.error_state.cleansed">
+          <p
+            class="input__error-text col-12"
+            *ngIf="
+              (!speciality.patientsPayload[payloadIndex].healthInfo
+                .additionalMedication ||
+                speciality.patientsPayload[payloadIndex].healthInfo
+                  .additionalMedication.length == 0) &&
+              !speciality.patientsPayload[payloadIndex].noadditionalMedication
+            "
+          >
+            Please update or confirm to continue.
+          </p>
+        </div>
+
+        <ul
+          class="patient__healthinfo-list"
+          *ngIf="
+            speciality.patientsPayload[payloadIndex].healthInfo != undefined &&
+            speciality.patientsPayload[payloadIndex].healthInfo
+              .additionalMedication != undefined
+          "
+        >
+          <li
+            *ngFor="
+              let medication of speciality.patientsPayload[payloadIndex]
+                .healthInfo.additionalMedication;
+              let ci = index
+            "
+          >
+            <a
+              href="javascript:void(0);"
+              (click)="deleteHealthItem(medication.drugId, 'Medications', ci)"
+            >
+              <span class="icon icon__dismiss">
+                <svg>
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"
+                  ></use>
+                </svg>
+              </span>
+            </a>
+
+            <p>{{ medication.drugName }}</p>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-5 col-lg-4 addMed_but">
+        <button
+          class="btn btn_primary"
+          type="button"
+          (click)="showMedicationsSearch = true"
+        >
+          Add medication
+        </button>
+      </div>
+
+      <arxrf-checkout-drugsearch
+        [show]="showMedicationsSearch"
+        heading="medications"
+        inputPrompt="Enter a medication"
+        subHeading="Add vitamins, herbs, supliments, over-the-counter medications, and prescriptions from other pharmacies."
+        type="Medications"
+        [showDelete]="true"
+        (close)="closeMedications($event)"
+        (update)="updateMedications($event)"
+      ></arxrf-checkout-drugsearch>
+    </div>
+  </div>
+  <div class="patient__healthinfo-allergies">
+    <div class="row">
+      <div class="col-md-7 col-lg-8">
+        <p class="text-danger" *ngIf="healthInfoServiceErr.drugAllergies">
+          {{ healthInfoServiceErr.errMessage }}
+        </p>
+        <h3>Known drug allergies:</h3>
+
+        <div
+          class="check-box mt-2"
+          *ngIf="
+            speciality.patientsPayload[payloadIndex].healthInfo == undefined ||
+            !speciality.patientsPayload[payloadIndex].healthInfo
+              .drugAllergies ||
+            speciality.patientsPayload[payloadIndex].healthInfo.drugAllergies
+              .length == 0
+          "
+        >
+          <input
+            type="checkbox"
+            id="no_drugAllergies-confirm"
+            name="no_drugAllergies-confirm_{{
+              speciality.patientsPayload[this.payloadIndex].patientId
+            }}"
+            (change)="speciality.savePatientContext(payloadIndex)"
+            [(ngModel)]="
+              speciality.patientsPayload[payloadIndex].nodrugAllergies
+            "
+          />
+
+          <label for="no_drugAllergies-confirm">
+            <span class="check"></span>
+            <span>I have no known Drug Allergies.</span>
+          </label>
+        </div>
+
+        <div class="row" *ngIf="checkoutService.error_state.cleansed">
+          <p
+            class="input__error-text col-12"
+            *ngIf="
+              (!speciality.patientsPayload[payloadIndex].healthInfo
+                .drugAllergies ||
+                speciality.patientsPayload[payloadIndex].healthInfo
+                  .drugAllergies.length == 0) &&
+              !speciality.patientsPayload[payloadIndex].nodrugAllergies
+            "
+          >
+            Please update or confirm to continue.
+          </p>
+        </div>
+
+        <ul
+          class="patient__healthinfo-list"
+          *ngIf="
+            speciality.patientsPayload[payloadIndex].healthInfo != undefined &&
+            speciality.patientsPayload[payloadIndex].healthInfo.drugAllergies !=
+              undefined
+          "
+        >
+          <li
+            *ngFor="
+              let allergie of speciality.patientsPayload[payloadIndex]
+                .healthInfo.drugAllergies;
+              let ci = index
+            "
+          >
+            <a
+              href="javascript:void(0);"
+              (click)="
+                deleteHealthItem(
+                  allergie.drugId,
+                  'Drug Allergies',
+                  ci,
+                  allergie.allergyCode
+                )
+              "
+            >
+              <span class="icon icon__dismiss">
+                <svg>
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"
+                  ></use>
+                </svg>
+              </span>
+            </a>
+
+            <p>{{ allergie.drugName }}{{ allergie.allergy }}</p>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-5 col-lg-4 addAllergy_btn">
+        <button
+          class="btn btn_primary"
+          type="button"
+          (click)="showAllergiesSearch = true"
+        >
+          Add drug allergy
+        </button>
+      </div>
+
+      <arxrf-checkout-drugsearch
+        [show]="showAllergiesSearch"
+        heading="allergies"
+        inputPrompt="Enter an allergy"
+        subHeading="Add any known drug allergies."
+        type="Drug Allergies"
+        [showDelete]="true"
+        (close)="closeAllergies($event)"
+        (update)="updateAllergies($event)"
+      ></arxrf-checkout-drugsearch>
+    </div>
+  </div>
+  <div class="patient__healthinfo-conditions">
+    <div class="row">
+      <div class="col-md-7 col-lg-8">
+        <p class="text-danger" *ngIf="healthInfoServiceErr.healthConditions">
+          {{ healthInfoServiceErr.errMessage }}
+        </p>
+        <h3>All Known health conditions:</h3>
+
+        <div
+          class="check-box mt-2"
+          *ngIf="
+            speciality.patientsPayload[payloadIndex].healthInfo == undefined ||
+            !speciality.patientsPayload[payloadIndex].healthInfo
+              .healthConditions ||
+            speciality.patientsPayload[payloadIndex].healthInfo.healthConditions
+              .length == 0
+          "
+        >
+          <input
+            type="checkbox"
+            id="no_healthConditions-confirm"
+            name="no_healthConditions-confirm_{{
+              speciality.patientsPayload[this.payloadIndex].patientId
+            }}"
+            (change)="speciality.savePatientContext(payloadIndex)"
+            [(ngModel)]="
+              speciality.patientsPayload[payloadIndex].nohealthConditions
+            "
+          />
+
+          <label for="health__info-confirm">
+            <span class="check"></span>
+            <span>I have no known Health Conditions.</span>
+          </label>
+        </div>
+
+        <div class="row" *ngIf="checkoutService.error_state.cleansed">
+          <p
+            class="input__error-text col-12"
+            *ngIf="
+              (!speciality.patientsPayload[payloadIndex].healthInfo
+                .healthConditions ||
+                speciality.patientsPayload[payloadIndex].healthInfo
+                  .healthConditions.length == 0) &&
+              !speciality.patientsPayload[payloadIndex].nohealthConditions
+            "
+          >
+            Please update or confirm to continue.
+          </p>
+        </div>
+
+        <ul
+          class="patient__healthinfo-list"
+          *ngIf="
+            speciality.patientsPayload[payloadIndex].healthInfo != undefined &&
+            speciality.patientsPayload[payloadIndex].healthInfo
+              .healthConditions != undefined &&
+            speciality.patientsPayload[payloadIndex].healthInfo.healthConditions
+              .length > 0
+          "
+        >
+          <li
+            *ngFor="
+              let condition of speciality.patientsPayload[payloadIndex]
+                .healthInfo.healthConditions;
+              let ci;
+              of: index
+            "
+          >
+            <a
+              href="javascript:void(0);"
+              (click)="
+                deleteHealthItem(
+                  condition.healthConditionCd
+                    ? condition.healthConditionCd
+                    : condition.drugId,
+                  'Health Conditions',
+                  ci
+                )
+              "
+            >
+              <span class="icon icon__dismiss">
+                <svg>
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"
+                  ></use>
+                </svg>
+              </span>
+            </a>
+            <p>{{ condition.drugName }}{{ condition.healthCondition }}</p>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-5 col-lg-4 addHealth_btn">
+        <button
+          class="btn btn_primary"
+          type="button"
+          (click)="showConditionsSearch = true"
+        >
+          Add health condition
+        </button>
+      </div>
+
+      <arxrf-checkout-drugsearch
+        [show]="showConditionsSearch"
+        heading="health conditions"
+        subHeading="Add any known drug health conditions."
+        inputPrompt="Enter a health condition"
+        type="Health Conditions"
+        [showDelete]="true"
+        (close)="closeConditions($event)"
+        (update)="updateConditions($event)"
+      ></arxrf-checkout-drugsearch>
+    </div>
+  </div>
+
+  <div class="check-box mt-5">
+    <input
+      type="checkbox"
+      id="health__info-confirm"
+      name="health__info-confirm_{{
+        speciality.patientsPayload[this.payloadIndex].patientId
+      }}"
+      [(ngModel)]="speciality.patientsPayload[payloadIndex].healthInfoChecked"
+    />
+    <label for="health__info-confirm">
+      <span class="check"></span>
+      <span>I confirm the above information is accurate.</span>
+    </label>
+  </div>
+
+  <div class="row" *ngIf="checkoutService.error_state.cleansed">
+    <p
+      *ngIf="!speciality.patientsPayload[payloadIndex].healthInfoChecked"
+      class="input__error-text col-12"
+    >
+      {{ healthinfo_error }}
+    </p>
+  </div>
+</div>
+
+<!--patient clinical review-->
+<div class="patient__clinicalreview">
+  <h3>Clinical Review</h3>
+
+  <div class="row mt-4 pb-2">
+    <div class="col-md-7 col-lg-8 pb-2">
+      <h4>Do you have any questions for the Pharmacy?</h4>
+      <p>(E.g. billing, insurance, missing prescriptions)</p>
+    </div>
+    <div class="col-md-5 col-lg-4 row">
+      <div class="btn__radio col-6">
+        <input
+          type="radio"
+          name="cr__assistance"
+          [(ngModel)]="patientsPayload.clinical_review.assistance"
+          value="yes"
+        />
+        <label>
+          <span class="radio"></span>
+          <span>Yes</span>
+        </label>
+      </div>
+
+      <div class="btn__radio col-6">
+        <input
+          type="radio"
+          name="cr__assistance"
+          [(ngModel)]="patientsPayload.clinical_review.assistance"
+          value="no"
+        />
+        <label>
+          <span class="radio"></span>
+          <span>No</span>
+        </label>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="" *ngIf="patientsPayload.clinical_review.assistance == 'yes'">
+        <p>
+          Please select an item that best describes your questions.
+          We'll contact you by the end of the next business day. Or, call us directly at
+          <span class="d-none d-sm-inline-block">877-365-5097.</span
+          ><span class="d-sm-none"
+            ><a title="877-365-5097" href="tel:877-365-5097">877-365-5097</a
+            >.</span
+          >
+        </p>
+      </div>
+
+      <div
+        class="assistance_info-container col-12"
+        *ngIf="patientsPayload.clinical_review.assistance == 'yes'"
+      >
+        <div class="mt-2">
+          <p><strong>Insurance/Billing</strong></p>
+          <div class="check-box">
+            <input
+              type="checkbox"
+              id="insuranceBillQtn"
+              name="insuranceBillQtn"
+              [(ngModel)]="patientsPayload.callMeReasons.insuranceBillQtn"
+            />
+            <label for="insuranceBillQtn"
+              ><span class="check"></span
+              ><span>Insurance/billing question</span></label
+            >
+          </div>
+
+          <div class="check-box">
+            <input
+              type="checkbox"
+              id="newInsurance"
+              name="newInsurance"
+              [(ngModel)]="patientsPayload.callMeReasons.newInsurance"
+            />
+            <label for="newInsurance"
+              ><span class="check"></span><span>New Insurance</span></label
+            >
+          </div>
+        </div>
+
+        <div
+          class="mt-3"
+          *ngIf="patientsPayload.clinical_review.assistance == 'yes'"
+        >
+          <p><strong>Prescriptions</strong></p>
+
+          <div class="check-box">
+            <input
+              type="checkbox"
+              id="prescNotVisible"
+              name="prescNotVisible"
+              [(ngModel)]="patientsPayload.callMeReasons.prescNotVisible"
+            />
+            <label for="prescNotVisible"
+              ><span class="check"></span
+              ><span>Prescription not visible</span></label
+            >
+          </div>
+
+          <div class="check-box">
+            <input
+              type="checkbox"
+              id="prscQty"
+              name="prscQty"
+              [(ngModel)]="patientsPayload.callMeReasons.prscQty"
+            />
+            <label for="prscQty"
+              ><span class="check"></span
+              ><span>Prescription quantity</span></label
+            >
+          </div>
+
+          <div class="check-box">
+            <input
+              type="checkbox"
+              id="prescChange"
+              name="prescChange"
+              [(ngModel)]="patientsPayload.callMeReasons.prescChange"
+            />
+            <label for="prescChange"
+              ><span class="check"></span
+              ><span>Prescription change</span></label
+            >
+          </div>
+
+          <div class="check-box">
+            <input
+              type="checkbox"
+              id="reqDiffPresc"
+              name="reqDiffPresc"
+              [(ngModel)]="patientsPayload.callMeReasons.reqDiffPresc"
+            />
+            <label for="reqDiffPresc"
+              ><span class="check"></span
+              ><span>Request a different prescription</span></label
+            >
+          </div>
+          <div class="mt-2">
+            <p>
+              <strong>Pharmacy Staff</strong>
+            </p>
+            <div class="check-box">
+              <input
+                type="checkbox"
+                id = "pharmacistContact"
+                name="pharmacistContact"
+                [(ngModel)]="patientsPayload.callMeReasons.pharmacistContact" />
+              <label for="pharmacistContact">
+                <span class="check"></span>
+                <span>Pharmacist question</span>
+              </label>
+            </div>
+          </div>
+          <div
+          class="col-md-12"
+          *ngIf="
+          patientsPayload.callMeReasons.pharmacistContact != ''
+          "
+        >
+          <p>
+            OK. We'll contact you by the end of the next business day. Or, you can
+            call us directly at
+            <span class="d-none d-sm-inline-block">877-365-5097.</span>
+            <span class="d-sm-none">
+              <a title="877-365-5097" href="tel:877-365-5097">877-365-5097</a
+              >.</span
+            >
+          </p>
+          <p>
+            <strong
+              >If this is a medical emergency, please contact your healthcare
+              provider or emergency services.</strong
+            >
+          </p>
+        </div>
+
+
+          <form class="form__on-light-bg mt-4">
+            <div class="form__input">
+              <span class="input__text-area">
+                <label class="input__title" for="notes"
+                  >Please enter your questions for the Pharmacy here</label
+                >
+                <textarea
+                  name="notes"
+                  id="notes"
+                  [(ngModel)]="patientsPayload.callMeReasons.notes"
+                  placeholder=""
+                ></textarea>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-12" *ngIf="checkoutService.error_state.cleansed">
+        <p
+          class="input__error-text"
+          *ngIf="patientsPayload.clinical_review.assistance == ''"
+        >
+          Please select a response
+        </p>
+      </div>
+    </div>
+
+    <p class="mt-5 fs-14 col-md-12 margin_align">
+      Based on your above responses, or your insurance benefits, we may need to
+      call you to gather additional information before shipping your medication.
+    </p>
+  </div>
+
+  <div class="speciality__disclaimer mt-1">
+    <h2>Pricing & Delivery Agreement</h2>
+
+    <p class="mt-4 mb-4">
+      We use all known insurance information to provide an estimated price. This
+      is not a guarantee, and we’ll notify you of any pricing change. You are
+      responsible for any amount owed in addition to the estimated amount. You
+      agree to accept delivery of your prescription(s) on the date indicated
+      above.
+    </p>
+
+    <div class="check-box">
+      <input
+        type="checkbox"
+        id="speciality-disclaimer"
+        name="speciality-disclaimer"
+        [(ngModel)]="patientsPayload.termsAndConditions"
+      />
+      <label for="speciality-disclaimer"
+        ><span class="check"></span
+        ><span
+          >I have read and agree to the above pricing & delivery
+          agreement.</span
+        ></label
+      >
+    </div>
+
+    <div class="row" *ngIf="checkoutService.error_state.cleansed">
+      <p class="input__error-text" *ngIf="!patientsPayload.termsAndConditions">
+        You must agree to the pricing & delivery agreement to continue
+      </p>
+    </div>
+  </div>
+</div>

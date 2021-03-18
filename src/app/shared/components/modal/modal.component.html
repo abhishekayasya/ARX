@@ -1,0 +1,28 @@
+
+<div style="display: none" #modalTemplate>
+
+</div>
+<section class="modal" [ngClass]="{
+    'arx__modal-show visibilityVisible' : show,
+    'arx__modal-hide' : !show,
+    'error-modal-section'  : showGatewayError
+  }" *ngIf="show" role="dialog" aria-labelledby="dialog1Title">
+  <span id="dialog1Title" class="sr-only">Beginning of the content</span>
+<div class="modal__content-contain rx__history__model {{cssClasses}}"
+  [ngClass]="{'error-modal' : showGatewayError}">
+
+    <button role="button" aria-label="Close dialog" class="btn btn__rounded action__close-modal" #closeButton (click)="closeModel()" *ngIf="allowClose">
+      <span class="icon icon__dismiss-v2"><svg alt=""><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss-v2"></use></svg></span>
+    </button>
+
+
+    <div [ngClass]="{'modal__content' : !noPaddingContainer}" [attr.aria-live]="ariaLive" aria-labelledby="Endofthecontent" >
+      <ng-content></ng-content>
+      <span id="Endofthecontent" class="sr-only">End of the content</span>
+    </div>
+
+    <a href="#" class="modalLastEl sr-only" aria-hidden="true"> tab </a>
+  </div>
+
+  <div class="overlay action__close-modal"></div>
+</section>

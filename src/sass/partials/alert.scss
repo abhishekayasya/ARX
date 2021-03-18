@@ -1,0 +1,80 @@
+
+.alert__error {  // default red
+    @include themify($themes) {
+      background: themed("alert_error_bg");
+      color: themed("alert_error_txt");
+
+      a {
+        color: themed("alert_error_txt");
+      }
+
+      &.minimal {
+        color: themed("alert_error_minimal");
+        a {
+          color: themed("alert_error_minimal");
+        }
+      }
+    }
+  }    
+
+  .alert__success {  // default green
+    @include themify($themes) {
+      background: themed("alert_success_bg");
+      color: themed("alert_success_txt");
+
+      a {
+        color: themed("alert_success_txt");
+      }
+
+      &.minimal {
+        color: themed("alert_success_minimal");
+        a {
+          color: themed("alert_success_minimal");
+        }
+      }
+    }
+  }
+
+  .alert__warn { // defalut yellow
+    @include themify($themes) {
+      background: themed("alert_warn_bg");
+      color: themed("alert_warn_txt");
+      a {
+        color: themed("alert_warn_txt");
+      }
+
+      &.minimal {
+        color: themed("alert_warn_minimal");
+        a {
+          color: themed("alert_warn_minimal");
+        }
+      }
+    }
+  }
+
+  .alert__info {  // default blue
+    @include themify($themes) {
+      background: themed("alert_info_bg");
+      color: themed("alert_info_txt");
+
+      a {
+        color: themed("alert_info_txt");
+      }
+
+      &.minimal {
+        color: themed("alert_info_minimal");
+        a {
+          color: themed("alert_info_minimal");
+        }
+        .icon {
+          color: themed("alert_info_icon")
+        }
+      }
+    }
+  }
+
+  .alert.minimal {
+    @include themify($themes) {
+      background: none;
+    }
+  }

@@ -1,0 +1,62 @@
+<div>
+
+<div class="col-12 pt-4 pb-5">
+    <h1 class="h1__page-title text-center col">Let’s review your Home Delivery prescriptions</h1>
+  </div>
+
+<div class="comp-confirm-address container">
+  <div class="rx-back-link row">
+    <a href="{{precReviewPath}}" routerLink="/submitorder" class="link__cta__back-arrow col-sx-12 col-sm-12"><span class="icon icon__arrow-left"><svg alt="" alt=""><use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-left"></use></svg></span>back to prescription review</a>
+  </div>
+  <div class="row rx-header-container">
+    <h2 class="col-sx-12 col-sm-12">Confirm Address</h2>
+    <p class="col-sx-12 col-sm-12 rx-description-container">The United States Postal Service indicated your address is missing information. You can either select the suggested address or continue with the address you entered.</p>
+  </div>
+  <arxrf-message></arxrf-message>
+  <div class="row rx-address-option">
+    <div class="rx-address-entered col-sx-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+      <h4>Address you entered</h4>
+      <p>{{addressToAdd.street}}, {{addressToAdd.city}}</p>
+      <p>{{addressToAdd.stateName}}, {{addressToAdd.state}}, {{addressToAdd.zipCode}}<span *ngIf="addressToAdd.addOnZipCode">{{'- ' + addressToAdd.addOnZipCode}}</span></p>
+      <button class="col-sx-12 col-sm-12 btn btn_primary" (click)='saveAddressChanges(true)'><span>Use entered</span></button>
+    </div>
+    <div class="rx-address-suggested col-sx-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngIf="isSuggestedAddressExist">
+      <h4>Suggested address</h4>
+      <div *ngIf="suggestedAddress?.length == 1 && isSuggestedAddressExist; else suggestedAddressOptionBlock">
+        <p *ngIf="isSuggestedAddressExist">{{suggestedAddress[0].street}}, {{suggestedAddress[0].city}}</p>
+        <p *ngIf="isSuggestedAddressExist">{{suggestedAddress[0].stateName}}, {{suggestedAddress[0].state}}, {{suggestedAddress[0].zip}}-
+        <span *ngIf="isSuggestedAddressExist">{{suggestedAddress[0].zipext}}</span></p>
+      </div>
+      <ng-template #suggestedAddressOptionBlock>
+        <form #addressBookForm="ngForm">
+          <div class="rx-options">
+            <div *ngFor="let address of suggestedAddress; let i = index" class="btn__radio color__neutral rx-address-options">
+              <input type="radio"
+                     name="addressOption"
+                     value="type"
+                     (click)="suggestedAddressToSelect(i)"
+              >
+              <label>
+                <span class="radio"></span>
+                <span>
+                    <p *ngIf="isSuggestedAddressExist">{{address.street}}, {{address.city}}</p>
+                    <p *ngIf="isSuggestedAddressExist">{{address.stateName}}, {{address.state}}, {{suggestedAddress.zip}}<span *ngIf="isSuggestedAddressExist">{{suggestedAddress.zipext}}</span></p>
+                </span>
+              </label>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+      <div class="row">
+        <div class="col-sx-12 col-sm-12">
+          <button class="btn btn_primary btn_suggested" [disabled]='!isSuggestedAddressExist' (click)='saveAddressChanges(false)'>Use suggested</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="rx-address-suggested col-sx-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngIf="!isSuggestedAddressExist">
+      <p>No Suggested address found.</p>
+    </div>
+  </div>
+</div>
+</div>

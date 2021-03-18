@@ -1,0 +1,16 @@
+.fm__add-adult-form {
+  .fm__add-adult-option {
+    padding-top: 2em;
+    width: 100%;
+    border-bottom: solid 1px #cfcfcf;
+  }
+}
+
+.form__input .input__title span {
+  text-transform: capitalize;
+}
+
+select:focus {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}

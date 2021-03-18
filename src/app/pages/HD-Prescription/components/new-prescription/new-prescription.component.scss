@@ -1,0 +1,357 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.container {
+  background-color: #fff !important;
+  font-size: 1.125rem;
+}
+.new-presc-comp {
+  padding: 2em;
+}
+
+.change-link {
+  color: #01728e;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+form,
+.pationtname-con {
+  margin-left: -12px;
+}
+
+.new-prescription-container {
+  padding: 3em;
+  // margin-top: 2em;
+  width: 100%;
+  //background: #fff;
+  font-size: 16px;
+  min-height: 500px;
+  .input__title {
+    text-transform: none;
+  }
+  .h2_title {
+    font-size: 1.4rem;
+    padding: 10px 0px 20px 0px;
+  }
+  .family-select {
+    width: 70%;
+  }
+  .form-container fieldset {
+    margin: 10px 0px 10px 0px;
+  }
+  .Line {
+    width: 100%;
+    margin-top: 29px;
+    height: 2px;
+    border: solid 1px #979797;
+  }
+  .btn__rounded {
+    border-radius: 50% !important;
+  }
+  .add-another {
+    margin-left: -10px;
+  }
+
+  .f-blue {
+    color: #01728e;
+  }
+  .add-another,
+  .remove-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #01728e;
+    font-weight: 600;
+    cursor: pointer;
+    div:first-child {
+      width: 59px;
+      height: 66px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    svg {
+      width: 66px;
+      height: 70px;
+    }
+  }
+  .remove-icon > div:first-child {
+    width: 45px !important;
+  }
+  sup {
+    font-size: 12px;
+  }
+  .warn-icon-con {
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 14px;
+  }
+  .container .row {
+    margin: 15px 0px 15px 0px;
+  }
+  .hd_error_icon {
+    width: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    height: 20px;
+    color: #e31837;
+    top: 5px;
+  }
+  .showmore-con {
+    padding: 14px 0px 0px 0px;
+  }
+  .showmore-con .hd_warn_icon {
+    color: #fcb44c;
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-top: -7px;
+  }
+  .showmore-con .hd_warn_icon + span {
+    font-weight: 600;
+  }
+  .prescription-list {
+    list-style: disc;
+    margin-left: 45px;
+  }
+  .prescription-list li {
+    margin: 10px;
+  }
+  .mobileview {
+    display: none;
+  }
+  .screenview {
+    display: block;
+  }
+  .footNote {
+    font-size: 14px;
+    margin-top: 50px;
+    sup {
+      font-size: 14px;
+    }
+  }
+  .display {
+    display: block;
+  }
+  .hide {
+    display: none;
+  }
+  .alert__text-contain {
+    padding: 15px 10px 15px 20px;
+  }
+  .bt-container {
+    display: flex;
+    justify-content: flex-end;
+    .btn {
+      width: 100%;
+    }
+  }
+  .transparent_btn {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #02a0c0;
+  }
+  .small_input_contain {
+    width: 50%;
+  }
+  .exceed-message {
+    margin-top: 15px;
+  }
+  .remove-container {
+    width: 100%;
+    .remove-icon {
+      float: right;
+      padding-top: 18px;
+      font-weight: 500;
+    }
+    .mobileview {
+      margin-top: -25px;
+    }
+  }
+}
+.singlemember {
+  margin-bottom: 10px;
+  div {
+    margin-bottom: 5px;
+  }
+}
+
+.buttonWrapper {
+  float: right;
+}
+.form-container {
+  font-size: 16px;
+}
+.terms_Container {
+  padding-top: 10px;
+  padding-left: 2px;
+  .check-box {
+    height: auto;
+    span {
+      font-size: 1.125rem;
+    }
+    label {
+      display: flex;
+      align-items: flex-start;
+    }
+    .check {
+      min-width: 23px;
+      width: 23px;
+      height: 23px;
+      margin: 8px 16px 0px 12px;
+    }
+  }
+}
+//   #app__root__section, .theme-default .color__neutral{
+//       background-color: #fff;
+//   }
+.flex-container {
+  display: flex;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #f0f1f1;
+  border: 1px solid #ccc;
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  li {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.6;
+    color: #8a8a8a;
+    white-space: nowrap;
+
+    &:hover {
+      color: #595a5c;
+      outline: 0;
+      background-color: #f7f7f7;
+      cursor: pointer;
+    }
+  }
+}
+.menu.display {
+  width: 100%;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.cancel-color {
+  color: #01728e !important;
+}
+.cancelbtn {
+  width: 120px;
+  height: 30px;
+}
+
+form,
+.bt-container {
+  width: 80%;
+}
+.font-22 {
+  font-size: 22px;
+}
+.font-18 {
+  font-size: 18px;
+}
+.btn:hover {
+  color: #fff;
+}
+.pd-0 {
+  padding: 0px !important;
+}
+
+.buyout_width {
+  width: 100%;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .h1__page-title {
+    font-size: 24px;
+    padding: 0px;
+  }
+  form,
+  .bt-container {
+    width: 100%;
+  }
+  .mobileview {
+    display: block !important;
+  }
+  .screenview {
+    display: none !important;
+  }
+  .hd-container {
+    padding: 0px;
+  }
+  .small_input_contain {
+    width: 100% !important;
+  }
+  .remove-container {
+    width: 5% !important;
+    div {
+      float: none !important;
+    }
+  }
+  .secondary.cancelbtn {
+    width: auto;
+    margin: auto;
+  }
+  .new-prescription-container .alert__text-contain {
+    padding: 0px !important;
+  }
+  .container {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  .new-presc-comp {
+    padding: 0;
+  }
+  .new-prescription-container {
+    padding: 1em;
+  }
+  .footNote {
+    margin-top: 0 !important;
+  }
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .container,
+  .new-prescription-container {
+    max-width: 80%;
+    margin: auto;
+    width: 80%;
+  }
+
+  .bt-container {
+    width: 82%;
+  }
+  .terms_Container,
+  .Line {
+    max-width: 100%;
+  }
+  form {
+    max-width: 50%;
+  }
+  .family-select {
+    width: 35% !important;
+  }
+}

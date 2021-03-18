@@ -1,0 +1,7 @@
+<a href="javascript:void(0);" class="arxterms" (click)="openTermsModal()">TCPA Communication Policy,</a>
+<arxrf-modal [show]="isTcpaModalVisible" (update)="updateTermsModal($event)">
+  <h2 class="tcpaHeadingPolicy">TCPA Communication Policy</h2>
+  <div class="termsModalContainer" [innerHTML]="common.decodeHtml(terms_content)">
+
+  </div>
+</arxrf-modal>

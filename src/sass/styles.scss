@@ -1,0 +1,1809 @@
+/* You can add global styles to this file, and also import other style files */
+
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.row {
+  clear: both;
+}
+
+.reg-form {
+  border-radius: 4px;
+}
+
+.check-box .check {
+  margin-right: 16px;
+}
+
+.input__contain input.optionalFieldEmpty + .input__title {
+  -webkit-transform: translate3d(20px, 0px, 0px) scale(1);
+  -moz-transform: translate3d(20px, 0px, 0px) scale(1);
+  -ms-transform: translate3d(20px, 0px, 0px) scale(1);
+  transform: translate3d(20px, 0px, 0px) scale(1);
+}
+
+.input__focus:focus + .input__title,
+.input__contain input.optionalFieldEmpty:focus + .input__title {
+  -webkit-transform: translate3d(-5px, -9px, 0px) scale(0.8);
+  -moz-transform: translate3d(-5px, -9px, 0px) scale(0.8);
+  -ms-transform: translate3d(-5px, -9px, 0px) scale(0.8);
+  transform: translate3d(-5px, -9px, 0px) scale(0.8);
+}
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .reg-form {
+    border-radius: 4px;
+  }
+  //remove background color on small devices
+  .app-container-main.color__neutral {
+    background: #fff !important;
+  }
+
+  .no-container-mobile {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media screen and (min-width: $md-screen) {
+  .reg-form form {
+    padding: 0 13%;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .reg-form form {
+    padding: 0;
+  }
+  .reg-form-label {
+    margin-left: 7px;
+    margin-bottom: 5px;
+  }
+}
+
+.reg-form-label {
+  margin-left: 10px;
+  margin-bottom: 6px;
+}
+
+
+.reg-form .terms span:not(.icon) {
+  font-size: 14px;
+  line-height: 25px;
+  font-family: "OpenSansRegular";
+}
+
+// .forgot-user {
+//     font-family: 'HelveticaNeueLTW01-55Roman';
+//     font-size: 14px;
+//     color: #1a7eac;
+// }
+
+.arx-logo {
+  width: 292px;
+  margin: 0 auto;
+}
+
+.reg-status-container {
+  padding: 0 48px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 64px;
+}
+
+.reg-status-dot {
+  background: #f7f7f7;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  min-width: 0;
+  position: relative;
+}
+
+#dot-label-account{
+  margin-left: -16px;
+}
+
+#dot-label-identity{
+  margin-left: -12px;
+}
+
+#dot-label-privacy{
+  margin-left: -12px;
+}
+
+#dot-label-confirmation{
+  margin-left: -32px;
+}
+
+.reg-status-line{
+  margin-top: 0.9rem;
+  width: 100%;
+  height: 3px;
+  background: #bfbfbf;
+  z-index: 99;
+  &.active {
+    background: #78278b;
+  }
+}
+
+.dot-container {
+  width: 30px;
+  min-width: 0;
+  z-index: 100;
+}
+
+.dot-container p {
+  font-size: 16px;
+  color: #414041; 
+  line-height: 22px;
+}
+
+.dot-container .active-dot{
+  background: #78278b;
+}
+
+.reg-status-container .active-line {
+  background: #78278b;
+}
+
+.dot-container .inactive-dot{
+  border: 2px solid #bfbfbf; 
+}
+
+h1.reg-base {
+  color: #00a2c7;
+  font-size: 30px !important;
+  font-family: 'open_sanslight' !important;
+}
+
+div.reg-base {
+  font-family: "open_sansbold";
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 24px;
+  letter-spacing: normal;
+  color: "#414041"
+}
+
+div.reg-base a {
+  font-family: "open_sansbold";
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 24px;
+  letter-spacing: normal;
+}
+
+.input-icon {
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  top: 16px;
+  left: 88%;
+}
+
+.open-eyeball {
+  top: 20px;
+}
+
+.phone-type-button {
+  width: 100%;
+  background: #ffffff;
+  outline: none;
+  font-size: 16px;
+  color: #00a2c7;
+  font-family: "open_sansbold";
+}
+
+#refill-datePicker {
+  // background: #f7f7f7;
+  margin-top: 20px;
+  border-radius: 5px;
+  height: 50px;
+  position: relative;
+}
+
+.refill-datePicker {
+  // background: #f7f7f7;
+  border-radius: 5px;
+  height: 50px;
+  position: relative;
+}
+
+#refill-datePicker label.input__title {
+  font-size: 12px;
+  font-family: "HelveticaNeueLTW01-55Roman";
+  top: -19px;
+  position: absolute;
+}
+
+.refill-datePicker label.input__title {
+  font-size: 12px;
+  font-family: "HelveticaNeueLTW01-55Roman";
+  top: -19px;
+  position: absolute;
+}
+
+.ngx-datepicker-input {
+  opacity: 1;
+  top: 16px;
+  position: absolute;
+  left: 10px;
+  border: 0 !important;
+}
+
+.ngx-datepicker-position-bottom-right {
+  z-index: 10;
+}
+
+.ngx-datepicker-calendar-container {
+  border: 0;
+  box-shadow: none;
+  width: 400px;
+}
+
+.ngx-datepicker-container
+  .ngx-datepicker-calendar-container
+  .main-calendar-container
+  .main-calendar-days
+  .day-unit.is-selected,
+.ngx-datepicker-container
+  .ngx-datepicker-calendar-container
+  .main-calendar-container
+  .main-calendar-days
+  .year-unit.is-selected,
+.ngx-datepicker-container
+  .ngx-datepicker-calendar-container
+  .main-calendar-container
+  .main-calendar-years
+  .day-unit.is-selected,
+.ngx-datepicker-container
+  .ngx-datepicker-calendar-container
+  .main-calendar-container
+  .main-calendar-years
+  .year-unit.is-selected {
+  background: #02a0c0;
+  border-radius: 50%;
+}
+
+.ngx-datepicker-container
+  .ngx-datepicker-calendar-container
+  .topbar-container
+  .topbar-title {
+  font-family: "HelveticaNeueLTW01-45Light";
+  font-size: 20px;
+  font-weight: normal;
+  color: #000;
+}
+
+span.text-pattern {
+  position: absolute;
+  left: 23px;
+  top: 32px;
+}
+
+.alert .btn__rounded .btn__dismiss {
+  color: #fff;
+}
+
+.message-container {
+  float: none;
+  width: 100%;
+}
+
+.ques-listing ul,
+.ques-listing ul li {
+  list-style: none;
+}
+
+.ques-listing p,
+.ques-listing label {
+  font-size: 16px;
+}
+
+.message-wrapper {
+  float: left;
+  width: 100%;
+}
+
+.code-sent {
+  position: relative;
+}
+
+/*
+  .code-sent span{
+    background: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    float: left;
+    display: block;
+    padding: 5px;
+    position: absolute;
+    left: 70px;
+    top: 3px;
+    border: 1px solid #14a381;
+  }
+  .code-sent:before{
+    content: "*";
+    font-family: "ATCOIcons";
+    line-height: normal;
+    font-size: 30px;
+    color: #14a381;
+    position: relative;
+    left: -5px;
+    top: 4px;
+    border: 1px solid #14a381;
+    border-radius: 30px;
+  }
+  */
+
+.reg-form .year-unit {
+  border-radius: 10px;
+  width: 81px !important;
+  line-height: 40px;
+  border: 1px solid #eaeaea;
+  float: left;
+  display: block;
+  text-align: center;
+  margin: 3px;
+}
+
+.reg-form .year-unit.is-selected {
+  border-radius: 10px !important;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-13 {
+  font-size: 13px;
+}
+
+.tool-tip-custom {
+  position: absolute !important;
+  top: 10px;
+  right: 0;
+  z-index: 1000;
+}
+
+.tool-tip-custom .tool-tip__blue {
+  width: 300px;
+  color: #fff;
+  font-size: 12px;
+}
+
+.tool-tip-custom .tool-tip__blue .list-styles__unordered {
+  margin-left: 10px;
+  position: relative;
+}
+
+.tool-tip-custom .tool-tip__blue .list-styles__unordered li {
+  font-size: 14px;
+  color: #fff;
+}
+
+.pws-wrapper {
+  position: relative;
+}
+
+.border-right-light {
+  border-right: 1px solid #ccc;
+}
+
+.f-blue {
+  color: #1a7eac !important;
+}
+
+a {
+  cursor: pointer;
+}
+
+svg {
+  fill: currentColor;
+}
+
+.refill-add-msg {
+  float: left;
+  position: relative;
+  padding: 10px 0 10px 30px;
+  font-family: HelveticaNeueLTStd-Hv;
+  font-size: 18px;
+  line-height: 24px;
+  color: #009a3d;
+}
+
+.refill-add-msg::before {
+  content: "*";
+  font-family: "ATCOIcons";
+  font-size: 24px;
+  left: 0;
+  top: 10px;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #009a3d;
+  text-align: center;
+}
+
+.modal .overlay {
+  opacity: 0.9;
+}
+
+.modal .alert {
+  padding: 1rem 0.5rem;
+}
+
+.border__round {
+  border-radius: 50%;
+}
+
+button[disabled],
+input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+}
+
+.tool-tip-custom {
+  top: 10px;
+  right: -35px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tool-tip-custom {
+    top: 10px;
+    right: -35px;
+  }
+}
+
+@media only screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .tool-tip.tool-tip-custom {
+    top: 8px !important;
+    right: -38px !important;
+  }
+}
+
+.input-overflow {
+  overflow: inherit;
+}
+
+.list__disc {
+  list-style-type: disc !important;
+}
+
+/* styling for arxrf-google-places */
+
+ul.rx__places-list {
+  width: 100%;
+  position: absolute;
+  top: 47px;
+  z-index: 9999;
+  background-color: #e4e4e4;
+  li {
+    padding: 15px 20px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #404040;
+    border-bottom: 1px solid #cfcfcf;
+    cursor: pointer;
+  }
+  li:hover,
+  li.active {
+    background-color: #ccc;
+  }
+}
+
+.input__contain {
+  overflow: visible;
+  min-height: 50px;
+}
+
+.ui-datepicker.ui-widget {
+  //fix for tooltip coming on top of date picker
+  z-index: 9999 !important;
+}
+#refill-datePicker {
+  label.input__title {
+    font-size: 16px;
+    top: 0;
+  }
+}
+
+.refill-datePicker {
+  label.input__title {
+    font-size: 16px;
+    top: 0;
+  }
+}
+
+//stop button from animation when it is disabled
+.btn {
+  &:disabled {
+    &:active {
+      transform: scale(1);
+      box-shadow: none;
+    }
+  }
+}
+
+// RxHistory modal expanding.
+.no-transition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+}
+
+//print media query
+@media print {
+  .noPrint {
+    display: none !important;
+  }
+
+  .visibilityNone {
+    visibility: hidden;
+  }
+  .visibilityVisible {
+    visibility: visible;
+  }
+}
+
+@media print {
+  @page {
+    size: A4; /* DIN A4 standard, Europe */
+    margin: 0px !important;
+    padding-bottom: 20px !important;
+    padding-top: 20px !important;
+  }
+  .rx__history-container {
+    overflow: visible !important;
+    max-height: none !important;
+    width: 720px !important;
+  }
+
+  li {
+    page-break-inside: avoid !important;
+  }
+}
+
+.color__green {
+  color: #009a3d !important;
+}
+
+div.rx__root-loader-container {
+  padding: 5% 1%;
+}
+
+@media only screen and (max-width: 630px) {
+  // .header-top .logo{
+  //   margin-left:50px;
+  //   max-width: 120px;
+  // }
+}
+
+// dashboard styling
+.dashboard-header {
+  background: #fff;
+  padding-top: 10px;
+  border-bottom: 1px solid #cfcfcf;
+}
+.dashboard-header h1 {
+  margin-top: 15px;
+}
+.dashboard-container {
+  background: #f7f7f7;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.dashboard-header .tabs {
+  border-bottom: none;
+  margin-top: 30px;
+}
+
+.rx-review {
+  width: 100%;
+  padding: 0;
+  //overflow: hidden;
+  .order-info {
+    padding: 3em;
+    margin-top: 2em;
+    width: 100%;
+    background: #fff;
+    .meta-details {
+      .shipping-address {
+        h2 {
+          margin-bottom: 15px;
+        }
+        button {
+          margin-top: 20px;
+          width: 100%;
+        }
+      }
+      .shipping-method {
+        // margin-top: 2em;
+        margin-bottom: 40px;
+        max-width: 365px;
+        .select-method {
+          margin: 15px 0;
+          display: flex;
+          justify-content: space-between;
+          .select__contain {
+            width: 90%;
+          }
+        }
+      }
+      .payment-details {
+        h2 {
+          margin-bottom: 15px;
+        }
+        .input__fifty-fifty {
+          display: flex;
+          justify-content: space-between;
+        }
+        .save-card {
+          margin: 15px 0;
+          > div {
+            display: inline-block;
+          }
+          .check-box {
+            @media screen and (max-width: $sm-screen) {
+              label {
+                font-size: 14px;
+              }
+            }
+          }
+          .tool-tip {
+            margin-left: 15px;
+            top: 4px;
+          }
+        }
+      }
+    }
+    .presc-summary {
+      .drugs-list {
+        margin-top: 20px;
+        list-style-type: none;
+        //border: solid 1px #cfcfcf;
+        border-radius: 5px;
+        li {
+          border: solid 1px #cfcfcf;
+          > .row > div:first-child {
+            //padding: 1%;
+          }
+          > .row > div:nth-child(2) {
+            background: #f7f7f7;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            .col {
+              display: flex;
+              justify-content: space-around;
+              margin: 12px auto;
+              .icon__dismiss {
+                color: #01728e;
+              }
+            }
+          }
+          @media screen and (min-width: $md-screen) {
+            > .row > div:nth-child(2) {
+              border-bottom-left-radius: 0;
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+            }
+          }
+          .drug-info {
+            // padding: 1% 2%;
+            .h1__page-title {
+              margin: 0.7rem 0 1rem;
+              @media screen and (min-width: $lg-screen) {
+                margin: 0;
+              }
+              @media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+                font-size: 22px;
+              }
+            }
+            div:last-child {
+              p {
+                margin: 0;
+              }
+            }
+            .drug-details {
+              p {
+                @media screen and (min-width: $md-screen) {
+                  display: inline-block;
+                }
+                @media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+                  font-size: 16px;
+                }
+              }
+              .break-line {
+                display: none;
+                height: 16px;
+                margin: 0 0.4rem !important;
+                border-left: 1px solid #404040;
+                @media screen and (min-width: $md-screen) {
+                  display: inline-block;
+                }
+                @media screen and (min-width: $lg-screen) {
+                  margin: 0 1rem !important;
+                }
+                @media screen and (min-width: $xl-screen) {
+                  margin: 0 1.4rem !important;
+                }
+              }
+            }
+          }
+
+          .drug-icon {
+            // padding: 1% 2%;
+
+            img {
+              height: 75px;
+              width: 75px;
+            }
+            @media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+              img {
+                width: 40px;
+                height: 40px;
+              }
+            }
+          }
+
+          &:not(:last-child) {
+            border-bottom: solid 1px #cfcfcf;
+          }
+        }
+      }
+      .add-more-presc {
+        padding-top: 20px;
+        color: #01728e;
+        display: flex;
+        align-items: flex-start;
+
+        span:nth-child(2) {
+          margin-left: 10px;
+          margin-top: 3px;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 300px) and (max-width: 480px) {
+    .order-info {
+      padding: 0em;
+    }
+  }
+}
+.cta-section {
+  margin: 20px 0px;
+  button {
+    width: 230px;
+  }
+}
+
+.cc-icon {
+  height: 30px !important;
+  width: 50px !important;
+}
+
+.cc-icon-inside-input {
+  margin-top: 2px;
+  margin-bottom: 4px;
+  height: 46px !important;
+  width: 64px !important;
+  position: absolute;
+  margin-right: 2px;
+  right: 0;
+}
+.cc-icon-inside-input.hidden {
+  display: none;
+}
+
+.alert__blue.minimal,
+.alert__green.minimal,
+.alert__red.minimal,
+.alert__yellow.minimal {
+  a {
+    width: 85% !important;
+  }
+}
+
+arxrf-input-ccnumber {
+  width: 100%;
+}
+
+.container__remove-cart-item {
+  height: 90%;
+}
+
+.wag-head-text2 {
+  font-weight: bold;
+}
+
+.wag-text-red {
+  color: red;
+}
+
+.color__text-red {
+  color: #e31837 !important;
+}
+
+.tool-tip .tool-tip__trigger:hover + .tool-tip__overlay,
+.tool-tip .tool-tip__trigger:focus + .tool-tip__overlay {
+  width: auto;
+  max-width: auto;
+}
+
+/* popper tooltip styling */
+.ngxp__container {
+  background-color: #1a7eac;
+  // background: #02a0c0;
+  border-radius: 5px;
+  box-shadow: 0px 1px 2px rgba(207, 207, 207, 0.5);
+  color: #fff;
+  padding: 35px 40px !important;
+  border: 0px !important;
+  z-index: 10;
+}
+
+.ngxp__container.ngxp__animation .ngxp__arrow {
+  border-color: #1a7eac;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+.module__heading {
+  font-size: 1.5em;
+  font-family: "OpenSansRegular";
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.fm__overlay-controls {
+  text-align: right;
+  .btn_cancel {
+    margin-right: 1em;
+    line-height: 2.5em;
+  }
+
+  .btn_continue {
+    float: right;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .fm__overlay-controls {
+    text-align: center;
+    .btn_continue {
+      width: 100% !important;
+    }
+
+    .btn_cancel {
+      margin-top: 1em;
+    }
+  }
+}
+
+.check-box .check {
+  min-width: 25px;
+}
+
+// .btn__green{
+//   background-color: #007d29;
+// }
+
+.underlinedText {
+  text-decoration: underline;
+}
+
+.arx__pagetitle-container .arx__pagetitle {
+  font-size: 1.8em;
+  font-family: "open_sansbold";
+  margin-top: 4.1px;
+}
+
+input[type="checkbox"] {
+  width: 25px;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $lg-screen) {
+  .cc__listing {
+    .cc-icon {
+      height: 20px !important;
+      width: 30px !important;
+      margin-top: 10px;
+    }
+  }
+}
+
+// overwrite alert message box
+.alert__text-contain {
+  width: 100%;
+  padding: 20px 0px 20px 0px;
+  line-height: 21px;
+}
+.alert__blue.minimal a {
+  width: 100% !important;
+}
+
+@media screen and (min-width: $lg-screen) {
+  .nav-bar-list {
+    width: 100%;
+    max-width: 960px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    .main_menu {
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      .accordin-main {
+        margin: 0;
+        margin-right: -15px;
+      }
+      .accordin-main:first-child {
+        margin-left: -15px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: $xl-screen) {
+  .nav-bar-list {
+    max-width: 1140px;
+  }
+}
+
+.linkeable_mesage a {
+  color: #01728e !important;
+}
+
+.msg-text {
+  width: 80%;
+}
+
+/*.drugs-list li.removeborder{
+  border: solid 0px #cfcfcf !important
+}*/
+@media (min-width: 1025px) {
+  .visible-lg {
+    display: block;
+  }
+  .hidden-lg,
+  .visible-md,
+  .visible-sm,
+  .visible-xs,
+  .visible-xs-inline,
+  .visible-xs-inline-block {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .visible-sm {
+    display: block;
+  }
+  .hidden-sm,
+  .visible-lg,
+  .visible-md,
+  .visible-xs,
+  .visible-xs-inline,
+  .visible-xs-inline-block {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1024px) {
+  .visible-md {
+    display: block;
+  }
+  .hidden-md,
+  .visible-lg,
+  .visible-sm,
+  .visible-xs,
+  .visible-xs-inline,
+  .visible-xs-inline-block {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .visible-xs-inline {
+    display: inline;
+  }
+  .visible-xs-inline-block {
+    display: inline-block;
+  }
+  .visible-xs {
+    display: block;
+  }
+  .hidden-xs,
+  .visible-lg,
+  .visible-md,
+  .visible-sm {
+    display: none;
+  }
+}
+
+.reg_error_screen p {
+  font-size: 16px;
+  font-family: 'open_sansregular' !important;
+  line-height: 24px;
+}
+
+// registration custom styling (LSG)
+.registrationContainer {
+  font-family: 'open_sansregular';
+
+  .arx-logo {
+    width: 420px;
+  }
+
+  .arxrf-logo-continer {
+    margin: 0 !important;
+    padding: 81px 29px 49px 30px !important;
+  }
+
+  .logo img {
+    height: 39px !important;
+  }
+
+  .form__input:nth-child(n + 2) {
+    margin-top: 30px;
+  }
+
+  .check-box .check {
+    width: 26px;
+    height: 25px;
+    border-radius: 2px;
+    border: solid 2px #00a2c7;
+  }
+
+  .radio {
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+    border: solid 2px #00a2c7 !important;
+    margin-right: 20px;
+  }
+
+  strong {
+    font-family: 'open_sansbold';
+  }
+
+  input {
+    font-family: 'open_sansbold';
+  }
+
+  select {
+    font-family: 'open_sansbold';
+  }
+
+  .btn_primary {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    background-color: #00a2c7 !important;
+    color: #fff;
+  }
+
+  .btn {
+    border-radius: 4px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'open_sansbold' !important;
+    font-weight: bold;
+    font-size: 15px !important;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.93;
+    letter-spacing: normal;
+    text-align: center;
+    height: 44px;
+    min-width: 141px;
+  }
+
+  .action__close-modal {
+    min-width: 44.45px;
+    min-height: 44.45px;
+  }
+
+  .reg-base.sub_heading_align {
+    margin-top: -10px;
+    margin-bottom: 39px !important;
+  }
+
+  .phone-type-block {
+    margin-top: 30px;
+  }
+
+  @media screen and (max-width: $xs-screen) {
+    .arx-logo {
+      width: 220px;
+    }
+  }
+
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    .arxrf-logo-continer {
+      margin: 0 !important;
+      padding: 35px 18px 39px 18px !important;
+      display: flex !important;
+      justify-content: center !important;
+    }
+    .logo img {
+      height: 24px !important;
+    }
+  }
+
+  @media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+    .arx-logo {
+      width: 254px;
+    }
+    .reg-status-dot {
+      width: 14px;
+      height: 14px;
+    }
+    .reg-status-line {
+      margin-top: 0.35rem;
+    }
+    #dot-label-account {
+      font-size: 14px;
+      margin-left: -20px;
+    }
+    #dot-label-identity {
+      font-size: 14px;
+      margin-left: -18px;
+    }
+    #dot-label-privacy {
+      font-size: 14px;
+      margin-left: -17px;
+    }
+    #dot-label-confirmation {
+      font-size: 14px;
+      margin-left: -33px;
+    }
+    .modal__content-contain {
+      min-height: auto;
+    }
+    .reg-base.sub_heading_align {
+      width: 275px;
+      margin: 0 auto;
+      margin-top: -10px;
+      margin-bottom: 17px !important;
+    }
+  }
+
+  .consent-container {
+    p {
+      font-size: 16px;
+    }
+  }
+}
+
+.modal__content-contain {
+  max-width: 750px;
+  width: 100%;
+  min-height: 360px;
+}
+
+.input__focus {
+  height: 100%; 
+  max-height: 50px;
+}
+
+//For inputs with header text contained in input element, have less
+//  padding on the bottom so text typed doesn't overlap with header
+.input__focus[_ngcontent-c4], .input__focus[_ngcontent-c5], .input__focus[_ngcontent-c6]{
+  padding-bottom: 8px;
+}
+
+@media screen and (min-width: $sm-screen) and (max-width: $md-screen) {
+  .reg-base.sub_heading_align {
+    margin-top: -10px;
+    margin-bottom: 15px !important;
+  }
+}
+
+//place tooltip to right of input on desktop view
+@media screen and (min-width: $lg-screen) {
+  .input__focus:focus {
+    position: absolute;
+  }
+}
+
+.input__focus:focus{
+  border: 2px solid;
+  border-color: #00a2c7;
+}
+
+.input__error {
+  opacity: 1;
+}
+
+.input__contain .input__error + .input__title,
+.input__contain input:valid + .input__title, 
+.input__contain input:focus + .input__title {
+  transform: translate3d(-5px, -15px, 0px) scale(0.8);
+}
+
+.select__contain label {
+  top: 4px;
+}
+
+a.logo_static {
+  max-width: 100%;
+}
+
+.open_sans_bold {
+  font-family: 'open_sansbold';
+}
+
+.open_sans_regular {
+  font-family: 'open_sansregular';
+}
+
+.phone-type-container {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  border: solid 2px #f7f7f7;
+  border-radius: 2px;
+  width: 100%;
+  max-height: 50px;
+  min-height: 50px;
+}
+
+.phone-type-block-mobile {
+  height: 66px;
+  margin-top: 23px;
+}
+
+.phone-type-container-mobile {
+  
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  border: solid 2px #f7f7f7;
+  border-radius: 2px;
+  width: 100%;
+  max-height: 50px;
+  min-height: 50px;
+}
+
+@media screen and (min-width: $lg-screen) {
+  .phone-type-container {
+    max-width: 380px;
+    position: absolute;
+    width: 100%;
+  }
+  .phone-type-block {
+    width: 100%;
+    max-height: 81px;
+    min-height: 81px;
+  }
+  .phone-type-block-mobile {
+    height: 100%;
+  }
+  .phone-type-block:hover {
+    max-height: 15px;
+    min-height: 15px;
+  }
+}
+@media screen and (max-width: $lg-screen) {
+  .phone-type-container {
+    width: 100%;
+  }
+  .phone-type-block {
+    width: 100%;
+    max-height: 85px;
+    min-height: 85px;
+  }
+  .phone-type-block-mobile {
+    max-width: 332px;
+    height: 100%;
+  }
+  .custom-dropdown-input:hover{
+    max-width: 100%;
+    max-height: 85px;
+    min-height: 85px;
+  } 
+}
+
+.phone-type-button {
+  width: 100%;
+  background: #ffffff;
+  outline: none;
+  font-size: 16px;
+  color: #00a2c7;
+  outline:none !important;
+  cursor: pointer;
+}
+
+.phone-type-button:focus
+.phone-type-button:active {
+  outline:none !important;
+}
+
+.phone-type-button.selected {
+  background: #00a2c7;
+  color: #ffffff;
+}
+
+.middle_button {
+  border-right: solid 2px #f7f7f7;
+  border-left: solid 2px #f7f7f7;
+}
+
+.tooltip_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip_container_phone_type, .tooltip_container_select {
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.phone-type-block:hover + .tooltip_container_phone_type,
+.custom-dropdown-inputbox:hover + .tooltip_container_select {
+  display: flex;
+}
+
+.custom-dropdown-inputbox {
+  max-height: 50px;
+}
+.tooltip_triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.tooltip_content {
+  background:  #00a2c7;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0;
+  font-family: "open_sansbold";
+  color: #ffffff;
+}
+
+//place tooltip to right of input on desktop view
+@media screen and (min-width: $lg-screen) {
+  .tooltip_container {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    flex-direction: row;
+    width:  290px;
+    margin-left: 24px;
+    bottom: 0px;
+    border-radius: 2px;
+  }
+  .tooltip_container_phone_type {
+    left: 100%;
+    top: -4%;
+    transform: translateY(4%);
+    position: relative;
+    flex-direction: row;
+    width:  290px;
+    margin-left: 24px;
+    bottom: 0px;
+    border-radius: 2px;
+  }
+  .tooltip_container_select {
+    left: 100%;
+    top: 88%;
+    transform: translateY(-88%);
+    position: relative;
+    flex-direction: row;
+    width:  290px;
+    margin-left: 24px;
+    bottom: 0px;
+    border-radius: 2px;
+  }
+  .tooltip_triangle {
+    margin-right: -2px;
+    border-width: 15px 15px 15px 0;
+    max-width: 15px;
+    border-color: transparent #00a2c7 transparent transparent;
+  }
+  .tooltip_content {
+    border-radius: 2px;
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .custom-dropdown {
+    max-height: 50px;
+  }
+}
+
+//place tooltip on bottom of input on mobile view
+@media screen and (max-width: $lg-screen) {
+  .tooltip_container {
+    flex-direction: column;
+    width: 100%;
+    margin-top: -16px;
+    margin-left: 1px;
+    margin-right: -1px;
+    border-radius: 0px 0px 2px 2px;
+  }
+  .tooltip_container_phone_type {
+    flex-direction: column;
+    width: 100%;
+    margin-top: -23px;
+    margin-left: 2px;
+    padding-left: 1px;
+    padding-right: 3px;
+    border-radius: 0px 0px 2px 2px;
+  }
+  .tooltip_container_select {
+    flex-direction: column;
+    width: 100%;
+    margin-top: -11px;
+    margin-left: 0px;
+    margin-right: -5px;
+    padding-left: 1px;
+    padding-right: 0px;
+    border-radius: 0px 0px 2px 2px;
+  }
+  .tooltip_triangle {
+    border-width: 0 15px 15px 15px;
+    max-width: 15px;
+    align-self: center;
+    border-color: transparent transparent #00a2c7 transparent;
+  }
+  .tooltip_content {
+    border-radius: 0px 0px 2px 2px;
+    margin-right: 2px;
+    width: 100%;
+    height: 100%;
+    padding: 8px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+  }
+  .input__contain {
+    height: 100%;
+  };
+}
+
+.phoneNoColor {
+  color: #00819e !important;
+}
+
+//styles for like-unlike-btn component
+
+.like-unlike-btn-style {
+  cursor: pointer;
+}
+
+.like-unlike-container {
+    position: relative;
+    top: 30px;
+    display: flex;
+    border: 1px solid #e4e0e4;
+    height: 38px;
+    justify-content: center;
+    align-items: center;
+    @media screen and (min-width: $md-screen ) {
+      height: 50px;
+      padding-left: 30px;
+    }
+    @media screen and (min-width: 769px) {
+      padding-left: 0;
+    }
+ 
+
+  .status_Info {
+    font-size: 12px;
+    color: #333333;
+    @media screen and (min-width: $md-screen) {
+      font-size: 18px;
+      color: #333333;
+      padding-right: 1.5rem;
+    }
+    @media screen and (min-width: $lg-screen) {
+      padding-right: 0;
+    }
+  }
+}
+
+.ic__like, .ic__dislike {
+  height: 25px;
+  width: 25px;
+  color: #00a2c7;
+  margin-left: 10px;
+  cursor: pointer;
+  @media screen and (min-width: $md-screen) {
+    height: 30px;
+    width: 30px;
+    color: #00a2c7;
+    margin-left: 25px;
+  }
+}
+
+.order-status-enh {
+  margin: 0px -15px 0px -15px;
+  @media screen and (min-width: $md-screen) {
+    margin: 0;
+  }
+}
+
+//Styles for accordion
+
+.order-card-conatiner {
+  .accordian {
+    &-container {
+        @media screen and (min-width:481px) and (max-width: 767px) {
+            padding: 7px;
+        }
+    }
+    &-item {
+        width: 100%;
+        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.15);
+        background-color: #f7f7f7;
+        margin: 30px auto;
+        @media screen and (min-width: $md-screen) {
+          // width: 520px;
+      }
+    }
+    &-toggle {
+        background-color: #ffffff;
+        color: #00a2c7;
+        font-size: 16px;
+        // padding: 14px 0;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.13;
+        letter-spacing: normal;
+        font-family: 'open_sansbold';
+        text-align: center;
+        height: 45px;
+        a {
+          display: block;
+          line-height: 3;
+        }
+    }
+    &-body {
+        padding: 0px 24px 16px 24px;
+    }
+  }
+
+  .icon {
+    min-width: 15px;
+    min-height: 15px;
+  }
+  .icon__arrow-down, .icon__arrow-up {
+    left: 5px;
+    width: 15px;
+    flex-grow: 0;
+    object-fit: contain;
+  }
+  .orderStatus_btn {
+    height: 50px;
+    font-size: 14px;
+    font-family: 'open_sansbold';
+    letter-spacing: 0.42px;
+    flex-grow: 0;
+    padding: 0 15.8px 0 15px;
+    background-color: #00a2c7;
+    border-radius: 4px;
+    color: #ffffff;
+    text-align: left;
+    cursor: pointer;
+  }
+  .reorder_btn {
+    min-width: 120px;
+  }
+  .trackPackage_btn {
+    min-width: 155px;
+    @media screen and (max-width: 480px) {
+      min-width: 144px;
+    }
+  }
+  .trackBtnAlign {
+    text-align: end;
+    bottom: 1.5rem;
+    right: -0.6rem;
+    @media screen and (min-width: $md-screen) {
+      position: relative;
+      bottom: 1.5rem;
+      right: -0.6rem;
+    }
+    .attentionRequired {
+      height: 50px;
+      font-size: 14px;
+      flex-grow: 0;
+      padding: 0 15.8px 0 15px;
+      background-color: #d60a0a;
+      border-radius: 69px 0px 0px 69px;
+      color: #ffffff;
+      cursor: pointer;
+      @media screen and (min-width: $md-screen) {
+        min-width: 155px;
+      }
+    }
+  }
+
+  .reorder_btn_icon.ic__arrow-right-btn {
+    @media screen and (max-width: 480px) {
+      right: 2rem;
+    }
+  }
+
+  .trackPkg_btn_icon.ic__arrow-right-btn {
+    @media screen and (min-width: $md-screen) {
+      right: 0.7rem;
+    }
+  }
+
+  .ic__arrow-right-btn {
+    position: absolute;
+    width: 15px;
+    height: 11px;
+    fill: #ffffff;
+    top: 1.25rem;
+    right: 1rem;
+  }
+
+  //Style for Order Status Progress Bar
+
+  .order-status-progress-container {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .order-status-dot {
+    background: #f7f7f7;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    min-width: 0;
+    position: relative;
+    border: 2px solid #e4e0e4;
+    &.active {
+      svg {
+        fill: #78278b;
+        position: relative;
+        top: 11px;
+      }
+      background-color: #78278b;
+    }
+    &.error {
+      svg {
+        fill: #d60a0a;
+        position: relative;
+        top: 0;
+      }
+      background-color: #d60a0a;
+    }
+}
+
+.activeDot {
+  display: none;
+  &.active {
+    display: block;
+  }
+  &.error {
+    display: block;
+    position: relative;
+    top: 0px;
+    left: 0px;
+  }
+}
+
+span.ic__checked.activeDot.active .ic__checked {
+    width: 10px;
+    height: 20px;
+    position: relative;
+    top: -2px;
+    fill: #fff;
+    left: 3.5px;
+    @media screen and (min-width: $md-screen) {
+      left: 2.5px;
+    }
+}
+
+span.ic__x.crossSign .crossSign {
+  width: 80px;
+  position: relative;
+  top: -29px;
+  left: 5.5px;
+  fill: #fff;
+}
+
+.statusErrorDot.activeDot {
+  position: relative;
+  border-radius: 50%;
+  height: 19px;
+  width: 19px;
+  top: -2px;
+  left: -1px;
+  background-color: #d60a0a;
+  .error {
+    span {
+      svg {
+        fill: #d60a0a !important;
+      }
+    }
+  }
+}
+
+.order-status-line {
+    margin-top: 0.55rem;
+    width: 100%;
+    height: 3px;
+    background: #e4e0e4;
+    z-index: 99;
+    &.active {
+      background: #78278b;
+    }
+}
+
+.order-status-progress-container p {
+    font-size: 12px;
+}
+
+.progress_first_label {
+    position: relative;
+    bottom: 20px;
+    left: 43px;
+    margin-left: -42px !important;
+}
+
+.ic__medical-prescription, .ic__calendar, .ic__open-box, .ic__shipped  {
+  svg {
+    width: 75px;
+    height: 75px;
+    position: relative;
+    top: 30px;
+    }
+  }
+
+  .order-status-progress-container{
+    #dot-label {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      bottom: 40px;
+      left: 34px;
+      @media screen and (min-width: $md-screen) {
+          left: 42px;
+      }
+  }
+    @media screen and (min-width: 576px) and (max-width: 991px) {
+      padding: 0 99px 0 109px;
+    }
+    @media screen and (min-width: $lg-screen) {
+      padding: 0 48px;
+    }
+  }
+
+  .attention_required {
+    width: 115px;
+    height: 50px;
+  }
+
+}

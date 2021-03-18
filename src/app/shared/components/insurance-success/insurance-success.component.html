@@ -1,0 +1,15 @@
+<div *ngIf="display" class="alert alert__success buyout_width">
+  <div class="alert__text-contain pd-0">
+    <span class="icon icon__info">
+      <svg alt="">
+        <use [attr.xlink:href]="getIconCheck"></use>
+      </svg>
+    </span>
+    <span class="msg-text">
+      <p class="mr-0">{{ successBannerMessage }}</p>
+    </span>
+    <button class="btn btn__rounded closeBtn" (click)="closeBanner()">
+      <div class="btn__dismiss" aria-label="Alert message close"></div>
+    </button>
+  </div>
+</div>

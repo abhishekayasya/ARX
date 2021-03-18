@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>RefillHub</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/files/live/sites/arxweb/files/images/favicon.ico" type="image/x-icon">
+  <script>
+    var pageContext = {};
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css"
+    href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/css/fonts.css">
+  <link rel="stylesheet" type="text/css"
+    href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/css/icons.css">
+  <!-- <script type="application/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvVR31ev5z6SwS0kNoNh8vrNMsSznavSQ&libraries=places"></script> -->
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script type="text/javascript" src="https://pie.staging.walgreens.com/pie/v1/walgreens/getkey.js"></script>
+  <script type="text/javascript" src="https://pie.staging.walgreens.com/pie/v1/encryption.js"></script>
+  <script src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/lib/md5.js"></script>
+  <!--Google analytics-->
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-116901901-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-116901901-1', { 'app_name': 'arx' });
+  </script>
+  <!--End-->
+
+</head>
+
+<body class="theme-default">
+  <arxrf-root
+    arx-serviceHost="https://ARX-LAH-029JB8T.walgreenco.net"
+    arx-logo="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/Alliance_Rx_Walgreens_Prime_logo2x.png"
+    arx-sso="" arx-ssoSource="prime" arx-assetsHost="https://dotcom-acs-qa.walgreens.com" arx-tollFree="855-244-2555"
+    arx-messageTimeOut="0" arx-pagecontentbase="/sites/arxweb/contents/register"
+    arx-sitecontentbase="/sites/arxweb/contents" arx-buyout-message-member='false'
+    arx-walgreens-base='https://dotcom-acs-qa.walgreens.com'
+    arx-walgreens-prescriptionRecordsUrl='/pharmacy/report/rxprint.jsp' ,
+    arx-walgreens-makeAPaymentUrl='/pharmacy/youraccount/accountbalance/payment.jsp'
+    service_prefix="/api"
+    site_key="arxweb">
+  </arxrf-root>
+
+  <script src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/lib/script.min.js"></script>
+  <script
+    src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/lib/jquery.creditCardValidator.js"></script>
+
+  <script>
+      // $(document).ready(function () {
+      //   setTimeout(function(){
+      //     $('.accoun__home-tabs-settings').find('a').on('click', function (e) {
+      //       console.log($(this).attr('href'));
+      //       var url = $(this).attr('href');
+      //       if ( url.startsWith('http') ) {
+      //         window.accountExternalUrl = url;
+      //
+      //         if ( window.overlay_modified == undefined ) {
+      //           window.overlay_modified = true;
+      //           $('.rx__history__model').find('a').each(function (item, element) {
+      //             if ( $(element).attr('href') == '#!' && $(element).attr('class') == undefined ) {
+      //               $(element).remove();
+      //             }
+      //           });
+      //
+      //           $('.rx__history__model').find('a').each(function (item, element) {
+      //             if ( $(element).attr('class') == 'secondary' ) {
+      //               $(element).attr('id', 'overlay_cancel_handler');
+      //               $(element).after('<a href="'+ window.accountExternalUrl+'" target="_blank" class="btn btn_primary" id="overlay_redirect_btn">Continue</a>');
+      //
+      //               $('#overlay_redirect_btn').on('click', function () {
+      //                 document.getElementById("overlay_cancel_handler").click();
+      //               });
+      //             }
+      //           });
+      //         } else {
+      //           $("#overlay_redirect_btn").attr('href', window.accountExternalUrl);
+      //         }
+      //       }
+      //     })
+      //   }, 4000);
+      // });
+  </script>
+</body>
+
+</html>

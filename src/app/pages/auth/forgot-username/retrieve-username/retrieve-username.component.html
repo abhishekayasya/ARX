@@ -1,0 +1,32 @@
+<div class="row">
+   <div class="col-md-12 bg-white retrieveUsername-form">
+      <form [formGroup]="forgotUsernameForm" class="form__on-light-bg">
+         <h1 class="h1__page-title text-center"> Retrieve your username </h1>
+          <arxrf-loader [show]="showLoader" message=""></arxrf-loader>
+         <p class="mt-4">Enter the email you use for AllianceRx Walgreens Prime. </p>
+         <div class="input__contain mt-4">
+            <input  
+               class="input__focus"
+               [ngClass]="{
+               'input__error': forgotUsernameForm.controls.username.invalid && forgotUsernameForm.controls.username.dirty
+               }"
+               type="text" 
+               formControlName="username" 
+               id="username" 
+               pattern="{{emailPattern}}"
+            />
+            <label class="input__title" for="username" aria-label="Enter the email you use for AllianceRx Walgreens Prime"><span>Email</span></label>
+          </div>
+          <div class="input__error-text" aria-live="assertive" role="alert" *ngIf="forgotUsernameForm.controls.username.invalid &&forgotUsernameForm.controls.username.dirty">
+                  <span *ngIf="forgotUsernameForm.controls.username.errors.required"><span class="sr-only">Error </span>Email is required.</span>
+                  <span *ngIf="forgotUsernameForm.controls.username.errors.pattern">Please enter valid Email ID</span>
+          </div>
+         <div class="mt-5">
+            <button class="btn btn_primary float-right col-12 col-md-5" (click)="retrieveUsername();">Continue</button>
+         </div>
+      </form>
+   </div>
+</div>
+<div class="col-md-12 text-center mt-4">
+  <arxrf-reg-option [showContact]="true"></arxrf-reg-option>
+</div>

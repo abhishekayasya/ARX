@@ -1,0 +1,15 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+    .h1__page-title {
+        font-size: 24px;
+        padding: 0px;
+    }
+    .hd-container {
+        padding: 0px;
+    }
+  }

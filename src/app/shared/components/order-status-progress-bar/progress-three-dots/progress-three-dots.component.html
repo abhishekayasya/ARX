@@ -1,0 +1,61 @@
+<div class="order-status-progress-container three-dots mb-5" *ngIf="!!isThreeDotsProgress">
+
+  <span class="order-status-line"
+    [ngClass]="{'active': progress_Bar_Status === 'reorder' || progress_Bar_Status === 'schedule-exception'}"></span>
+
+  <div class="dot-container">
+    <div class="order-status-dot" [ngClass]="{'active': progress_Bar_Status === 'schedule-exception'}">
+      <div class="statusErrorDot activeDot" [ngClass]="{'error': progress_Bar_Status === 'schedule-exception'}">
+        <span class="ic__x crossSign"><svg class="crossSign" alt="">
+            <use
+              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__x">
+            </use>
+          </svg></span>
+      </div>
+      <span class="ic__medical-prescription"><svg alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__medical-prescription">
+          </use>
+        </svg></span>
+    </div>
+    <p id="dot-label" class="progress_first_label">
+      <arxrf-order-status-progress-bar [progressBar]="'progressBar'" [progressStatus]="'Schedule'">
+      </arxrf-order-status-progress-bar>
+    </p>
+  </div>
+
+  <span class="order-status-line"></span>
+
+  <div class="dot-container" id="identity-container">
+    <div class="order-status-dot">
+      <span class="ic__open-box"><svg alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__open-box">
+          </use>
+        </svg></span>
+    </div>
+    <p id="dot-label">
+      <arxrf-order-status-progress-bar [progressBar]="'progressBar'" [progressStatus]="'Pack'">
+      </arxrf-order-status-progress-bar>
+    </p>
+  </div>
+
+  <span class="order-status-line"></span>
+
+  <div class="dot-container">
+    <div class="order-status-dot">
+      <span class="ic__shipped"><svg alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__shipped">
+          </use>
+        </svg></span>
+    </div>
+    <p id="dot-label">
+      <arxrf-order-status-progress-bar [progressBar]="'progressBar'" [progressStatus]="'Ship'">
+      </arxrf-order-status-progress-bar>
+    </p>
+  </div>
+
+  <span class="order-status-line"></span>
+
+</div>

@@ -1,0 +1,89 @@
+<div class="container-fluid new-prescription-container bg-white">
+  <div class="row">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+  <div class="row">
+    <arxrf-loader [show]="showLoader" [loaderOverlay]="true"></arxrf-loader>
+  </div>
+  <div class="container">
+    <div class="row">
+      <h1 class="h1__page-title text-center col">
+        Transfer Home Delivery Prescription
+      </h1>
+    </div>
+    <!-- Buyout Banner start -->
+    <div class="mt-5" *ngIf="buyOutUser">
+      <arxrf-buyout-prescription
+        (closeBuyoutBanner)="onCloseBuyoutBanner()"
+        [display]="displayBuyoutBanner"
+      ></arxrf-buyout-prescription>
+    </div>
+    <!-- Buyout Banner end-->
+
+    <div class="row">
+      <p>
+        Home delivery provides a
+        <strong><span>90-day supply of medication</span></strong
+        >. We'll use the information below to request a 90 day supply of your
+        medication, or the max your plan allows.
+      </p>
+    </div>
+    <div class="row">
+      <div class="showmore-con">
+        <div class="singlemember" *ngIf="!multipleMember">
+          <div><h2 class="h2_patient">Patient name:</h2></div>
+          <div>
+            {{ _userService.user.profile.basicProfile.firstName }}
+            {{ _userService.user.profile.basicProfile.lastName }}
+          </div>
+        </div>
+        <div *ngIf="multipleMember">
+          <div class="multiplemember-con col-md-4">
+            <arxrf-refill-members
+              (onSelect)="updateMember($event)"
+              [isHdPrescription]="true"
+            ></arxrf-refill-members>
+          </div>
+        </div>
+
+        <div class="prescription-list">
+          <div class="warn-icon-con home_delivery_info">
+            <div class="icon hd_info_icon">
+              <svg>
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                  class="__web-inspector-hide-shortcut__"
+                ></use>
+              </svg>
+            </div>
+            <p>
+              To request a new Home Delivery prescription, you must first be
+              enrolled in Home Delivery Pharmacy. Please have your insurance and
+              health history information ready.
+            </p>
+          </div>
+
+          <div class="row bt-container flex-column-reverse flex-sm-row">
+            <div class="btn__pair ">
+              <a
+                (click)="redirectToMyAccount()"
+                class="secondary cancelbtn cancel-color"
+                >Cancel</a
+              >
+            </div>
+            <div class="col-md-4 mb-2">
+              <button
+                class="btn btn_primary m-btn"
+                (click)="redirectToEnrollInsurnace()"
+              >
+                Add insurance
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

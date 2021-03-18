@@ -1,0 +1,325 @@
+<div class="personalInfoContainer">
+  <div class="container no-container-mobile">
+    <div class="row">
+      <div class="col-12 col-md-8">
+        <p class="heading">{{pageTitle}}</p>
+      </div>
+        <div class="col-12 col-md-4">
+          <div class="membersDD mt-2">
+            <arxrf-refill-members (onSelect)="updateMember($event)"></arxrf-refill-members>
+          </div>
+        </div>
+    </div>
+
+    <arxrf-loader [show]="loaderState" [loaderOverlay]="loaderOverlay"></arxrf-loader>
+    <div class="mt-3">
+      <arxrf-message></arxrf-message>
+    </div>
+
+
+    <div class="row mt-4" *ngIf="personalInfoLoaded">
+      <div class="col-12">
+        <h3>Personal information for {{firstName + " " + lastName | titlecase}}</h3>
+      </div>
+    </div>
+
+    <div class="details" *ngIf="personalInfoLoaded && !showPersonalInfoEditView">
+      <div>
+        <p class="detailLabel"><strong>Name</strong></p>
+        <p class="detailValue">{{firstName}} {{lastName}}</p>
+      </div>
+      <div>
+        <p class="detailLabel"><strong>Address</strong></p>
+        <p class="detailValue address">
+          <span>{{street}}<span *ngIf="aptSuite" class="d-inline">,</span> {{aptSuite}}</span>
+          <span *ngIf="city">{{city + " ,"}} {{state}} {{zipCode}} <span class="d-inline" *ngIf="addOnZipCode"> {{"- " + addOnZipCode}} </span> </span>
+        </p>
+      </div>
+      <div>
+        <p class="detailLabel"><strong>Date of Birth</strong></p>
+        <p class="detailValue">{{dateOfBirth}}</p>
+      </div>
+      <div>
+        <p class="detailLabel"><strong>Gender</strong></p>
+        <p class="detailValue">{{gender}}</p>
+      </div>
+      <div *ngIf="primaryNumber">
+        <p class="detailLabel"><strong>Primary phone</strong></p>
+        <p class="detailValue">({{getAreaCode( primaryNumber.number )}}) {{getNumberWithoutAreaCode( primaryNumber.number )}} ({{primaryNumber.type}})</p>
+      </div>
+      <div *ngIf="alternateNumbers.length !== 0">
+        <p class="detailLabel"><strong>Alternate phone</strong></p>
+        <ul>
+          <li *ngFor="let phone of alternateNumbers">
+            <p class="detailValue">({{ getAreaCode( phone.number ) }}) {{getNumberWithoutAreaCode(phone.number)}} ({{phone.type}})</p>
+          </li>
+        </ul>
+      </div>
+
+      <a href="#!" (click)="editPersonalInfo($event)" role="button"><span class="btn btn_primary editBtn">Edit</span></a>
+
+    </div><!--.details section ends-->
+
+    <div class="personalInfoForm" *ngIf="showPersonalInfoEditView">
+      <div class="alert alert__info minimal"  *ngIf="!appContext.isSpsite">
+        <span class="alert__text-contain">
+          <span class="icon icon__info">
+           <svg alt=""><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"></use></svg>
+          </span>
+
+          <span>
+            <p>
+              <strong>Changes made will also update your Walgreens.com account.</strong>
+            </p>
+          </span>
+        </span>
+      </div>
+      <form [formGroup]="personalInfoForm" class="form__on-light-bg" (submit)="savePersonalInfo()">
+        <div>
+          <p class="detailLabel"><strong>Name</strong></p>
+          <p class="detailValue">{{firstName}} {{lastName}}</p>
+        </div>
+        <div class="form__input">
+          <p class="detailLabel"><strong>Address</strong></p>
+          <span class="input__contain">
+            <input
+              class="input__focus"
+              [ngClass]="{
+                'input__error': (personalInfoForm.controls.street.invalid && (personalInfoForm.controls.street.touched || personalInfoForm.controls.street.dirty))
+              }"
+              formControlName="street"
+              id="street"
+            />
+            <label class="input__title" for="street">Address</label>
+           </span>
+        </div>
+        <div class="input__error-text" aria-live="assertive" role="alert"
+             *ngIf="personalInfoForm.controls.street.invalid && (personalInfoForm.controls.street.touched || personalInfoForm.controls.street.dirty)">
+          <span *ngIf="personalInfoForm.controls.street.errors.required || personalInfoForm.controls.street.errors.whitespace"><span class="sr-only">Error </span>Address is required.</span>
+        </div>
+        <div class="form__input">
+          <span class="input__contain">
+            <input
+              class="input__focus"
+              [ngClass]="{
+                'input__error': (personalInfoForm.controls.aptSuite.invalid && (personalInfoForm.controls.aptSuite.touched || personalInfoForm.controls.aptSuite.dirty))
+              }"
+              type="text" 
+              id="aptSuite" 
+              formControlName="aptSuite" 
+              required="false" 
+              placeholder="(Optional)">
+            <label class="input__title" for="aptSuite">apt/suite/other</label>
+          </span>
+          <div class="input__error-text"
+               *ngIf="personalInfoForm.controls.aptSuite.invalid && (personalInfoForm.controls.aptSuite.touched || personalInfoForm.controls.aptSuite.dirty)">
+            <span *ngIf="personalInfoForm.controls.aptSuite.errors.required">Apt suite is required.</span>
+          </div>
+        </div>
+
+        <div class="form__input">
+          <span class="input__contain">
+            <input
+              class="input__focus"
+              [ngClass]="{
+                'input__error': (personalInfoForm.controls.city.invalid && (personalInfoForm.controls.city.touched || personalInfoForm.controls.city.dirty))
+              }"
+              type="text" 
+              id="city" 
+              formControlName="city" 
+              required>
+            <label class="input__title" for="city">City</label>
+          </span>
+          <div class="input__error-text" aria-live="assertive" role="alert"
+               *ngIf="personalInfoForm.controls.city.invalid && (personalInfoForm.controls.city.touched || personalInfoForm.controls.city.dirty)">
+            <span *ngIf="personalInfoForm.controls.city.errors.required"><span class="sr-only">Error </span>City is required.</span>
+          </div>
+        </div>
+        <div class="select__contain mt-3" [ngClass]="{
+          'input__error': (personalInfoForm.controls.state.invalid && (personalInfoForm.controls.state.touched || personalInfoForm.controls.state.dirty))
+        }">
+          <label for="state">State</label>
+                <span class="icon icon__arrow-down">
+                  <svg alt=""><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use></svg>
+                </span>
+            <select formControlName="state" id="state">
+              <option value="" class="" selected>Choose State</option>
+              <option *ngFor="let state of STATE_US" value="{{state.short_name}}">
+                {{state.name}}
+              </option>
+            </select>
+        </div>
+        <div class="input__error-text" aria-live="assertive" role="alert"
+               *ngIf="personalInfoForm.controls.state.invalid && (personalInfoForm.controls.state.touched || personalInfoForm.controls.state.dirty)">
+            <span *ngIf="personalInfoForm.controls.state.errors.required"><span class="sr-only">Error </span>State is required.</span>
+          </div>
+          <div class="row mt-3 zipcodeContainer">
+            <div class="col-6">
+          <div class="form__input">
+            <span class="input__contain">
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': (personalInfoForm.controls.zipCode.invalid && (personalInfoForm.controls.zipCode.touched || personalInfoForm.controls.zipCode.dirty))
+                }"
+                type="text" 
+                id="zipCode" 
+                [specified-input]="personalInfoForm.controls.zipCode" 
+                invalidExp="[^0-9]" 
+                formControlName="zipCode" 
+                maxlength="5" 
+                pattern="^[0-9]{5,5}$" 
+                required>
+              <label class="input__title" for="zipCode">zipCode</label>
+            </span>
+            <div class="input__error-text" aria-live="assertive" role="alert"
+                 *ngIf="personalInfoForm.controls.zipCode.invalid && (personalInfoForm.controls.zipCode.touched || personalInfoForm.controls.zipCode.dirty)">
+              <span *ngIf="personalInfoForm.controls.zipCode.errors.required"><span class="sr-only">Error </span>Zipcode is required.</span>
+              <span *ngIf="personalInfoForm.controls.zipCode.errors.pattern">Please enter valid Zip Code</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 optionalZip">
+          <div class="form__input">
+            <span class="input__contain">
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': (personalInfoForm.controls.addOnZipCode.invalid && (personalInfoForm.controls.addOnZipCode.touched || personalInfoForm.controls.addOnZipCode.dirty))
+                }" 
+                type="text"  
+                id="addOnZipCode" 
+                [specified-input]="personalInfoForm.controls.addOnZipCode" 
+                invalidExp="[^0-9]" 
+                formControlName="addOnZipCode" 
+                maxlength="4" 
+                pattern="^[0-9]{4,4}$">
+              <label class="input__title" for="addOnZipCode">Optional zipcode</label>
+            </span>
+            <div class="input__error-text"
+                 *ngIf="personalInfoForm.controls.addOnZipCode.invalid && (personalInfoForm.controls.addOnZipCode.touched || personalInfoForm.controls.addOnZipCode.dirty)">
+                <span *ngIf="personalInfoForm.controls.addOnZipCode.errors.pattern">Please enter valid Zip Code.</span>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div>
+          <p class="detailLabel"><strong>Date of Birth</strong></p>
+          <p class="detailValue">{{dateOfBirth}}</p>
+        </div>
+        <div>
+          <p class="detailLabel"><strong>Gender</strong></p>
+          <p class="detailValue">{{gender}}</p>
+        </div>
+        <div>
+          <p class="detailLabel"><strong>Contact Information</strong></p>
+          <div class="row contactInfo">
+            <div class="col-12 col-md-6">
+               <span class="input__contain">
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      'input__error': (personalInfoForm.controls.primaryPhone.invalid && (personalInfoForm.controls.primaryPhone.touched || personalInfoForm.controls.primaryPhone.dirty))
+                    }"
+                    type="text"  
+                    id="primaryPhone" 
+                    formControlName="primaryPhone" 
+                    [specified-input]="personalInfoForm.controls.primaryPhone" 
+                    invalidExp="[^0-9]" 
+                    maxlength="10" 
+                    pattern="^[0-9]{10,10}$" 
+                    (keyup)="validatePhone()" 
+                    required>
+                  <label class="input__title" for="primaryPhone">Primary phone</label>
+                </span>
+              <div class="input__error-text" aria-live="assertive" role="alert"
+                   *ngIf="personalInfoForm.controls.primaryPhone.invalid && (personalInfoForm.controls.primaryPhone.touched || personalInfoForm.controls.primaryPhone.dirty)">
+                <span *ngIf="personalInfoForm.controls.primaryPhone.errors.required"><span class="sr-only">Error </span>Primary phone is required.</span>
+                <span *ngIf="personalInfoForm.controls.primaryPhone.errors.pattern">Please enter valid Phone Number.</span>
+                <span *ngIf="personalInfoForm.controls.primaryPhone.errors.duplicate">Please enter a unique number.</span>
+              </div>
+            </div>
+            <div class="col-12 col-md-5 phoneTypeContainer">
+               <span class="select__contain">
+                <label for="phoneType">Phone Type</label>
+                 <span class="icon icon__arrow-down">
+                  <svg><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use></svg>
+                 </span>
+                <select id="phoneType" formControlName="phoneType" (change)="validatePhoneType()" [ngClass]="{
+                'input__error': (personalInfoForm.controls.phoneType.invalid && (personalInfoForm.controls.phoneType.touched || personalInfoForm.controls.phoneType.dirty))
+              }">
+                  <option value="{{type}}" *ngFor="let type of PHONE_TYPES" >
+                    {{type}}
+                  </option>
+                </select>
+              </span>
+              <div class="input__error-text"
+                   *ngIf="personalInfoForm.controls.phoneType.invalid && (personalInfoForm.controls.phoneType.touched || personalInfoForm.controls.phoneType.dirty)">
+                <span *ngIf="personalInfoForm.controls.phoneType.errors.duplicate">Please enter a unique phone type.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row alternateContactInfo" *ngFor="let control of personalInfoForm.controls.alternateNumFields.controls; let i = index">
+          <div class="col-12 col-md-6">
+          <span class="input__contain">
+            <input
+              class="input__focus"
+              [ngClass]="{
+                'input__error': (control.controls.number.invalid && (control.controls.number.touched || control.controls.number.dirty))
+              }"
+              #altNumber 
+              type="text" 
+              [formControl]="control.controls.number" 
+              maxlength="10" 
+              (focusout)="validatePhone()" 
+              (keyup)="validatePhone()" 
+              [attr.data-altNum]="i"
+              pattern="^(0|[1-9][0-9]*)$">
+            <label class="input__title">Alternate number</label>
+          </span>
+            <div class="input__error-text">
+              <span *ngIf="control.controls.number.errors?.required">Phone number is required.</span>
+              <span *ngIf="control.controls.number.errors?.pattern">Please enter valid Phone Number.</span>
+              <span *ngIf="control.controls.number.errors?.duplicate">Please enter a unique number</span>
+            </div>
+          </div>
+          <div class="col-12 col-md-5 phoneTypeContainer">
+           <span class="select__contain">
+            <label for="phoneType">Phone Type</label>
+             <span class="icon icon__arrow-down">
+              <svg><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use></svg>
+             </span>
+            <select id="phoneType" formControlName="phoneType" [formControl]="control.controls.type" (change)="validatePhoneType()" [attr.data-altNum]="i" [ngClass]="{
+                'input__error': (control.controls.type.invalid && (control.controls.type.touched || control.controls.type.dirty))
+              }">
+              <option value="{{type}}" *ngFor="let type of PHONE_TYPES">
+                {{type}}
+              </option>
+            </select>
+          </span>
+            <div class="input__error-text"
+                 *ngIf="control.controls.type.invalid && (control.controls.type.touched || control.controls.type.dirty)">
+              <span *ngIf="control.controls.type.errors.duplicate">Please enter a unique phone type.</span>
+              <span *ngIf="control.controls.type.errors.phnTypeNull">Please select unique phone type.</span>
+            </div>
+          </div>
+          <div class="col-2 col-md-1 offset-10 offset-md-0">
+            <button class="deleteNumBtn" (click)="deleteAltNumber(i)"><span class="icon icon__dismiss-v2 mt-2"><svg alt="" alt="" class="remove-item"><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss-v2"></use></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="addNumber mt-4" *ngIf="alternateNumberCount <= 1">
+          <span (click)="addItem()" class="icon icon__plus-add plusIcon"><svg alt=""><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__plus-add"></use></svg></span>
+          <span class="btnText">Add new number</span>
+        </div>
+
+        <span class="btn__pair mt-5 pb-5 block">
+          <a href="#!" class="secondary cancelBtnAlign" (click)="cancelEdit($event)">Cancel</a>
+          <a href="#!" role="button" (click)="savePersonalInfo($event)"><span class="btn btn_primary">Save changes</span></a>
+        </span>
+      </form>
+    </div><!-- .personalInfoForm ends-->
+  </div>
+</div>

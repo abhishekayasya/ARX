@@ -1,0 +1,5 @@
+.rx__prescription-content h3 {
+    @include themify($themes) {
+        font-family: themed("h1LightFontFamily");
+      }
+}

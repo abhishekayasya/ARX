@@ -1,0 +1,3 @@
+<arxrf-loader [show]="loaderState" [loaderOverlay]="true"></arxrf-loader>
+<arxrf-myaccount-insurance [isBuyout]="true" *ngIf="insuaranceStatus && insuaranceStatus !== 'No'"></arxrf-myaccount-insurance>
+<arxrf-signup-insurance-new *ngIf="insuaranceStatus && insuaranceStatus == 'No'"></arxrf-signup-insurance-new>

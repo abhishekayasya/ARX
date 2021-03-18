@@ -1,0 +1,433 @@
+<div class="container">
+  <arxrf-loader
+    [show]="showLoader"
+    message="Loading..."
+    [loaderOverlay]="!showLoader"
+  ></arxrf-loader>
+  <div class="h1__page-title title-prescription">
+    Review Transfer Home Delivery Prescription
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <arxrf-loader
+        [show]="loader"
+        [message]="loaderMessage"
+        [loaderOverlay]="loaderOverlay"
+      ></arxrf-loader>
+    </div>
+  </div>
+  <section class="order-info" *ngIf="!showLoader">
+    <div class="meta-details">
+      <div class="row">
+        <div class="shipping-details">
+          <div class="shipping-address">
+            <div *ngIf="pcaType !== 'transfer'">
+              <h5 class="home-details">
+                Prescriptions<a
+                  class="edit-link"
+                  (click)="editprescription('prescriptions')"
+                  href="javascript:void(0)"
+                  >Edit</a
+                >
+              </h5>
+              <ul class="precription-list">
+                <li>
+                  Patient: <span>{{ patientdetails.patientName }}</span>
+                </li>
+                <li>
+                  Pharmacy: <span>{{ pharmacydetails.pharmacyName }}</span>
+                </li>
+                <li>
+                  Pharmacy Phone:
+                  <span>{{ pharmacydetails.pharmacyPhoneNumber }}</span>
+                </li>
+              </ul>
+              <ul
+                class="precription-list1"
+                *ngFor="let prescription of prescriptiondetails"
+              >
+                <li>
+                  Prescription name:
+                  <span>{{ prescription.prescriptionName }}</span>
+                </li>
+                <li>
+                  Prescription number:
+                  <span>{{
+                    prescription.rxNumber == "" ? "NA" : prescription.rxNumber
+                  }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="pcaType === 'transfer'">
+              <h5 class="home-details">
+                Patient Information<a
+                  class="edit-link"
+                  (click)="editprescription('patientInfo')"
+                  href="javascript:void(0)"
+                  >Edit</a
+                >
+              </h5>
+              <p *ngIf="patientdetails?.patientName">
+                Patient: {{ patientdetails.patientName }}
+              </p>
+              <p *ngIf="patientdetails?.patientPhoneNumber">
+                Phone: {{ patientdetails.patientPhoneNumber }}
+              </p>
+              <p *ngIf="patientdetails?.patientDOB">
+                Date of birth:
+                {{ patientdetails.patientDOB | date: "MM/dd/yyyy" }}
+              </p>
+              <p *ngIf="patientdetails?.patientEmail">
+                Email address: {{ patientdetails.patientEmail }}
+              </p>
+              <h5 class="home-details  mt-4">
+                Prescriptions<a
+                  class="edit-link"
+                  (click)="editprescription('prescriptions')"
+                  href="javascript:void(0)"
+                  >Edit</a
+                >
+              </h5>
+              <ul class="precription-list">
+                <li>
+                  Pharmacy: <span>{{ pharmacydetails.pharmacyName }}</span>
+                </li>
+                <li>
+                  Pharmacy Phone:
+                  <span>{{ pharmacydetails.pharmacyPhoneNumber }}</span>
+                </li>
+              </ul>
+              <ul
+                class="precription-list1"
+                *ngFor="let prescription of prescriptiondetails"
+              >
+                <li>
+                  Prescription name:
+                  <span>{{ prescription.prescriptionName }}</span>
+                </li>
+                <li>
+                  Prescription number:
+                  <span>{{
+                    prescription.rxNumber == "" ? "NA" : prescription.rxNumber
+                  }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div *ngIf="pcaType === 'transfer'">
+            <h5 class="home-details  mt-4">
+              Shipping address<a
+                class="edit-link"
+                (click)="editprescription('shippingAddress')"
+                href="javascript:void(0)"
+                >Edit</a
+              >
+            </h5>
+            <ul class="shipping-list">
+              <li>{{ patientdetails.patientAddress }}</li>
+              <li>{{ patientdetails.patientAddressLine2 }}</li>
+            </ul>
+          </div>
+          <div
+            *ngIf="pcaType !== 'transfer'"
+            class="transfer-shipping-method mt-4"
+          >
+            <h5 class="home-details">
+              Shipping address<a
+                *ngIf="!addshippingaddress"
+                class="edit-link"
+                (click)="editShippAddress()"
+                href="javascript:void(0)"
+                >Edit</a
+              >
+            </h5>
+            <div *ngIf="!addshippingaddress">
+              <ul class="shipping-list">
+                <li>{{ addedShippingAddress.street }}</li>
+                <li>
+                  {{ addedShippingAddress.city }},
+                  {{ addedShippingAddress.state }}
+                  {{ addedShippingAddress.zipcode }}
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="addshippingaddress">
+              <form [formGroup]="shippAddress" class="form__on-light-bg">
+                <div class="form__input">
+                  <span
+                    class="input__contain"
+                    >
+                    <input
+                      [ngClass]="{
+                        input__error:
+                          shippAddress.controls.street.invalid &&
+                          (shippAddress.controls.street.touched ||
+                            shippAddress.controls.street.dirty)
+                      }"
+                      formControlName="street"
+                      id="street"
+                    />
+                    <label class="input__title" for="street"
+                      ><span>Address</span></label
+                    >
+                  </span>
+                </div>
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    shippAddress.controls.street.invalid &&
+                    (shippAddress.controls.street.touched ||
+                      shippAddress.controls.street.dirty)
+                  "
+                >
+                  <span *ngIf="shippAddress.controls.street.errors.required || shippAddress.controls.street.errors.whitespace"
+                    ><span class="sr-only">Error </span>Street is
+                    required.</span
+                  >
+                </div>
+
+                <div class="form__input">
+                  <span
+                    class="input__contain"
+                    >
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          shippAddress.controls.city.invalid &&
+                          (shippAddress.controls.city.touched ||
+                            shippAddress.controls.city.dirty)
+                      }"
+                      type="text"
+                      formControlName="city"
+                      id="city"
+                      required
+                    />
+                    <label class="input__title" for="city"
+                      ><span>City</span></label
+                    >
+                  </span>
+                </div>
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    shippAddress.controls.city.invalid &&
+                    (shippAddress.controls.city.touched ||
+                      shippAddress.controls.city.dirty)
+                  "
+                >
+                  <span *ngIf="shippAddress.controls.city.errors.required"
+                    ><span class="sr-only">Error </span>City is required.</span
+                  >
+                </div>
+
+                <div class="col-md-12 form__input">
+                  <div class="row expiry_zip_container">
+                    <div class="col-8 pl-0">
+                      <span
+                        class="input__contain"
+                        [ngClass]="{
+                          input__error:
+                            shippAddress.controls.state.invalid &&
+                            (shippAddress.controls.state.touched ||
+                              shippAddress.controls.state.dirty)
+                        }"
+                      >
+                        <span class="icon icon__arrow-down">
+                          <svg>
+                            <use
+                              href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                            ></use>
+                          </svg>
+                        </span>
+                        <select formControlName="state" id="state">
+                          <option value="" class="" selected>State</option>
+                          <option
+                            *ngFor="let state of STATE_US"
+                            value="{{ state.short_name }}"
+                          >
+                            {{ state.name }}
+                          </option>
+                        </select>
+                      </span>
+                      <div
+                        class="input__error-text"
+                        aria-live="assertive"
+                        role="alert"
+                        *ngIf="
+                          shippAddress.controls.state.invalid &&
+                          (shippAddress.controls.state.touched ||
+                            shippAddress.controls.state.dirty)
+                        "
+                      >
+                        <span
+                          *ngIf="shippAddress.controls.state.errors.required"
+                          ><span class="sr-only">Error </span>State is
+                          required.</span
+                        >
+                      </div>
+                    </div>
+                    <div class="col-4 pr-0">
+                      <span
+                        class="input__contain"
+                      >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              shippAddress.controls.zipcode.invalid &&
+                              (shippAddress.controls.zipcode.touched ||
+                                shippAddress.controls.zipcode.dirty)
+                          }"
+                          type="text"
+                          formControlName="zipcode"
+                          id="zipcode"
+                          maxlength="5"
+                          pattern="^[0-9]{5,5}$"
+                          [specified-input]="shippAddress.controls.zipcode"
+                          invalidExp="[^0-9]"
+                          required
+                        />
+                        <label class="input__title" for="zipcode"
+                          ><span>Zip Code</span></label
+                        >
+                      </span>
+                      <div
+                        class="input__error-text"
+                        aria-live="assertive"
+                        role="alert"
+                        *ngIf="
+                          shippAddress.controls.zipcode.invalid &&
+                          (shippAddress.controls.zipcode.touched ||
+                            shippAddress.controls.zipcode.dirty)
+                        "
+                      >
+                        <span
+                          *ngIf="shippAddress.controls.zipcode.errors.required"
+                          ><span class="sr-only">Error </span>Zip Code is
+                          required.</span
+                        >
+                        <span
+                          *ngIf="shippAddress.controls.zipcode.errors.pattern"
+                          >Please enter valid Zip Code.</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="shipping-msg">
+                  Editing the address for this order will not update your
+                  account.
+                </div>
+                <div
+                  class="form-row flex-column-reverse flex-sm-row mt-3"
+                  *ngIf="editshippingaddress"
+                >
+                  <div class="col-md-4  col-sm-12"></div>
+                  <div class="col-md-4  col-sm-12 mt-2 btn__pair text-center">
+                    <a
+                      href="javascript:void(0);"
+                      class="secondary cancel_btn btn-center"
+                      (click)="cancelShippAddress()"
+                      >Cancel</a
+                    >
+                  </div>
+                  <div class="col-md-4  col-sm-12 mt-2">
+                    <button
+                      class="btn btn_primary"
+                      (click)="updateShippAddress()"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
+                <div class="row mt-3" *ngIf="enableaddbutton">
+                  <div class="col-md-6 col-lg-6 col-12"></div>
+                  <div class="col-md-6 col-lg-6 col-12 text-right">
+                    <button
+                      class="btn btn_primary add_address_btn"
+                      style="display: inline-block; width:100%"
+                      (click)="addShippAddress()"
+                    >
+                      Add address
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="transfer-shipping-method mt-4">
+            <h5 class="home-details">Shipping method</h5>
+            <p class="home_standard">Standard (FREE)</p>
+            <ul class="shipping-add">
+              <li>5-10 business days</li>
+              <li>
+                Request requires additional processing time. Once authorized,
+                your order will be shipped for free. If you require expedited or
+                overnight shipping, please call Home Delivery Pharmacy at
+                877-787-3047.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+  </section>
+
+  <div class="container p-0 mt-3">
+    <div
+      class="d-flex flex-column-reverse flex-sm-row  pb-3 justify-content-md-end btn__pair"
+    >
+      <a
+        class="secondary cancel_btn mt-2 cancel-color"
+        style="color: #05728e;"
+        (click)="cancelRequest()"
+        >Cancel</a
+      >
+      <button
+        [ngClass]="[
+          disableSubmitbtn
+            ? 'btn btn__disabled disabled mt-2 btns_width'
+            : 'btn btn_primary mt-2'
+        ]"
+        [disabled]="disableSubmitbtn"
+        (click)="submitRequest()"
+      >
+        Submit request
+      </button>
+    </div>
+  </div>
+</div>
+
+<arxrf-modal
+  [show]="upgradeCancelModel"
+  cssClasses="bg-grey"
+  (update)="hideUpgradeCancelModel($event)"
+>
+  <p>
+    Are you sure you want to cancel this request to transfer a prescription?
+    Your information won’t be saved.
+  </p>
+
+  <div class="modal__bottom-actions">
+    <div
+      class="d-flex flex-column-reverse btn__pair flex-sm-row pb-3 justify-content-md-end"
+    >
+      <a
+        href="javascript:void(0)"
+        class="secondary mr-2 rm_line"
+        (click)="hideUpgradeCancelModel(false)"
+        >No, go back</a
+      >
+      <button class="btn btn_primary" (click)="cancelUpgradeProcess()">
+        Yes, cancel request
+      </button>
+    </div>
+  </div>
+</arxrf-modal>

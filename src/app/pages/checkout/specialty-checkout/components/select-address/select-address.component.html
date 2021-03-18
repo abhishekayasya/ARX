@@ -1,0 +1,11 @@
+<div
+  class="speciality__addreses_container"
+  *ngIf="pid != undefined || rid != undefined"
+>
+  <arxrf-address-selector
+    type="{{ subtype }}"
+    [patientId]="pid"
+    [referralId]="rid"
+    addAddressUrl="{{ addAddressUrl }}"
+  ></arxrf-address-selector>
+</div>

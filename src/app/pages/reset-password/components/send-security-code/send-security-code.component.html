@@ -1,0 +1,137 @@
+<div class="row">
+  <div class="col-md-12 bg-white securityCodeForm">
+    <form [formGroup]="sendSecurityCodeForm" class="form__on-light-bg">
+      <h1 class="h1__page-title text-center">Get your security code</h1>
+      <arxrf-loader [show]="showLoader" message="Loading..."></arxrf-loader>
+      <p class="mt-3">
+        We need to send you a security code. Where would you like to receive it?
+      </p>
+      <div class="col-md-12">
+        <fieldset>
+          <legend class="sr-only">Get your security code</legend>
+
+          <div>
+            <div class="btn__radio mt-4 mb-2">
+              <input
+                type="radio"
+                id="txtMsg"
+                name="securityCodeType"
+                (change)="updateVOption($event)"
+              />
+              <label for="txtMsg">
+                <span class="radio"></span
+                ><span><p>Text to phone number on file*</p></span>
+              </label>
+            </div>
+            <div class="radio-phnTxt" id="phone_div" *ngIf="showTextSelection">
+              <div class="mb10">Enter the last 4 digits of your phone #.</div>
+              <section class="row">
+                <section class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+                  <div class="flex-box flex-box-nowrap align-items-center mb10">
+                    <div class="pr5">***-***-</div>
+                    <div class="flex-1 form__on-light-bg">
+                      <div class="form__input">
+                        <span
+                          class="input__contain"
+                          >
+                          <input
+                            class="input__focus"
+                            [ngClass]="{
+                              input__error:
+                                sendSecurityCodeForm.controls.phonecode.invalid &&
+                                (sendSecurityCodeForm.controls.phonecode
+                                  .touched ||
+                                  sendSecurityCodeForm.controls.phonecode.dirty)
+                            }"
+                            type="text"
+                            name="phonecode"
+                            (keyup)="onchangePhoneCode($event)"
+                            [specified-input]="
+                              sendSecurityCodeForm.controls.phonecode
+                            "
+                            invalidExp="[^0-9]"
+                            formControlName="phonecode"
+                            id="phonecode"
+                            maxlength="4"
+                            pattern="^[0-9]{4,4}$"
+                            required
+                          />
+                          <label class="input__title" for="username"
+                            >Last 4 digits</label
+                          ></span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </section>
+              <div
+                class="input__error-text"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  sendSecurityCodeForm.controls.phonecode.invalid &&
+                  (sendSecurityCodeForm.controls.phonecode.touched ||
+                    sendSecurityCodeForm.controls.phonecode.dirty)
+                "
+              >
+                <span
+                  *ngIf="
+                    sendSecurityCodeForm.controls.phonecode.errors.required
+                  "
+                  ><span class="sr-only">Error </span>Please enter last 4
+                  digits.</span
+                >
+                <span
+                  *ngIf="sendSecurityCodeForm.controls.phonecode.errors.pattern"
+                  >Please enter last 4 digits.</span
+                >
+              </div>
+              <div class="radio-phn send-security-code">
+                Use email if you have no phone # on file.
+              </div>
+            </div>
+          </div>
+
+          <div class="btn__radio mt-4 mb-2">
+            <input
+              type="radio"
+              id="email"
+              name="securityCodeType"
+              value="email"
+              (change)="updateVOption($event)"
+            />
+            <label for="email">
+              <span class="radio"></span><span><p>Email</p></span>
+            </label>
+          </div>
+
+          <p class="radio-phn">
+            For your security, if you choose this method we will ask you to
+            verify your identity to access your pharmacy records online.
+          </p>
+        </fieldset>
+      </div>
+      <div class="mt-5 text-sm-right">
+        <button
+          class="btn btn_primary col-12 col-md-6 sendCodeBtn "
+          [ngClass]="{ btn__disabled: sendbuttonHighlights }"
+          (click)="sendSecurtiyCode()"
+        >
+          Send Code
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="col-md-11 text-left mt-4">
+  <p class="fs-14">
+    If you can't receive text messages or email, call Customer
+    Service for help toll-free 24/7.<a class="sendCall"> 877-250-5823</a>
+  </p>
+</div>
+<div class="col-md-11 text-center mt-4">
+  <p class="fs-14">
+    *Messaging and data rates may apply.
+  </p>
+</div>

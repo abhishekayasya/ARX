@@ -1,0 +1,169 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.mail-checkout__creditcard-exist {
+  .card_update {
+    a {
+      padding-top: 6px;
+    }
+  }
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: not-allowed; 
+}
+
+.not-refill-online {
+  font-weight: 900;
+  color: #e31837;
+  font-size: 22px;
+  font-family: Helvetica Neue LT W01_85 Heavy,Arial,Sans-Serif;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.removed-back-bg {
+  text-align: center;
+  
+  text-align: center;
+  position: static;
+  display: flex;
+  align-items: center;
+}
+.bgred{
+  background-color: #e31837 !important;
+}
+.rowhighlight{
+  border: 1px solid #e31837 !important;
+}
+ul .removed-col {
+  color: #fff;
+  font-weight: 900;
+  font-size: 22px;
+  display: inline-block;
+  align-items: center;
+}
+
+.drugs-list li.removeborder{
+  border: solid 0px #cfcfcf !important
+}
+
+
+span.icon.icon__alert.icon-warn {
+  margin-right: 10px;
+  width: 5px !important;
+  min-height: 25px !important;
+}
+.alert-icon-copy{
+  
+  min-height: 30px;
+  width: 82px;
+  position: relative;
+  display: inline-block;
+  fill:red;
+
+}
+
+.input__error-text {
+  color: red;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.not-refillable-text {
+  color: red;
+  margin-top: 9px;
+  margin-bottom: 9px;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;   
+}
+
+.wag-third-box-section.hidden-xs {
+  position: relative;
+  background-color: #f7f7f7;
+}
+
+.list-group {
+  margin-bottom: 20px;
+  padding-left: 0;
+}
+
+select:focus{
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+
+input[type=checkbox]:focus + label {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+
+.lastFill{
+  font-weight: bold;
+}
+
+.copayDisclaimer{
+  margin-top: 30px;
+}
+
+.submit_request_btn {
+  margin-top: 30px;
+  margin-bottom: 100px;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $md-screen){
+  .submit_request_btn {
+    margin-top: 20px;
+    margin-bottom: 50px;
+  }
+  .drug-icon {
+    margin-top: 12px;
+  }
+  .presc-summary {
+    margin-top: 30px;
+  }
+  .btn_primary {
+    width: 100%;
+  }
+  .border__round {
+    max-width: none;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .expiry_zip_container .input__title {
+    max-width: 100%;
+    padding-left: 15px;
+  }
+  .check-box .check {
+    margin-right: 12px;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: 767px) {
+  .svgIconAlignment {
+    align-self: center;
+  }
+}
+
+@media screen and (min-width: $sm-screen) and (max-width: $md-screen){
+  .drug-icon {
+    margin-top: 12px;
+  }
+  .drug-info {
+    padding-left: 30px;
+  }
+  .border__round {
+    max-width: none;
+  }
+}
+.rx-review .order-info .presc-summary .drugs-list li.removeborder{
+  border: solid 0px #cfcfcf !important
+}

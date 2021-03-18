@@ -1,0 +1,410 @@
+<arxrf-loader
+  [show]="_refillService.loaderStatus"
+  message="Loading..."
+  style="height: 200%; width: 200%"
+  [loaderOverlay]="_refillService.loaderOverlay"
+></arxrf-loader>
+<div class="row">
+  <div class="col-12">
+    <arxrf-message></arxrf-message>
+
+    <div class="row" *ngIf="showPaymentMessage">
+      <div class="col-12">
+        <div class="alert alert__info minimal">
+          <a class="alert__text-contain">
+            <span class="icon icon__info">
+              <svg>
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                ></use>
+              </svg>
+            </span>
+
+            <span>
+              <p>We need your payment information to turn on Auto Refill</p>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <h1>Shipping Address</h1>
+    <p>Note: Changing your address will apply to all Auto Refill Rx.</p>
+    <form class="form__on-light-bg mt-1" [formGroup]="shippingForm">
+      <div class="form__input">
+        <span
+          class="input__contain"
+        >
+          <input
+            class="input__focus"
+            [ngClass]="{
+              input__error:
+                shippingForm.controls.street1.invalid &&
+                (shippingForm.controls.street1.touched ||
+                  shippingForm.controls.street1.dirty)
+            }"
+            type="text" 
+            formControlName="street1" 
+            id="street1" 
+            required />
+          <label class="input__title" for="street1"
+            ><span>street1 Address</span></label
+          >
+        </span>
+      </div>
+
+      <div
+        class="input__error-text"
+        aria-live="assertive"
+        role="alert"
+        *ngIf="
+          shippingForm.controls.street1.invalid &&
+          (shippingForm.controls.street1.touched ||
+            shippingForm.controls.street1.dirty)
+        "
+      >
+        <span *ngIf="shippingForm.controls.street1.errors.required"
+          ><span class="sr-only">Error </span>Address is required</span
+        >
+        <span *ngIf="shippingForm.controls.street1.errors.pattern"
+          >Please enter valid Address.</span
+        >
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="form__input mt-3">
+            <span
+              class="input__contain"
+            >
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  input__error:
+                    shippingForm.controls.city.invalid &&
+                    (shippingForm.controls.city.touched ||
+                      shippingForm.controls.city.dirty)
+                }"
+                type="text"
+                formControlName="city"
+                id="city"
+                pattern="^[a-zA-Z ]+$"
+                required
+              />
+              <label class="input__title" for="city"><span>City</span></label>
+            </span>
+          </div>
+          <div
+            class="input__error-text"
+            aria-live="assertive"
+            role="alert"
+            *ngIf="
+              shippingForm.controls.city.invalid &&
+              (shippingForm.controls.city.touched ||
+                shippingForm.controls.city.dirty)
+            "
+          >
+            <span *ngIf="shippingForm.controls.city.errors.required"
+              ><span class="sr-only">Error </span>City is required</span
+            >
+            <span *ngIf="shippingForm.controls.city.errors.pattern"
+              >Please enter a valid City</span
+            >
+          </div>
+
+          <div class="form__input">
+            <span
+              class="input__contain"
+              >
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  input__error:
+                    shippingForm.controls.zip.invalid &&
+                    (shippingForm.controls.zip.touched ||
+                      shippingForm.controls.zip.dirty)
+                }"
+                type="text"
+                formControlName="zip"
+                id="zip"
+                pattern="^[0-9]{5,5}$"
+                [specified-input]="shippingForm.controls.zip"
+                invalidExp="[^0-9]"
+                maxlength="5"
+              />
+              <label class="input__title" for="zip"
+                ><span>Zip Code</span></label
+              >
+            </span>
+          </div>
+
+          <div
+            class="input__error-text"
+            aria-live="assertive"
+            role="alert"
+            *ngIf="
+              shippingForm.controls.zip.invalid &&
+              (shippingForm.controls.zip.touched ||
+                shippingForm.controls.zip.dirty)
+            "
+          >
+            <span *ngIf="shippingForm.controls.zip.errors.required"
+              ><span class="sr-only">Error </span>Zip Code is required.</span
+            >
+            <span *ngIf="shippingForm.controls.zip.errors.pattern"
+              >Please enter valid Zip Code</span
+            >
+          </div>
+        </div>
+
+        <div class="col">
+          <span
+            class="select__contain mt-3"
+            [ngClass]="{
+              input__error:
+                shippingForm.controls.state.invalid &&
+                (shippingForm.controls.state.touched ||
+                  shippingForm.controls.state.dirty)
+            }"
+          >
+            <label for="state">State</label>
+            <span class="icon icon__arrow-down">
+              <svg>
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                ></use>
+              </svg>
+            </span>
+            <select formControlName="state" id="state">
+              <option value="" class="" selected>Choose State</option>
+              <option
+                *ngFor="let state of STATE_US"
+                value="{{ state.short_name }}"
+              >
+                {{ state.name }}
+              </option>
+            </select>
+          </span>
+          <div
+            class="input__error-text"
+            aria-live="assertive"
+            role="alert"
+            *ngIf="
+              shippingForm.controls.state.invalid &&
+              (shippingForm.controls.state.touched ||
+                shippingForm.controls.state.dirty)
+            "
+          >
+            <span><span class="sr-only">Error </span>State is required.</span>
+          </div>
+        </div>
+      </div>
+
+      <!--payment fields-->
+      <div class="row mt-3" *ngIf="isCreditCardEditable">
+        <div class="col-12">
+          <h1>Payment</h1>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div class="form__input">
+                <span
+                  class="input__contain"
+                >
+                  <arxrf-input-ccnumber
+                    [showErrorState]="
+                        shippingForm.controls.ccNumber.invalid &&
+                        (shippingForm.controls.ccNumber.touched ||
+                          shippingForm.controls.ccNumber.dirty)
+                    "
+                    name="ccNumber"
+                    label="Add Credit Card"
+                    (onCCChange)="updateCCType($event)"
+                    formControlName="ccNumber"
+                  ></arxrf-input-ccnumber>
+                </span>
+              </div>
+
+              <div
+                class="input__error-text"
+                *ngIf="
+                  shippingForm.controls.ccNumber.invalid &&
+                  (shippingForm.controls.ccNumber.touched ||
+                    shippingForm.controls.ccNumber.dirty)
+                "
+              >
+                <span *ngIf="shippingForm.controls.ccNumber.errors.required"
+                  >Credit card is required.</span
+                >
+                <span *ngIf="shippingForm.controls.ccNumber.errors.validcc"
+                  >Please enter valid credit card number</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3 paymentInfo">
+            <div class="col-6">
+              <div class="form__input">
+                <span
+                  class="input__contain"
+                >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        shippingForm.controls.expDate.invalid &&
+                        (shippingForm.controls.expDate.touched ||
+                          shippingForm.controls.expDate.dirty)
+                    }"
+                    type="text"
+                    formControlName="expDate"
+                    id="expiration_date"
+                    maxlength="5"
+                    placeholder="MM/YY"
+                    [creditCardExpiry]="shippingForm.controls.expDate"
+                    required
+                  />
+                  <label class="input__title" for="expiration_date"
+                    ><span>Expiration date</span></label
+                  >
+                </span>
+              </div>
+
+              <div
+                class="input__error-text"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  shippingForm.controls.expDate.invalid &&
+                  (shippingForm.controls.expDate.touched ||
+                    shippingForm.controls.expDate.dirty)
+                "
+              >
+                <span *ngIf="shippingForm.controls.expDate.errors.required"
+                  ><span class="sr-only">Error </span>Expiration date is
+                  required.</span
+                >
+                <span
+                  *ngIf="
+                    shippingForm.controls.expDate.errors.pattern ||
+                    shippingForm.controls.expDate.errors.validDate
+                  "
+                  >Please enter valid expiration date</span
+                >
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form__input">
+                <span
+                  class="input__contain"
+                  >
+                  <input
+                    [ngClass]="{
+                      input__error:
+                        shippingForm.controls.ccZip.invalid &&
+                        (shippingForm.controls.ccZip.touched ||
+                          shippingForm.controls.ccZip.dirty)
+                    }"
+                    type="text"
+                    formControlName="ccZip"
+                    id="card_zip"
+                    maxlength="5"
+                    [specified-input]="shippingForm.controls.ccZip"
+                    invalidExp="[^0-9]"
+                    pattern="^[0-9]{5,5}$"
+                    ng-reflect-maxlength="5"
+                    ng-reflect-pattern="^[0-9]{5,5}$"
+                    ng-reflect-name="zip"
+                    class="ng-dirty ng-invalid ng-touched input__focus"
+                    required
+                  />
+                  <label class="input__title" for="card_zip"
+                    ><span>ZIP code</span></label
+                  >
+                </span>
+              </div>
+
+              <div
+                class="input__error-text"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  shippingForm.controls.ccZip.invalid &&
+                  (shippingForm.controls.ccZip.touched ||
+                    shippingForm.controls.ccZip.dirty)
+                "
+              >
+                <span *ngIf="shippingForm.controls.ccZip.errors.required"
+                  ><span class="sr-only">Error </span>ZIP code is
+                  required.</span
+                >
+                <span *ngIf="shippingForm.controls.ccZip.errors.pattern"
+                  >Please enter valid ZIP code</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div class="check-box">
+                <fieldset>
+                  <legend></legend>
+                  <div class="check-box">
+                    <input
+                      type="checkbox"
+                      id="expCheckbox"
+                      aria-label="Save credit card as Express Pay"
+                    />
+                    <label for="expCheckbox"
+                      ><figure class="check"></figure
+                    ></label>
+                    <span>Save credit card as Express Pay</span>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="input__error-text" *ngIf="isCCDetailAvailable">
+                Please enter Credit Card details.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="creditCardSummary" *ngIf="!isCreditCardEditable">
+        <h1>Payment</h1>
+        <div class="creditCardUpdateBtn">
+          <p>Credit Card Info</p>
+          <a href="javascript:void(0)" (click)="updateCreditCard()"
+            >Update card info</a
+          >
+        </div>
+        <div class="cardDetails ml-3">
+          <span>
+            <span class="icon icon__wide icon__credit-card"
+              ><svg alt="" alt="">
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__credit-card"
+                ></use></svg
+            ></span>
+            <span class="ml-4">{{ creditCardNumber }}</span>
+          </span>
+          <span class="setMargin">{{ creditCardExpiryDate }}</span>
+          <span>{{ creditCardZip }}</span>
+        </div>
+      </div>
+
+      <div class="mt-5 float-right">
+        <button
+          class="btn btn_primary"
+          [disabled]="shippingForm.invalid"
+          (click)="updateShippingInfo()"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

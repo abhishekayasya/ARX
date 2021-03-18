@@ -1,0 +1,91 @@
+<div class="row">
+  <arxrf-loader [show]="loader" [loaderOverlay]="overlay"></arxrf-loader>
+</div>
+
+<div class="security-ques">
+  <div class="row info-warn" *ngIf="!appContext.isSpsite">
+    <div class="col-md-12 col-xs-12 col-sm-12">
+      <div>
+    <span class="icon icon__info mr-2">
+      <svg alt="">
+        <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"></use>
+      </svg>
+    </span>
+      <h4>Changes to your account will also update your information on Walgreens.com</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <p class="col-md-12 col-xs-12 col-sm-12">For security reasons, we will not display your answer. </p>
+  </div>
+
+  <form [formGroup]="securityForm" class="form__on-light-bg">
+    <section class="questions">
+      <div class="row">
+        <h3 class="col-md-12 col-xs-12 col-sm-12 mt-3">Security question</h3>
+      </div>
+      <div class="row no-gutters">
+      <span class="select__contain col-md-6 col-xs-12 col-sm-12">
+          <label for="select-dropdown">Title select</label>
+          <span class="icon icon__arrow-down">
+            <svg alt="">
+              <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use>
+            </svg>
+          </span>
+          <select formControlName="questionCode" id="select-dropdown" [(ngModel)]="selectedSecurityQue"
+                  [ngClass]="{
+                'input__error': securityForm.controls.questionCode.invalid && (securityForm.controls.questionCode.touched || securityForm.controls.questionCode.dirty)
+              }">
+            <option value="" >Choose your security question</option>
+            <option *ngFor="let quest of questions"
+                    [value]="quest.code">{{quest.question}}
+              </option>
+          </select>
+
+        </span>
+
+      </div>
+      <div class="input__error-text" aria-live="assertive" role="alert"
+             *ngIf="securityForm.controls.questionCode.invalid && (securityForm.controls.questionCode.touched || securityForm.controls.questionCode.dirty)">
+          <span *ngIf="securityForm.controls.questionCode.errors.required"><span class="sr-only">Error </span>Security Question is required.</span>
+        </div>
+    </section>
+
+
+    <section class="answer">
+      <div class="row">
+        <h3 class="col-md-12 col-xs-12 col-sm-12">Security answer</h3>
+      </div>
+      <div class="row">
+        <div class="form__input formInputSecurityQues col-md-6 col-xs-12 col-sm-12">
+      <span class="input__contain">
+        <input
+          class="input__focus"
+          [ngClass]="{
+            'input__error': securityForm.controls.answer.invalid && (securityForm.controls.answer.touched || securityForm.controls.answer.dirty)
+          }"
+          type="password" 
+          formControlName="answer">
+        <label class="input__title">
+          <span>Enter your answer</span>
+        </label>
+      </span>
+
+          <div class="input__error-text" aria-live="assertive" role="alert"
+               *ngIf="securityForm.controls.answer.invalid && (securityForm.controls.answer.touched || securityForm.controls.answer.dirty)">
+            <span *ngIf="securityForm.controls.answer.errors.required"><span class="sr-only">Error </span>Security answer is required.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+
+  <div class="row no-gutters btn-section">
+    <div class="btn__pair btnPairAlignment">
+        <a href="{{routes.securityIformation.absoluteRoute}}" class=" cancelLink"> <strong>Cancel</strong> </a>
+        <a href="javascript:void(0);" role="button" class="btn btn_primary btnPairAlignment" (click)="submitSecurityQuestionDetail()">Save changes</a>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row" *ngIf="!homeDelivery.hideHead && !emptyCart">
+    <div class="col-12 pt-4 pb-3">
+      <h1 class="h1__page-title text-center col">
+        Let’s review your Home Delivery prescriptions
+      </h1>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="homeDelivery.showbanner">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!emptyCart">
+    <div class="col-12 hd-container">
+      <div class="rx-review">
+        <arxrf-loader
+          [show]="checkout.loader"
+          [loaderOverlay]="checkout.loaderOverlay"
+        ></arxrf-loader>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="emptyCart">
+    <div class="col-12">
+      <div class="empty-cart-container pt-5">
+        <h3>You have no prescriptions selected to refill.</h3>
+        <p class="pt-3">
+          <strong
+            ><a href="{{ ROUTES.refill.absoluteRoute }}"
+              >Refill Prescriptions</a
+            >
+          </strong>
+        </p>
+        <p class="pt-3">
+          <strong
+            ><a href="{{ ROUTES.status.absoluteRoute }}">Check Order Status </a>
+          </strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

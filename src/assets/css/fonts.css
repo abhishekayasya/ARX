@@ -1,0 +1,89 @@
+@font-face {
+  font-family: 'HelveticaNeueLTW01-45Light';
+  src: url("fonts/helvetica/HelveticaNeueLTW01-45Light.eot");
+  src: url("fonts/helvetica/HelveticaNeueLTW01-45Light.eot?#iefix") format("embedded-opentype"), url("fonts/helvetica/HelveticaNeueLTW01-45Light.woff2") format("woff2"), url("fonts/helvetica/HelveticaNeueLTW01-45Light.woff") format("woff"), url("fonts/helvetica/HelveticaNeueLTW01-45Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'HelveticaNeueLTW01-55Roman';
+  src: url("fonts/helvetica/HelveticaNeueLTW01-55Roman.eot");
+  src: url("fonts/helvetica/HelveticaNeueLTW01-55Roman.eot?#iefix") format("embedded-opentype"), url("fonts/helvetica/HelveticaNeueLTW01-55Roman.woff2") format("woff2"), url("fonts/helvetica/HelveticaNeueLTW01-55Roman.woff") format("woff"), url("fonts/helvetica/HelveticaNeueLTW01-55Roman.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'HelveticaNeueLTW01-75Bold';
+  src: url("fonts/helvetica/HelveticaNeueLTW01-75Bold.eot");
+  src: url("fonts/helvetica/HelveticaNeueLTW01-75Bold.eot?#iefix") format("embedded-opentype"), url("fonts/helvetica/HelveticaNeueLTW01-75Bold.woff2") format("woff2"), url("fonts/helvetica/HelveticaNeueLTW01-75Bold.woff") format("woff"), url("fonts/helvetica/HelveticaNeueLTW01-75Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Helvetica Neue LT W01_85 Heavy";
+  src: url("fonts/helvetica/c2f5d987-5e8d-45c9-9d2a-47b4afa1a679.eot?#iefix");
+  src: url("fonts/helvetica/c2f5d987-5e8d-45c9-9d2a-47b4afa1a679.eot?#iefix") format("eot"), url("fonts/helvetica/c431f563-3e4b-43a5-9ae0-9ecf7c2f9f0d.woff2") format("woff2"), url("fonts/helvetica/3e0db264-6719-473d-98e5-68979bb2d5ad.woff") format("woff"), url("fonts/helvetica/59c04c82-b450-46e1-a5b4-729f09643dda.ttf") format("truetype"), url("fonts/helvetica/91ac33a3-d2a2-48ac-a066-d241ef29ca2d.svg#91ac33a3-d2a2-48ac-a066-d241ef29ca2d") format("svg");
+}
+
+@font-face {
+  font-family: 'HelveticaRoundedLTStd-Bd';
+  src: url("fonts/helvetica/HelveticaRoundedLTStd-Bd.eot");
+  src: url("fonts/helvetica/HelveticaRoundedLTStd-Bd.eot?#iefix") format("embedded-opentype"), url("fonts/helvetica/HelveticaRoundedLTStd-Bd.woff2") format("woff2"), url("fonts/helvetica/HelveticaRoundedLTStd-Bd.woff") format("woff"), url("fonts/helvetica/HelveticaRoundedLTStd-Bd.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url('fonts/roboto/Roboto-Bold.eot');
+  src: url('fonts/roboto/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
+      url('fonts/roboto/Roboto-Bold.woff2') format('woff2'),
+      url('fonts/roboto/Roboto-Bold.woff') format('woff'),
+      url('fonts/roboto/Roboto-Bold.ttf')  format('truetype'),
+      url('fonts/roboto/Roboto-Bold.svg#Roboto-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenSansBold";
+  src: url('fonts/opensans/OpenSans-Bold.ttf')  format('truetype');
+}
+
+
+/* opensans font family  */
+@font-face {
+  font-family: 'open_sansbold';
+  src: url("fonts/opensans/opensans-bold-webfont.woff2") format("woff2"),
+    url("fonts/opensans/opensans-bold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansextrabold';
+  src: url("fonts/opensans/opensans-extrabold-webfont.woff2") format("woff2"),
+    url("fonts/opensans/opensans-extrabold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sanslight';
+  src: url('fonts/opensans/opensans-light-webfont.woff2') format('woff2'),
+    url('fonts/opensans/opensans-light-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansregular';
+  src: url("fonts/opensans/opensans-regular-webfont.woff2") format("woff2"),
+    url("fonts/opensans/opensans-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sanssemibold';
+  src: url('fonts/opensans/opensans-semibold-webfont.woff2') format('woff2'),
+    url('fonts/opensans/opensans-semibold-webfont.woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -1,0 +1,65 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+#app__root__section, .theme-default .color__neutral{
+    background-color: #f9f9f9 !important;
+}
+.verify-identity-outercon{
+    margin: 0 auto;
+    max-width: 568px;
+    .verify-identity-innercon{
+        background-color: #fff;
+        padding: 30px 90px;
+    }
+    
+}
+.msg-content{
+    font-size: 18px;
+    line-height: 1.83;
+    color: #404040;
+    margin: auto;
+    margin: 30px 0px 30px 0px;
+}
+.input__title{
+    text-transform: none;
+    height: 28px;
+}
+.blue-text{
+    color:#01728e;
+}
+.btn{
+    min-width: 120px !important;
+}
+.help-text{
+    max-width: 596px;
+    margin: auto;
+    margin-top: 30px;
+    div{
+        margin-bottom: 5px;
+    }
+}
+.backLink{
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  font-size: 18px;
+  color: #01728e !important;
+  height: 46px;
+  .icon svg, .icon img{
+      height: 37px;
+      color: #1a7eac;
+  }
+  strong{
+      margin:11px 0px 0px 5px;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+    .verify-identity-innercon{
+        padding: 10px !important;
+    }
+}

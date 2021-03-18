@@ -1,0 +1,207 @@
+<div class="accoun__header">
+  <div class="container no-container-mobile">
+    <arxrf-loader [show]="loaderState"></arxrf-loader>
+
+    <div class="row" *ngIf="!loaderState">
+      <div class="col-8">
+        <h1>My Account</h1>
+      </div>
+      <div class="col-md-4 offset-md-0">
+        <div class="membersDD">
+          <arxrf-refill-members
+            (onSelect)="updateMember($event)"
+            [GAflag]="true"
+          ></arxrf-refill-members>
+        </div>
+      </div>
+    </div>
+
+    <!-- insurance success message section -->
+
+    <div class="message-container mt-2" *ngIf="insuranceSuccessMessage && !appContext.isSpsite">
+      <div class="alert alert__success">
+        <a class="alert__text-contain">
+          <span class="icon icon__check">
+            <svg>
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__check"
+              ></use>
+            </svg>
+          </span>
+          <span class="msg-text">
+            <div class="sr-only">
+              Success! Your insurance information has been updated. This has
+              also been applied to your Walgreens.com account.
+            </div>
+            <div aria-hidden="true" class="alert-content mr-1" tabindex="0">
+              Success! Your insurance information has been updated. This has
+              also been applied to your Walgreens.com account.
+            </div>
+          </span>
+          <button class="btn btn__rounded closeBtn" (click)="closeInsuMsg()">
+            <div aria-label="Alert message close" class="btn__dismiss"></div>
+          </button>
+        </a>
+      </div>
+    </div>
+    <!-- insurance success message section Ends -->
+
+    <!-- harmony redirect message section starts -->
+    <div class="message-container mt-2" *ngIf="harmonyRedirectSuccessMessage">
+      <div class="alert alert__info">
+        <a class="alert__text-contain">
+          <span class="icon icon__check">
+            <svg>
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+              ></use>
+            </svg>
+          </span>
+          <span class="msg-text">
+            <div class="sr-only">
+              Going forward, use the same username and password as your Walgreens account to sign in to this account.
+            </div>
+            <div aria-hidden="true" class="alert-content mr-1" tabindex="0">
+              Going forward, use the same username and password as your Walgreens account to sign in to this account.
+            </div>
+          </span>
+          <button class="btn btn__rounded closeBtn" (click)="closeHrmyMsg()">
+            <div aria-label="Alert message close" class="btn__dismiss"></div>
+          </button>
+        </a>
+      </div>
+    </div>
+    <!-- harmony redirect message section ends -->
+
+    <div class="row">
+      <div class="col-12 mt-2">
+        <arxrf-buyout-message
+          [show]="refillService.buyoutBannerStatus && !appContext.isSpsite"
+          [insuranceStatus]="insuranceStatus"
+          [buyoutMessage]="'Welcome to AllianceRx Walgreens Prime. If your prescriptions have been transferred to us recently, '"
+          [isBuyoutUser]="refillService.isBuyoutUser"
+          [isBuyoutUnlock]="refillService.isBuyoutUnlock"
+          [dismissible]="true"
+        ></arxrf-buyout-message>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      *ngIf="
+        !refillService.isBuyoutUnlock &&
+        insuranceStatus && insuranceStatus == 'No' &&
+        !hideInsuranceMessage  && !appContext.isSpsite
+      "
+    >
+      <div class="col-12">
+        <div class="alert alert__info">
+          <div class="alert__text-contain">
+            <span class="icon icon__info">
+              <svg alt="">
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                ></use>
+              </svg>
+            </span>
+
+            <span class="msg-text">
+              <p>
+                Add insurance information for Home Delivery refills.
+                <strong
+                  ><a (click)="redirectForInsuranceUpdate()">Continue ></a>
+                </strong>
+              </p>
+            </span>
+
+            <button
+              class="btn btn__rounded closeBtn"
+              (click)="hideInsuranceMessage = true"
+            >
+              <div class="btn__dismiss" aria-label="Alert message close"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row" *ngIf="
+    !hidelegacyMessage
+  ">
+      <div class="col-12">
+        <div class="alert alert__warn">
+          <div class="alert__text-contain">
+            <span class="icon icon__alert">
+              <svg alt="">
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                ></use>
+              </svg>
+            </span>
+
+            <div *ngIf="isMobile==='true'">
+            <span class="msg-text">
+              <p>
+                Effective August 20th, 2020, your username must be an email address.
+                <strong
+                  ><a href="{{ ROUTES.securityIformation.absoluteRoute }}">Update now ></a>
+                </strong>
+              </p>
+            </span>
+          </div>
+
+          <div *ngIf="isMobile==='false'">
+            <span class="msg-text">
+              <p>
+                <strong> Effective August 20th, 2020,</strong> your username must be an email address. For Walgreens.com accounts, we can help you
+                update your user name to an email address.
+                <strong
+                  ><a href="{{ ROUTES.securityIformation.absoluteRoute }}">Update now ></a>
+                </strong>
+              </p>
+            </span>
+          </div>
+
+            <button
+              class="btn btn__rounded closeBtn"
+              (click)="updateCookie('hidelegacyBanner');hidelegacyMessage = true"
+            >
+              <div class="btn__dismiss" aria-label="Alert message close"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+
+
+    <div class="row mt-5" *ngIf="!loaderState">
+      <div class="col-12">
+        <h1>Your prescriptions</h1>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="row text-right mt-4">
+          <div class="col-12 col-md-6">
+            <button
+              class="btn btn_transaction_primary refillPresBtn"
+              (click)="goto(ROUTES.refill.absoluteRoute)"
+            >
+              Refill prescriptions
+            </button>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <button
+              class="btn btn_light checkStatusBtn"
+              (click)="goto(ROUTES.status.absoluteRoute)"
+            >
+              Check status
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

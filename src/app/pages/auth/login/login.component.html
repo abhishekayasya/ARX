@@ -1,0 +1,189 @@
+<div class="container no-container-mobile">
+  <div class="row">
+    <div class="col-md-12 justify-content-center align-items-center">
+      <div class="loginContainer">
+        <arxrf-loader
+          [show]="showLoader"
+          message="Loading your account home..."
+          [loaderOverlay]="true"
+        ></arxrf-loader>
+        <div class="row">
+          <div class="arx-logo" *ngIf="showArxLogo">
+            <arxrf-logo></arxrf-logo>
+          </div>
+        </div>
+        <div class="row">
+          <div class="message-wrapper">
+            <arxrf-message></arxrf-message>
+          </div>
+        </div>
+        <div class="row formContainer">
+          <div class="col-md-12 bg-white reg-form">
+            <form
+              [formGroup]="loginForm"
+              class="form__on-light-bg"
+              *ngIf="!accountLocked"
+            >
+              <h1 class="h1__page-title text-center">{{ heading }}</h1>
+
+              <p class="mt-2" *ngIf="ssoLogin">
+                <!--
+                    To begin, please sign in or create a Walgreens.com account. Please have your insurance details ready.
+                    -->
+              </p>
+              <p *ngIf="!_appContext.isSpsite" class="mt-2">Already have a Walgreens account?</p>
+              <p *ngIf="!_appContext.isSpsite" class="mt-2">
+                Sign in using your Walgreens.com username and password.
+              </p>
+
+              <arxrf-loader
+                [show]="showLoader"
+                message=""
+                [loaderOverlay]="true"
+              ></arxrf-loader>
+
+              <div class="text-right mt-3">
+                <a
+                  href="{{ routes.forgotUsername.publicUrl }}"
+                  class="forgot-user"
+                  >Forgot username?</a
+                >
+              </div>
+
+              <div
+                class="form__input mt-1"
+              >
+                <span class="input__contain">
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        (loginForm.controls.username.invalid &&
+                          loginForm.controls.username.dirty) ||
+                        invalidLogin
+                    }"
+                    type="text"
+                    formControlName="username"
+                    id="username"
+                    required
+                  />
+                  <label class="input__title userNameEmail" for="username"
+                    ><span>Username/Email</span></label
+                  >
+                </span>
+              </div>
+              <div
+                class="input__error-text"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  loginForm.controls.username.invalid &&
+                  loginForm.controls.username.dirty
+                "
+              >
+                <span *ngIf="loginForm.controls.username.errors.required"
+                  ><span class="sr-only">Error </span>Please check your
+                  username. Username could be your email address.</span
+                >
+                <span *ngIf="loginForm.controls.username.errors.pattern"
+                  >Please enter valid email.</span
+                >
+              </div>
+
+              <div class="text-right mt-3">
+                <a href="/password" class="forgot-user">Forgot password?</a>
+              </div>
+
+              <div
+                class="form__input mt-1"
+              >
+                <span class="input__contain">
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        (loginForm.controls.password.invalid &&
+                          loginForm.controls.password.dirty) ||
+                        invalidLogin
+                    }"
+                    type="{{ isPasswordVisible ? 'text' : 'password' }}"
+                    formControlName="password"
+                    id="password"
+                    required
+                  />
+                  <label class="input__title" for="password"
+                    ><span>Password</span></label
+                  >
+                </span>
+              </div>
+              <fieldset class="passwordToggleContainer">
+                <legend></legend>
+                <div class="check-box">
+                  <input
+                    id="check-one"
+                    type="checkbox"
+                    tabindex="0"
+                    (change)="isPasswordVisible = !isPasswordVisible"
+                  />
+                  <label for="check-one"
+                    ><span class="check"></span
+                    ><span>Show password</span></label
+                  >
+                </div>
+              </fieldset>
+              <div
+                class="input__error-text"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  loginForm.controls.password.invalid &&
+                  loginForm.controls.password.dirty
+                "
+              >
+                <span *ngIf="loginForm.controls.password.errors.required"
+                  ><span class="sr-only">Error </span> Please re-enter your
+                  password.</span
+                >
+              </div>
+
+              <div class="mt-5">
+                <button
+                  class="btn btn_primary float-right col-md-6 col-12 mb-2"
+                  (click)="validUserFunction()"
+                >
+                  Continue
+                </button>
+              </div>
+            </form>
+
+            <div class="account__locked" *ngIf="accountLocked">
+              <h1 class="h1__page-title text-center icon__error">
+                Maximum attempts reached
+              </h1>
+              <p class="mt-4 fs-14">
+                Your account has been locked for security reasons. Please wait
+                15 minutes and try again, call customer service at 877-250-5823
+                or reset your password.
+              </p>
+
+              <div class="row text-center mt-3">
+                <div class="col-md-12 col-sm-12 col-xs-6 p-0">
+                  <button
+                    class="btn btn_primary btnBlock"
+                    routerLink="/password"
+                  >
+                    Reset password
+                  </button>
+                  <a href="/login">Try again</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-center mt-4">
+            <arxrf-reg-option [showContact]="true"></arxrf-reg-option>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<div class="row notifications__home-toolbar">
+  <div class="col-md-6">
+
+    <a href="javascript:void(0)" (click)="delete()">
+      Delete
+    </a>
+
+  </div>
+  <div class="col-md-6 text-right">
+    <p class="notifications__home-inbox-label">
+      Inbox({{provider.count.inbox}})
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <arxrf-loader [show]="loadingState"></arxrf-loader>
+</div>
+
+<div class="row" *ngIf="!loadingState && table != undefined">
+  <div class="col-md-12">
+    <table class="table bg-white notifications_inbox-list">
+      <thead>
+        <tr>
+          <th>
+            <fieldset>
+              <legend></legend>
+              <div class="check-box">
+                <input type="checkbox" name="select__all" (click)="selectAll( $event )">
+                <label><span class="check"></span><span></span></label>
+              </div>
+            </fieldset>
+          </th>
+          <th>Name</th>
+          <th>Subject</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <p *ngIf="table.total == 0">No message found in inbox</p>
+        <tr *ngFor="let message of table.list; let i = index" >
+          <td>
+            <fieldset>
+              <legend></legend>
+              <div class="check-box">
+                <input type="checkbox" name="select__{{message.messageId}}" (click)="selectForDelete( i, $event )" [checked]="message.selectedForDelete">
+                <label><span class="check"></span><span></span></label>
+              </div>
+            </fieldset>
+          </td>
+          <td>
+            <p>{{message.name}}</p>
+          </td>
+          <td class="selectable" (click)="gotoDetail( message.messageId )">
+            <p [ngClass]="{ 'unread': message.unread == 'Yes' }">
+              {{message.subject}}
+            </p>
+          </td>
+          <td>
+            <p>
+              {{message.date}}
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-12">
+    <div class="notifications__pager">
+      <div class="quantity__buttons">
+        <button class="btn btn_primary btn__rounded qtyplus" aria-label="decrease" [ngClass]="{ 'btn__disabled' : !table.prev }" (click)="table.prevPage()">
+          <span class="icon icon__minus-v2">
+            <svg alt="">
+              <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-left"></use>
+            </svg>
+          </span>
+        </button>
+
+        <p><strong>Page {{table.current}} of {{table.pages}}</strong></p>
+
+        <button class="btn btn_primary btn__rounded qtyplus" aria-label="increase" [ngClass]="{ 'btn__disabled' : !table.next }" (click)="table.nextPage()">
+          <span class="icon icon__plus-v2">
+            <svg alt="">
+              <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-right"></use>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

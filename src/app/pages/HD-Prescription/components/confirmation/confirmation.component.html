@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 page-title">
+      <h1 class="h1__page-title title-prescription text-center col"> Thank you. We received your request.</h1>
+      <h1 class="h1__page-title text-center sub-title col">A confirmation email has been sent to
+        <span>{{useremail}}</span></h1>
+    </div>
+    <div class="col-lg-12 p0">
+      <span class="print-icon print-hand" (click)="printConfirmation()"><svg alt="" width="80" height="80">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__print">
+          </use>
+        </svg></span><span (click)="printConfirmation()" class="print-text print-hand">Print</span>
+    </div>
+  </div>
+  <section class="order-info bg-color" id="print-section">
+    <div class="meta-details">
+      <div class="row">
+        <div class="shipping-details col-md-12">
+          <div>
+            <h2 class="Home-Delivery">Home Delivery</h2>
+          </div>
+          <div class="shipping-address" *ngIf="pca_flow">
+            <h3 class="home-detailsnew">Patient Information</h3>
+            <ul class="precription-list-first">
+              <li>Patient: <span>{{OrderDetailsData?.patient?.patientName}}</span></li>
+              <li>Phone: <span>{{OrderDetailsData?.patient?.patientPhoneNumber}}</span></li>
+              <li>Date of birth: <span>{{OrderDetailsData?.patient?.patientDOB}}</span></li>
+              <li>Email address: <span>{{OrderDetailsData?.patient?.patientEmail}}</span></li>
+            </ul>
+          </div>
+          <div class="shipping-address">
+            <h3 class="home-detailsnew">Prescriptions</h3>
+            <p *ngIf="!pca_flow" class="patient-name">Patient: <span>{{OrderDetailsData?.patient?.patientName }}</span>
+            </p>
+            <ul class="precription-list-first"
+              *ngFor="let prescription of OrderDetailsData.prescriptions; let i = index">
+              <li>Doctor: <span>{{prescription?.doctorName}}</span></li>
+              <li>Phone: <span>{{prescription?.doctorPhoneNumber}}</span></li>
+              <li>Drug name and strength: <span>{{prescription?.drugName}}</span></li>
+              <li>Qty: <span>{{prescription?.drugQuantity}}</span></li>
+            </ul>
+          </div>
+          <div class="shipping_address">
+            <h3 class="home-detailsnew">Shipping Address</h3>
+            <ul class="shipping-list">
+              <li>{{OrderDetailsData?.patient?.patientAddress }}</li>
+              <li>{{OrderDetailsData?.patient?.patientCity }}, {{OrderDetailsData?.patient?.patientState }}
+                {{OrderDetailsData?.patient?.patientZip }}</li>
+            </ul>
+          </div>
+          <div class="shipping_method">
+            <h3 class="home-detailsnew">Shipping method</h3>
+            <p class="home_standard">Standard (FREE)</p>
+            <ul class="shipping-add">
+              <li>5-10 business days.</li>
+              <li>Request requires additional processing time. Once authorized, your order will be shipped for free. If
+                you require expedited or overnight shipping, please call Home Delivery Pharmacy at 877-787-3047.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+  <div class="row">
+    <div class="col-12 hd-container">
+      <div class="rx-review">
+        <arxrf-loader [show]="false" [loaderOverlay]=""></arxrf-loader>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

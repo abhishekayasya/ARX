@@ -1,0 +1,7 @@
+<a href="javascript:void(0);" class="arxterms" (click)="openHipaaModal()">Notice of Privacy Practices.</a>
+<arxrf-modal [show]="isHipaaModalVisible" (update)="updateHipaaModal($event)" class="hipaaTextContainer">
+  <h2>Notice of Privacy Practices</h2>
+  <div class="termsModalContainer" [innerHTML]="common.decodeHtml(terms_content)">
+
+  </div>
+</arxrf-modal>

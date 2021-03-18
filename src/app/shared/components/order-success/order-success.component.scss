@@ -1,0 +1,237 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.orders__section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+@media print {
+  @page {
+    size: A4; /* DIN A4 standard, Europe */
+    margin: 0;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  li {
+    page-break-inside: avoid;
+  }
+}
+.orders__section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.checkout-review__container {
+  padding-top: 10px !important;
+}
+.order-info {
+  margin-top: 0px;
+}
+.hero-title {
+  margin-bottom: 0px !important;
+  padding-bottom: 10px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.h1__page-title {
+  margin: 30px 0 8px;
+}
+.short-message {
+  margin-bottom: 14px;
+  p {
+    margin-top: 5px !important;
+  }
+}
+.mail-checkout__creditcard-exist {
+  .card_update {
+    a {
+      padding-top: 6px;
+    }
+  }
+}
+.contact-us {
+  margin-top: 30px;
+  span {
+    color: #01728e;
+  }
+}
+.hero-title {
+  font-size: 32px;
+  line-height: 32px;
+  margin-bottom: 30px;
+}
+.checkout-review__container {
+  padding: 40px 40px;
+  background: #ffffff;
+  margin-bottom: 3em;
+  @media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+    padding: 0px;
+  }
+}
+
+.print-hand {
+  cursor: pointer;
+}
+
+.print-block {
+  display: inline-block;
+  left: 30px;
+}
+
+.print-icon svg {
+  color: #02a0c0;
+  position: absolute;
+  margin: -17px 0px 0px -125px;
+}
+.print-icon {
+  float: right;
+  background-color: #02a0c0;
+}
+.print-text {
+  float: right;
+  font-size: 18px;
+  //font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  color: #01728e;
+  margin: 15px 15px 15px 0;
+}
+
+.order-info {
+  padding: 5px !important;
+
+  .shipping-method {
+    h2 {
+      margin-bottom: 15px;
+    }
+  }
+}
+.orders__cleansed-referral {
+  width: 100%;
+}
+
+.rx__orderconfirm-combonav {
+  padding-top: 1em;
+  margin-bottom: 3em;
+}
+
+.rx_-combo-confirm-print {
+  margin-bottom: 2em;
+}
+
+.rx__nocombo-print {
+  padding-top: 1em;
+}
+
+.presc-summary {
+  margin-top: 14px;
+}
+.rx-review .order-info .meta-details .shipping-method {
+  margin-bottom: 10px;
+}
+.order-info .shipping-method h2,
+.rx-review .order-info .meta-details .shipping-address h2 {
+  margin-bottom: 0px;
+}
+
+@media screen and (max-width: 1023px) {
+  .shipping-method {
+    // margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .smallScreen-view {
+    padding: 0px;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .drug-icon {
+    margin-top: 12px;
+  }
+  .border__round {
+    max-width: none;
+  }
+}
+
+.Print_btn {
+  width: 230px;
+  @media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+    .Print_btn {
+      width: 130px;
+    }
+  }
+}
+
+@media screen and (min-width: $sm-screen) {
+  .drug-icon {
+    margin-top: 12px;
+  }
+  .border__round {
+    max-width: none;
+  }
+}
+
+.rx-review .order-info .presc-summary .drugs-list li {
+  margin-bottom: 20px;
+}
+.rx-review
+  .order-info
+  .presc-summary
+  .drugs-list
+  li
+  .drug-info
+  .h1__page-title {
+  font-size: 22px;
+  @media screen and (min-width: $lg-screen) {
+    // margin: 0.7rem 0 0.3rem 0;
+
+    margin-top: 0;
+  }
+}
+a.alert__text-contain {
+  padding: 0px;
+}
+.alert.alert__warn {
+  margin-bottom: 10px;
+}
+
+.br-war {
+  border: solid 1px #fcb44c;
+}
+.ft-clr {
+  color: #ac6502;
+}
+.br-none {
+  border: none !important;
+}
+.br-normal {
+  border: solid 1px #cfcfcf;
+}
+span.icon.icon__alert.icon-warn {
+  margin-right: 10px;
+  width: 5px !important;
+  min-height: 25px !important;
+}
+
+.warning-icon {
+  display: inline-block;
+  margin-top: 10px;
+}
+.va-super {
+  vertical-align: super;
+}
+
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}

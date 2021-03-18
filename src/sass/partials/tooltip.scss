@@ -1,0 +1,22 @@
+
+.ngxp__container {
+  @include themify($themes) {
+    background-color: themed("tooltip_bg_color");
+    color: themed("tooltip_fg_color");
+  }
+}
+
+.tool-tip .tool-tip__trigger {
+  @include themify($themes) {
+    color: themed("tooltip_icon_color");
+  }
+}
+
+.ngxp__container.ngxp__animation .ngxp__arrow {
+  @include themify($themes) {
+    border-color: themed("tooltip_bg_color");
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+}

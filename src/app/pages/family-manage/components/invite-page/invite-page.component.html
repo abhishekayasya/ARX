@@ -1,0 +1,62 @@
+<div class="fm-invite-parent">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="module__heading">Grant Permission</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <arxrf-message></arxrf-message>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="validInvitation">
+      <div class="col-12" *ngIf="!invitationExpired">
+
+        <p class="mt-4">Please give legal consent below for {{user}} to manage your pharmacy profile.</p>
+
+        <p class="mt-4">I give permission for {{user}} to manage my prescriptions, prescription refills, health history records and any other health information on their account. I understand that I can revoke this permission at any time.</p>
+
+        <div class="col-md-6 col-sm-12">
+          <div class="row mt-4">
+
+            <div class="col-md-2 col-sm-12 mt-2">
+              <a href="javascript:void(0)" class="decline_action" (click)="declineInvite()">Decline</a>
+            </div>
+
+            <div class="col-md-10 col-sm-12 mt-2">
+              <button class="btn btn_primary accept_action" (click)="acceptInvite()" type="button">
+                Accept
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="invitationExpired">
+      <div class="col-12">
+        <h3 class="mt-3">Invitation Expired</h3>
+
+        <p class="mt-4">
+          This invitation has expired, so we can't add you to {{user}} Family Account.
+        </p>
+
+        <p class="mt-3">
+          Please request a new invitation from {{user}}.
+        </p>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="invalidUser && invalidInvite">
+      <div class="col-12">
+        <p class="mt-4">The page you are trying to access is intended for another user.<br><a href="javascript:void(0)" (click)="logoutPersist()" >Please click here to sign out</a> and have the intended user sign in to complete this action.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+

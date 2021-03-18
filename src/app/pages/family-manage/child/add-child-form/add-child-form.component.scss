@@ -1,0 +1,24 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.instructions-list{
+  list-style: initial;
+  margin-left: 16px;
+}
+
+.form__input .input__title span {
+  text-transform: capitalize;
+}
+
+label {
+  font-family: "HelveticaNeueLTW01-55Roman" !important;
+}
+
+@media only screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .continueBtn {
+    width: 100%;
+  }
+}

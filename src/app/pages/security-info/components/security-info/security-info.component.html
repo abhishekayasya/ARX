@@ -1,0 +1,98 @@
+<arxrf-loader [show]="showLoader" loaderOverlay="true"></arxrf-loader>
+
+<arxrf-message></arxrf-message>
+<div *ngIf="securityInfoBaner" class="row">
+  <div class="col-md-12 col-xs-12 col-sm-12">
+    <div class="alert alert__info minimal">
+      <span class="alert__text-contain">
+        <span class="icon icon__info">
+          <svg class="info-color" alt="">
+            <use
+              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+            ></use>
+          </svg>
+        </span>
+        <h4 class="banner-font">
+          For your username below, enter an email address. It will be used as
+          your username for your AllianceRx Walgreens Prime and Walgreens
+          accounts.
+        </h4>
+      </span>
+    </div>
+  </div>
+</div>
+<div *ngIf="displayAlertBanner" class="alert alert__yellow">
+  <a class="alert__text-contain">
+    <span class="icon icon__alert">
+      <svg>
+        <use
+          xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+        ></use>
+      </svg>
+    </span>
+
+    <span class="alertContent">
+      <div id="alert-content">
+        <span *ngIf="!isMobile">
+          <strong>Effective August 20th, 2020</strong>, your username must be an
+          email address. For Walgreens.com accounts, we can help you update your
+          username to an email address. Please edit your username below.
+        </span>
+        <span *ngIf="isMobile">
+          Effective August 20th, 2020, your username must be an email address.
+          Please edit your username below.
+        </span>
+      </div>
+    </span>
+    <button
+      class="btn btn__rounded closeBtn"
+      (click)="updateCookie('securityInfoBanner'); displayAlertBanner = false"
+    >
+      <div class="btn__dismiss" aria-label="Alert message close"></div>
+    </button>
+  </a>
+</div>
+
+<div class="row security-info">
+  <section class="col-md-6 col-xs-12 col-sm-12 tile-block">
+    <h4>Username and Password</h4>
+    <p class="mt-2">
+      {{ user.basicProfile.userName || user.basicProfile.login }}
+    </p>
+    <button
+      class="btn btn_primary col-md-4 col-xs-12 col-sm-12"
+      (click)="
+        moveToUserInfo(routes.securityIformation.children.userinfo.route)
+      "
+    >
+      Edit
+    </button>
+  </section>
+  <section class="col-md-6 col-xs-12 col-sm-12 tile-block">
+    <h4>Security Question</h4>
+    <p class="mt-2" *ngIf="securityQuestion">{{ securityQuestion }}</p>
+    <button
+      *ngIf="securityQuestion"
+      class="btn btn_primary col-md-4 col-xs-12 col-sm-12"
+      (click)="
+        moveToSecQues(
+          routes.securityIformation.children.security_question.route
+        )
+      "
+    >
+      Edit
+    </button>
+
+    <button
+      *ngIf="!securityQuestion"
+      class="btn btn_primary col-md-4 col-xs-12 col-sm-12"
+      (click)="
+        moveToSecQues(
+          routes.securityIformation.children.security_question.route
+        )
+      "
+    >
+      Add
+    </button>
+  </section>
+</div>

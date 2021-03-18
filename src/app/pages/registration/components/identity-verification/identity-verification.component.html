@@ -1,0 +1,118 @@
+<div class="pb-4 pb-md-2 mt-3" *ngIf="isViewHidden">
+  <div class="col-md-12" *ngIf="authOptionSelected == 'KBA'">
+    <h1 class="h1__page-title reg-base text-center mb-3">Answer questions to verify identity</h1>
+    <p class="mt-2 text-center subHeadingAlign answers_align">AllianceRx Walgreens Prime will not view, access, or retain your answers for any purpose.</p>
+  </div>
+
+  <div class="col-md-12" *ngIf="authOptionSelected == 'IVR'">
+    <h1 class="h1__page-title reg-base text-center">Call us to verify identity</h1>
+  </div>
+
+  <div class="col-md-12" *ngIf="authOptionSelected === '' && !_appContext.isNewRegistrationFlow || isReselecting">
+    <h1 class="h1__page-title reg-base text-center mb-3">Verify your identity</h1>
+    <p class="text-center subHeadingAlign">To access your pharmacy records and health information, please verify your identity below.</p>
+  </div>
+</div>
+
+<div class="bg-white reg-form reg-sub-container" *ngIf="isViewHidden" [ngClass]="{
+      'phoneOptionSelectedStyle': authOptionSelected === 'IVR',
+      'd-none': _registrationService.showCircularLoader | async
+    }
+  ">
+  <div class="reg-container form__on-light-bg reg-sub-section" #signupIdentityView>
+    <div class="container no-container-mobile">
+      <div class="row">
+        <div class="identity-info" *ngIf="!authTypeSelectedStatus">
+
+          <div class="col-md-12">
+            <fieldset aria-labelledby="verifyId">
+              <legend id="verifyId">Please verify your identity</legend>
+              <div class="btn__radio authOptionsAlign" *ngFor="let type of authOptions">
+
+                <input type="radio" [id]="type.key" class="verification_option" name="verificationOption" value="{{type.key}}"
+                  (change)="updateVOption($event)" tabindex="0">
+
+                <label for="{{type.key}}">
+                  <span class="radio"></span>
+                  <span [innerHTML]="type.label"></span>
+                </label>
+
+              </div>
+            </fieldset>
+            
+            <div class="float-right">
+              <button class="btn cont_Btn_align" [ngClass]="authOptionClicked!==AUTH_ACTIONS.none.code?'btn_primary':'btn__neutral'" [disabled]="authOptionClicked===AUTH_ACTIONS.none.code" (click)="onVerificationOptionsSelected($event)">Continue</button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="verify-by-phone" *ngIf="authOptionSelected == 'IVR'">
+          <p class="mb-0">Please call <a href="tel:8005733586" class="phoneNoColor">800-573-3586</a> and provide the following unique activation code: </p>
+          <h1 class="pt-4 byPhoneAlign"><strong class="activationCodeFontSize">{{authOptionsResponse.rxAuthentication.ivrKeyCode}}</strong></h1>
+        </div>
+
+        <div class="verify-by-text" *ngIf="authOptionSelected == 'TEXT'">
+          <form class="form__on-light-bg mt-3">
+            <p>A code has been sent to ******1234 </p>
+            <div class="input__contain">
+              <input type="text" name="txtCode" id="txtCode" />
+              <label class="input__title"><span>Enter the 6-digit code</span></label>
+            </div>
+          </form>
+        </div>
+
+        <div class="verify-by-online" *ngIf="authOptionSelected == 'KBA'">
+          <ol class="list-styles list-styles__ordered ques-listing">
+            <li *ngFor="let question of onlineQuestions; index as ind" class="questionsAlignment" data-id="{{question.questionId}}">
+              <fieldset attr.aria-labelledby="{{'que-'+ind}}">
+                <legend id="{{'que-'+ind}}">{{question.question}}</legend>
+                <p><strong>{{question.question}}</strong></p>
+
+                <div class="row" *ngFor="let choise of question.choiceBeanList; index as i">
+                  <div class="col-md-12 questionnaireAlign">
+                    <div class="btn__radio radio_input_height">
+                      <input type="radio" tabindex="0" id="{{question.questionId + i}}" name="{{question.questionId}}"
+                        (change)="collectAnswer($event)" value="{{choise.choiceId}}" />
+                      <label for="{{question.questionId + i}}">
+                        <span class="radio"></span>
+                        <span>{{choise.choiceText}}</span><br />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </li>
+          </ol>          
+        </div>
+
+        <div class="kbaError" *ngIf="isKbaGenericError">
+          <p>Unfortunately, we're unable to verify your identity online. Please continue below and verify your identity by phone.</p>
+        </div>
+
+
+        <div class="col-md-12 continue_btn_fix" *ngIf="authTypeSelectedStatus">
+          <div class="mt-2 float-right">
+            <button class="btn btn_primary" (click)="compoleteVerification($event)"
+            [disabled]="!( enableIdentityContinueButton && ((_identityService.enableContinueButton) || (authOptionSelected == 'IVR')) || isKbaGenericError)"
+            [ngClass]="{
+              btn_primary: ( enableIdentityContinueButton && ((_identityService.enableContinueButton) || (authOptionSelected == 'IVR'))) || isKbaGenericError,
+              btn__neutral: !( enableIdentityContinueButton && ((_identityService.enableContinueButton) || (authOptionSelected == 'IVR')) || isKbaGenericError)
+            }">Continue</button>
+          </div>
+          
+          <div class="mt-1 float-right p-3 verify-identity-controls-cancel">
+            <a href="javascript:void(0);" class="cancel_link" (click)="reselectVerificationOption()">Cancel</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12 disclaimer" [ngClass]="{'d-none': authOptionSelected !== 'KBA'}">
+  <div class="mb-3" [ngClass]="{'d-none': (_registrationService.showCircularLoader | async)}">
+    <strong>PLEASE NOTE</strong>: If you are experiencing issues with online verification, you will receive an email once we have finished our review. If you do not receive an email within three hours of your request, please call us at <span class="disclaimer_phoneColor">877-787-3047</span>.
+  </div>
+</div>

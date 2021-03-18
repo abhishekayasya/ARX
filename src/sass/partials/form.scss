@@ -1,0 +1,88 @@
+.form__on-light-bg {
+    @include themify($themes) {
+        textarea {
+            background: themed("color_neutral");
+        }
+    }
+}
+
+.input__contain {
+    @include themify($themes) {
+        background: themed("color_neutral");
+    }
+}
+
+input[type=checkbox]:checked + label .check:before {
+    @include themify($themes) {
+        border-color: themed("checkbox_col_primary");
+        background: themed("checkbox_col_primary");
+    }
+}
+
+.check-box__green input[type=checkbox]:checked + label .check:before {
+    @include themify($themes) {
+        border-color: themed("checkbox_col_secondary");
+        background: themed("checkbox_col_secondary");
+    }
+}
+
+.check-box.disabled input[type=checkbox]:checked + label .check:before {
+    @include themify($themes) {
+        background: themed("disabled_default");
+    }
+}
+  
+.check-box.disabled figure {
+    @include themify($themes) {
+        border-color: themed("disabled_default");
+    }
+}
+  
+.check-box.disabled span {
+    @include themify($themes) {
+        color: themed("disabled_span") !important;
+        border-color: themed("disabled_default");
+    }
+}
+
+.select__contain select {
+    @include themify($themes) {
+        background: themed("color_neutral");
+    }
+}
+
+.radio, input[type=radio]:checked + label .radio {
+    @include themify($themes) {
+        border-color: themed("radio_border");
+    }
+}
+
+.radio:before {
+    @include themify($themes) {
+        background: themed("radio_bg_before");
+    }
+}
+
+input[type=radio]:checked + label .radio:before {
+    @include themify($themes) {
+        background: themed("radio_bg");
+    }
+}
+
+.input__error {
+    @include themify($themes) {
+        border-color: themed("input_error");
+    }
+}
+
+.input__error-text {
+    @include themify($themes) {
+        color: themed("input_error");
+    }
+}
+
+.input__popper {
+    @include themify($themes) {
+        border-color: themed("input_popper");
+    }
+}

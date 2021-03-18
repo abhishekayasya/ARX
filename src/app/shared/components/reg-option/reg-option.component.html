@@ -1,0 +1,18 @@
+<p *ngIf="showReg">Need an account?  <a class="registerNowLink" href="javascript:void(0);" (click)="redirectToRegisteration()">Register now</a> </p>
+
+<arxrf-modal [show]="regOptions" cssClasses="bg-white">
+  <div class="rx__registration-option text-left">
+    <h1 class="h1__page-title">Already a Walgreens customer?</h1>
+    <p class="mt-3 mb-3">Walgreens.com and AllianceRx Walgreens Prime credentials are actually the same. Use them interchangeably.  </p>
+
+    <div class="row">
+      <div class="col">
+        <button class="btn btn__neutral" (click)="selectionProcess('N')">No, create new account</button>
+      </div>
+
+      <div class="col">
+        <button class="btn btn_primary" (click)="selectionProcess('E')">Yes, use existing account </button>
+      </div>
+    </div>
+  </div>
+</arxrf-modal>

@@ -1,0 +1,31 @@
+.inactive__message-container {
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+  width: 100%;
+  background-color: #FCB44C;
+
+  .inactive__message {
+    width: 100%;
+    text-align: center;
+    padding: 0.5em;
+
+    p {
+      display: inline-block;
+      vertical-align: text-bottom;
+      font-weight: bold;
+      a {
+        color: #007bff;
+      }
+    }
+    span.icon {
+      display: inline-block;
+    }
+  }
+}
+
+#app__root__section {
+  padding-bottom: 84px;
+  margin-bottom: -16px;
+}
+

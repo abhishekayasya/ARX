@@ -1,0 +1,21 @@
+.invitation-details{
+    border-top: 1px solid #cfcfcf;
+    margin: 40px 0;
+    .detailLabel{
+        font-size: 14px;
+    }
+    .detailValue{
+        font-size: 12px;
+    }
+    strong.detailLabel{
+        font-size: 18px;
+    }
+}
+
+.form__input .input__title{
+    text-transform: capitalize;
+}
+
+.input__title span{
+    font-size: 15px;
+}

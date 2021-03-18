@@ -1,0 +1,248 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+
+.title-prescription{
+  font-size: 28px;
+  line-height: 1.21;
+  text-align: center;
+}
+.sub-title{
+  font-size: 18px;
+  line-height: 1.83;
+}
+
+.cancel-color[_ngcontent-c4] {
+  color: #01728E !important;
+}
+
+.title-prescription,.sub-title{
+  font-family: HelveticaNeueLTW01-45Light;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  color: #404040;
+}
+.card_number{
+  padding-right: 29px;
+  padding-left: 27px;
+  line-height: 2.83;
+}
+.Home-Delivery{
+    font-size: 28px;
+    line-height: 2.83;
+}
+.Home-Delivery .home-details .precription-list .shipping-list .shipping-add{
+    
+    font-family: HelveticaNeueLTW01-45Light;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    color: #404040;
+  }
+  
+  .shipping-details li{
+    line-height: 1.83;
+  }
+.home-details{
+    
+    font-size: 22px;
+    line-height: 2.83;
+   }
+
+  .shipping-list{
+  font-size: 18px;
+  }
+
+.precription-list{
+ font-size: 18px;
+ font-weight: bold;
+}
+.precription-list1{
+  font-size: 18px;
+  margin-top: 15px;
+ }
+ .shipping-add{
+    font-size: 16px;
+ }
+
+  .print-img{
+    width: 60px;
+    height: 60px;
+  
+  }
+.print-icon svg{
+  color: #02a0c0;
+  position: absolute;
+  margin: -17px 0px 0px -115px;
+
+}
+.print-icon{
+  float: right;
+   background-color: #02a0c0;
+}
+ .print-text{
+  float: right;
+  font-family: HelveticaNeueLTStd-Bd;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  color: #01728e;
+  margin: 15px;
+}
+.navbar {
+    width: 100%;
+    overflow: auto;
+  }
+  
+  .navbar a {
+    float: right;
+    padding: 12px;
+    color: #02a0c0;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .navbar-nav{
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+
+.submit_request_btn {
+  // margin-top: 30px;
+  margin-bottom: 100px;
+  background-color: #02a0c0;
+  font-size: 18px;
+}
+
+
+//Apply media query i pad only
+@media all and (device-width: 768px) and (device-height: 1024px) {
+  .btn_primary, .btns_width {
+    width: 16.625em !important;
+ }
+};
+
+@media screen and (min-width: $xs-screen) and (max-width: $md-screen){
+
+  .btn_primary, .btns_width{
+    width: 100%;
+  }
+ 
+  
+
+}
+
+.transfer-shipping-method{
+  max-width: 50%;
+}
+
+.transfer-shipping-method select {
+  // background: #f7f7f7;
+  // border-radius: 5px;
+  // padding: 22px 20px 9px 20px;
+  cursor: pointer;
+ // width: 350px;
+}
+.transfer-shipping-method .icon__arrow-down {
+  position: absolute;
+  left: 276px;
+  color: #01728E;
+  min-width: 13px;
+  pointer-events: none;
+  width: 20px;
+}
+// .transfer-shipping-method label {
+//   position: absolute;
+//   font-size: 11px;
+//   left: 84px;
+//   margin-top: 4px;
+// }
+.edit-link{
+  width: 48px;
+  display: inline-block;
+  text-align: right;
+  font-size: 14px;
+}
+.change-address-link{
+  width: 136px;
+  display: inline-block;
+  text-align: right;
+  font-size: 14px;
+}
+.cancel_btn{
+  box-shadow: none;
+  color: #05728e;
+  font-size: 18px;
+}
+.payment-details1{
+  max-width: 50%;
+  margin-top: 20px;
+}
+.save-card{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.form__input .input__title span {
+  text-transform: capitalize;
+}
+
+.shipping-msg{
+  font-size: 16px;
+  margin-top: 20px;
+  line-height: 1.83;
+}
+.add_address_btn{
+  background-color: #02a0c0;
+  font-size: 18px;
+}
+.cancel_btn_add{
+  background: #fff;
+  box-shadow: none;
+  color: #05728e;
+}
+.bold{
+  font-weight: bold;
+  font-size: 18px;
+}
+.color__bg{
+  background: #f9f9f9;
+}
+.text-right-can{
+  text-align: right;
+}
+.rm_line{
+  text-decoration: none;
+}
+
+@media screen and (max-width: $md-screen) {
+  .transfer-shipping-method{
+    max-width: 100%;
+  }
+ 
+}
+
+@media screen and (max-width: $sm-screen) {
+  .title-prescription{
+    text-align: left;
+    margin-left: -17px;
+  }
+  .text-right-can{
+    text-align: center;
+  }
+}
+
+.btn-center {
+  margin: 0 auto !important;
+  display: block;;
+}
+

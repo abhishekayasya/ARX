@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ad-alliancerx-www</groupId>
+    <artifactId>alliancerx-www</artifactId>
+    <version>5.2.37-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>alliancerx-www-refillhub</artifactId>
+
+  <packaging>pom</packaging>
+  <name>AllianceRx www :: Refill Hub</name>
+  <description></description>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <!-- Use the latest released version:
+        https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+        <version>1.10.0</version>
+
+        <executions>
+          <execution>
+            <!-- optional: you don't really need execution ids, but it looks nice in your build log. -->
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <!-- optional: default phase is "generate-resources" -->
+            <phase>generate-resources</phase>
+          </execution>
+
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>npm build</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <!-- optional: The default argument is actually
+              "install", so unless you need to run some other bower command,
+              you can remove this whole <configuration> section.
+              -->
+              <arguments>run build</arguments>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>npm update-libraries</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <!-- optional: The default argument is actually
+              "install", so unless you need to run some other bower command,
+              you can remove this whole <configuration> section.
+              -->
+              <arguments>run update-libraries</arguments>
+            </configuration>
+          </execution>
+        </executions>
+
+        <configuration>
+          <nodeVersion>v12.18.3</nodeVersion>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

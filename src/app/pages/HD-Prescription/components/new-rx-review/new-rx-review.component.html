@@ -1,0 +1,460 @@
+<div>
+  <h1
+    class="title-prescription text-lg-center text-md-center text-sm-left col-lg-12 mt-2"
+  >
+    Review New Home Delivery Prescription
+  </h1>
+</div>
+
+<div class="form-row">
+  <div class="col-12">
+    <arxrf-loader
+      [show]="loader"
+      [message]="loaderMessage"
+      [loaderOverlay]="loaderOverlay"
+    ></arxrf-loader>
+  </div>
+</div>
+<div class="container bg-grey">
+  <section class="order-info">
+    <div class="meta-details">
+      <!-- Prescription method -->
+
+      <h2 class="home-details">
+        {{ getHeaderText
+        }}<a
+          href="javascript:void(0);"
+          (click)="goBackPrescriptionPage('patientInfo')"
+          role="button"
+          class="edit-link"
+          >Edit</a
+        >
+      </h2>
+
+      <div class="presc-summary">
+        <div class="form-row">
+          <div
+            class="drug-info col-10 mt-2"
+            *ngIf="pcaType !== 'new' && pcaType !== 'transfer'"
+          >
+            <p class="break-line" *ngIf="patientInfo?.patientName"></p>
+            <p *ngIf="patientInfo?.patientName">
+              <strong>Patient: {{ newRxDetails?.patient?.patientName }}</strong>
+            </p>
+          </div>
+          <div *ngIf="pcaType === 'new'" class="drug-info col-10 mt-2">
+            <p class="break-line" *ngIf="patientInfo?.patientName"></p>
+            <p *ngIf="patientInfo?.patientName">
+              Patient: {{ patientInfo.patientName }}
+            </p>
+
+            <p class="break-line" *ngIf="patientInfo?.patientPhoneNumber"></p>
+            <p *ngIf="patientInfo?.patientPhoneNumber">
+              Phone: {{ patientInfo.patientPhoneNumber }}
+            </p>
+
+            <p class="break-line" *ngIf="patientInfo?.patientDOB"></p>
+            <p *ngIf="patientInfo?.patientDOB">
+              Date of birth: {{ patientInfo.patientDOB | date: "MM/dd/yyyy" }}
+            </p>
+
+            <p class="break-line" *ngIf="patientInfo?.patientEmail"></p>
+            <p *ngIf="patientInfo?.patientEmail">
+              Email address: {{ patientInfo.patientEmail }}
+            </p>
+          </div>
+        </div>
+
+        <h2 *ngIf="pcaType === 'new'" class="home-details">
+          Prescription Information<a
+            href="javascript:void(0);"
+            (click)="goBackPrescriptionPage('prescriptions')"
+            role="button"
+            class="edit-link"
+            >Edit</a
+          >
+        </h2>
+
+        <ul class=" rx-prescription-list">
+          <li
+            *ngFor="
+              let prescription of newRxDetails.prescriptions;
+              let i = index
+            "
+          >
+            <div class="form-row">
+              <div class="drug-info col-10 col-sm-12 col-xs-12">
+                <p class="break-line mt-3" *ngIf="prescription?.doctorName"></p>
+                <p *ngIf="prescription?.doctorName">
+                  Doctor: {{ prescription.doctorName }}
+                </p>
+
+                <p
+                  class="break-line"
+                  *ngIf="prescription?.doctorPhoneNumber"
+                ></p>
+                <p *ngIf="prescription?.doctorPhoneNumber">
+                  Phone: {{ prescription.doctorPhoneNumber }}
+                </p>
+
+                <p class="break-line" *ngIf="prescription.drugName"></p>
+                <p *ngIf="prescription?.drugName">
+                  Drug name and Strength: {{ prescription.drugName }}
+                </p>
+
+                <p class="break-line" *ngIf="prescription?.drugQuantity"></p>
+                <p *ngIf="prescription?.drugQuantity">
+                  Qty: {{ prescription.drugQuantity }}
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="pcaType === 'new'">
+        <h2 class="home-details">
+          Shipping address<a
+            href="javascript:void(0);"
+            (click)="goBackPrescriptionPage('shippingAddress')"
+            role="button"
+            class="edit-link"
+            >Edit</a
+          >
+        </h2>
+
+        <ul class="rx-prescription-list">
+          <li>
+            <div class="form-row">
+              <div class="drug-info col-10 col-sm-12 col-xs-12">
+                <p>{{ patientInfo.patientAddress }}</p>
+                <p>{{ patientInfo.patientAddressLine2 }}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!--  Shipping address  template-->
+      <div
+        class="presc-summary  mt-3"
+        *ngIf="pcaType !== 'new' && pcaType !== 'transfer'"
+      >
+        <div class="shipping-details">
+          <div class="">
+            <h2 class="home-details">
+              Shipping address
+              <a
+                *ngIf="!addshippingaddress"
+                (click)="editShippAddress()"
+                href="javascript:void(0);"
+                class="change-address-link"
+                >Edit</a
+              >
+            </h2>
+          </div>
+
+          <div *ngIf="!addshippingaddress">
+            <p>{{ newRxDetails?.patient?.patientAddress }}</p>
+            <p>
+              {{ newRxDetails?.patient?.patientCity
+              }}{{ newRxDetails?.patient?.patientCity ? "," : "" }}
+              {{ newRxDetails?.patient?.patientState }}
+              {{ newRxDetails?.patient?.patientZip }}
+            </p>
+          </div>
+
+          <div *ngIf="addshippingaddress">
+            <form
+              class="form__on-light-bg"
+              [formGroup]="_editAddressForm"
+              autocomplete="off"
+            >
+              <div class="col-md-6 col-sm-12 mt-3 p-0">
+                <div
+                  class="form__input"
+                >
+                  <span class="input__contain">
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          _editAddressForm.controls.street.invalid &&
+                          (_editAddressForm.controls.street.touched ||
+                            _editAddressForm.controls.street.dirty)
+                      }"
+                      formControlName="street"
+                      id="street"
+                    />
+                    <label class="input__title" for="address">
+                      <span>Address</span>
+                    </label>
+                  </span>
+                </div>
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    _editAddressForm.controls.street.invalid &&
+                    (_editAddressForm.controls.street.touched ||
+                      _editAddressForm.controls.street.dirty)
+                  "
+                >
+                  <span *ngIf="_editAddressForm.controls.street.errors.required || _editAddressForm.controls.street.errors.whitespace"
+                    ><span class="sr-only">Error </span>Address is
+                    required</span
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12 mt-3 p-0">
+                <div class="form__input">
+                  <span
+                    class="input__contain"
+                    >
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          _editAddressForm.controls.city.invalid &&
+                          (_editAddressForm.controls.city.touched ||
+                            _editAddressForm.controls.city.dirty)
+                      }"
+                      type="text"
+                      formControlName="city"
+                      id="city"
+                      pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+                      required
+                    />
+                    <label class="input__title" for="city">
+                      <span>City</span>
+                    </label>
+                  </span>
+                </div>
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    _editAddressForm.controls.city.invalid &&
+                    (_editAddressForm.controls.city.touched ||
+                      _editAddressForm.controls.city.dirty)
+                  "
+                >
+                  <span *ngIf="_editAddressForm.controls.city.errors.required"
+                    ><span class="sr-only">Error </span>City is required.</span
+                  >
+                  <span *ngIf="_editAddressForm.controls.city.errors.pattern"
+                    >Please enter a valid City</span
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12 mt-3 p-0 expiry_zip_container">
+                <div class="form-row">
+                  <div class="col-md-8 col-sm-12 mt-2">
+                    <span
+                      class="select__contain form__input"
+                      [ngClass]="{
+                        input__error:
+                          _editAddressForm.controls.state.invalid &&
+                          (_editAddressForm.controls.state.touched ||
+                            _editAddressForm.controls.state.dirty)
+                      }"
+                    >
+                      <label for="select-dropdown">State</label>
+                      <span class="icon icon__arrow-down rx-margin-right-16">
+                        <svg alt="">
+                          <use
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                          ></use>
+                        </svg>
+                      </span>
+                      <select formControlName="state" id="state">
+                        <option value="" class="" selected>State</option>
+                        <option
+                          *ngFor="let state of STATE_US"
+                          value="{{ state.short_name }}"
+                        >
+                          {{ state.name }}
+                        </option>
+                      </select>
+                    </span>
+                    <div
+                      class="input__error-text"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        _editAddressForm.controls.state.invalid &&
+                        (_editAddressForm.controls.state.touched ||
+                          _editAddressForm.controls.state.dirty)
+                      "
+                    >
+                      <span
+                        *ngIf="_editAddressForm.controls.state.errors.required"
+                        ><span class="sr-only">Error </span>State is
+                        required.</span
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-12 mt-2">
+                    <span
+                      class="input__contain"
+                      >
+                      <input
+                        class="input__focus"
+                        [ngClass]="{
+                          input__error:
+                            _editAddressForm.controls.zipCode.invalid &&
+                            (_editAddressForm.controls.zipCode.touched ||
+                              _editAddressForm.controls.zipCode.dirty)
+                        }"
+                        type="text"
+                        formControlName="zipCode"
+                        id="zipCode"
+                        pattern="^[0-9]{5,5}$"
+                        [specified-input]="_editAddressForm.controls.zipCode"
+                        invalidExp="[^0-9]"
+                        maxlength="5"
+                        required
+                      />
+                      <label class="input__title" for="zipCode">
+                        Zip Code
+                      </label>
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    _editAddressForm.controls.zipCode.invalid &&
+                    (_editAddressForm.controls.zipCode.touched ||
+                      _editAddressForm.controls.zipCode.dirty)
+                  "
+                >
+                  <span
+                    *ngIf="_editAddressForm.controls.zipCode.errors.required"
+                    ><span class="sr-only">Error </span>Zip Code is
+                    required.</span
+                  >
+                  <span *ngIf="_editAddressForm.controls.zipCode.errors.pattern"
+                    >Please enter valid Zip Code</span
+                  >
+                </div>
+
+                <div class="shipping-msg mt-2">
+                  Editing the address for this order will not update your
+                  account.
+                </div>
+
+                <div
+                  class="form-row flex-column-reverse flex-sm-row mt-3"
+                  *ngIf="editshippingaddress"
+                >
+                  <div class="col-md-4  col-sm-12"></div>
+                  <div class="col-md-4  col-sm-12 mt-2 btn__pair text-center">
+                    <a
+                      href="javascript:void(0);"
+                      class="secondary cancel_btn btn-center"
+                      (click)="cancelShippAddress()"
+                      >Cancel</a
+                    >
+                  </div>
+                  <div class="col-md-4  col-sm-12 mt-2">
+                    <button
+                      class="btn btn_primary"
+                      (click)="updateShippAddress()"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
+
+                <div class="row mt-3" *ngIf="enableaddbutton">
+                  <div class="col-md-6 col-lg-6 col-sm-12"></div>
+                  <div class="col-md-6 col-lg-6 col-sm-12 text-right">
+                    <button
+                      class="btn btn_primary"
+                      (click)="updateShippAddress()"
+                    >
+                      Add address
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!--Availble shipping template -->
+      <div class="presc-summary  mt-2">
+        <h2 class="home-details">Shipping method</h2>
+        <p class="home_standard">Standard (FREE)</p>
+        <p class="body-copy__fourteen">{{ shippingMethod.message }}</p>
+        <div class="col-md-6 col-sm-12 p-0">
+          <p class="body-copy__fourteen">
+            Request requires additional processing time. Once authorized, your
+            order will be shipped for free. If you require expedited or
+            overnight shipping, please call Home Delivery Pharmacy at
+            877-787-3047.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+  <div class="container p-0 mt-3">
+    <div
+      class="d-flex flex-column-reverse flex-sm-row  pb-3 justify-content-md-end btn__pair"
+    >
+      <a
+        href="javascript:void(0);"
+        class="secondary cancel_btn mt-2"
+        (click)="cancelRequest()"
+        >Cancel</a
+      >
+      <button
+        [ngClass]="[
+          addshippingaddress
+            ? 'btn btn__disabled disabled mt-2 btns_width'
+            : 'btn btn_primary mt-2'
+        ]"
+        [disabled]="addshippingaddress"
+        (click)="submitPrescription()"
+      >
+        Submit request
+      </button>
+    </div>
+    <!--  -->
+  </div>
+  <!--  Submit and cancel button section  start -->
+</div>
+
+<arxrf-modal
+  [show]="upgradeCancelModel"
+  cssClasses="bg-grey"
+  (update)="hideUpgradeCancelModel($event)"
+>
+  <p class="mt-2">
+    Are you sure you want to cancel this request for a new prescription? Your
+    information won’t be saved.
+  </p>
+  <div class="modal__bottom-actions">
+    <div
+      class="d-flex flex-column-reverse btn__pair flex-sm-row pb-3 justify-content-md-end"
+    >
+      <a
+        href="javascript:void(0);"
+        class="secondary cancel_btn mt-2"
+        (click)="hideUpgradeCancelModel(false)"
+        >No, go back</a
+      >
+      <button class="btn btn_primary mt-2" (click)="cancelUpgradeProcess()">
+        Yes, cancel request
+      </button>
+    </div>
+  </div>
+</arxrf-modal>

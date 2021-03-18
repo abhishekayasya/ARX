@@ -1,0 +1,79 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.registrationContainer{
+  margin: 0 auto;
+  max-width: 600px;
+    .reg-form{
+      padding: 1.5rem;
+    }
+}
+
+.h1__page-title {
+  color: #00a2c7;
+  font-size: 30px !important;
+  font-family: 'open_sanslight' !important;
+}
+p {
+  font-size: 16px;
+  font-family: 'open_sansregular' !important;
+  line-height: 24px;
+}
+.reg-sub-container {
+  margin-top: 10px;
+  padding: 14px 24px 24px 24px;
+  margin-bottom: 48px;
+  box-shadow: 0px 2px 4px 0px #bfbfbf;
+}
+
+.heading_align {
+  height: 68px;
+  display: flex;
+  justify-content: center;
+}
+
+.phoneNoColor {
+  color: #00819e !important;
+}
+
+.reg-status-dot {
+  margin-bottom: 15px;
+}
+
+@media screen and (min-width: $md-screen) {
+  .reg-sub-section {
+    padding: 20.25px 65px 26.25px 87px;
+  }
+  .reg-sub-container {
+    width: 600px !important;
+  }
+}
+
+@media screen and (min-width: $sm-screen) and (max-width: $md-screen) {
+  .reg-sub-section  {
+    padding: 0px 24px;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .reg-sub-section  {
+    padding: 0px 13px 15px 20px;
+  }
+  .reg-sub-container {
+    margin: 0px 10px 10px 10px;
+  }
+  .heading_align {
+    height: 102px;
+    margin: 5px auto;
+    width: 320px;
+  }
+  .reg-status-dot {
+    margin-bottom: 7px;
+  }
+  .reg-status-container {
+    margin-bottom: 44px;
+  }
+}

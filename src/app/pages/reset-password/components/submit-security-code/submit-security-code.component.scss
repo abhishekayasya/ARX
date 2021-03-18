@@ -1,0 +1,40 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+  .input__contain .input__title {
+    text-transform: none;
+  }
+
+  .icon__check {
+    vertical-align: -4px;
+  }
+
+  .codeMsgFontSize {
+    font-size: 16px;
+  }
+
+  .forget-password-form {
+    padding-top: 60px;
+    padding-bottom: 50px;
+    padding-left: 90px;
+    padding-right: 90px;
+  }
+
+  .continueBtn {
+    width: 170px;
+  }
+
+  @media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+    .forget-password-form {
+      padding: 1rem;
+    }
+    .btn_primary {
+      width: 100%;
+    }
+    .regAnotherCode {
+      text-align: center;
+    }
+  }

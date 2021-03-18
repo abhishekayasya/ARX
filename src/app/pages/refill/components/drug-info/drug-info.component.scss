@@ -1,0 +1,13 @@
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+  .confirmationButtons{
+    div:nth-child(2){
+      margin-top: 10px;
+    }
+  }
+}
+
+.rx__druginfo-container {
+  margin-left: 7%;
+  max-width: 600px;
+}

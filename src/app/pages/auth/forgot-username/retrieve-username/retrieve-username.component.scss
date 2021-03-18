@@ -1,0 +1,30 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.input__contain span {
+    text-transform: capitalize;
+}
+
+.btn:disabled {
+    opacity: 1;
+}
+
+.retrieveUsername-form{
+  padding: 3rem;
+}
+
+.retrieveUsername-form {
+    padding: 3em;
+    border-radius: 5px;
+    padding-left: 90px;
+    padding-right: 90px;
+}
+
+@media only screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+  .retrieveUsername-form {
+    padding: 2rem 1rem;
+  }
+}

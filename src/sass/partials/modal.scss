@@ -1,0 +1,15 @@
+.termsModalContainer {
+    @include themify($themes) {
+        p {
+            font-size: themed("termsModalContainer_p_size");
+        }
+      }
+}
+
+.modal {
+    @include themify($themes) {
+        h2 {
+            font-size: themed("modal_h2_font_size");
+        }
+    }
+}

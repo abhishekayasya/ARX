@@ -1,0 +1,104 @@
+.Clinical-review-for {
+  width: 100%;
+  height: 40px;
+  font-family: "HelveticaNeueLTW01-55Roman", Arial, Sans-Serif;
+  font-size: 28px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.21;
+  letter-spacing: normal;
+  text-align: center;
+  color: #404040;
+}
+
+.Have-you-had-any-cha {
+  width: 466px;
+  height: 66px;
+  font-family: HelveticaNeueLTStd-Bd;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  color: #404040;
+}
+
+.step_btn {
+  width: 100%;
+}
+
+.textarea-box {
+  background-color: #f7f7f7;
+}
+
+.container-box {
+  min-height: calc(60vh);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.select__contain select {
+  padding: 22px 40px 9px 20px;
+}
+
+.heading-inline {
+  span {
+    i {
+      display: inline;
+    }
+  }
+}
+
+.select__contain {
+  select ~ label {
+    transition: 0.2s;
+  }
+  select.selected_float ~ label {
+    font-size: 1rem;
+    top: 1rem;
+    font-weight: bold;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .step_btn {
+    width: 218px;
+  }
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+// .errordialog{
+//     top:-300px;
+// }
+.modal-footer,
+.modal-header {
+  border: 0px;
+}
+.modal-content {
+  padding: 35px;
+}
+.modal-header {
+  font-weight: 600;
+  font-size: 20px;
+  padding-bottom: 0px;
+}
+.checkBox {
+  position: relative;
+  height: auto;
+  padding-top: 12px !important;
+}
+
+.checkBox-label {
+  max-width: 85%;
+}

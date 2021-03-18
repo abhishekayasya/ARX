@@ -1,0 +1,11 @@
+.tabs li.selected {
+    @include themify($themes) {
+      background: themed("tab_bg_color");
+    }
+  }
+
+  .tab-content-bgcolor {
+    @include themify($themes) {
+        background: themed("tab_bg_color");
+      }
+  }

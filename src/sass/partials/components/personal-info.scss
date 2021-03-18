@@ -1,0 +1,5 @@
+.remove-item {
+    @include themify($themes) {
+        color: themed("personal_info_remove_item_color");
+      }
+}

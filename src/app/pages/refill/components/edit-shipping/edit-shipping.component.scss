@@ -1,0 +1,53 @@
+.creditCardSummary{
+  margin-top: 26px;
+
+  .creditCardUpdateBtn{
+    p{
+      display: inline-block;
+    }
+
+    a{
+      float: right;
+      clear: both;
+    }
+  }
+
+  .cardDetails{
+    span{
+      width: 25%;
+      display: inline-block;
+    }
+    .icon__credit-card{
+      display: inline;
+
+      svg{
+        width: 46px;
+      }
+    }
+    .setMargin {
+      margin-left: 57px;
+    }
+  }
+}
+#card_zip{
+  padding-left:21px;
+}
+
+.input__contain .input__title span {
+  text-transform: capitalize;
+}
+.select__contain.input__error {
+  border-radius: 5px;
+}
+
+.paymentInfo{
+  label{
+    width: 100%;
+  }
+}
+
+input[type="checkbox"]:focus+label, select:focus {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+

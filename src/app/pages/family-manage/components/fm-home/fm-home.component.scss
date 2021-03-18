@@ -1,0 +1,131 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.fm__home {
+  .borderBtm {
+    border-bottom: solid 1px #cfcfcf;
+  }
+  .fm__home-header {
+    padding: 2em 0em;
+    span.icon {
+      min-width: 70px;
+      min-height: 70px;
+      @media screen and (max-width: $md-screen) {
+        min-width: 50px;
+        min-height: 50px;
+        margin-bottom: 1em;
+      }
+    }
+
+    @media screen and (max-width: $sm-screen) {
+      text-align: center;
+    }
+  }
+  .fm__home-member-list {
+    padding: 0px 15px;
+  }
+  .fm__home-nomembers {
+    p {
+      width: 100%;
+    }
+    ul {
+      margin-top: 1em;
+      margin-left: 1em;
+      li {
+        list-style-type: disc;
+        margin-top: 0.5em;
+      }
+    }
+  }
+  .fm__home-member {
+    padding: 2em 0em;
+    .member_info {
+      .member_info-name {
+        font-size: 21px;
+        margin-bottom: 0.5em;
+        @media screen and (max-width: $sm-screen) {
+          width: 60%;
+          display: inline-block;
+        }
+      }
+      .member_info-remove {
+        @media screen and (max-width: $sm-screen) {
+          display: inline-block;
+        }
+      }
+    }
+    border-bottom: solid 1px #cfcfcf;
+  }
+
+  .fm__home-footer {
+    padding: 2em 0em;
+    .fm__home-footer-action {
+      margin-top: 1em;
+      button {
+        width: 100%;
+      }
+    }
+    .col-md-3 {
+      margin-right: 1em;
+    }
+  }
+
+  .fm__home-homedelivery {
+    margin-top: 1em;
+    background-color: #e8f2f6;
+    padding: 3em 1em;
+    button {
+      @media screen and (max-width: $sm-screen) {
+        width: 100%;
+        margin-top: 1em;
+      }
+    }
+  }
+}
+
+.alert.minimal {
+  .alert__text-contain {
+    width: 100% !important;
+  }
+}
+
+.add-adult-steps {
+  list-style-type: decimal;
+  li {
+    margin-bottom: 2em;
+  }
+}
+
+.add-adult-continue {
+  width: 258px;
+}
+
+.remove_model_btn {
+  width: 258px;
+}
+
+.account__status-pending {
+  margin-left: 1em;
+  vertical-align: middle;
+}
+
+select:focus {
+  outline: #4d90fe solid 2px;
+  // outline-style: auto;
+}
+
+.input_error {
+  border: 2px solid red;
+}
+.input_error_text {
+  color: red;
+}
+.resend {
+  color: #01728e !important;
+}
+.color-blk {
+  color: #000;
+}

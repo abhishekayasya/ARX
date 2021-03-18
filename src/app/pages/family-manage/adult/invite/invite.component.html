@@ -1,0 +1,100 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="module__heading">Add an Adult</div>
+    </div>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <p>Send an invite to {{adultService.personalInfo.firstName}} to join your Family Prescriptions account. They have 1 week to accept before your invitation expires.</p>
+    </div>
+  </div>
+
+  <div class="row mt-3" *ngIf="adultService.email_exit">
+    <div class="col-12">
+      <p>Select one of the following to receive your invite:</p>
+    </div>
+  </div>
+
+  <div class="row mt-4 fm__add-adult-invite">
+
+    <div class="col-md-6">
+      <fieldset>
+        <legend></legend>
+        <div class="btn__radio mt-4" *ngIf="adultService.email_exit">
+
+          <input type="radio"
+                 name="inviteEmail"
+                 value="{{adultService.email_exit}}"
+                 tabindex="0"
+                 [(ngModel)]="email_option"
+                 (change)="newEmailForm.reset()">
+
+          <label>
+            <span class="radio"></span>
+            <span [innerHTML]="adultService.email_exit"></span>
+          </label>
+
+        </div>
+
+        <div class="btn__radio mt-4 mb-2">
+
+          <input type="radio"
+                 name="inviteEmail"
+                 value="new"
+                 tabindex="0"
+                  [(ngModel)]="email_option"
+          (change)="newEmailForm.reset()">
+
+          <label>
+            <span class="radio"></span>
+            <span>Enter a new email address</span>
+          </label>
+
+        </div>
+
+        <form class="form__on-light-bg" [formGroup]="newEmailForm" *ngIf="email_option == 'new'">
+
+          <div class="form__input formInput col-12 mt-3">
+            <span class="input__contain">
+              <input 
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': newEmailForm.controls.email.invalid && newEmailForm.controls.email.touched
+                }"
+                type="text" 
+                formControlName="email"
+              >
+              <label class="input__title">
+                <span>Email</span>
+              </label>
+            </span>
+            <span class="input__error-text" *ngIf="newEmailForm.controls.email.invalid && newEmailForm.controls.email.touched">
+              <span *ngIf="newEmailForm.controls.email.errors.pattern">Please enter valid email.</span>
+              <span *ngIf="newEmailForm.controls.email.errors.required">Please enter email address.</span>
+            </span>
+          </div>
+
+        </form>
+      </fieldset>
+
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 row align-items-center flex-sm-row-reverse inviteCancelLink mt-5">
+    <button class="btn btn_primary sendInviteBtn col-md-8 col-lg-8" type="button" (click)="sendInviteToMember()">Send Invite</button>
+    
+    <div class="col-md-4 col-lg-4 cancelLink">
+      <a href="javascript:void(0)" [routerLink] ="ROUTES.family_management.absoluteRoute"><strong>Cancel</strong></a>
+    </div>
+  </div>
+
+</div>

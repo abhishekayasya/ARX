@@ -1,0 +1,8 @@
+<div *ngIf="show" [ngClass]="{ 'loading-wrapper': loaderOverlay }">
+<div class="load-wrap">
+  <figure class="loading__dots"><span></span></figure>
+  <div class="mt-4" *ngIf="show"><h5>{{message}}</h5></div>
+</div>
+</div>
+
+

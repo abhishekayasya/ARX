@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 justify-content-center align-items-center">
+      <div class="verify-identity-outercon">
+        <div class="row">
+          <div class="arx-logo">
+            <arxrf-logo></arxrf-logo>
+          </div>
+        </div>
+        <arxrf-message></arxrf-message>
+        <div class="" [hidden]="blokermessage">
+          <a class="backLink" (click)="backAction('securityquestion')">
+            <span class="icon icon__arrow-left">
+              <svg alt="">
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-left"
+                ></use>
+              </svg>
+            </span>
+            <strong>Back</strong>
+          </a>
+        </div>
+        <arxrf-loader
+          [show]="showLoader"
+          message="Loading..."
+          [loaderOverlay]="true"
+        ></arxrf-loader>
+
+        <div class="verify-identity-innercon" [hidden]="blokermessage">
+          <h1 class="h1__page-title text-center">Verify your Identity</h1>
+          <div class="msg-content">
+            Please answer the following security question to verify your
+            identity:
+            <div *ngIf="selectedSecurityQue">
+              {{ selectedSecurityQue.question }}
+            </div>
+          </div>
+          <form [formGroup]="securityquestionForm">
+            <fieldset>
+              <legend></legend>
+              <div class="form__input mt-1">
+                <span
+                  class="input__contain"
+                  >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        securityquestionForm.controls.sec_ans.invalid &&
+                        (securityquestionForm.controls.sec_ans.touched ||
+                          securityquestionForm.controls.sec_ans.dirty)
+                    }"
+                    type="password"
+                    formControlName="sec_ans"
+                    id="sec_ans"
+                    maxlength="40"
+                    required
+                    autocomplete="off"
+                  />
+                  <label class="input__title " for="sec_ans"
+                    ><span>Enter your security answer</span></label
+                  >
+                </span>
+              </div>
+              <div
+                class="input__error-text"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  securityquestionForm.controls.sec_ans.invalid &&
+                  (securityquestionForm.controls.sec_ans.touched ||
+                    securityquestionForm.controls.sec_ans.dirty)
+                "
+              >
+                <span
+                  ><span class="sr-only">Error </span>Enter your security
+                  answer</span
+                >
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend></legend>
+              <div class="mt-5">
+                <button
+                  class="btn float-right col-md-5 col-12 mb-2"
+                  (click)="submitAnswer()"
+                  [ngClass]="
+                    securityquestionForm.controls.sec_ans.valid
+                      ? 'btn_primary'
+                      : 'btn__disabled'
+                  "
+                  [disabled]="securityquestionForm.controls.sec_ans.invalid"
+                >
+                  Continue
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+      <div class="help-text text-center" [hidden]="blokermessage">
+        <div>Need help? Call Customer Service for help toll-free 24/7.</div>
+        <div class="blue-text">
+          <a href="tel:877-250-5823" (click)="GaeventTollfree()"
+            >877-250-5823</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

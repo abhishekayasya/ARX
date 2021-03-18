@@ -1,0 +1,196 @@
+<div class="row bg-white">
+  <div class="col-md-12">
+    <arxrf-account-refillinfo
+      [insuranceStatus]="insuranceStatus"
+      (insuranceStatusOnMemberSelect)="updateInsuranceStatus()"
+      (memberSwitch)="notifications.updateUnreadCount()"
+    ></arxrf-account-refillinfo>
+  </div>
+</div>
+
+<div class="row bg-white tabsContainer">
+  <div class="container">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <ul class="tabs" role="tablist">
+        <li class="selected" role="presentation">
+          <a href="javascript:void(0)" role="tab"><strong>Settings</strong></a>
+        </li>
+        <li (click)="gotoMessages()" role="presentation">
+          <a href="javascript:void(0)" role="tab"
+            ><strong>Messages {{(siteKey === SITEKEY.arxKey) ? '('+notifications.unread_count+')' : ''}}</strong></a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row color__neutral">
+  <div class="container">
+    <div class="row accoun__home-tabs-settings">
+      <div class="col col-md-4" *ngIf="showDefaultLinks">
+        <h3>Account</h3>
+        <ul>
+          <li>
+            <a href="{{ ROUTES.personalInfo.absoluteRoute }}" (click)="personalInfoLink()">
+              <strong> Personal Information </strong></a
+            >
+          </li>
+          <li>
+            <a href="{{ ROUTES.securityIformation.absoluteRoute }}" (click)="securityInfoLink()">
+              <strong> Security Information </strong>
+            </a>
+          </li>
+
+          <li>
+            <a href="/update-notifications" (click)="emailsNotificationsLink()">
+              <strong> Emails and Notifications </strong>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col col-md-4" *ngIf="!showDefaultLinks && accountLinks">
+        <h3>{{ accountLinks.title }}</h3>
+        <ul class="{{ accountLinks.cssClass }}">
+          <li *ngFor="let link of accountLinks.links">
+            <a href="javascript:void(0)" (click)="redirectionHandler(link)">
+              <strong> {{ link.title }} </strong></a
+            >
+            <div
+              class="account_option_detail"
+              [innerHTML]="_common.decodeHtml(link.description)"
+            ></div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col offset-md-2 col-md-6" *ngIf="showDefaultLinks">
+        <h3>Prescription</h3>
+        <ul>
+          <li *ngIf="!appContext.isSpsite">
+            <a href="{{ ROUTES.account_insurance.absoluteRoute }}" (click)="insuranceInfoLink()">
+              <strong> Insurance Information: </strong>
+            </a>
+            <span *ngIf="insuranceStatus">
+              <strong>{{ getInsuranceStatusToDisplay() }}</strong>
+            </span>
+            <p
+              class="account_option_detail"
+              *ngIf="insuranceStatus && insuranceStatus != 'Yes'"
+              [innerHTML]="getInsuranceDescriptionToDisplay() | html"
+            ></p>
+          </li>
+
+          <li>
+            <a href="{{ ROUTES.account_health.absoluteRoute }}" (click)="healthHistoryLink()">
+              <strong> Health History </strong>
+            </a>
+
+            <p class="account_option_detail">
+              Please
+              <a href="{{ ROUTES.account_health.absoluteRoute }}">verify</a>
+              that your allergies and health conditions are up to date.
+            </p>
+          </li>
+
+          <li  *ngIf="!appContext.isSpsite">
+            <a href="{{ ROUTES.expressPay.absoluteRoute }}" (click)="expressPayLink()">
+              <strong> ExpressPay </strong>
+            </a>
+          </li>
+
+          <li *ngIf="!appContext.isSpsite">
+            <a
+              target="_blank"
+              href="javascript:void(0)"
+              (click)="
+                goToExternalLink($event, appContext.prescriptionRecordsUrl)
+              "
+            >
+              <strong> Prescription Records </strong>
+            </a>
+          </li>
+          <li *ngIf="!appContext.isSpsite">
+            <a
+              target="_blank"
+              href="javascript:void(0)"
+              (click)="goToExternalLink($event, appContext.makeAPaymentUrl)"
+            >
+              <strong> Make a Payment </strong>
+            </a>
+            <p class="account_option_detail">
+              You will be redirected to walgreens.com
+            </p>
+          </li>
+          <li>
+            <a href="{{ ROUTES.family_management.absoluteRoute }}" (click)="familyAccManagementLink()">
+              <strong> Family Account Management </strong>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="col offset-md-2 col-md-6"
+        *ngIf="!showDefaultLinks && prescriptionLinks"
+      >
+        <h3>{{ prescriptionLinks.title }}</h3>
+        <ul class="{{ prescriptionLinks.cssClass }}">
+          <li *ngIf="!appContext.isSpsite">
+            <a href="{{ ROUTES.account_insurance.absoluteRoute }}"  (click)="insuranceInfoLink()">
+              <strong> Insurance information: </strong>
+            </a>
+            <span *ngIf="insuranceStatus">
+              <strong>{{ getInsuranceStatusToDisplay() }}</strong>
+            </span>
+            <p
+              class="account_option_detail"
+              *ngIf="insuranceStatus"
+              [innerHTML]="getInsuranceDescriptionToDisplay() | html"
+            ></p>
+          </li>
+
+          <li *ngFor="let link of prescriptionLinks.links">
+            <a href="javascript:void(0)" (click)="redirectionHandler(link)">
+              <strong> {{ link.title }} </strong></a
+            >
+            <div
+              class="account_option_detail"
+              [innerHTML]="_common.decodeHtml(link.description)"
+            ></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<arxrf-modal
+  [show]="isGoToExternalLinkModalVisible"
+  (update)="redirectModalUpdate($event)"
+>
+  <div class="row">
+    <h2 class="col-12">{{ modalContent.title }}</h2>
+    <p class="mt-3 col-12">{{ modalContent.description }}</p>
+  </div>
+
+  <div class="row externalLinkModal">
+    <div class="col-12 col-md-10 offset-md-2">
+      <span class="btn__pair mt-5">
+        <a
+          href="#"
+          class="secondary"
+          (click)="redirectConfirm($event, false)"
+          ><span>{{ modalContent.cancelText }}</span></a
+        >
+        <a
+          href="#"
+          role="button"
+          (click)="redirectConfirm($event, true)"
+          ><span class="btn btn_primary">{{ modalContent.okText }}</span></a
+        >
+      </span>
+    </div>
+  </div>
+</arxrf-modal>

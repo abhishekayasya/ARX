@@ -1,0 +1,10 @@
+<img src="{{card_type.icon}}" class="cc-icon-inside-input" *ngIf="card_type" alt="">
+<input type="text" id="{{name}}" [(ngModel)]="value" (input)="onCCInputEvent.emit();"
+       (blur)="onBlur($event)"
+       (change)="onChange($event)"
+       placeholder
+       autocomplete="off"
+       maxlength="16"
+       [ngClass]="{'input__error': isBlurred && showErrorState}"
+       invalidExp="[^0-9]" #focusOnCCInput required/>
+<label class="input__title" for="{{name}}"><span>{{label}}</span> <span class="sr-only" aria-label="max length is 16"></span> </label>

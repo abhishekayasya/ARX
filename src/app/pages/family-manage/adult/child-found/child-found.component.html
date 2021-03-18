@@ -1,0 +1,36 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="module__heading">Add an Adult</div>
+    </div>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <p>This family member is under 18 years of age. Please add them as a child or reenter prescription number.</p>
+    </div>
+  </div>
+
+  <div class="row mt-4 fm__add-adult-underage">
+    <div class="col-12">
+      <p class="">
+        <a href="javascript:void(0)" routerLink="{{ROUTES.family_management.children.adult.add.absoluteRoute}}">
+          <strong>Reenter Prescription Number</strong>
+        </a>
+      </p>
+    </div>
+
+    <div class="col-3 mt-4">
+      <button class="btn btn_primary add_child_btn" type="button" (click)="gotoChild()">Add a child</button>
+    </div>
+
+  </div>
+
+</div>

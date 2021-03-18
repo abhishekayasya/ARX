@@ -1,0 +1,79 @@
+<div class="container bg-white reg-form reg-sub-container" 
+  [ngClass]="{'d-none': regService.showCircularLoader | async}"
+>
+  <div class="row form__on-light-bg reg-sub-section">
+    <!--for non buyout user-->
+    <div *ngIf="!isBuyout && !regService.regLoader">
+      <div class="col-md-12">
+        <p class="Thank-you-for-regist">
+          Your account has been successfully created.
+          <br><br>
+          <strong>Get started now by:</strong>
+        </p>
+      </div>
+
+      <div class="col-md-12">
+        <div class="Register-family-me fs-14">
+          <div class="reg__success-link">
+            <span class="icon reg__success-icon ic__managing-prescriptions">
+              <img src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/ic__managing-prescriptions.svg"/>
+            </span>
+            <a href="/manageprescriptions">Managing prescriptions</a>
+          </div>
+          <div class="reg__success-link">
+            <span class="icon reg__success-icon ic__verifying-health-history">
+              <img src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/ic__verifying-health-history.svg"/>
+            </span>
+            <a href="/myaccount/health-history">Verifying health history</a>
+          </div>
+          <div class="reg__success-link">
+            <span class="icon reg__success-icon ic__managing-family-members">
+              <img src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/ic__managing-family-members.svg"/>
+            </span>
+            <a href="/family-management">Adding family members</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 go_to_Actbtn">
+        <div>
+          <button
+            class="btn btn_primary goToActbtn"
+            (click)="redirectToDashBoard()"
+          >
+            Go to Account Home
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--for buyout user-->
+    <div class="reg-submit" *ngIf="isBuyout && !regService.regLoader">
+      <h1 class="h1__page-title text-center code-sent">
+        <span class="icon icon__check">
+          <svg>
+            <use
+              href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__check"
+            ></use></svg
+        ></span>
+        Thanks for registering. Your account is now active.
+      </h1>
+
+      <div class="col-md-12">
+        <p class="mt-3">
+          On the next step, we’ll ask you to enter your insurance, health and
+          prescription information. This information is required for accessing
+          previous pharmacy prescriptions.
+        </p>
+      </div>
+
+      <div class="col-12">
+        <div class="mt-5 float-right">
+          <button class="btn btn_primary" (click)="redirectToBuyout()">
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

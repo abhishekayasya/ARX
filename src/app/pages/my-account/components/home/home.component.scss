@@ -1,0 +1,78 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+__home {
+  .tab-content {
+    margin-top: 1em;
+  }
+}
+
+.accoun__home-tabs-settings {
+  margin-top: 60px;
+  h3 {
+    margin: 0.5em 0em;
+    padding-bottom: 9px;
+  }
+
+  ul {
+    li {
+      margin: 0px 0em;
+      font-family: HelveticaNeueLTW01-45Light;
+      border-top: solid 1px #cfcfcf;
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+    }
+
+    li:last-child {
+      border-bottom: solid 1px #cfcfcf;
+    }
+  }
+
+  .account_option_detail {
+    font-size: 16px;
+    margin-top: 1em;
+  }
+}
+
+.tabsContainer {
+  padding-top: 60px;
+  .tabs {
+    border-bottom: none;
+  }
+}
+
+.externalLinkModal{
+  .btn__pair {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+
+
+@media only screen and (min-device-width: $xs-screen) and (max-device-width: 630px) {
+  .externalLinkModal {
+    .btn__pair {
+      flex-direction: column;
+      min-height: 50px;
+    }
+    .btn__pair a:last-child{
+      width: 100%;
+    }
+    .btn_primary {
+      margin-top: 30px;
+      width: 100%;
+    }
+    .secondary {
+      overflow: visible;
+      min-height: 15px;
+      margin-right: 0;
+
+      span {
+        margin: 0 auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row no-gutters">
+    <div class="col-md-6 col-sm-10 col-12 offset-md-3 offset-md-1 offset-0 bg-white my-5 py-4 px-4 text-center">
+      <h2 class="mt-5 mb-2"><em>{{currentName}}</em> <br> Review Patient Details</h2>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos perspiciatis unde, vel rerum ad corrupti culpa blanditiis aliquam et atque non, amet maiores repudiandae, a voluptatibus molestias delectus voluptates molestiae.</p>
+      <button type="button" class="btn btn_primary step_btn my-5" [routerLink]="['/', 'clinical-assessment']" 
+      [disabled]="false">
+      <span *ngIf="showCheckout; else checkoutIsAllowed">
+        Checkout
+      </span>
+      <ng-template #checkoutIsAllowed>
+        <span>
+          Review & continue
+        </span>
+      </ng-template>
+      
+      </button>
+    </div>
+  </div>
+</div>

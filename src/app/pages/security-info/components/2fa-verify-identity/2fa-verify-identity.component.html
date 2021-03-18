@@ -1,0 +1,330 @@
+<div class="container no-container-mobile">
+  <div class="row">
+    <div class="col-md-12 justify-content-center align-items-center">
+      <div class="loginContainer">
+        <arxrf-loader
+          [show]="showLoader"
+          message="Loading your account home..."
+          [loaderOverlay]="true"
+        ></arxrf-loader>
+        <div class="row">
+          <div class="col-12">
+            <arxrf-loader
+              [show]="loader"
+              [message]="loaderMessage"
+              [loaderOverlay]="loaderOverlay"
+            ></arxrf-loader>
+          </div>
+        </div>
+        <div class="row">
+          <div class="arx-logo">
+            <arxrf-logo></arxrf-logo>
+          </div>
+        </div>
+        <div *ngIf="accountLock && !displayErrorState">
+          <a class="backLink" (click)="backAction()">
+            <span class="icon icon__arrow-left">
+              <svg alt="">
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-left"
+                ></use>
+              </svg>
+            </span>
+            <strong>Back</strong>
+          </a>
+        </div>
+        <div class="row msgContainer">
+          <div class="message-wrapper">
+            <arxrf-message></arxrf-message>
+          </div>
+        </div>
+        <div class="row formContainer" *ngIf="!loader && accountLock && !displayErrorState">
+          <div class="col-md-12 bg-white reg-form">
+            <div class="identity-header" *ngIf="!displaySendCode">Verify your identity</div>
+            <div *ngIf="selectVOption">
+              <div class="subhead">
+                <div class="head-desc">
+                  {{isLiteUser
+                    ? "We need to send you a security code to verify your identity. "
+                    :"For security purposes, please verify your identity using one of the methods below:"}}
+                </div>
+                <div class="tool-icon">
+                  <!--tooltip -->
+                  <div
+                    [popper]="twofaTooltip"
+                    [popperTrigger]="'hover'"
+                    [popperPlacement]="'right'"
+                    [popperDelay]="300"
+                    class="tool-tip tool-tip-custom"
+                  >
+                    <span
+                      role="button"
+                      class="tool-tip__trigger"
+                      tabindex="0"
+                      aria-describedby="tool-tip__text_birth"
+                    >
+                      <span class="icon icon__question-mark">
+                        <svg alt="">
+                          <title>Help information</title>
+                          <use
+                            href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__question-mark"
+                          ></use>
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+
+                  <popper-content #twofaTooltip>
+                    <div>
+                      <p id="tool-tip__text_birth">
+                        The security of your information is of the highest
+                        importance to us. This added security feature may
+                        periodically ask you to verify your identity.
+                      </p>
+                    </div>
+                  </popper-content>
+                  <!--tooltip -->
+                </div>
+              </div>
+              <div class="mobile_view">
+                <span class="head-desc"
+                  >{{isLiteUser
+                                      ? "We need to send you a security code to verify your identity."
+                                      :"For security purposes, please verify your identity using one of the methods below."}}
+                  <span class="tool-icon">
+                    <!--tooltip -->
+                    <div
+                      [popper]="mobiletwofaTooltip"
+                      [popperTrigger]="'hover'"
+                      [popperPlacement]="'right'"
+                      [popperDelay]="300"
+                      class="tool-tip tool-tip-custom"
+                    >
+                      <span
+                        role="button"
+                        class="tool-tip__trigger"
+                        tabindex="0"
+                        aria-describedby="tool-tip__text_birth"
+                      >
+                        <span class="icon icon__question-mark">
+                          <svg alt="">
+                            <title>Help information</title>
+                            <use
+                              href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__question-mark"
+                            ></use>
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+
+                    <popper-content #mobiletwofaTooltip>
+                      <div>
+                        <p id="tool-tip__text_birth">
+                          The security of your information is of the highest
+                          importance to us. This added security feature will ask
+                          you to verify your identity each time you sign in with
+                          a different device or browser, or sign in after
+                          clearing your cache.
+                        </p>
+                      </div>
+                    </popper-content>
+                    <!--tooltip -->
+                  </span>
+                </span>
+              </div>
+              <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="isLiteUser">
+                <div class="subhead" style="padding-bottom: 0px;">
+                <div class="head-desc" style="margin-left:-15px;">
+                  Your security code will be sent to <sup class="sup_font">1</sup>
+                <div id="verifyId">
+                  {{username}}
+                </div>
+                </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="!isLiteUser">
+                <fieldset class="mt-3">
+                  <legend id="verifyId">
+                    Email or text your security code to<sup class="sup_font"
+                      >1</sup
+                    >:
+                  </legend>
+                  <div class="btn__radio">
+                    <input
+                      id="radio-1"
+                      name="groupContact"
+                      value="email"
+                      type="radio"
+                      [(ngModel)]="selectedContact"
+                      tabindex="0"
+                      (change)="updateVOption('email')"
+                    />
+                    <label for="radio-1">
+                      <span class="radio"></span>
+                      <span>Email: {{ username }}</span>
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset
+                  class="mt-3"
+                  *ngFor="let phone of userPhone; let phoneIndex = index"
+                >
+                  <legend></legend>
+                  <div class="btn__radio">
+                    <input
+                      name="groupContact"
+                      value="{{ phone.type }}"
+                      type="radio"
+                      [(ngModel)]="selectedContact"
+                      (change)="updateVOption(phone.type)"
+                    />
+                    <label for="radio-1">
+                      <span class="radio"></span>
+                      <span
+                        >{{ phone.type | titlecase }}: {{ phone.number }}</span
+                      >
+                    </label>
+                  </div>
+                </fieldset>
+
+                <fieldset class="mt-3" *ngIf="securityQuestionValidate">
+                  <legend id="verifyId1">
+                    Or verify using your security question
+                  </legend>
+                  <div class="btn__radio">
+                    <input
+                      name="groupContact"
+                      value="Security"
+                      type="radio"
+                      [(ngModel)]="selectedContact"
+                      (change)="updateVOption('Security')"
+                      tabindex="0"
+                    />
+                    <label for="radio-1">
+                      <span class="radio"></span>
+                      <span>Security question</span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="row mt-3" style="width:101%" *ngIf="!showLoader">
+                <div class="col-md-8 col-lg-8 col-12"></div>
+                <div class="col-md-4 col-lg-4 col-12 text-right">
+                  <button *ngIf="!isLiteUser"
+                    class="btn btn_default"
+                    [ngClass]="{
+                      submit_request_btn: disableSubmitbtn == false,
+                      btn__disabled: disableSubmitbtn == true
+                    }"
+                    style="display: inline-block; width:100%"
+                    [disabled]="disableSubmitbtn"
+                    (click)="submitVoption()"
+                  >
+                    Continue
+                  </button>
+                  <button *ngIf="isLiteUser"
+                    class="btn btn_default submit_request_btn"
+                    [ngClass]="{
+                      submit_request_btn: !disableSendbtn,
+                      btn__disabled: disableSendbtn
+                    }"
+                    style="display: inline-block; width:100%"
+                    [disabled]="disableSendbtn"
+                    (click)="submitVoption()"
+                  >
+                    Send code
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="displaySendCode">
+              <div class="code-sent">
+                <div class="icon icon__check color__green">
+                  <svg>
+                    <use
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__check"
+                    ></use>
+                  </svg>
+                </div>
+                <div class="otpsubhead">Code sent</div>
+              </div>
+
+              <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="otpsubhead1">{{ showRetryCount() }}</div>
+              </div>
+
+              <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="row">
+                  <div class="col-md-12 col-xs-12 col-sm-12 input-code">
+                    <div class="form__input">
+                      <span
+                        class="input__contain"
+                      >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error: wrongCodeEntered || codeEntered == ''
+                          }"
+                          type="text"
+                          [(ngModel)]="codeEntered"
+                          maxlength="6"
+                          (keypress)="omit_special_char($event)"
+                          #code="ngModel"
+                        />
+                        <label class="input__title">
+                          <span>Enter your security code</span>
+                        </label>
+                      </span>
+                      <span
+                        *ngIf="wrongCodeEntered"
+                        class="input__error-text"
+                        [innerHTML]="wrongCodeEnteredMessage"
+                      ></span>
+                      <span *ngIf="codeEntered == '' && !wrongCodeEntered" class="input__error-text"
+                        >Verification Code is required.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row btn-top" style="width:104%">
+                <div class="col-md-6 col-lg-6 col-12 new-code">
+                  <div class="care-no" *ngIf="displaySendCode  && remainingCodeAttempts > 1">
+                    <a href="javascript:void(0)" (click)="sendCode(true)"
+                      >Request a new code</a>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-12 text-right">
+                  <button
+                    class="btn"
+                    style="display: inline-block; width:100%;"
+                    [ngClass]="codeEntered ? reqNewCode? 'btn_primary' : 'btn__disabled' : 'btn__disabled'"
+                    [disabled]="!codeEntered "
+                    (click)="submitCode()"
+                  >
+                    Continue
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-center customer-panel">
+            <p class="customer-care">
+              Need help? Call Customer Service for help toll-free 24/7.
+            </p>
+            <p class="care-no">
+              <a href="tel:8772505823" (click)="TollFreeClick()"
+                >877-250-5823</a
+              >
+            </p>
+            <p class="care-msg" *ngIf="selectVOption">
+              1 Messaging and data rates may apply.
+            </p>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

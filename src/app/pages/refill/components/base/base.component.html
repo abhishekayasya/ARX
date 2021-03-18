@@ -1,0 +1,917 @@
+<div class="row dashboard-header mb-lg-5 noPrint">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-4 offset-md-8">
+        <div class="rx__members-container">
+          <arxrf-refill-members
+            (onSelect)="updateMember($event)"
+          ></arxrf-refill-members>
+        </div>
+      </div>
+    </div>
+    <!-- insurance success message section -->
+
+    <div
+      class="message-container mt-2"
+      *ngIf="
+        (insuranceSuccessMessage &&
+        refillService.activeMemberId == buyoutUnlockUser) || buyoutOnlyInsurance
+      "
+    >
+      <div class="alert alert__success">
+        <a class="alert__text-contain staticMsg">
+          <span class="icon icon__check">
+            <svg>
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__check"
+              ></use>
+            </svg>
+          </span>
+          <span class="msg-text">
+            <div class="sr-only">
+              Success! Your insurance information has been updated. This has
+              also been applied to your Walgreens.com account.
+            </div>
+            <div aria-hidden="true" class="alert-content mr-1" tabindex="0">
+              Success! Your insurance information has been updated. This has
+              also been applied to your Walgreens.com account.
+            </div>
+          </span>
+          <button class="btn btn__rounded closeBtn" (click)="closeInsuMsg()">
+            <div aria-label="Alert message close" class="btn__dismiss"></div>
+          </button>
+        </a>
+      </div>
+    </div>
+    <!-- insurance success message section Ends -->
+    <div class="row">
+      <div class="col-12 mt-2">
+        <arxrf-buyout-message
+          [show]="refillService.showBuyoutBanner && !appContext.isSpsite"
+          [showPreviousPharmacyButton]="false"
+          [buyoutMessage]="refillService.defaultBuyoutMessage"
+          [buyoutMobileMessage]="refillService.defaultBuyoutMobileMessage"
+          [dismissible]="true"
+        ></arxrf-buyout-message>
+      </div>
+    </div>
+
+    <arxrf-dashboard-tabs
+      [activeTabId]="ROUTES.refill.route"
+      (statusclick)="CallStatusAction()"
+    ></arxrf-dashboard-tabs>
+  </div>
+</div>
+
+<div class="container no-container-mobile">
+  <div class="row color__neutral pt-3">
+    <div class="col-md-3 noPrint">
+      <ul class="links__listed d-none d-md-block" role="tablist">
+        <li role="presentation">
+          <a
+            class="link-cta"
+            tabindex="0"
+            role="tab"
+            [attr.aria-selected]="
+              refillService.activeFolder == 'active' ? true : false
+            "
+            [ngClass]="{
+              active: refillService.activeFolder == 'active'
+            }"
+            (keydown.enter)="activeRefill()"
+            (click)="activeRefill()"
+            ><span class="icon-1 icon icon__rx-refill"
+              ><svg>
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__rx-refill"
+                ></use></svg></span
+            ><strong>Active</strong></a
+          >
+        </li>
+
+        <li role="presentation">
+          <a
+            class="link-cta"
+            tabindex="0"
+            role="tab"
+            [attr.aria-selected]="
+              refillService.activeFolder == 'hidden' ? true : false
+            "
+            [ngClass]="{
+              active: refillService.activeFolder == 'hidden'
+            }"
+            (keydown.enter)="hiddenRefill()"
+            (click)="hiddenRefill()"
+            ><span class="icon-2 icon icon__rx-refill"
+              ><svg>
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__folder"
+                ></use></svg></span
+            ><strong>Hidden</strong></a
+          >
+        </li>
+
+        <li *ngIf="refillService.isBuyoutUser && !appContext.isSpsite" role="presentation">
+          <a
+            class="link-cta"
+            tabindex="0"
+            role="tab"
+            [attr.aria-selected]="
+              refillService.activeFolder == 'previousPres' ? true : false
+            "
+            [ngClass]="{
+              active: refillService.activeFolder == 'previousPres'
+            }"
+            (keydown.enter)="previousRefill()"
+            (click)="previousRefill()"
+            ><span class="icon-2 icon icon__rx-refill"
+              ><svg>
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__folder"
+                ></use></svg></span
+            ><strong>Previous Pharmacy</strong></a
+          >
+        </li>
+      </ul>
+      <!-- XS screen  -->
+      <div>
+        <div class="row smallScreenSection d-md-none">
+          <div
+            [ngClass]="{
+              'col-12': refillService.activeFolder == 'previousPres',
+              'col-9 col-sm-8': refillService.activeFolder !== 'previousPres'
+            }"
+          >
+            <span class="select__contain">
+              <label for="folder">Folder</label>
+              <span class="icon icon__arrow-down">
+                <svg>
+                  <use
+                    href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+              <select
+                [(ngModel)]="refillService.activeFolder"
+                (change)="toggleRefillOnSmallScreen($event)"
+                id="folder"
+              >
+                <option value="active">Active</option>
+                <option value="hidden">Hidden</option>
+                <option *ngIf="refillService.isBuyoutUser && !appContext.isSpsite" value="previousPres"
+                  >Previous Pharmacy</option
+                >
+              </select>
+            </span>
+          </div>
+          <div
+            class="col-3 col-sm-4 searchBtn"
+            *ngIf="
+              refillService.prescriptionList &&
+              refillService.prescriptionList.length !== 0
+            "
+            [hidden]="refillService.activeFolder == 'previousPres'"
+          >
+            <a
+              href="javascript:void(0)"
+              role="button"
+              (click)="toggleMobileSearchInput()"
+              ><span class="btn btn_filter"
+                ><span class="icon icon__search"
+                  ><svg alt="" alt="">
+                    <use
+                      href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__search"
+                    ></use></svg></span></span
+            ></a>
+          </div>
+          <div
+            class="col-sm-12 sortFilterBtn"
+            *ngIf="
+              refillService.prescriptionList &&
+              refillService.prescriptionList.length !== 0
+            "
+            [hidden]="refillService.activeFolder == 'previousPres'"
+          >
+            <a
+              href="javascript:void(0)"
+              role="button"
+              (click)="sortFilterDialog.open()"
+              ><span class="btn btn_filter">Sort & Filter</span></a
+            >
+          </div>
+          <div
+            class="col-12"
+            *ngIf="isMobileSearchInputVisible"
+            [hidden]="refillService.activeFolder == 'previousPres'"
+          >
+            <div class="input__search">
+              <div class="input__search-contain">
+                <label for="searchBox"></label>
+                <input
+                  class="blue-shadow"
+                  [(ngModel)]="prescriptionSearchValue"
+                  id="searchBox"
+                  type="text"
+                  name="text"
+                  placeholder="Search Rx"
+                  (ngModelChange)="searchPrescriptions()"
+                  (input)="fireSearchGAEvent()"
+                />
+                <span class="icon icon__search"
+                  ><svg alt="" alt="">
+                    <use
+                      href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__search"
+                    ></use></svg
+                ></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <arxrf-full-screen-dialog
+        [_refillService]="refillService"
+        #sortFilterDialog
+        (sortandFilter)="sortFilterOnSmallScreen()"
+      >
+        <dialog-content>
+          <span class="select__contain mt-2">
+            <label for="sortBy">Sort by</label>
+            <span class="icon icon__arrow-down">
+              <svg>
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                ></use>
+              </svg>
+            </span>
+            <select [(ngModel)]="sortBySelection" id="sortBy">
+              <option
+                *ngFor="let sortOption of sortOptions"
+                value="{{ sortOption.key }}"
+                >{{ sortOption.value }}</option
+              >
+            </select>
+          </span>
+
+          <div>
+            <h5>Filter by</h5>
+            <span class="select__contain">
+              <label for="prescriber">Prescriber</label>
+              <span class="icon icon__arrow-down">
+                <svg>
+                  <use
+                    href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+              <select [(ngModel)]="prescriberFilter" id="prescriber">
+                <option value="">All</option>
+                <option *ngFor="let pres of prescribers">{{
+                  pres && pres.name ? pres.name : "N/A"
+                }}</option>
+              </select>
+            </span>
+          </div>
+
+          <span class="select__contain" *ngIf='!appContext.isSpsite'>
+            <label for="pharmacyType">Pharmacy Type</label>
+            <span class="icon icon__arrow-down">
+              <svg>
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                ></use>
+              </svg>
+            </span>
+            <select [(ngModel)]="rxTypeFilter" id="pharmacyType">
+              <option value="">All</option>
+              <option *ngFor="let rxname of rxTypes" value="{{ rxname.key }}">{{
+                rxname.text
+              }}</option>
+            </select>
+          </span>
+        </dialog-content>
+      </arxrf-full-screen-dialog>
+
+      <div [hidden]="refillService.activeFolder == 'previousPres'">
+        <div class="widget-panel d-none d-md-block">
+          <div
+            class="input__search"
+            *ngIf="
+              refillService.prescriptionList &&
+              refillService.prescriptionList.length
+            "
+          >
+            <div class="input__search-contain">
+              <label class="sr-only" for="search">Search</label>
+              <input
+                class="blue-shadow"
+                [(ngModel)]="prescriptionSearchValue"
+                id="search"
+                type="text"
+                name="text"
+                placeholder="Search Rx"
+                (ngModelChange)="searchPrescriptions()"
+                (input)="fireSearchGAEvent()"
+              />
+              <span class="icon icon__search"
+                ><svg alt="" alt="">
+                  <use
+                    href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__search"
+                  ></use></svg
+              ></span>
+            </div>
+          </div>
+
+          <span
+            class="select__contain mt-2"
+            *ngIf="
+              refillService.prescriptionList &&
+              refillService.prescriptionList.length !== 0
+            "
+          >
+            <label for="sortBy">Sort by</label>
+            <span class="icon icon__arrow-down">
+              <svg>
+                <use
+                  href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                ></use>
+              </svg>
+            </span>
+            <select
+              [(ngModel)]="sortBySelection"
+              (change)="sortPrescriptions()"
+              id="sortBy"
+            >
+              <option
+                *ngFor="let sortOption of sortOptions"
+                value="{{ sortOption.key }}"
+                >{{ sortOption.value }}</option
+              >
+            </select>
+          </span>
+
+          <fieldset>
+            <div
+              *ngIf="
+                refillService.prescriptionList &&
+                refillService.prescriptionList.length !== 0
+              "
+            >
+              <legend><h5>Filter by</h5></legend>
+              <span class="select__contain">
+                <label for="prescriber">Prescriber</label>
+                <span class="icon icon__arrow-down">
+                  <svg>
+                    <use
+                      href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                    ></use>
+                  </svg>
+                </span>
+                <select
+                  (change)="filter()"
+                  [(ngModel)]="prescriberFilter"
+                  id="prescriber"
+                  (change)="firePrescriberFilterGAEvent()"
+                >
+                  <option value="">All</option>
+                  <option *ngFor="let pres of prescribers">{{
+                    pres && pres.name ? pres.name : "N/A"
+                  }}</option>
+                </select>
+              </span>
+            </div>
+
+            <span
+              class="select__contain"
+              *ngIf="
+                refillService.prescriptionList &&
+                refillService.prescriptionList.length !== 0
+                && !appContext.isSpsite
+              "
+            >
+              <label for="pharmacyType">Pharmacy Type</label>
+              <span class="icon icon__arrow-down">
+                <svg>
+                  <use
+                    href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+              <select
+                (change)="filter()"
+                [(ngModel)]="rxTypeFilter"
+                id="pharmacyType"
+                (change)="firePharmacyTypeFilterGAEvent()"
+              >
+                <option value="">All</option>
+                <option
+                  *ngFor="let rxname of rxTypes"
+                  value="{{ rxname.key }}"
+                  >{{ rxname.text }}</option
+                >
+              </select>
+            </span>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="result-wrapper">
+        <div class="row searchResult" *ngIf="prescriptionSearchValue">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <p
+              *ngIf="
+                refillService.prescriptionList &&
+                refillService.prescriptionList.length !== 0
+              "
+            >
+              Search Result for <strong>{{ prescriptionSearchValue }}</strong>
+              <a style="cursor: pointer" (click)="clearSearchResult()"
+                >Clear Result</a
+              >
+            </p>
+            <p
+              *ngIf="
+                refillService.prescriptionList.length === 0 &&
+                !refillService.loaderStatus
+              "
+            >
+              No Search Results found for
+              <strong>{{ prescriptionSearchValue }}</strong> in your
+              {{ refillService.activeFolder }} folder
+            </p>
+            <p
+              *ngIf="
+                refillService.prescriptionList.length === 0 &&
+                !refillService.loaderStatus
+              "
+            >
+              Please check spelling and try again or
+              <a style="cursor: pointer" (click)="clearSearchResult()"
+                >view all prescriptions.</a
+              >
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div
+              class="message-wrapper"
+              *ngIf="
+                refillService.prescriptionList &&
+                refillService.prescriptionList.length !== 0
+              "
+            >
+              <!-- when selected prescriptions found for chekcout page -->
+              <div
+                class="alert alert__info"
+                *ngIf="selectedPresInChOut && disContCheckOutContainer == false"
+              >
+                <div class="alert__text-contain">
+                  <span class="icon icon__info">
+                    <svg alt="">
+                      <use
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                      ></use>
+                    </svg>
+                  </span>
+
+                  <span>
+                    <p>
+                      Don’t forget, you have
+                      {{ selectedPresInChOut }} prescription in checkout.
+                      <strong
+                        ><a
+                          href="javascript:void(0);"
+                          (click)="continueCheckOut()"
+                        >
+                          Continue
+                        </a>
+                      </strong>
+                    </p>
+                  </span>
+                  <span class="icon icon__arrow-right"
+                    ><svg alt="">
+                      <use
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-right"
+                      ></use></svg
+                  ></span>
+                </div>
+                <button
+                  class="btn btn__rounded action__dismiss-alert"
+                  (click)="disContCheckOutContainer = true"
+                >
+                  X
+                </button>
+              </div>
+            </div>
+
+            <!--Previous Pharmacy banner start -->
+            <!-- <div class="alert alert__info" *ngIf="showPreviousPharmacyBanner && pharmacyCheckOutContainer == false">
+                <div class="alert__text-contain">
+                    <span class="icon icon__info">
+                        <svg alt=""><use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"></use></svg>
+                    </span>
+                    <span>
+                        <p>
+                        Prescription records are still being uploaded into our system. If your prescription is not listed or if you need assistance, please contact our pharmacy team at 1-877-787-3047.
+                        </p>
+                    </span>
+                </div>
+                <button class="btn btn__rounded action__dismiss-alert" (click)="pharmacyCheckOutContainer = true">X</button>
+            </div> -->
+            <!-- Previous Pharmacy banner end -->
+
+            <arxrf-message
+              class="noPrint"
+              [disable]="globalMessageDisable"
+            ></arxrf-message>
+
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="row">
+                  <div
+                    class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 presc-container noPrint"
+                  >
+                    <div
+                      class="no__prescription"
+                      *ngIf="
+                        ((refillService && !refillService.prescriptionList) ||
+                          refillService.prescriptionList.length === 0) &&
+                        !refillService.loaderStatus &&
+                        !filterEnabled &&
+                        !prescriptionSearchValue
+                      "
+                    >
+                      <p
+                        *ngIf="
+                          refillService.activeFolder == 'active' &&
+                          ((refillService && !refillService.prescriptionList) ||
+                            refillService.prescriptionList.length === 0) &&
+                          !refillService.isServiceErr
+                        "
+                      >
+                      Can’t find what you’re looking for? It's possible that we are still processing your prescriptions. Once they are fully processed, your prescriptions will show here.<br><br>
+                      For further assistance, please call us.<br><br>
+                      Specialty Pharmacy – <a href="tel:8552442555">(855) 244-2555</a>  <br>
+                      <span *ngIf='!appContext.isSpsite'>
+                      Home Delivery Pharmacy – <a href="tel:8777873047">(877) 787-3047</a>
+                      </span>
+                      </p>
+                      <h1 *ngIf="refillService.activeFolder == 'hidden'">
+                        Active folder too cluttered?
+                      </h1>
+                      <p *ngIf="refillService.activeFolder == 'hidden'">
+                        Hide unwanted prescriptions and we'll store them for you
+                        here.
+                      </p>
+                    </div>
+
+                    <div
+                      *ngIf="
+                        filterEnabled &&
+                        refillService.prescriptionList.length == 0
+                      "
+                      class="message-box"
+                    >
+                      <h2>No Result found</h2>
+                      <p>
+                        We're unable to find any prescriptions on file.
+                        <a href="javascript:void(0)" (click)="clearFilters()"
+                          >Clear filter</a
+                        >
+                      </p>
+                    </div>
+
+                    <arxrf-loader
+                      [show]="refillService.loaderStatus"
+                      message="Loading..."
+                      [loaderOverlay]="refillService.loaderOverlay"
+                    ></arxrf-loader>
+                    <arxrf-prescription-list
+                      (showRxHistoryPopUp)="enableRxHistoryPopup($event)"
+                      (presSelected)="prescriptionSelected($event)"
+                      (togglePrescription)="hideUnhideRx($event)"
+                      (toggleAutoRefill)="autoRefill($event)"
+                      (openAddressInfoEvent)="openAddressInfo($event)"
+                      (editShippingAddressEvent)="editShippingOnAddress($event)"
+                      [autoRefillMessage]="autoRefillMessage"
+                    ></arxrf-prescription-list>
+
+                    <div
+                      class="mt-3"
+                      *ngIf="
+                        (prescriptionSearchValue || filterEnabled) &&
+                        !refillService.loaderStatus
+                      "
+                    >
+                      <p *ngIf="refillService.activeFolder == 'active'">
+                        Can’t find what you’re looking for ? Check the
+                        <a
+                          href="javascript:void(0)"
+                          (click)="activeRefill(true)"
+                          >hidden</a
+                        >
+                        folder
+                      </p>
+
+                      <p *ngIf="refillService.activeFolder == 'hidden'">
+                        Can’t find what you’re looking for ? Check the
+                        <a
+                          href="javascript:void(0)"
+                          (click)="activeRefill(true)"
+                          >active</a
+                        >
+                        folder
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    *ngIf="
+                      refillService.selectedPrescriptions.size >= 0 &&
+                      refillService.prescriptionList &&
+                      refillService.prescriptionList.length !== 0
+                    "
+                    class="col-12 req-refill-btn-contain noPrint"
+                  >
+                    <div class="refill-btn-wrap">
+                      <ul>
+                        <li>
+                          <a
+                            [class.dsblReqRefillBtn]="dsblReqRefillBtn"
+                            href="javascript:void(0)"
+                            class="btn refill-btn btn_request_refill_light"
+                            (click)="checkoutPrescriptions()"
+                            ><strong
+                              class="count"
+                              *ngIf="refillService.requestRefillBtnCount > 0"
+                              >{{ refillService.requestRefillBtnCount }}</strong
+                            >
+                            <strong
+                              *ngIf="
+                                refillService.requestRefillBtnCount === 0 ||
+                                refillService.requestRefillBtnCount == 1
+                              "
+                              >Request Refill</strong
+                            >
+                            <strong
+                              *ngIf="refillService.requestRefillBtnCount > 1"
+                              >Request Refills</strong
+                            >
+                          </a>
+                        </li>
+
+                        <li
+                          class="selectionMessage"
+                          *ngIf="selectionMessage != ''"
+                        >
+                          <span class="icon icon__check">
+                            <svg>
+                              <use
+                                href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__check"
+                              ></use></svg
+                          ></span>
+                          <span
+                            ><small>{{ selectionMessage }}</small></span
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <arxrf-modal
+                [show]="editShippingStatus"
+                cssClasses="bg-white shippingAddressModal"
+                (update)="updateEditAddressSate($event)"
+              >
+                <arxrf-refillhub-editShipping
+                  [shippingObservable]="shippingAddressObservable"
+                  *ngIf="editShippingStatus"
+                  [showPaymentMessage]="showPaymentMessage"
+                  (onSuccess)="editShippingSuccessCallback($event)"
+                ></arxrf-refillhub-editShipping>
+              </arxrf-modal>
+
+              <arxrf-modal
+                [show]="enableRxhWindow"
+                [noPaddingContainer]="true"
+                cssClasses="bg-white no-transition"
+                (update)="updateRxPopupState(true)"
+              >
+                <div class="rx__popup-container" id="rxHistoryModal">
+                  <div class="row no-gutters drug-title">
+                    <div class="col-md-2 drug-icon">
+                      <figure class="tablet-img">
+                        <img
+                          *ngIf="!clickedPresc?.drugInfo?.drugImageURL"
+                          src="{{
+                            appContext.assetsHost || appContext.assetPrefix
+                          }}/images/IN1827/default_image_small.jpg"
+                          class="border__round"
+                          alt=""
+                          appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                        />
+                        <img
+                          *ngIf="
+                            appContext.assetPrefix != '' &&
+                            clickedPresc?.drugInfo?.drugImageURL
+                          "
+                          src="{{ appContext.assetPrefix }}{{
+                            clickedPresc?.drugInfo.drugImageURL
+                          }}"
+                          class="border__round rx__history-presc-img"
+                          alt="{{ clickedPresc?.drugInfo.drugName }}"
+                          appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                        />
+                        <img
+                          *ngIf="
+                            appContext.assetPrefix == '' &&
+                            clickedPresc?.drugInfo?.drugImageURL
+                          "
+                          src="{{ appContext.assetsHost }}{{
+                            clickedPresc?.drugInfo.drugImageURL
+                          }}"
+                          class="border__round rx__history-presc-img"
+                          alt="{{ clickedPresc?.drugInfo.drugName }}"
+                          appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                        />
+                      </figure>
+                    </div>
+                    <div class="col">
+                      <p class="h1__page-title">
+                        {{ clickedPresc?.drugInfo.drugName }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="rxStatusBanner">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                      <div class="alert alert__info">
+                        <a
+                          href="javascript:void(0)"
+                          [routerLink]="['/orderstatus']"
+                          [queryParams]="{ id: clickedPresc?.prescriptionId }"
+                          class="alert__text-contain"
+                        >
+                          <span class="icon icon__info">
+                            <svg>
+                              <use
+                                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                              ></use>
+                            </svg>
+                          </span>
+                          <span>
+                            <div id="alert-content">
+                              <span
+                                >Refill requested on
+                                {{
+                                  clickedPresc?.refillInfo.lastFillDate
+                                }}.</span
+                              ><strong>Check Rx Status</strong>
+                            </div>
+                          </span>
+                          <span class="icon icon__arrow-right">
+                            <svg>
+                              <use
+                                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-right"
+                              ></use>
+                            </svg>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row tabSection">
+                    <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                      <ul class="tabs" role="tablist">
+                        <li
+                          [ngClass]="{
+                            selected: activeTab == 'history',
+                            noPrint: activeTab == 'info'
+                          }"
+                          (click)="switchRxPopupTab('history')"
+                          role="presentation"
+                        >
+                          <a
+                            href="javascript:void(0)"
+                            (click)="fireRxHistoryGAEvent()"
+                            role="tab"
+                            attr.aria-selected="{{
+                              activeTab == 'history' ? true : false
+                            }}"
+                            ><strong>Rx History</strong></a
+                          >
+                        </li>
+                        <li
+                          [ngClass]="{
+                            selected: activeTab == 'info',
+                            noPrint: activeTab == 'history'
+                          }"
+                          (click)="switchRxPopupTab('info')"
+                          role="presentation"
+                        >
+                          <a
+                            href="javascript:void(0)"
+                            role="tab"
+                            attr.aria-selected="{{
+                              activeTab == 'info' ? true : false
+                            }}"
+                            ><strong>Drug Information</strong></a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 fs-14 print_btn noPrint"
+                    >
+                      <p
+                        class="f-blue print-icon"
+                        (keydown.enter)="printHistory()"
+                        (click)="printHistory()"
+                        tabindex="0"
+                      >
+                        <span class="icon icon__print"
+                          ><svg alt="" alt="">
+                            <use
+                              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__print"
+                            ></use></svg
+                        ></span>
+                        <span>Print</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                      <div
+                        class="tab-content tab-content-bgcolor on-neutral-background"
+                        *ngIf="activeTab == 'history'"
+                      >
+                        <arxrf-refill-rxhistory
+                          [viewIdObservable]="rxPopupSelectedObserver"
+                          (rxStatusBanner)="rxHistoryStatusBanner($event)"
+                          (editShipping)="rxHistoryShipCallback($event)"
+                        ></arxrf-refill-rxhistory>
+                      </div>
+
+                      <div
+                        class="tab-content tab-content-bgcolor on-neutral-background"
+                        *ngIf="activeTab == 'info'"
+                      >
+                        <arxrf-refill-druginfo
+                          [viewIdObservable]="rxPopupSelectedObserver"
+                        ></arxrf-refill-druginfo>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </arxrf-modal>
+
+              <arxrf-modal
+                [show]="refillService.showInsuranceModal"
+                class="insuranceModal"
+                (update)="updateInsuranceModal($event)"
+              >
+                <div class="row">
+                  <div class="col-12">
+                    <h1>Please enroll in Home Delivery</h1>
+                  </div>
+                  <div class="col-12 mt-3">
+                    <p>
+                      Sorry, in order to refill a Home Delivery prescription,
+                      you must first enroll in Home Delivery.
+                    </p>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <span class="btn__pair col-12">
+                    <div class="col-12">
+                      <div class="buttonWrapper">
+                        <a
+                          href="#!"
+                          class="secondary"
+                          (click)="closeInsuranceModal($event)"
+                          >Cancel</a
+                        >
+                        <a
+                          href="#!"
+                          role="button"
+                          (click)="enrollInsurance($event)"
+                          ><span class="btn btn_primary">Enroll</span></a
+                        >
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </arxrf-modal>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

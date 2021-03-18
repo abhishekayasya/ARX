@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="module__heading">Add a Child</div>
+    </div>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+  <!--.details section ends-->
+  <div class="confirm-details">
+    <p>
+      <strong class="detailLabel">Confirm child information:</strong>
+    </p>
+    <div>
+      <p class="detailLabel"><strong> First name </strong></p>
+      <p class="detailValue">{{(childDetails?.firstName) ? childDetails?.firstName : invitationDetails.firstName}}</p>
+    </div>
+
+    <div>
+      <p class="detailLabel"><strong> Last name </strong></p>
+      <p class="detailValue">{{(childDetails?.lastName) ? childDetails?.lastName : invitationDetails.lastName}}</p>
+    </div>
+
+    <div>
+      <p class="detailLabel"><strong> Date of Birth </strong></p>
+      <p class="detailValue">{{(childDetails?.dateOfBirth) ? childDetails?.dateOfBirth : invitationDetails.dateOfBirth}}</p>
+    </div>
+    <div>
+      <p class="detailLabel"><strong> Prescription number </strong></p>
+      <p class="detailValue">{{(childDetails?.prescriptionNumber) ? childDetails?.prescriptionNumber : invitationDetails.prescriptionNumber}}</p>
+    </div>
+
+  </div>
+  <!--.details section ends-->
+
+  <div class="invitation-details" *ngIf="invitationDetails">
+    <p>
+      <strong class="detailLabel">Confirm invitation:</strong>
+    </p>
+    <div>
+      <p class="detailLabel">Subject:</p>
+      <p class="detailValue">{{invitationDetails?.subject}}</p>
+    </div>
+
+    <div>
+      <p class="detailLabel">Message: </p>
+      <p class="detailValue">{{invitationDetails?.invitationMsg}}</p>
+    </div>
+
+    <div *ngIf="invitationDetails?.additionalMsg">
+      <p class="detailLabel">Additional Message: </p>
+      <p class="detailValue">{{invitationDetails?.additionalMsg}}</p>
+    </div>
+
+  </div>
+
+  <div class="row no-gutters btn-section mt-4">
+      <span class="btn__pair">
+          <a [routerLink]="routes.family_management.children.child.add.absoluteRoute" class="secondary">Edit</a>
+          <a href="javascript:void(0);" role="button" (click)="addChild()">
+            <span class="btn btn_primary" *ngIf="!invitationDetails">Confirm</span>
+            <span class="btn btn_primary" *ngIf="invitationDetails">Send Invite</span>
+          </a>
+        </span>
+    </div>
+
+
+
+</div>

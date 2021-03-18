@@ -1,0 +1,96 @@
+.account__healthinfo {
+  background: #fff;
+  width: 100%;
+}
+.healthinfo__heading {
+  font-size: 28px;
+  font-family: HelveticaNeueLTW01-45Light;
+}
+
+.healthinfo_container {
+  padding: 1em 0em;
+}
+
+.healthinfo__display {
+  .item {
+    padding: 1em 0em;
+  }
+}
+
+.healthinfo_main {
+  padding: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+.insurance__header {
+  margin-top: 16px;
+  width: 100%;
+  h3 {
+    line-height: 2.5em;
+  }
+  span.icon {
+    min-width: 70px;
+    min-height: 70px;
+  }
+  .icon__insurance{
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.insuranceInfo__addControls {
+  a {
+    line-height: 3em;
+  }
+}
+
+.addInsuranceBtn{
+  width: 100%;
+  margin-top: 20px;
+}
+
+.form__input .input__title span {
+  text-transform: capitalize;
+}
+.insuranceInfo__addControls .secondary{
+  max-width: 100px;
+}
+
+.insurance__hc_list li {
+  float: left;
+  min-width: 50%;
+  padding: 1%;
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px) {
+  .btn_primary {
+    width: 100%;
+  }
+  .insuranceInfo__addControls .secondary {
+    text-align: center;
+    display: inline-block;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .insurance__hc_list li {
+    min-width: 100%;
+  }
+}
+
+.ins__edit a {
+  line-height: 3em;
+}
+
+.insurance__form {
+  padding: 0px;
+}
+
+input[type=checkbox]:focus+label, select:focus  {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}

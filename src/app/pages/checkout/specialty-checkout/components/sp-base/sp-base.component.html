@@ -1,0 +1,26 @@
+<div class="container no-container-mobile">
+  <div class="row" *ngIf="!speciality.hideHead">
+    <div class="col-12 pt-4">
+      <h1 class="h1__page-title text-center">Let’s review your Specialty prescriptions.</h1>
+     <p class="text-center">If needed, our pharmacy care team will contact you for additional information to complete your order.</p>    
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="rx-review">
+        <arxrf-loader [show]="checkout.loader" [loaderOverlay]="checkout.loaderOverlay" ></arxrf-loader>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+
+

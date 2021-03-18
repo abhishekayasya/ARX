@@ -1,0 +1,79 @@
+.account_health-container {
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+  .account_health-heading {
+    font-size: 28px;
+  }
+  .heading{
+    font-size: 28px;
+    color: #404040;
+    font-weight: normal;
+    font-family: HelveticaNeueLTW01-45Light;
+  }
+
+  .account_health-content {
+    padding: 1em 1em;
+
+    .account_health-item {
+      // margin-bottom: 1em;
+      padding: 1em 0em;
+
+      ul {
+        li {
+          p {
+            display: inline-block;
+            vertical-align: bottom;
+          }
+
+          a {
+            display: inline-block;
+            .icon__dismiss {
+              min-height: 25px;
+              color: #000;
+            }
+            .icon_dismiss_buyout {
+              color: #01728E;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.btn_primary {
+width: 135px;
+height: 50px;
+}
+
+.button_Edit {
+padding: 0px;
+}
+
+.button_Update {
+  padding: 0px;
+}
+
+.insuranceInfo__addControls {
+  a {
+    line-height: 3em;
+  }
+}
+
+.insuranceInfo__addControls .secondary{
+  max-width: 100px;
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px) {
+  .btn_primary {
+    width: 100%;
+  }
+  .insuranceInfo__addControls .secondary {
+    text-align: center;
+    display: inline-block;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+}

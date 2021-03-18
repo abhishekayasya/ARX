@@ -1,0 +1,116 @@
+<div class="order-card-conatiner">
+  <arxrf-accordian [direction]="'middle'" [toggle-body]="false" [toggle-button]="true" [column]="2" *ngIf="orders">
+    <arxrf-accordian-item *ngFor="let order of orders">
+      <arxrf-accordian-head>
+        <div class="order-card">
+          <div class="row">
+            <div class="col-5 col-md-6 mb-2">
+              <span><strong>Status: {{order.progress.progressBarStatus}}</strong></span>
+            </div>
+
+            <div class="col-7 col-md-6 trackBtnAlign pr-md-0" *ngIf="order.progress.progressBarStatus === 'ship'">
+              <arxrf-order-status-cta [btnClass]="'orderStatus_btn trackPackage_btn'" [btnText]="'Track Package'"
+                (click)="trackPackage()">
+              </arxrf-order-status-cta>
+              <span><svg class="trackPkg_btn_icon ic__arrow-right-btn" alt="">
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__arrow-right-btn">
+                  </use>
+                </svg></span>
+            </div>
+
+            <div class="col-7 col-md-6 trackBtnAlign pr-md-0" *ngIf="order.progress.progressBarStatus === 'schedule'">
+              <arxrf-order-status-cta [btnClass]="'orderStatus_btn reorder_btn'" [btnText]="'Reorder'"
+                (click)="scheduleBtn()">
+              </arxrf-order-status-cta>
+              <span><svg class="reorder_btn_icon ic__arrow-right-btn" alt="">
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__arrow-right-btn">
+                  </use>
+                </svg></span>
+            </div>
+
+            <div class="col-7 col-md-6 trackBtnAlign pr-md-0"
+              *ngIf="order.progress.progressBarStatus === 'schedule-exception'">
+              <span><svg class="attention_required" alt="">
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#attention_required">
+                  </use>
+                </svg></span>
+            </div>
+          </div>
+
+          <div class="">
+            <span><strong>Est. arrival date: {{order.estimatedArrivalDate}}</strong></span>
+          </div>
+          
+          <div class="col-md-12 pt-5" *ngIf="order.showToggle">
+            <arxrf-progress-five-dots [progress_Bar_Status]="order.progress.progressBarStatus">
+            </arxrf-progress-five-dots>
+          </div>
+
+          <div class="col-md-12 pt-2" *ngIf="order.showToggle">
+            <arxrf-progress-three-dots [progress_Bar_Status]="order.progress.progressBarStatus">
+            </arxrf-progress-three-dots>
+          </div>
+          <hr>
+
+          <div *ngIf="order.showToggle">
+            THE LONG MESSAGE COMPONENT WILL GO HERE
+          </div>
+        </div>
+      </arxrf-accordian-head>
+      <arxrf-accordian-body>
+        <ul>
+          <li *ngFor="let medicalItem of order.medicalItems">
+            <p>{{medicalItem.referralId}} | {{medicalItem.itemName}} | {{medicalItem.price}} |
+              {{medicalItem.prescriber}}
+            </p>
+          </li>
+        </ul>
+      </arxrf-accordian-body>
+      <arxrf-accordian-toggler>
+        <arxrf-accordian-toggle-on>
+          <a class="order-toggle-link" (click)="order.showToggle=true">
+            View More
+            <span class="icon icon__arrow-down"><svg alt="">
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down">
+                </use>
+              </svg></span>
+          </a>
+
+        </arxrf-accordian-toggle-on>
+
+        <arxrf-accordian-toggle-off>
+          <a class="order-toggle-link" (click)="order.showToggle=false">
+            View Less
+            <span class="icon icon__arrow-up"><svg alt="">
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-up">
+                </use>
+              </svg></span>
+          </a>
+
+        </arxrf-accordian-toggle-off>
+
+        <div class="like-unlike-container" id="like-unlike-container">
+          <span class="status_Info">Was this status information useful?</span>
+          <span>
+            <svg class="ic__like" alt="" (click)="likeBtnClicked()">
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__like">
+              </use>
+            </svg>
+            <svg class="ic__dislike" alt="" (click)="unlikeBtnClicked()">
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__dislike">
+              </use>
+            </svg>
+          </span>
+        </div>
+
+      </arxrf-accordian-toggler>
+    </arxrf-accordian-item>
+  </arxrf-accordian>
+</div>

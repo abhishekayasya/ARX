@@ -1,0 +1,6 @@
+a.forgot-user {
+    @include themify($themes) {
+        font-size: themed("forgot_user_font_size");
+        font-family: themed("forgot_user_font_family");
+      }
+}

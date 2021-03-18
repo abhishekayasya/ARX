@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <ul class="tabs">
+        <li
+          [ngClass]="{
+            selected: activeTabId == ROUTES.refill.route
+          }"
+        >
+          <a href="{{ ROUTES.refill.absoluteRoute }}" (click)="RefillAction()"
+            ><strong>Refills</strong></a
+          >
+        </li>
+        <li
+          [ngClass]="{
+            selected: activeTabId == ROUTES.status.route
+          }"
+        >
+          <a href="{{ ROUTES.status.absoluteRoute }}" (click)="StatusAction()"
+            ><strong>Status</strong></a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

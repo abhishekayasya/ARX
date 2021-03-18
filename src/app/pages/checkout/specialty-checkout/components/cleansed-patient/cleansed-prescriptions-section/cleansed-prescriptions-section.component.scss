@@ -1,0 +1,162 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+
+p.due_amount {
+    display: inline-block;
+    vertical-align: bottom;
+  }
+
+.orders__cleansed-referral{
+  border-bottom: 1px solid #cfcfcf;
+  padding-bottom: 3em;
+  margin-bottom: 3em;
+}
+
+.orders__cleansed-patient-prescription {
+  border-bottom: 1px solid #cfcfcf;
+  .h1__page-title {
+    word-wrap: break-word;
+  }
+}
+
+.orders__cleansed-patient-prescription-container:last-of-type {
+  .orders__cleansed-patient-prescription {
+    border-bottom: none;
+  }
+}
+
+.drug-icon {
+  margin-top: 5px;
+}
+
+.editBtn {
+  border-radius: 5px;
+}
+
+.cc__listing {
+  border-top: solid 1px #cfcfcf;
+  margin-left: -15px;
+  .cc__listing-card {
+    margin: 2em 0em;
+  }
+  .check {
+    margin-right: 10px;
+  }
+  .card_icon {
+    padding: 0;
+    top: 5px;
+    position: relative;
+  }
+  .cc__listing-amount-input {
+    background: #f7f7f7;
+  }
+  .check-box{
+    height: auto;
+  }
+  .btn__radio{
+    min-height: 27px;
+  }
+}
+
+.card_update{
+  .amountContainer{
+    background: #f7f7f7;
+    border-radius: 5px;
+    padding-left: 9px;
+
+    input{
+      display: inline-block;
+      padding-left: 2px;
+      width: 79%;
+    }
+  }
+}
+
+.estimated-price {
+  margin-top: -14px;
+  margin-bottom: 15px;
+  color: #404040;
+}
+
+.isDisable{
+  background: #b1b0af;
+}
+
+select:focus {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+
+.check-box .check{
+  min-width: 25px;
+}
+
+
+
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+  .drug-info{
+    padding-left: 0px;
+  }
+
+  .check {
+    margin-top: -5px;
+  }
+  .presc-summary {
+    padding-top: 2.5rem;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $lg-screen){ 
+  .cc__listing {
+    .card_icon {
+      top: 0;
+    }
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $md-screen){ 
+  .btn_primary {
+    width: 100%;
+  }
+  .drug-icon {
+    margin-top: 12px;
+  }
+  .check-box {
+    min-height: 45px !important;
+    height: auto;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: 767px) {
+  .svgIconAlign {
+    align-self: center;
+  }
+}
+
+.ccDisabled {
+  .radio, .check  {
+    border-color: #e4e4e4;
+  } 
+  .card_number {
+    color: #e4e4e4;
+  }
+  input[type=checkbox], input[type=radio] {
+    pointer-events: none;
+  }
+}
+
+.payment-details{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .payment-details{
+    padding:10px;
+  }
+}

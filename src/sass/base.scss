@@ -1,0 +1,31 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+@import "themes.scss";
+@import "themify";
+
+@import 'partials/fonts.scss';
+@import 'partials/global_styles.scss';
+@import 'partials/buttons.scss';
+@import 'partials/header.scss';
+@import 'partials/footer.scss';
+@import 'partials/alert.scss';
+@import 'partials/form.scss';
+@import 'partials/tabs.scss';
+@import 'partials/modal.scss';
+@import 'partials/customSelect.scss';
+
+@import 'partials/components/login.scss';
+@import 'partials/components/registration.scss';
+@import 'partials/components/personal-info.scss';
+@import 'partials/components/prescription-list.scss';
+@import 'partials/components/notification.scss';
+@import 'partials/progress_bar.scss';
+@import 'partials/tooltip.scss';
+@import 'partials/components/address-related.scss';
+
+
+

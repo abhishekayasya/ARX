@@ -1,0 +1,358 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="module__heading">Add an Adult</div>
+    </div>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+  <div class="row fm__add-adult mt-3">
+    <div class="col-12">
+      <p>
+        Select how you’d like to look up your family member. Make sure this
+        family member is over the age of 18.
+      </p>
+    </div>
+  </div>
+
+  <div class="row mt-4 fm__add-adult-form">
+    <div class="col-md-6">
+      <span class="select__contain">
+        <label for="searchMethod">Search method</label>
+        <span class="icon icon__arrow-down">
+          <svg>
+            <use
+              href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+            ></use>
+          </svg>
+        </span>
+        <select
+          [(ngModel)]="adultService.add_option"
+          id="searchMethod"
+          aria-label="Search method drop down list, press SPACE BAR to open available options in the list"
+          (change)="resetForms()"
+        >
+          <option
+            *ngFor="let state of adultService.options"
+            value="{{ state.id }}"
+            >{{ state.text }}</option
+          >
+        </select>
+      </span>
+    </div>
+    <div class="col-md-12 fm__add-adult-option"></div>
+
+    <div class="col-md-6 mt-4">
+      <div
+        class="fm__add-adult-info"
+        *ngIf="adultService.add_option == adultService.options[0].id"
+      >
+        <form class="form__on-light-bg" [formGroup]="adultInfoForm">
+          <!--first name-->
+          <div class="form__input">
+            <span
+              class="input__contain"
+            >
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  input__error:
+                    adultInfoForm.controls.firstName.invalid &&
+                    (adultInfoForm.controls.firstName.touched ||
+                      adultInfoForm.controls.firstName.dirty)
+                }"
+                type="text"
+                formControlName="firstName"
+                id="firstName"
+                maxlength="20"
+                pattern="^[-a-zA-Z]+(\s+[a-zA-Z]+)*$"
+                required
+              />
+              <label class="input__title" for="firstName"
+                ><span>First Name</span></label
+              >
+            </span>
+          </div>
+          <div
+            class="input__error-text"
+            aria-live="assertive"
+            role="alert"
+            *ngIf="
+              adultInfoForm.controls.firstName.invalid &&
+              (adultInfoForm.controls.firstName.touched ||
+                adultInfoForm.controls.firstName.dirty)
+            "
+          >
+            <span *ngIf="adultInfoForm.controls.firstName.errors.required"
+              ><span class="sr-only">Error </span>First Name is required.</span
+            >
+            <span *ngIf="adultInfoForm.controls.firstName.errors.pattern"
+              >Please enter valid First Name.</span
+            >
+          </div>
+          <!--first name-->
+
+          <!--last name-->
+          <div class="form__input">
+            <span
+              class="input__contain"
+            >
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  input__error:
+                    adultInfoForm.controls.lastName.invalid &&
+                    (adultInfoForm.controls.lastName.touched ||
+                      adultInfoForm.controls.lastName.dirty)
+                }"
+                type="text"
+                formControlName="lastName"
+                id="lastName"
+                maxlength="20"
+                pattern="^[-a-zA-Z]+(\s+[a-zA-Z]+)*$"
+                required
+              />
+              <label class="input__title" for="lastName"
+                ><span>Last Name</span></label
+              >
+            </span>
+          </div>
+          <div
+            class="input__error-text"
+            aria-live="assertive"
+            role="alert"
+            *ngIf="
+              adultInfoForm.controls.lastName.invalid &&
+              (adultInfoForm.controls.lastName.touched ||
+                adultInfoForm.controls.lastName.dirty)
+            "
+          >
+            <span *ngIf="adultInfoForm.controls.lastName.errors.required"
+              ><span class="sr-only">Error </span>Last Name is required.</span
+            >
+            <span *ngIf="adultInfoForm.controls.lastName.errors.pattern"
+              >Please enter valid Last Name.</span
+            >
+          </div>
+          <!--last name-->
+
+          <!--date of birth-->
+          <div class="form__input">
+            <span
+              class="input__contain input__remove-animation"
+              id="refill-datePicker"   
+            >
+              <input
+                [ngClass]="{
+                  input__error:
+                    adultInfoForm.controls.dateOfBirth.invalid &&
+                    (adultInfoForm.controls.dateOfBirth.touched ||
+                      adultInfoForm.controls.dateOfBirth.dirty)
+                }"
+                type="text"
+                formControlName="dateOfBirth"
+                date-picker
+                id="dateOfBirth"
+                required
+                placeholder="MM/DD/YYYY"
+                (keypress)="omit_special_char($event)"
+                class="input__dates input__focus"
+                maxlength="10"
+              />
+              <label class="input__title" for="dateOfBirth"
+                ><span>Date of Birth</span></label
+              >
+            </span>
+          </div>
+
+          <div
+            class="input__error-text"
+            aria-live="assertive"
+            role="alert"
+            *ngIf="
+              adultInfoForm.controls.dateOfBirth.invalid &&
+              (adultInfoForm.controls.dateOfBirth.touched ||
+                adultInfoForm.controls.dateOfBirth.dirty)
+            "
+          >
+            <span *ngIf="adultInfoForm.controls.dateOfBirth.errors.required"
+              ><span class="sr-only">Error </span>Date of Birth is
+              required.</span
+            >
+            <span *ngIf="adultInfoForm.controls.dateOfBirth.errors.validDate"
+              >Please enter valid date.</span
+            >
+          </div>
+          <!--date of birth-->
+
+          <div class="row mt-4">
+            <!--phone number-->
+            <div class="col-sm">
+              <div class="form__input">
+                <span
+                  class="input__contain"
+                  >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        adultInfoForm.controls.number.invalid &&
+                        (adultInfoForm.controls.number.touched ||
+                          adultInfoForm.controls.number.dirty)
+                    }"
+                    type="text"
+                    maxlength="10"
+                    [specified-input]="adultInfoForm.controls.number"
+                    invalidExp="[^0-9]"
+                    formControlName="number"
+                    id="phoneNumber"
+                    pattern="^[0-9]{10,10}$"
+                    required
+                  />
+                  <label class="input__title" for="phoneNumber"
+                    ><span>Phone</span></label
+                  >
+                </span>
+              </div>
+              <div
+                class="input__error-text"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  adultInfoForm.controls.number.invalid &&
+                  (adultInfoForm.controls.number.touched ||
+                    adultInfoForm.controls.number.dirty)
+                "
+              >
+                <span *ngIf="adultInfoForm.controls.number.errors.required"
+                  ><span class="sr-only">Error </span>Phone Number is
+                  required.</span
+                >
+                <span *ngIf="adultInfoForm.controls.number.errors.pattern"
+                  >Please enter valid Phone Number.</span
+                >
+              </div>
+            </div>
+            <!--phone number-->
+
+            <!--phone type-->
+            <div class="col-sm mt-4 mt-sm-0 phoneTypeContainer">
+              <span
+                class="select__contain"
+                [ngClass]="{
+                  input__error:
+                    adultInfoForm.controls.phoneType.invalid &&
+                    (adultInfoForm.controls.phoneType.touched ||
+                      adultInfoForm.controls.phoneType.dirty)
+                }"
+              >
+                <span class="icon icon__arrow-down">
+                  <svg>
+                    <use
+                      href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                    ></use>
+                  </svg>
+                </span>
+                <label for="phoneType">Phone Type</label>
+                <select
+                  formControlName="phoneType"
+                  id="phoneType"
+                  aria-label="Phone type drop down list, press SPACE BAR to open available options in the list"
+                >
+                  <option value="{{ type }}" *ngFor="let type of PHONE_TYPES">
+                    {{ type }}
+                  </option>
+                </select>
+              </span>
+              <div
+                class="input__error-text"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  adultInfoForm.controls.phoneType.invalid &&
+                  (adultInfoForm.controls.phoneType.touched ||
+                    adultInfoForm.controls.phoneType.dirty)
+                "
+              >
+                <span *ngIf="adultInfoForm.controls.phoneType.errors.required"
+                  >Phone Type is required.</span
+                >
+              </div>
+            </div>
+            <!--phone type-->
+          </div>
+        </form>
+      </div>
+
+      <div
+        class="fm__add-adult-rxnumber"
+        *ngIf="adultService.add_option == adultService.options[1].id"
+      >
+        <form class="form__on-light-bg">
+          <div class="form__input" [formGroup]="rxNumberForm">
+            <div class="form__input">
+              <span
+                class="input__contain"
+                >
+                <input
+                  class="input__focus"
+                  [ngClass]="{
+                    input__error:
+                      rxNumberForm.controls.rxNumber.invalid &&
+                      (rxNumberForm.controls.rxNumber.touched ||
+                        rxNumberForm.controls.rxNumber.dirty)
+                  }"
+                  type="text"
+                  minlength="12"
+                  aria-label="Prescription number"
+                  [specified-input]="rxNumberForm.controls.rxNumber"
+                  maxlength="13"
+                  formControlName="rxNumber"
+                  id="rxNumber"
+                  pattern="^[0-9\-]{12,13}$"
+                  required
+                />
+                <label class="input__title" for="phoneNumber"
+                  ><span>Prescription number</span></label
+                >
+              </span>
+            </div>
+            <div
+              class="input__error-text"
+              aria-live="assertive"
+              role="alert"
+              *ngIf="
+                rxNumberForm.controls.rxNumber.invalid &&
+                (rxNumberForm.controls.rxNumber.touched ||
+                  rxNumberForm.controls.rxNumber.dirty)
+              "
+            >
+              <span *ngIf="rxNumberForm.controls.rxNumber.errors.required"
+                ><span class="sr-only">Error </span>Prescription number is
+                required.</span
+              >
+              <span *ngIf="rxNumberForm.controls.rxNumber.errors.pattern"
+                >Please enter valid Prescription Number</span
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-12 mt-5">
+      <button
+        class="btn btn_primary"
+        type="button"
+        (click)="sendInfoSearchRequest()"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</div>

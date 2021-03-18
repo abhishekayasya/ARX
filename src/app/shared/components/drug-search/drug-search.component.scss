@@ -1,0 +1,218 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.modal {
+  z-index: 99999;
+}
+.checkout__drugsearch-show {
+  visibility: visible;
+  opacity : 1;
+  display : block;
+  pointer-events : auto;
+}
+
+.checkout__drugsearch-hide {
+  visibility: hidden;
+  opacity : 0;
+  display : none;
+  pointer-events : none;
+}
+
+.search__focus {
+  height: 100%;
+  max-height: 50px;
+}
+
+.rx__checkout-drug__model {
+  input {
+    background: #fff;
+  }
+  .btn {
+    width: initial;
+  }
+  .submitBtn {
+    width: 100%;
+  }
+}
+
+.rx__checkout-drug-list-container {
+  margin-top: 2em;
+  .rx__checkout-drug-list {
+    ul {
+      padding: 1em;
+      border: 1px solid #f7f7f7;
+      height: 300px;
+      overflow: scroll;
+      background: #fff;
+      @media (max-width: 635px) {
+        padding: 0;
+      }
+
+      li {
+        cursor: pointer;
+        padding: .5em;
+        color: #017e9d;
+        > ul > li {
+          cursor: default;
+          > div > label {
+            cursor: pointer;
+          }
+        }
+        @media (max-width: 635px) {
+          padding: 0;
+          border-bottom: 1px solid #cfcfcf;
+
+          > ul {
+            padding: 0;
+            > li {
+              padding-left: 0;
+              padding-right: 0;
+              background: #fafafa;
+              color: #404040;
+              border-bottom: none;
+              > div {
+                margin: 0 20px 0 20px;
+                padding: 1.5em 0 1.5em 0;
+                border-bottom: 1px solid #cfcfcf;
+              }
+              &:last-child div{
+                border-bottom: none;
+              }
+  
+            }
+            
+          }
+
+        }
+        
+        p {
+          font-size: 18px;
+          
+          @media (max-width: 635px) {
+            padding: .5em 20px .5em 20px;
+          }
+        }
+        
+        
+      }
+    }
+
+    ul.selected_list {
+      li {
+        @media (max-width: 635px) {
+          border-bottom: none;
+          margin: 0 17px 0 17px;
+        }
+
+
+        p {
+          // display: inline-block;
+          // filter: blur();
+          vertical-align: bottom;
+          color: #000;
+          @media (max-width: 635px){
+            padding: 0;
+          }
+        }
+
+        a {
+          // display: inline-block;
+          .icon__dismiss {
+            min-height: 25px;
+            color: #000;
+          }
+        }
+      }
+    }
+
+    ul.sub_drugs {
+      border: none;
+      height: auto;
+      padding: 0em 1em;
+    }
+  }
+}
+
+@media only screen
+and (min-device-width: $xs-screen)
+and (max-device-width: $sm-screen) {
+  .rx__checkout-drug-list{
+    padding-left: 10px;
+  }
+}
+
+
+.form__input .input__title span{
+  text-transform: none;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #f0f1f1;
+  border: 1px solid #ccc;
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  li{
+      display: block;
+      padding: 3px 20px;
+      clear: both;
+      font-weight: normal;
+      line-height: 1.6;
+      color: #8a8a8a;
+      white-space: nowrap;
+      
+      &:hover{
+        color: #595a5c;
+        outline: 0;
+        background-color: #f7f7f7;
+      }
+  }
+  
+}
+.menu.show{
+  display: block;
+}
+
+.rx__checkout-drug-list-result{
+  border-radius: 5px;
+ 
+  .icon__arrow-down{
+    float: right;
+    @media screen and (min-width: 480px){
+      display: none;
+    }
+  }
+  .rotated.icon__arrow-down{
+    transform: rotate(180deg);
+  }
+  .check-box .check{
+    @media screen and (min-width: 480px){
+      display: none;
+    }
+  }
+
+}
+
+@media (max-width: 635px) {
+  .modal__content-contain {
+    transform: translateY(0px) scale(1);
+   }
+}

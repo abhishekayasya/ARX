@@ -1,0 +1,225 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.container {
+  background-color: #fff !important;
+  font-size: 1.125rem;
+}
+
+.showmore-con {
+  width: 100%;
+  display: block;
+  word-break: break-word;
+}
+
+.info_icons {
+  color: &#8505;
+}
+.change-link {
+  color: #02a0c0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+.previousvalue {
+  div {
+    margin: 3px;
+  }
+}
+.h2_patient {
+  font-size: 1.1rem;
+  font-family: Helvetica Neue LT W01_85 Heavy;
+  // margin-top: 40px;
+}
+.m-btn {
+  margin-right: 10px;
+}
+.pationtname-con {
+  margin-left: -12px;
+}
+.secondary {
+  width: auto;
+  margin: auto;
+}
+.new-prescription-container {
+  // padding: 3em;
+  margin-top: 2em;
+  width: 100%;
+  background: #fff;
+  font-size: 16px;
+  min-height: 500px;
+  .input__title {
+    text-transform: none;
+  }
+  .h2_title {
+    font-size: 1.4rem;
+    padding: 10px 0px 10px 0px;
+  }
+  .form-container fieldset {
+    margin: 1em 0em 1em 0em;
+  }
+  .Line {
+    width: 100%;
+    height: 1px;
+    background-color: #979797;
+  }
+  .add-another {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #02a0c0;
+    font-weight: 600;
+    cursor: pointer;
+    div:first-child {
+      width: 59px;
+      height: 66px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    svg {
+      width: 66px;
+      height: 70px;
+    }
+  }
+  sup {
+    font-size: 12px;
+  }
+  .warn-icon-con {
+    display: flex;
+    flex-flow: row;
+  }
+  .container .row {
+    //margin: 2em 0em 2em 0em;
+    margin-top: 30px;
+  }
+  .showmore-con .hd_warn_icon {
+    color: #fcb44c;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  .home_delivery_info {
+    margin-left: -45px;
+  }
+  .hd_info_icon {
+    //color: #0ea0c0 !important;
+    color: #01728e !important;
+    margin-right: 10px;
+  }
+  .showmore-con .hd_warn_icon + span {
+    font-weight: 600;
+  }
+  .prescription-list {
+    list-style: disc;
+    margin-left: 45px;
+    display: block;
+  }
+  .prescription-list li {
+    margin: 10px;
+  }
+  .mobileview {
+    display: none;
+  }
+
+  .footNote {
+    font-size: 1rem;
+  }
+
+  .bt-container {
+    display: flex;
+    justify-content: flex-end;
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .cancel-color {
+    color: #01728e !important;
+  }
+
+  .transparent_btn {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #02a0c0;
+  }
+  .small_input_contain {
+    width: 50%;
+  }
+  .btn__rounded {
+    background-color: #fff !important;
+  }
+}
+.multiplemember-con {
+  margin: 0px 0px 40px 0px;
+}
+.singlemember {
+  margin-bottom: 20px;
+  margin-top: -15px;
+  div {
+    margin-bottom: 5px;
+  }
+}
+
+.buttonWrapper {
+  float: right;
+}
+.form-container {
+  font-size: 16px;
+}
+.terms_Container {
+  padding-top: 8px;
+  padding-left: 2px;
+  .check-box {
+    height: auto;
+    span {
+      font-size: 1.125rem;
+    }
+    label {
+      display: flex;
+      align-items: flex-start;
+    }
+    .check {
+      min-width: 23px;
+      width: 23px;
+      height: 23px;
+      margin: 8px 16px 0px 12px;
+    }
+  }
+}
+#app__root__section,
+.theme-default .color__neutral {
+  background-color: #fff !important;
+}
+.mt-5 {
+  margin-top: 5px;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .h1__page-title {
+    font-size: 24px;
+    padding: 0px;
+  }
+  .mobileview {
+    display: block !important;
+  }
+  .screenview {
+    display: none !important;
+  }
+  .hd-container {
+    padding: 0px;
+  }
+  .secondary.cancelbtn {
+    width: auto;
+    margin: auto;
+  }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .container {
+    width: 100%;
+  }
+}

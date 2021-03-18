@@ -1,0 +1,46 @@
+.security-info {
+  padding-top: 30px;
+  .h1__page-title {
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+  .tile-block {
+    margin-bottom: 3rem;
+
+    button {
+      margin-top: 32px;
+    }
+  }
+}
+.alert__yellow {
+  background: #fcb44c !important;
+  color: #404040 !important;
+}
+.alertContent {
+  font-family: Helvetica;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.31;
+  letter-spacing: normal;
+  color: #4b4b4b;
+}
+.alert .btn__rounded {
+  max-width: 10% !important;
+}
+.minimal {
+  background: #01728e !important;
+  color: #ffffff !important;
+}
+.info-color {
+  color: #fff;
+}
+
+.banner-font {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  font-family: inherit;
+  font-stretch: 100%;
+}

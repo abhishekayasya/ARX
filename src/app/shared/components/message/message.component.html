@@ -1,0 +1,60 @@
+<div #alertContainer class="noPrint">
+  <div class="message-container" *ngIf="!disable">
+    <div
+
+      *ngFor="let message of messages; let i = index"
+
+      class="alert "
+
+      [ngClass]="{
+        'alert__error': message.level == 'ERROR',
+        'alert__success': message.level == 'SUCCESS',
+        'alert__warn': message.level == 'WARN',
+        'alert__info': message.level == 'INFO',
+        'minimal': message.minimal
+      }"
+
+    >
+      <a class="alert__text-contain">
+
+      <span class="icon icon__info" *ngIf="message.level == 'INFO'">
+        <svg>
+          <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"></use>
+        </svg>
+      </span>
+
+        <span class="icon icon__alert" *ngIf="message.level == 'ERROR'">
+        <svg>
+          <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"></use>
+        </svg>
+      </span>
+
+        <span class="icon icon__check" *ngIf="message.level == 'SUCCESS'">
+        <svg>
+          <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__check"></use>
+        </svg>
+      </span>
+
+
+        <span class="icon icon__alert" *ngIf="message.level == 'WARN'">
+        <svg>
+          <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"></use>
+        </svg>
+      </span>
+
+        <span [ngClass]="{'msg-text': !message.hideCloseBtn}">
+          <div class="sr-only">{{(message.level != 'SUCCESS') ? "Error " + message.message : message.message}}</div>
+        <div aria-hidden="true" class="alert-content mr-1" tabindex="0" [innerHTML]="message.message | html">
+        </div>
+      </span>
+
+      <button *ngIf="!message.hideCloseBtn" class="btn btn__rounded closeBtn" (click)="hideMessage($event, i, message.messageId)">
+          <div class="btn__dismiss" aria-label="Alert message close"></div>
+      </button>
+
+      </a>
+
+    </div>
+  </div>
+</div>
+

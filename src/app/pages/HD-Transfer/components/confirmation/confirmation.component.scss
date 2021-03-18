@@ -1,0 +1,168 @@
+.title-prescription{
+  font-size: 28px;
+  line-height: 1.21;
+}
+.sub-title{
+  font-size: 18px;
+  line-height: 1.83;
+}
+.order-info{
+  margin-top:0px;
+  padding: 40px;
+  background: #fff;
+}
+.page-title{
+padding-bottom: 3em;
+}
+
+.h1__page-title span{
+  font-weight: 600;
+}
+.title-prescription,.sub-title{
+  
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  color: #404040;
+}
+.card_number{
+    padding-right: 15px;
+    padding-left: 15px;
+    line-height: 2.83;
+}
+.home-detailsnew{
+    line-height: 2.83;
+    //font-weight: bold;
+    font-size: 22px;
+  
+}
+.Home-Delivery{
+  font-size: 28px;
+  //font-weight: bold;
+}
+.Home-Delivery, .home-details, .precription-list, .shipping-list, .shipping-add, .home-detailsnew{
+   
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    color: #404040;
+  }
+  .home-detailsnew, .shipping_address, .shipping_method, .payment-details{
+   margin-top:20px;
+  }
+  .shipping-list{
+    font-size: 18px;
+  }
+  .home_standard{
+    font-size: 18px;
+  }
+
+  .shipping-details li{
+    line-height: 1.83;
+  }
+.home-details{
+    
+    font-size: 18px;
+    line-height: 2.83;
+    font-weight: bold;
+   }
+
+.precription-list{
+ font-size: 18px;
+ padding-top: 15px;
+}
+ .shipping-add{
+    font-size: 16px;
+ }
+
+  .print-img{
+    width: 60px;
+    height: 60px;
+  
+  }
+.print-icon svg{
+  color: #02a0c0;
+  position: absolute;
+  margin: -17px 0px 0px -115px;
+  cursor: pointer;
+
+}
+.print-icon{
+  float: right;
+   background-color: #02a0c0;
+   cursor: pointer;
+}
+ .print-text{
+  float: right;
+  font-size: 16px;
+  //font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  color: #01728e;
+  margin: 15px 15px 15px 0;
+  cursor: pointer;
+}
+.navbar {
+    
+   padding: 0;
+  }
+  
+  .navbar a {
+  float: right;
+  color: #02a0c0;
+  text-decoration: none;
+  font-size: 17px;
+  margin-top: 20px;
+  margin-left: 60px;
+  font-weight: 600;
+  padding-right: 25px;
+  }
+
+  .navbar-nav{
+   margin-left: 50px;
+  }
+
+  .navbar-nav svg{
+    padding: 0;
+    margin: 0;
+
+  }
+ .refill-icons{
+  color: #02a0c0;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  } 
+  .nav-border{
+    border-right: 1px solid #02a0c0;
+  }
+  .shipping_method{
+    max-width: 50%;
+    }
+    
+  .precription-list-first{
+    font-size: 18px;
+    padding-top: 10px;
+  }
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .order-info{
+   padding: 0 !important;
+   margin: 0;
+  }
+  .page-title{
+    padding-bottom:0;
+  }
+  .precription-list-first{
+    font-size: 16px;
+  }
+  .h1__page-title{
+    text-align: left !important;
+    padding: 0;
+  }
+  .shipping_method{
+    max-width: 100%;
+    }
+}

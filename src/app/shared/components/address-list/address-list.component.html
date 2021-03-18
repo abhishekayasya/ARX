@@ -1,0 +1,48 @@
+<section class="rx-address-book container">
+  <div class="row rx-option-container">
+    <div class="rx-header-container col-sm-12">
+      <h2 class="">Select a shipping address<address></address></h2>
+      <div class="rx-add-more-address-Button l-display-flex">
+        <a *ngIf="addAddressUrl != undefined" href="{{addAddressUrl}}">
+          <span class="icon icon__plus-add"><svg alt="" alt=""><use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__plus-add"></use></svg></span>
+          <span class="l-vertically-align-flex"><strong>add new address</strong></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="row loader__container">
+      <div class="col-12">
+        <arxrf-loader [show]="loader"></arxrf-loader>
+      </div>
+    </div>
+
+    <div *ngIf="addressesService.addresses" class="rx-address-book-option col-sx-12 col-sm-12">
+      <form #addressBookForm="ngForm">
+        <div class="rx-options">
+          <div *ngFor="let address of addressesService.addresses; let i = index" class="btn__radio rx-address-option">
+            <input type="radio"
+                   name="addressOption"
+                   value="type"
+                   [checked]="address.isPreferred || address.preferred"
+                   (click)="selectAddress( i )"
+            >
+            <label>
+              <span class="radio"></span>
+              <span>
+                <p>{{address.firstName}} {{address.lastName}}</p>
+                <p>{{address.street}} {{address.street1}} {{address.city}}, {{address.state}} {{address.zip}} {{address.zipCode}}</p>
+                <a *ngIf='!this.isSpeciality' title="edit address {{address.street}} {{address.street1}} {{address.city}},{{address.state}} {{address.zipCode}}" href="{{editAddressLink}}?aid={{address.id}}">Edit address</a>
+                <a *ngIf="!this.isSpeciality && !address.isPreferred && addressesService.addresses?.length > 1" href="javascript:void(0)" (click)="deleteAddress( address.id )" title="edit address {{address.street}} {{address.street1}} {{address.city}},{{address.state}} {{address.zipCode}}">Delete</a>
+              </span>
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="rx-btn-select-address">
+    <button role="button" class="btn btn_primary select_address_btn" type="button" (click)="selectAddressForCheckout()">Select address</button>
+  </div>
+</section>
+

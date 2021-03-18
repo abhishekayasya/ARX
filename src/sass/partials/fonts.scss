@@ -1,0 +1,53 @@
+h1 {
+  @include themify($themes) {
+    font-size: themed(h1_font_size);
+    font-family: themed(heavy_font_famliy);
+  }
+}
+
+h2 {
+  @include themify($themes) {
+    font-size: themed(h2_font_size);
+    font-family: themed(heavy_font_famliy);
+  }
+}
+
+h3 {
+  @include themify($themes) {
+    font-size: themed(h3_font_size);
+    font-family: themed(heavy_font_famliy);
+  }
+}
+
+h4 {
+  @include themify($themes) {
+    font-size: themed(h4_font_size);
+    font-family: themed(heavy_font_famliy);
+  }
+}
+
+h5 {
+  @include themify($themes) {
+    font-size: themed(h5_font_size);
+    font-family: themed(heavy_font_famliy);
+  }
+}
+
+h6 {
+  @include themify($themes) {
+    font-size: themed(h6_font_size);
+    font-family: themed(heavy_font_famliy);
+  }
+}
+
+strong, .link__cta, .btn, .btn__pair a.secondary, .modal h2,input, textarea, select, .select__contain select, .btn__toggle:before, .btn__toggle:after{
+  @include themify($themes) {
+    font-family: themed(heavy_font_famliy);
+  }
+}
+
+.phone-type-button{
+  @include themify($themes) {
+    font-family: themed(heavy_font_family_2);
+  }
+}

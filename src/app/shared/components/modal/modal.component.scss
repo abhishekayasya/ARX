@@ -1,0 +1,67 @@
+.arx__modal-show {
+  visibility: visible;
+  opacity : 1;
+  display : block;
+  pointer-events : auto;
+}
+
+.arx__modal-hide {
+  visibility: hidden;
+  opacity : 0;
+  display : none;
+  pointer-events : none;
+}
+
+.btn.action__close-modal{
+  z-index: 99;
+  background-color: #fff;
+  svg{
+    fill: #404040;
+    width: 50px;
+  }
+}
+.btn__rounded{
+  border-radius: 50% !important;
+  outline: none !important;
+
+}
+.btn span.icon {
+  -webkit-transition: 300ms;
+  -moz-transition: 300ms;
+  -ms-transition: 300ms;
+  transition: 300ms;
+}
+@media only screen and (max-width:600px){
+  .button_Allign{
+    top : 12px !important;
+  }
+}
+
+button:focus {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+
+@media print {
+  .modal{
+    position: static !important;
+  }
+}
+
+
+.error-modal {
+  position: relative;
+  max-width: 100%;
+  margin: 00px auto;
+  padding: 30px 0px 60px;
+  background: #fff !important;
+  border-radius: 0;
+  z-index: 10;
+  height: 100vh;
+  transform: none;
+  width: 100%;
+}
+
+.error-modal-section {
+  overflow:hidden;
+}

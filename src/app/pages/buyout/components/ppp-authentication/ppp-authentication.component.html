@@ -1,0 +1,73 @@
+<div class="container no-container-mobile">
+  <div class="row">
+    <div class="col-md-12 justify-content-center align-items-center">
+      <div class="buyout_unlock_container">
+        <arxrf-loader [show]="showLoader" [loaderOverlay]="true" ></arxrf-loader>
+        <div class="row">
+          <div class="message-wrapper">
+            <arxrf-message></arxrf-message>
+          </div>
+        </div>
+        <div class="row formContainer">
+          <div class="col-md-12 bg-white pp-unlock-form" >
+            <form class="form__on-light-bg" [formGroup]="ppForm">
+              <h1 class="h1__page-title text-center">One prescription number, all access
+                <p>Step 3 of 3</p>
+              </h1>
+              <p class="mt-4">Enter one prescription (“Rx”) number from any of your medication labels.</p>
+
+              <div class="text-right mt-3">
+                <a href="javascript:void(0);" class="forgot-user" (click)="enableRxInfo = true">Where’s this?</a>
+              </div>
+              <div class="form__input mt-1"  >
+                    <span class="input__contain">
+                       <input 
+                        class="input__focus"
+                        [ngClass]="{
+                          'input__error': (ppForm.controls.rxNumber.invalid && ppForm.controls.rxNumber.dirty)
+                        }"
+                        type="text"
+                        formControlName="rxNumber"
+                        id="rxNumber"
+                        required>
+                      <label class="input__title" for="rxNumber"><span>Prescription number</span></label>
+                    </span>
+              </div>
+              <div class="input__error-text" aria-live="assertive" role="alert"
+                   *ngIf="(ppForm.controls.rxNumber.invalid && ppForm.controls.rxNumber.dirty)">
+                <span *ngIf="ppForm.controls.rxNumber.errors.required">
+                  Prescription Number is required
+                </span>
+                <span *ngIf="ppForm.controls.rxNumber.errors.pattern">
+                  Please enter valid Prescription Number
+                </span>
+              </div>
+
+              <div class="mt-5">
+                <button class="btn btn_primary float-right col-md-6 col-12 mb-2" (click)="submitUnlockRequest()">Continue</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<arxrf-modal [show]="enableRxInfo" (update)="updateRxInfoState($event)" class="rx-info-model">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="">Where’s the prescription number?</h1>
+
+        <p class="mt-5">Look for the “Rx” number printed on your medication label or slip.</p>
+
+        <div class="pill_image_container text-center mt-4">
+          <img src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/568F6000-5A78-47F2-AD63-5E0E9718A3C7.png" alt="" >
+        </div>
+
+      </div>
+    </div>
+  </div>
+</arxrf-modal>
+

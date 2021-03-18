@@ -1,0 +1,258 @@
+<div class="row">
+  <div class="rx__cc-container col-12">
+    <div class="col-12">
+      <a href="{{ backUrl }}"> < back to prescription review</a>
+    </div>
+    <div class="col-md-6">
+      <form
+        [formGroup]="newCardForm"
+        class="form__on-light-bg"
+        *ngIf="creditCard"
+      >
+        <h2>Card Information</h2>
+
+        <div class="row no-gutters mt-2">
+          <p>{{ creditCard.firstName }} {{ creditCard.lastName }}</p>
+        </div>
+
+        <div class="row no-gutters mt-2">
+          <span class="col-md-1" [cc-type]="creditCard.creditCardType"> </span>
+          <span class="offset-md-1 col">{{
+            creditCard.creditCardNumber | ccnumber: "5"
+          }}</span>
+        </div>
+
+        <div class="form__input">
+          <span
+            class="input__contain"
+          >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                  newCardForm.controls.expDate.invalid &&
+                  (newCardForm.controls.expDate.touched ||
+                    newCardForm.controls.expDate.dirty)
+              }"
+              type="text"
+              formControlName="expDate"
+              id="expDate"
+              placeholder="MM/YY"
+              maxlength="5"
+              [creditCardExpiry]="newCardForm.controls.expDate"
+              required
+            />
+            <label class="input__title" for="expDate">
+              <span>Expiration date</span>
+            </label>
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          *ngIf="
+            newCardForm.controls.expDate.invalid &&
+            (newCardForm.controls.expDate.touched ||
+              newCardForm.controls.expDate.dirty)
+          "
+        >
+          <span *ngIf="newCardForm.controls.expDate.errors.required"
+            >Expiration date is required.</span
+          >
+          <span
+            *ngIf="
+              newCardForm.controls.expDate.errors.pattern ||
+              newCardForm.controls.expDate.errors.validDate
+            "
+            >Please enter valid Expiration date.</span
+          >
+        </div>
+
+        <h2 class="billing-address">Billing Address</h2>
+
+        <div class="check-box">
+          <input
+            type="checkbox"
+            id="sameAsShipping"
+            tabindex="0"
+            formControlName="sameAsShipping"
+            (change)="setBillingAddress($event)"
+            [checked]="isShippingAdd"
+          />
+          <label for="sameAsShipping">
+            <span class="check"></span>
+            <span>Same as shipping address</span>
+          </label>
+        </div>
+
+        <div class="form__input">
+          <span
+            class="input__contain"
+          >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                  newCardForm.controls.street1.invalid &&
+                  (newCardForm.controls.street1.touched ||
+                    newCardForm.controls.street1.dirty)
+              }"
+              formControlName="street1"
+              id="street1"
+            />
+            <label class="input__title" for="street1">
+              <span>Street address 1</span>
+            </label>
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          *ngIf="
+            newCardForm.controls.street1.invalid &&
+            (newCardForm.controls.street1.touched ||
+              newCardForm.controls.street1.dirty)
+          "
+        >
+          <span *ngIf="newCardForm.controls.street1.errors.required || newCardForm.controls.street1.errors.whitespace"
+            >Primary address is required.</span
+          >
+        </div>
+
+        <div class="form__input">
+          <span class="input__contain">
+            <input class="input__focus" type="text" formControlName="street2" id="street2" />
+            <label class="input__title" for="street2">
+              <span>Street address 2 (optional)</span>
+            </label>
+          </span>
+        </div>
+
+        <div class="form__input">
+          <span
+            class="input__contain"
+          >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                  newCardForm.controls.city.invalid &&
+                  (newCardForm.controls.city.touched ||
+                    newCardForm.controls.city.dirty)
+              }"
+              type="text" 
+              formControlName="city" 
+              id="city" 
+            />
+            <label class="input__title" for="city">
+              <span>City</span>
+            </label>
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          *ngIf="
+            newCardForm.controls.city.invalid &&
+            (newCardForm.controls.city.touched ||
+              newCardForm.controls.city.dirty)
+          "
+        >
+          <span *ngIf="newCardForm.controls.city.errors.required"
+            >City is required.</span
+          >
+          <span
+            *ngIf="
+              newCardForm.controls.city.errors.pattern ||
+              newCardForm.controls.city.errors.minLength
+            "
+            >Please enter valid city name.</span
+          >
+        </div>
+
+        <div class="row no-gutters form__input">
+          <div class="col-5">
+            <span class="select__contain">
+              <label for="select-dropdown">State</label>
+              <span class="icon icon__arrow-down">
+                <svg alt="">
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+
+              <select formControlName="state">
+                <option value="" class="" selected>Select State</option>
+                <option
+                  *ngFor="let state of STATE_US"
+                  value="{{ state.short_name }}"
+                >
+                  {{ state.name }}
+                </option>
+              </select>
+            </span>
+          </div>
+          <div class="col-5 zip-code">
+            <span
+              class="input__contain"
+            >
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  input__error:
+                    newCardForm.controls.zip.invalid &&
+                    (newCardForm.controls.zip.touched ||
+                      newCardForm.controls.zip.dirty)
+                }"
+                type="text"
+                formControlName="zip"
+                id="zip"
+                maxlength="5"
+                [specified-input]="newCardForm.controls.zip"
+                invalidExp="[^0-9]"
+              />
+              <label class="input__title" for="zip">
+                <span>ZIP code</span>
+              </label>
+            </span>
+            <div
+              class="input__error-text"
+              *ngIf="
+                newCardForm.controls.zip.invalid &&
+                (newCardForm.controls.zip.touched ||
+                  newCardForm.controls.zip.dirty)
+              "
+            >
+              <span *ngIf="newCardForm.controls.zip.errors.required"
+                >Zip code is required.</span
+              >
+              <span *ngIf="newCardForm.controls.zip.errors.pattern"
+                >Please enter valid zip code.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="check-box saveAsPrefered" *ngIf="cardSelected">
+          <input
+            type="checkbox"
+            id="saveAsPrefered"
+            tabindex="0"
+            formControlName="saveAsPrefered"
+            [checked]="isPreferredAdd"
+          />
+          <label for="saveAsPrefered">
+            <span class="check"></span>
+            <span>Save credit card as preferred payment</span>
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-12 mb-5 mt-4 text-right rx__cc-footer">
+    <button class="btn btn_primary" type="button" (click)="saveCardInfo()">
+      Save
+    </button>
+  </div>
+</div>

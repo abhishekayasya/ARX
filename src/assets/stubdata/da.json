@@ -1,0 +1,185 @@
+{
+  "DoAssessmentResponse": {
+    "DoAssessmentResult": {
+      "Header": {
+        "RequestId": 23
+      },
+      "Status": {
+        "StatusCode": "",
+        "StatusMessage": ""
+      },
+      "AssessmentStep": {
+        "AssessmentStepId": 4431,
+        "Questions": {
+          "QuestionType": [
+            {
+              "Answer": "",
+              "QuestionId": "3877-9499",
+              "Visible": true,
+              "QuestionName": "cboOTCchanges",
+              "QuestionText": "Have you had any  changes to your specialty medication since your last refill?",
+              "OldAnswer": "",
+              "DataType": "",
+              "ControlType": "combobox",
+              "Optional": false,
+              "Priority": 1884,
+              "Width": 120,
+              "ValidationScriptsType": {
+                "@nil": "true"
+              },
+              "AllowableAnswers": {
+                "AnswerType": [
+                  {
+                    "Answer": 0,
+                    "AnswerDisplayText": "",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 1,
+                    "AnswerDisplayText": "Reports no changes or additions to medications",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 2,
+                    "AnswerDisplayText": "Provided updates to OTC and\/or prescribed medications",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 3,
+                    "AnswerDisplayText": "Unable to provide updates to medical profile",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 4,
+                    "AnswerDisplayText": "Declined to provide medication information- RPh informed",
+                    "Selected": false
+                  }
+                ]
+              },
+              "MaxLength": 0
+            },
+            {
+              "Answer": "",
+              "QuestionId": "3880-9500",
+              "Visible": true,
+              "QuestionName": "cboAllergyChanges",
+              "QuestionText": "SKIP",
+              "OldAnswer": "",
+              "DataType": "",
+              "ControlType": "combobox",
+              "Optional": false,
+              "Priority": 1885,
+              "Width": 120,
+              "ValidationScriptsType": {
+                "@nil": "true"
+              },
+              "AllowableAnswers": {
+                "AnswerType": [
+                  {
+                    "Answer": 0,
+                    "AnswerDisplayText": "",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 3,
+                    "AnswerDisplayText": "No allergies reported",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 1,
+                    "AnswerDisplayText": "New allergies recorded",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 2,
+                    "AnswerDisplayText": "Declined to provide allergies\/answer",
+                    "Selected": false
+                  }
+                ]
+              },
+              "MaxLength": 0
+            },
+            {
+              "Answer": "",
+              "QuestionId": "3883-9501",
+              "Visible": true,
+              "QuestionName": "cboMedConditChanges",
+              "QuestionText": "SKIP",
+              "OldAnswer": "",
+              "DataType": "",
+              "ControlType": "combobox",
+              "Optional": false,
+              "Priority": 1886,
+              "Width": 120,
+              "ValidationScriptsType": {
+                "@nil": "true"
+              },
+              "AllowableAnswers": {
+                "AnswerType": [
+                  {
+                    "Answer": 0,
+                    "AnswerDisplayText": "",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 1,
+                    "AnswerDisplayText": "Patient reports no additional medical conditions",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 2,
+                    "AnswerDisplayText": "Patient has additional medical conditions",
+                    "Selected": false
+                  }
+                ]
+              },
+              "MaxLength": 0
+            },
+            {
+              "Answer": "",
+              "QuestionId": "3886-9502",
+              "Visible": true,
+              "QuestionName": "cboSpecMedChanges",
+              "QuestionText": "Have you had any changes to your specialty medication since your last refill?",
+              "OldAnswer": "",
+              "DataType": "",
+              "ControlType": "combobox",
+              "Optional": false,
+              "Priority": 1887,
+              "Width": 120,
+              "ValidationScriptsType": {
+                "@nil": "true"
+              },
+              "AllowableAnswers": {
+                "AnswerType": [
+                  {
+                    "Answer": 0,
+                    "AnswerDisplayText": "",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 1,
+                    "AnswerDisplayText": "Yes",
+                    "Selected": false
+                  },
+                  {
+                    "Answer": 2,
+                    "AnswerDisplayText": "No",
+                    "Selected": false
+                  }
+                ]
+              },
+              "MaxLength": 0
+            }
+          ]
+        },
+        "ValidationScriptsListType": ""
+      },
+      "AssessmentTrackingId": 131340365,
+      "ValidationScripts": "",
+      "TransactionRows": {
+        "@nil": "true"
+      }
+    }
+  }
+}

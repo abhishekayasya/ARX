@@ -1,0 +1,122 @@
+<div class="fm-auth-container">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="module__heading">Grant Permission</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <arxrf-message></arxrf-message>
+      </div>
+    </div>
+
+    <div class="row fm-auth-options" *ngIf="!auth_options_state">
+      <div class="col-md-12 mt-4">
+        <fieldset>
+          <legend>Please verify your identity</legend>
+
+          <p>In order to access your private online pharmacy records and health information, you will need to verify your identity</p>
+          <div class="btn__radio mt-4" *ngFor="let type of authOptions">
+
+            <input type="radio"
+                   [id]="type.key"
+                   name="verificationOption"
+                   value="{{type.key}}"
+                   [checked]="options_selected == type.key"
+                   [(ngModel)]="options_selected"
+                   tabindex="0">
+
+            <label for="{{type.key}}">
+              <span class="radio"></span>
+              <span [innerHTML]="type.label"></span>
+            </label>
+
+          </div>
+        </fieldset>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <p><strong>Verify Online</strong></p>
+            <p class="mt-3">You will simply need to answer a few questions based on your personal information. This process is similar to those used by banks or credit institutions to prevent unauthorized account access.</p>
+            <p class="mt-5">Your answers are used only to verify your identity. They will not be stored or otherwise accessible by ARxWP.</p>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <button class="btn btn_primary" [disabled]="options_selected == ''" (click)="onSelection()">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row mt-4" *ngIf="auth_options_state && options_selected == 'KBA'">
+      <div class="col-12">
+        <p>You're just a few minutes away from having full access to your pharmacy records. Your answers are used only to verify your identity. ARxWP does not retain this data and cannot access or view your answers.</p>
+        <p class="mt-3">Answer the following questions</p>
+
+        <div class="row">
+          <div class="col-12">
+            <ol class="list-styles list-styles__ordered ques-listing mt-4">
+              <li *ngFor="let question of onlineQuestions" data-id="{{question.questionId}}">
+                <fieldset>
+                  <legend>{{question.question}}</legend>
+                  <p><strong>{{question.question}}</strong></p>
+
+                  <div class="row" *ngFor="let choise of question.choiceBeanList; index as i ">
+                    <div class="col-md-12">
+                      <div class="btn__radio mt-4">
+                        <input type="radio"
+                               tabindex="0"
+                               id="{{question.questionId + i}}"
+                               name="{{question.questionId}}"
+                               (change)="collectAnswer($event)"
+                               value="{{choise.choiceId}}"/>
+                        <label for="{{question.questionId + i}}">
+                          <span class="radio"></span>
+                          <span>{{choise.choiceText}}</span><br/>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <a href="javascript:void(0)" (click)="onlineQuestions = undefined; auth_options_state = false">Cancel</a>
+            <button class="btn btn_primary" [disabled]="onlineQuestions == undefined" (click)="processKBASubmission()">Continue</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row" *ngIf="auth_options_state && options_selected == 'IVR'">
+      <div class="col-12">
+        <p class="mt-3">Please call 800-573-3586 and provide the following unique activation code: </p>
+        <h1><strong>{{ivrKeyCode}}</strong></h1>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <a href="javascript:void(0)" (click)="auth_options_state = false">Cancel</a>
+            <button class="btn btn_primary" (click)="submitIVRProcess()">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="auth_options_state && options_selected == 'TXT'">
+      text ....
+    </div>
+
+
+  </div>
+</div>

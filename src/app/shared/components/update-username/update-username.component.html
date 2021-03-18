@@ -1,0 +1,64 @@
+<div class="container no-container-mobile">
+  <div class="row">
+    <div class="col-md-12 justify-content-center align-items-center">
+      <div class="loginContainer">
+        <arxrf-loader [show]="showLoader" message="Loading your account home..." [loaderOverlay]="true"></arxrf-loader>
+        <div class="row">
+          <div class="arx-logo" *ngIf="showArxLogo">
+            <arxrf-logo></arxrf-logo>
+          </div>
+        </div>
+        <div class="row">
+          <div class="message-wrapper">
+            <arxrf-message></arxrf-message>
+          </div>
+        </div>
+        <div class="row formContainer">
+          <div class="col-md-12 bg-white reg-form">
+            <form [formGroup]="updateUserNameForm" class="form__on-light-bg">
+              <h1 class="h1__page-title text-center mt-4 mb-3"> Update Username </h1>
+              <div *ngIf="isEmailUpdated == false; else successUsernameBlk">
+                <div class="form__input mt-1">
+                  <span class="input__contain">
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        'input__error': (updateUserNameForm.controls.username.invalid && updateUserNameForm.controls.username.dirty) || invalidUserName
+                      }"
+                      type="text" 
+                      formControlName="username" 
+                      id="username" 
+                      (keyup) = "invalidUserName = false" 
+                      required>
+                    <label class="input__title userNameEmail" for="username"><span>Email</span></label>
+                  </span>
+                </div>
+                <div class="input__error-text" aria-live="assertive" role="alert"
+                  *ngIf="(updateUserNameForm.controls.username.invalid && updateUserNameForm.controls.username.dirty)  || invalidUserName">
+                  <span *ngIf="updateUserNameForm.controls.username.errors && updateUserNameForm.controls.username.errors.required">
+                    <span class="sr-only">Error</span>
+                    Email address is required.
+                  </span>
+                  <span *ngIf="updateUserNameForm.controls.username.errors && updateUserNameForm.controls.username.errors.pattern">Please enter valid email.</span>
+                </div>
+                <div class="mt-2">
+                  <button class="btn btn_primary float-right col-md-12 col-12 mb-3"
+                    (click)="validUserName();">Continue</button>
+                </div>
+
+              </div>
+              <ng-template #successUsernameBlk>
+                <p class="mt-2"> From now on, please use your email, {{emailId}} to sign in.</p>
+                <div class="mt-3">
+                  <button class="btn btn_primary float-right col-md-12 col-12 mb-3"
+                    (click)="postUserNameSuccess();">Continue</button>
+                </div>
+              </ng-template>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

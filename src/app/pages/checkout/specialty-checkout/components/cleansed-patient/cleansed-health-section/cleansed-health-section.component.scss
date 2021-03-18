@@ -1,0 +1,85 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.patient__healthinfo {
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 3em;
+  padding: 3em 0em;
+
+  .patient__healthinfo-medication {
+    margin-top: 5em;
+  }
+
+  .patient__healthinfo-allergies {
+    margin-top: 5em;
+  }
+
+  .patient__healthinfo-conditions {
+    margin-top: 5em;
+  }
+}
+
+.patient__healthinfo-list {
+  li {
+    display: inline-block;
+    margin-right: 1em;
+
+    p {
+      display: inline-block;
+      vertical-align: bottom;
+    }
+
+    a {
+      display: inline-block;
+      .icon__dismiss {
+        min-height: 25px;
+        color: #000;
+      }
+    }
+  }
+}
+
+.patient__clinicalreview {
+  border-bottom: 1px solid #cfcfcf;
+  // margin-top: 5em;
+  padding-bottom: 3em;
+
+  .btn__radio {
+    display: inline-block;
+  }
+}
+
+.check-box .check {
+  min-width: 25px;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .check {
+    margin-top: -5px;
+  }
+
+  .addMed_but {
+    padding-top: 1.5rem;
+  }
+  .addAllergy_btn {
+    padding-top: 1.5rem;
+  }
+
+  .addHealth_btn {
+    padding-top: 1.5rem;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $md-screen) {
+  .btn_primary {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 750px) {
+  .input__title {
+    width: 400px;
+  }
+}

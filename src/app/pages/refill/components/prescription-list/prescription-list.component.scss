@@ -1,0 +1,372 @@
+.prescriptionListContainer{
+  @media only screen and (min-width: 1000px){
+    .hide-contain.mobileViewImgIcon{
+      max-width: 97px;
+    }
+  }
+  
+  .presStatus{
+    color: #007d29;
+    font-size: 18px;
+    font-family: 'HelveticaNeueLTW01-75Bold';
+    padding-top: 5px;
+    margin-left: 20px;
+    @media only screen and (min-width: 320px) and (max-width: 568px) {
+      padding-left: 0;
+    }
+
+    span.icon{
+      top: 9px;
+    }
+  }
+
+  .btn__toggle span{
+    pointer-events: none;
+  }
+  li{
+    margin-top: 10px;
+  }
+
+  .view-address{
+    float: left;
+    width: 100%;
+  }
+
+  .refill-wrapper-dark {
+    width: 100%;
+    min-height: 130px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px 0 rgba(207, 207, 207, 0.5);
+  }
+
+  .rx__prescription-content {
+    padding: 10px 0px 10px 0px;
+    @media only screen and (min-width: 320px) and (max-width: 568px) {
+      padding-left: 10px;
+    }
+
+    h3 {
+      font-size: 30px;
+      // font-family: HelveticaNeueLTW01-45Light;
+      line-height: 1.13;
+      cursor: pointer;
+      padding-top: 15px;
+      a{
+        text-decoration: none;
+        // color: #1a7eac;
+      }
+      @media only screen and (min-width: 320px) and (max-width: 568px) {
+        font-size: 21px;
+      }
+    }
+  }
+
+  .refill-wrapper-dark {
+    padding: 3%;
+    min-height: auto;
+    background: #d7d7d7;
+  }
+  .refill-due{
+    border-radius: 0 5px 5px 0;
+    background: transparent;
+
+    > div {
+      box-shadow: 0 1px 2px 0 rgba(207, 207, 207, 0.5);
+      background-color:#d0ede6;
+      height: 100%;
+      position: relative;
+    }
+  }
+  .refill-due .check-box{
+    margin: 0 0 0 -16px;
+    width: auto;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+      margin-left: -20px;
+    }
+  }
+  .refill-content {
+    width: 100%;
+    background: #fff;
+    border-radius: 5px 0 0 5px;
+    position: relative;
+  }
+  .hide__cta{
+    margin: 12px 0px 9px 21px;
+    display: inline-block;
+    font-size: 14px;
+  }
+  .refill-left {
+    text-align: right;
+    margin-top: 29px;
+    padding-right: 2em;
+    p{
+      font-size: 16px;
+    }
+    &.noPadding{
+      @media only screen and (min-width: 1000px) {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+  .toggle-btn-wrap{
+    margin: 10px 0 0 0;
+  }
+  .toggle-btn-wrap .toggle__title{
+    padding-left: 0;
+    padding-right: 10px;
+    @media only screen and (min-width: 320px) and (max-width: 414px) {
+      padding-right: 12px;
+    }
+  }
+  .refill-qty {
+    font-size: 18px;
+    // padding-top: 9px;
+    padding-right: 0px;
+  }
+  .refill-due .corner-flag {
+    position: absolute;
+    right:0;
+    top:0;
+    width: 0;
+    height: 0;
+    border-top: 60px solid #007d29;
+    border-left: 60px solid transparent;
+  }
+  .refill-due .corner-flag:after{
+    content: "Due";
+    font-family: 'HelveticaNeueLTW01-75Bold';
+    position: absolute;
+    z-index: 3;
+    top: -53px;
+    left: -34px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .check-box{
+    margin: 105px auto 0;
+    width: 26px;
+  }
+  .refill-title h3{
+    font-size: 30px;
+    font-family: HelveticaNeueLTW01-45Light;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.13;
+    letter-spacing: normal;
+    text-align: left;
+    color: #1a7eac;
+    cursor: pointer;
+    :focus{
+      outline: rgb(1, 114, 142) dotted 2px;
+    }
+  }
+  .toggle__title{
+    float: left;
+    line-height: 31px;
+    padding-right: 5px;
+  }
+  .toggle__title strong{
+    font-size: 15px;
+    @media only screen and (min-width: 320px) and (max-width: 414px) {
+      font-size: 12px;
+    }
+  }
+  .address__container p {
+    line-height: 1;
+  }
+
+  .messageIconBlue svg{
+    color: #1a7eac;
+    width: 45px;
+    height: 45px;
+    margin-top: -1px;
+  }
+  .rx__prescription-figure{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-left: 15px;
+    margin-top: 30px;
+
+    img{
+      width: 4rem;
+      height: 4rem;
+    }
+
+    a:focus img{
+      border: #4D90FE solid 2px;
+    }
+    &.previousPharmacyImage{
+      background: rgb(207, 207, 207);
+
+      .icon{
+        top: 18px;
+        left: 17px;
+        @media only screen and (min-width: 320px) and (max-width: 568px) {
+          top: 6px;
+          left: 6px;
+        }
+
+        svg{
+          fill: #fff;
+          width: 83px;
+          height: auto;
+        }
+      }
+    }
+
+    @media only screen and (min-width: 320px) and (max-width: 568px) {
+      width: 40px;
+      height: 40px;
+      margin-left: 5px;
+
+      img{
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+      margin-left: 7px;
+    }
+  }
+
+  small{
+    font-size: 18px;
+    p {
+      display: inline-block;
+      padding-left: 0;
+    }
+
+    @media only screen and (min-width: 320px) and (max-width: 576px) {
+      font-size: 14px;
+      p {
+        display: block;
+        font-size: 14px;
+      }
+      .toggle__title {
+        padding-right: 2px;
+      }
+    }
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 414px) {
+    .right-pad {
+      padding-right: 0;
+      padding-left: 5px;
+    }
+
+    .check-box__green .check {
+      width: 30px;
+      height: 30px;
+      background: #fff;
+    }
+  }
+
+  .hide-contain{
+    position: relative;
+  }
+
+  .hide-contain-text {
+    position: absolute;
+    bottom: 0;
+    // a {
+    //   // color: #1a7eac;
+    // }
+  }
+
+  .check-box__green .check{
+    border: 2px solid #8a8a8a !important;
+  }
+
+}
+
+.text_Align{
+  padding: 0px;
+}
+
+.disabled_overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  background-color: rgba(204, 204, 197, 0.3);
+  cursor: not-allowed;
+  border-radius: 5px 0 0 5px;
+}
+
+  @media only screen and (min-width: 769px) {
+  .set_height{
+    min-height: 170px;
+  }
+
+  .text-align{
+    padding: 5px;
+    margin-right: -65px;
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .view-address{
+    font-size: 12px;
+  }
+}
+
+  input:focus + label figure {
+    outline: #4D90FE solid 2px;
+    // outline-style: auto;
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 480px){
+    .no_refill{
+      padding-right: 25px;
+    }
+    .mobileViewPresPage {
+      padding-bottom: 10px;
+    }
+    .prescriptionListContainer .toggle-btn-wrap {
+      margin: 0px;
+    }
+    .mobileViewToggleBtn {
+      padding-bottom: 0px;
+    }
+    .mobileViewImgIcon {
+      padding-left: 20px;
+      margin-top: -5px;
+    }
+    .viewAddMobileView {
+      padding-top: 5px;
+    }
+    .hide__cta {
+      margin: 7px !important;
+    }
+    .prescriptionListContainer .refill-left {
+      margin-bottom: 15px;
+      padding-right: 3em;
+    }
+  }
+
+  //  small and medium devices only
+  @media only screen and (min-width: 320px) and (max-width: 768px) {
+    .check-box .check::before{
+      background: #fff;
+    }
+    .refill__status {
+      margin-bottom: 8px;
+    }
+  }
+
+  .no_refill{
+    line-height: normal;
+  }
+.fill {
+  min-height: 100%;
+}

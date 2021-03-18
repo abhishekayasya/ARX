@@ -1,0 +1,30 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.input__contain .input__title span {
+    text-transform: capitalize;
+}
+
+.formInput {
+    padding: 0px;
+}
+
+.inviteCancelLink {
+    padding: 0;
+}
+
+@media only screen and (min-device-width: $xs-screen) and (max-device-width: $sm-screen) {
+    .sendInviteBtn {
+        width: 100%;
+    }
+    .cancelLink {
+        margin-top: 12px;
+    }
+    .inviteCancelLink {
+        text-align: center;
+        padding-left: 15px;
+    }
+}

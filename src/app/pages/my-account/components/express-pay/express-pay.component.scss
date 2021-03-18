@@ -1,0 +1,102 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+.rx-express-pay {
+  background-color: #fff;
+  h2{
+    font-size: 28px;
+    font-family: HelveticaNeueLTW01-45Light;
+  }
+  .expressInfo{
+    font-family: HelveticaNeueLTW01-55Roman;
+    font-size: 16px;
+    max-width: 839px;
+    text-align: justify;
+  }
+  .paymentInfo{
+    font-size: 18px;
+  }
+  .cardInfo{
+    vertical-align: top;
+  }
+  .form-section{
+    max-width: 500px;
+  }
+  .deleteBtnContainer{
+    width: 100%;
+    .confirmBtn{
+      width: 100%;
+      span{
+        width: 100%;
+      }
+    }
+
+  }
+  .expressPayContainer{
+    height: 100vh;
+  }
+  .rx-width-max {
+    width: 100%;
+  }
+  .rx-margin-top-1rem {
+    margin-top: 1rem;
+  }
+  .rx-margin-top-30 {
+    margin-top: 1.875rem;
+  }
+  .rx-margin-top-40 {
+    margin-top: 2.5rem;
+  }
+  .rx-margin-top-20 {
+    margin-top: 1.25rem;
+  }
+  .rx-margin-top-24 {
+    margin-top: 1.5rem;
+  }
+  .rx-margin-padding-30 {
+    padding-top: 1.875rem;
+  }
+  .cc-icon {
+    width: 39px !important;
+  }
+  .btn_delete {
+    background: #e8f2f6;
+  }
+  .btn__cancel {
+    box-shadow: 0 0 0 0;
+    color: #02a0c0;
+  }
+  @media only screen and (min-width: 648px) {
+    padding: 0 3.125rem ;
+    .btn_width {
+      width: 218px;
+    }
+    .btn__cancel {
+      margin-top: 1.5rem;
+    }
+    .btnEdit{
+      margin-left: 1.875rem;
+    }
+  }
+}
+
+.btn:focus {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+
+.form__input .input__title {
+  text-transform: capitalize;
+}
+
+@media only screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .zipCodeMobile {
+    width: 100%;
+    padding-left: 15px;
+  }
+  .expressPayContainer {
+    padding: 0px;
+  }
+}

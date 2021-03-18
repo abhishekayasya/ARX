@@ -1,0 +1,7 @@
+<a href="javascript:void(0);" class="arxterms" (click)="openTermsModal()">AllianceRx Walgreens Prime Terms Of Use</a>
+<arxrf-modal [show]="isTermsModalVisible" (update)="updateTermsModal($event)" class="termsTextContainer">
+  <h2>Terms of use</h2>
+  <div class="termsModalContainer hipaaModalContainer" [innerHTML]="common.decodeHtml(terms_content)">
+
+  </div>
+</arxrf-modal>

@@ -1,0 +1,19 @@
+.progress-bar {
+  background-color: transparent;
+  padding-top: 2em;
+}
+
+.progress-bar .text li {
+  max-width: 300px;
+}
+
+// IE only
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .progress-bar .text li{
+    flex-grow: 1;
+  }
+  .text li{
+  width: 33.33%
+  }
+
+}

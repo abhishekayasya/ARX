@@ -1,0 +1,240 @@
+<section class="rx-express-pay">
+  <div class="expressPayContainer container">
+    <arxrf-message></arxrf-message>
+    <arxrf-loader [show]="loaderState"></arxrf-loader>
+    <p class="rx-margin-top-30 expressInfo">
+      ExpressPay is the fastest way to get your prescriptions. Convenient and
+      secure, we store your credit card information. We will bill your credit
+      card when your prescriptions ship. View our
+      <a href="/online-privacy-security">Online Policy and Security Policy</a>
+      to learn how we protect your information.
+    </p>
+    <!-- If no card is present -->
+    <div *ngIf="addCardBlock" class="rx-margin-top-30">
+      <h3>Accepted Payment</h3>
+      <div class="card-icons rx-margin-top-20">
+        <span>
+          <img
+            src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/VISA_card.png"
+            alt="VISA_card"
+            class="cc-icon"
+          />
+        </span>
+        <span class="ml-2">
+          <img
+            src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/Mastercard.png"
+            alt="VISA_card"
+            class="cc-icon"
+          />
+        </span>
+        <span class="ml-2">
+          <img
+            src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/Amex_card.png"
+            alt="VISA_card"
+            class="cc-icon"
+          />
+        </span>
+        <span class="ml-2">
+          <img
+            src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/Discover_card.png"
+            alt="VISA_card"
+            class="cc-icon"
+          />
+        </span>
+      </div>
+      <button
+        role="button"
+        class="btn btn_primary rx-width-max rx-margin-top-30 btn_width"
+        type="button"
+        (click)="addCreditCard(false)"
+      >
+        Add Credit Card
+      </button>
+    </div>
+    <!-- in case of card present or we need to add new card or edir card -->
+    <div
+      *ngIf="addCardForm || showCardBlock"
+      class="form-section rx-margin-top-30"
+    >
+      <h3 class="paymentInfo">Payment Information</h3>
+      <!-- add new card and edit existing card -->
+      <div class="row rx-margin-top-20" *ngIf="addCardForm">
+        <div class="col-12">
+          <form class="" [formGroup]="_expressPayForm">
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="form__input color__neutral">
+                  <span
+                    class="input__contain"
+                  >
+                    <arxrf-input-ccnumber
+                      [showErrorState]="_expressPayForm.controls.ccNumber.invalid && (_expressPayForm.controls.ccNumber.touched || _expressPayForm.controls.ccNumber.dirty)"
+                      name="ccNumber"
+                      formControlName="ccNumber"
+                      (onCCChange)="updateCCType($event)"
+                      label="Credit Card Number"
+                    ></arxrf-input-ccnumber>
+                  </span>
+                </div>
+                
+                <div class="input__error-text" *ngIf="_expressPayForm.controls.ccNumber.invalid && (_expressPayForm.controls.ccNumber.touched ||_expressPayForm.controls.ccNumber.dirty)">
+                  <span *ngIf="_expressPayForm.controls.ccNumber.errors.required">Credit card is required.</span>
+                  <span *ngIf="_expressPayForm.controls.ccNumber.errors?.validcc">Please enter valid credit card number</span>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-6">
+                <div class="form__input color__neutral">
+                  <span
+                    class="input__contain"
+                  >
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          _expressPayForm.controls.expDate.invalid &&
+                          (_expressPayForm.controls.expDate.touched ||
+                            _expressPayForm.controls.expDate.dirty)
+                      }"
+                      type="text"
+                      formControlName="expDate"
+                      id="expiration_date"
+                      maxlength="5"
+                      placeholder="MM/YY"
+                      [creditCardExpiry]="_expressPayForm.controls.expDate"
+                      required
+                    />
+                    <label class="input__title" for="expiration_date"
+                      ><span>Expiration date</span></label
+                    >
+                  </span>
+                </div>
+                
+                <div class="input__error-text" aria-live="assertive" role="alert" *ngIf="_expressPayForm.controls.expDate.invalid && (_expressPayForm.controls.expDate.touched || _expressPayForm.controls.expDate.dirty)">
+                  <span *ngIf="_expressPayForm.controls.expDate.errors.required"><span class="sr-only">Error </span>Expiration date is required.</span>
+                  <span *ngIf="_expressPayForm.controls.expDate.errors.pattern || _expressPayForm.controls.expDate.errors.validDate">Please enter valid expiration date</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form__input color__neutral">
+                  <span
+                    class="input__contain"
+                  >
+                    <input
+                      [ngClass]="{
+                        input__error:
+                          _expressPayForm.controls.ccZip.invalid &&
+                          (_expressPayForm.controls.ccZip.touched ||
+                            _expressPayForm.controls.ccZip.dirty)
+                      }"
+                      type="text"
+                      formControlName="ccZip"
+                      id="card_zip"
+                      maxlength="5"
+                      [specified-input]="_expressPayForm.controls.ccZip"
+                      invalidExp="[^0-9]"
+                      pattern="^[0-9]{5,5}$"
+                      ng-reflect-maxlength="5"
+                      ng-reflect-pattern="^[0-9]{5,5}$"
+                      ng-reflect-name="zip"
+                      class="ng-dirty ng-invalid ng-touched input__focus"
+                      required
+                    />
+                    <label class="input__title zipCodeMobile" for="card_zip"
+                      ><span>ZIP code</span></label
+                    >
+                  </span>
+                </div>
+                
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="_expressPayForm.controls.ccZip.invalid && (_expressPayForm.controls.ccZip.touched || _expressPayForm.controls.ccZip.dirty)">
+                  <span *ngIf="_expressPayForm.controls.ccZip.errors.required"><span class="sr-only">Error </span>ZIP code is required.</span>
+                  <span *ngIf="_expressPayForm.controls.ccZip.errors.pattern">Please enter valid ZIP code</span>
+                </div>
+              </div>
+            </div>
+            <button
+              role="button"
+              class="btn btn_primary rx-width-max rx-margin-top-24 btn_width"
+              type="button"
+              [disabled]="_expressPayForm.invalid"
+              (click)="saveCreditCard()"
+            >
+              Save
+            </button>
+            <button
+              role="button"
+              class="btn btn__cancel rx-width-max rx-margin-top-1rem btn_width"
+              type="button"
+              (click)="goBackToPreviousRoute()"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- if card present then below block will be display-->
+      <div *ngIf="showCardBlock">
+        <div class="cardDetails rx-margin-top-20">
+          <span>
+            <span [cc-type]="cardType"> </span>
+            <span class="ml-2 cardInfo">{{ creditCardNumber }}</span>
+          </span>
+          <span class="ml-2 cardInfo">EXP {{ ccExpiryDate }}</span>
+          <span class="ml-2 cardInfo">ZIP {{ ccZip }}</span>
+        </div>
+        <button
+          role="button"
+          class="btn btn_delete rx-width-max rx-margin-top-1rem btn_width"
+          type="button"
+          (click)="showDeleteModal()"
+        >
+          Delete
+        </button>
+        <button
+          role="button"
+          class="btn btn_primary rx-width-max btn_width btnEdit rx-margin-top-1rem"
+          type="button"
+          (click)="addCreditCard(true)"
+        >
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+  <arxrf-modal
+    [show]="isDeleteModalVisible"
+    (update)="deleteModalUpdate($event)"
+  >
+    <div class="row">
+      <h2 class="col-12">Remove payment information</h2>
+      <p class="col-12">
+        Deleting will permanently remove your card information
+      </p>
+    </div>
+    <div class="deleteBtnContainer mt-4 row">
+      <div class="col-12 col-md-6 mb-3 mb-md-none">
+        <a
+          href="javascript:void(0)"
+          class="confirmBtn"
+          role="button"
+          (click)="deleteConfirm($event, false)"
+          ><span class="btn btn_primary">No</span></a
+        >
+      </div>
+      <div class="col-12 col-md-6">
+        <a
+          href="javascript:void(0)"
+          class="confirmBtn"
+          role="button"
+          (click)="deleteConfirm($event, true)"
+          ><span class="btn btn_primary">Yes</span></a
+        >
+      </div>
+    </div>
+  </arxrf-modal>
+</section>

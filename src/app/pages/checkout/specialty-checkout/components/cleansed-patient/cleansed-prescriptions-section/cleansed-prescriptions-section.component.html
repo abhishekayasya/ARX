@@ -1,0 +1,588 @@
+<div
+  class="orders__cleansed-referral"
+  *ngFor="
+    let referral of speciality.patientsPayload[payloadIndex].referrals;
+    let i = index
+  "
+>
+  <div class="meta-details">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="mb-4">
+          Review your Specialty Rx prescriptions for
+          {{ referral.selectedAdresss.firstName | titlecase }}
+        </h2>
+      </div>
+      <div class="shipping-details col-md-6">
+        <div class="shipping-address">
+          <h2>Shipping address</h2>
+
+          <!--shpping address-->
+          <div
+            *ngIf="
+              referral.boxDetails.shippingInfo != undefined &&
+              referral.selectedAdresss != undefined
+            "
+          >
+            <p>
+              {{ referral.selectedAdresss.firstName }}
+              {{ referral.selectedAdresss.lastName }}
+            </p>
+            <p>{{ referral.selectedAdresss.street1 }}</p>
+            <p>
+              {{ referral.selectedAdresss.city }},
+              {{ referral.selectedAdresss.state }}
+              {{ referral.selectedAdresss.zip }}
+            </p>
+          </div>
+
+          <p
+            class="input__error-text"
+            *ngIf="referral.selectedAdresss == undefined"
+          >
+            No shipping address found, please provide an address.
+          </p>
+          <div class="mt-3 d-none d-md-block">
+            <a
+              href="javascript:void(0)"
+              (click)="
+                redirectToAddressBook(
+                  referral.subType,
+                  speciality.patientsPayload[payloadIndex].scriptMedId,
+                  referral.referralId,
+                  speciality.patientsPayload[payloadIndex].meId
+                )
+              "
+            >
+              <strong>Edit Address</strong>
+            </a>
+          </div>
+
+          <a
+            href="javascript:void(0);"
+            (click)="
+              redirectToAddressBook(
+                referral.subType,
+                speciality.patientsPayload[payloadIndex].scriptMedId,
+                referral.referralId,
+                speciality.patientsPayload[payloadIndex].meId
+              )
+            "
+            role="button"
+            class="btn_primary mt-3 editBtn"
+          >
+            <span class="btn btn_primary d-md-none">Edit</span>
+          </a>
+        </div>
+
+        <div class="shipping-method mt-4">
+          <h3>Delivery date</h3>
+
+          <div class="select-method pr-md-5">
+            <!--Availble shipping methods -->
+            <span
+              class="select__contain mr-2"
+              *ngIf="referral.boxDetails.shippingInfo.availableDates.length > 0"
+            >
+              <label for="{{ i }}__shippingdates"
+                >Scheduled delivery date</label
+              >
+              <span class="icon icon__arrow-down">
+                <svg alt="">
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+
+              <select
+                id="{{ i }}__shippingdates_{{
+                  speciality.patientsPayload[this.payloadIndex].scriptMedId
+                }}"
+                name="{{ i }}__shippingdates_{{
+                  speciality.patientsPayload[this.payloadIndex].scriptMedId
+                }}"
+                [(ngModel)]="
+                  speciality.patientsPayload[payloadIndex].referrals[i]
+                    .boxDetails.shippingInfo.selectedDate
+                "
+                [disabled]="
+                  payload.referrals[i].callMeReasons.prefDelDtNotAvailable ==
+                  true
+                "
+                [class.isDisable]="
+                  payload.referrals[i].callMeReasons.prefDelDtNotAvailable
+                "
+                (change)="
+                  speciality.savePatientContext(payloadIndex);
+                  changeScheduleDate($event.target.value)
+                "
+              >
+                <option
+                  *ngFor="
+                    let date of referral.boxDetails.shippingInfo.availableDates
+                  "
+                  [ngValue]="date"
+                  >{{ date | slice: 0:10 | date: "EEE, LLL dd, yyyy" }}
+                </option>
+              </select>
+            </span>
+
+            <!-- Tool-Tip  -->
+            <div
+              [popper]="cleansedshippingTooltip"
+              [popperTrigger]="'click'"
+              [popperPlacement]="'right'"
+              [popperDelay]="300"
+              class="tool-tip"
+            >
+              <span
+                role="button"
+                class="tool-tip__trigger"
+                tabindex="0"
+                aria-describedby="tool-tip__text_cleansedshippingTooltip"
+              >
+                <span class="icon icon__question-mark">
+                  <svg alt="">
+                    <title>Help information</title>
+                    <use
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__question-mark"
+                    ></use>
+                  </svg>
+                </span>
+              </span>
+            </div>
+
+            <popper-content #cleansedshippingTooltip>
+              <div>
+                <p id="tool-tip__text_cleansedshippingTooltip">
+                  Delivery is available Monday–Friday except for refrigerated
+                  items, which can be delivered Tuesday–Friday. Your delivery
+                  date must be at least 3 business days from your order date.
+                </p>
+              </div>
+            </popper-content>
+            <!-- tool-tip  -->
+          </div>
+
+          <div class="check-box">
+            <input
+              type="checkbox"
+              id="{{ i }}_date_not_available"
+              name="{{ i }}_date_not_available_{{
+                speciality.patientsPayload[this.payloadIndex].scriptMedId
+              }}"
+              (change)="shippingDateNotAvailable(i, $event)"
+              [checked]="referral.callMeReasons.prefDelDtNotAvailable"
+            />
+            <label for="{{ i }}_date_not_available">
+              <span class="check"></span>
+              <span>My preferred date is not available</span>
+            </label>
+          </div>
+          <span
+            *ngIf="
+              speciality.patientsPayload[payloadIndex].referrals[i]
+                .callMeReasons.prefDelDtNotAvailable
+            "
+            >We'll contact you by the end of the next business day. Or, you can
+            also call us directly at 888-347-3416.</span
+          >
+
+          <div class="row mt-4 no-gutters" *ngIf="referral.signatureRequired">
+            <div class="col-2 align-self-center">
+              <span class="icon icon__info" style="color: #02a0c0;">
+                <svg>
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                  ></use>
+                </svg>
+              </span>
+            </div>
+            <div class="col-10">
+              <p>
+                <span>
+                  <strong>Adult (18+) signature required for delivery.</strong>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--payment information-->
+      <div class="payment-details col-md-6">
+        <h2>Payment</h2>
+
+        <div class="row">
+          <div class="col-12">
+            <span class="icon icon__info" style="color: #02a0c0;">
+              <svg>
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                ></use>
+              </svg>
+            </span>
+            <p class="due_amount">
+              <span>
+                <strong>Due Now: ${{ referral.dueNow | price }}</strong>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="referral.missingCCCase">
+          <div class="col-12">
+            <p>{{ referral.missingCCMessage }}</p>
+          </div>
+        </div>
+
+        <div
+          class="row"
+          *ngIf="checkoutService.error_state.cleansed && !referral.noPaymentDue"
+        >
+          <div class="col-12">
+            <p class="input__error-text" *ngIf="countSelected(referral) == 0">
+              Please add payment information to your account
+            </p>
+          </div>
+        </div>
+
+        <!-- section in case no payment is due -->
+        <div class="row" *ngIf="referral.noPaymentDue">
+          <div class="col-12">
+            <p>
+              No payment is due at this time. Please continue and submit your
+              order without payment.
+            </p>
+          </div>
+        </div>
+
+        <!--payment and cc information-->
+        <div
+          *ngIf="
+            referral.boxDetails.shippingInfo.creditCard != undefined &&
+            referral.dueNow > 0
+          "
+        >
+          <div class="cc__options">
+            <div class="btn__radio mt-2">
+              <input
+                type="radio"
+                name="cc_option_1_{{
+                  speciality.patientsPayload[this.payloadIndex].scriptMedId
+                }}_{{ referral.referralId }}"
+                [checked]="referral.payBy == '1'"
+                value="1"
+                (change)="onPayByChange($event, referral)"
+              />
+              <label>
+                <span class="radio"></span>
+                <span>Pay on 1 card</span>
+              </label>
+            </div>
+
+            <div
+              *ngIf="referral?.boxDetails?.shippingInfo?.creditCard?.length > 1"
+              class="btn__radio mt-2"
+            >
+              <input
+                type="radio"
+                name="cc_option_2_{{
+                  speciality.patientsPayload[this.payloadIndex].scriptMedId
+                }}_{{ referral.referralId }}"
+                [checked]="referral.payBy == '2'"
+                value="2"
+                (change)="onPayByChange($event, referral)"
+              />
+              <label>
+                <span class="radio"></span>
+                <span>Pay on 2 cards</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="cc__listing mt-3">
+            <div
+              class="col-md-12 cc__listing-card"
+              *ngFor="
+                let card of referral.boxDetails.shippingInfo.creditCard;
+                let cardIndex = index
+              "
+            >
+              <div
+                class="row align-items-center"
+                [ngClass]="{
+                  ccDisabled: isCCExpired(card)
+                }"
+              >
+                <div class="col-4 p0">
+                  <!--card selection checkbox-->
+                  <div
+                    class="btn__radio mt-2 d-inline-block"
+                    *ngIf="referral.payBy == '1'"
+                  >
+                    <input
+                      type="radio"
+                      name="cc_selected_{{ cardIndex }}_{{
+                        speciality.patientsPayload[this.payloadIndex]
+                          .scriptMedId
+                      }}_{{ referral.referralId }}"
+                      [checked]="card.isSelected"
+                      value="{{ card.paymentMethodId }}"
+                      (change)="onCardSelect(i, cardIndex, $event)"
+                      [disabled]="isCCExpired(card)"
+                    />
+                    <label>
+                      <span class="radio"></span>
+                    </label>
+                  </div>
+                  <div
+                    class="check-box d-inline-block"
+                    [ngClass]="{
+                      disabled: isCCExpired(card)
+                    }"
+                    *ngIf="referral.payBy == '2'"
+                  >
+                    <input
+                      type="checkbox"
+                      id="{{ card.creditCardNumber }}"
+                      name="{{ card.paymentMethodId }}"
+                      value="{{ card.paymentMethodId }}"
+                      [checked]="card.isSelected"
+                      (change)="onCardSelect(i, cardIndex, $event)"
+                      [disabled]="
+                        cardStateCheck(card, referral) || isCCExpired(card)
+                      "
+                    />
+                    <label for="{{ card.creditCardNumber }}">
+                      <span class="check"></span>
+                      <span></span>
+                    </label>
+                  </div>
+
+                  <div
+                    class="card_icon d-inline-block"
+                    [cc-type]="card.creditCardType"
+                  ></div>
+                </div>
+                <div class="card_number col-2 pr-0">
+                  <p>*{{ card.creditCardNumber | ccnumber: "4" }}</p>
+                </div>
+                <div class="card_exp col-2 p0">
+                  <p *ngIf="!isCCExpired(card)">{{ card.expDate }}</p>
+                  <p *ngIf="isCCExpired(card)" class="input__error-text">
+                    Expired
+                  </p>
+                </div>
+                <div class="card_update col-4 pr-0 text-right">
+                  <div
+                    class="form__input amountContainer"
+                    [ngClass]="{
+                      input__error:
+                        card.dueNowValid != undefined && !card.dueNowValid
+                    }"
+                    *ngIf="
+                      card.isSelected &&
+                      referral.payBy == '2' &&
+                      countSelected(referral) > 0
+                    "
+                  >
+                    <span>$</span>
+                    <input
+                      type="text"
+                      specified-input
+                      invalidExp="[^0-9\d*(\.\d+)?$]"
+                      name="{{ card.paymentMethodId }}"
+                      class="cc__listing-amount-input"
+                      (keyup)="calculateAmount($event, i)"
+                      value="{{ card.dueNow }}"
+                      (focus)="calculateAmount($event, i)"
+                      (blur)="calculateAmount($event, i)"
+                    />
+                  </div>
+                  <a
+                    href="javascript:void(0)"
+                    *ngIf="
+                      referral.payBy == '1' ||
+                      (referral.payBy == '2' && countSelected(referral) < 1)
+                    "
+                    (click)="redirectToUpdateCard(card.paymentMethodId)"
+                    >Update</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--add new cc information -->
+        <div class="row" *ngIf="referral.noPaymentDue == undefined">
+          <div class="col-12 col-lg-6 mt-2">
+            <button
+              type="button"
+              class="btn btn_primary"
+              (click)="redirectToAddCard(referral)"
+            >
+              Add credit card
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--prescription listing-->
+    <div class="presc-summary">
+      <h2>Prescriptions</h2>
+      <ul class="drugs-list" *ngIf="!loaderState">
+        <li>
+          <div class="row m-0">
+            <div class="m-0 col-md-10">
+              <div
+                class="row orders__cleansed-patient-prescription-container"
+                *ngFor="
+                  let prescription of referral.prescriptionList;
+                  let pindex = index
+                "
+              >
+                <div class="col-md-12 orders__cleansed-patient-prescription">
+                  <div class="row">
+                    <div class="drug-icon col-3 col-md-2">
+                      <img
+                        *ngIf="!prescription?.drugImageURL"
+                        src="{{
+                          appContext.assetsHost || appContext.assetPrefix
+                        }}/images/IN1827/default_image_small.jpg"
+                        class="border__round"
+                        alt=""
+                        appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                      />
+                      <img
+                        *ngIf="
+                          appContext.assetPrefix != '' &&
+                          prescription?.drugImageURL
+                        "
+                        src="{{ appContext.assetPrefix }}{{
+                          prescription?.drugImageURL
+                        }}"
+                        class="border__round"
+                        alt="{{ prescription.drugName }}"
+                        appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                      />
+                      <img
+                        *ngIf="
+                          appContext.assetPrefix == '' &&
+                          prescription?.drugImageURL
+                        "
+                        src="{{ appContext.assetsHost }}{{
+                          prescription?.drugImageURL
+                        }}"
+                        class="border__round"
+                        alt="{{ prescription.drugName }}"
+                        appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                      />
+                    </div>
+                    <div class="drug-info col-9 col-md-10">
+                      <h1 class="h1__page-title">
+                        {{ prescription.drugName }}
+                      </h1>
+                      <div class="drug-details">
+                        <p>Qty: {{ prescription.qty }}</p>
+                        <p class="break-line"></p>
+                        <p>Rx: {{ prescription.rxNumber }}</p>
+                        <p class="break-line"></p>
+                        <p>{{ prescription.prescriber }}</p>
+                        <p
+                          class="break-line"
+                          *ngIf="prescription.prescriber"
+                        ></p>
+                        <p>{{ prescription.patientName }}</p>
+
+                        <!--prescription price-->
+                        <p class="float-right">
+                          ${{ prescription.cashPrice | price }}*
+                        </p>
+                        <div class="check-box">
+                          <input
+                            type="checkbox"
+                            id="donotneed_{{ prescription.rxNumber }}"
+                            name="donotneed_{{ prescription.rxNumber }} "
+                            [disabled]="
+                              isDisableSelection(
+                                referral,
+                                prescription.requestToRemove
+                              )
+                            "
+                            [(ngModel)]="prescription.requestToRemove"
+                            (ngModelChange)="
+                              donotNeedItem(prescription, $event)
+                            "
+                            tabindex="0"
+                          />
+                          <label
+                            *ngIf="referral.prescriptionList.length > 1"
+                            for="donotneed_{{ prescription.rxNumber }}"
+                          >
+                            <span class="check"></span>
+                            <span>I do not need this item</span>
+                          </label>
+                        </div>
+
+                        <div
+                          class="check-box"
+                          *ngIf="prescription.showRequestToRemove"
+                        >
+                          <p class="text-warning">
+                            Your removal request has been sent and is pending
+                            review.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--action to remove referral-->
+            <div class="m-0 col-md-2 text-center svgIconAlign">
+              <div class="col container__remove-cart-item">
+                <a
+                  href="javascript:void(0)"
+                  (click)="removeReferral(i, referral)"
+                >
+                  <span class="icon icon__dismiss">
+                    <svg alt="" alt="">
+                      <use
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"
+                      ></use>
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="row add-more-presc">
+        <div class="col-12 col-sm-4 estimated-price">
+          <span>* Estimated price</span>
+        </div>
+        <div class="col-12 col-sm-8 text-sm-right">
+          <a [routerLink]="ROUTES.refill.absoluteRoute" (click)="addMorePres()">
+            <span class="icon icon__plus-add">
+              <svg alt="" alt="">
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__plus-add"
+                ></use>
+              </svg>
+            </span>
+            <span>
+              <strong>add more prescriptions</strong>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

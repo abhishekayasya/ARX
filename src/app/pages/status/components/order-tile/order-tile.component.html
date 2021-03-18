@@ -1,0 +1,190 @@
+<section #orderTile tabindex="0" class="order-tile">
+  <div class="order-info">
+    <div class="order-id" *ngIf="order.orderType === 'Mail'">
+      <span>Order#: </span>
+      <span>{{ order.orderNumber }}</span>
+    </div>
+    <div
+      class="order-date"
+      *ngIf="
+        order.orderType === 'specialty' &&
+        order.expectedDeliveryDate &&
+        order.orderStatus == 'Scheduled'
+      "
+    >
+      <span>Scheduled delivery </span>
+      <span>{{ order.expectedDeliveryDate }}</span>
+    </div>
+  </div>
+  <div
+    class="order-panel"
+    [ngClass]="{'mb-4': prescription && prescription.priority === '5'}"
+    *ngFor="let prescription of order.prescriptions; let $index = index"
+  >
+    <div
+      class="order-header"
+      [ngClass]="getHeaderClass(prescription.priority)"
+      *ngIf="order.prescriptionStatusDiffer || $index === 0 || (prescription && prescription.priority === '5')"
+    >
+      <div class="status">
+        <span
+          class="icon icon__same-day"
+          *ngIf="
+            order.header === 'In Progress' ||
+            order.priority === '3' ||
+            prescription.priority === '3' ||
+            order.header === 'Shipped' ||
+            order.priority === '5' ||
+            prescription.priority === '5' "
+        >
+          <svg alt="">
+            <use
+              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__same-day"
+            ></use>
+          </svg>
+        </span>
+        <span
+          class="icon icon__info"
+          *ngIf="
+            order.header === 'Action Needed' ||
+            prescription.priority === '1' ||
+            order.priority === '1' ||
+            order.header === 'Delayed - No Action Needed' ||
+            prescription.priority === '2' ||
+            order.priority === '2'
+          "
+        >
+          <svg alt="">
+            <use
+              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+            ></use>
+          </svg>
+        </span>
+        <span class="status-text">
+          {{ prescription.header || order.header }}
+        </span>
+        <span
+          class="caret top-right"
+          (click)="prescription.openDetails = !!!prescription.openDetails"
+        ></span>
+      </div>
+      <div
+        class="shipping-info"
+        [ngClass]="{ collapsed: !prescription.openDetails }"
+        *ngIf="prescription.header === 'Shipped' || order.header === 'Shipped'"
+      >
+        <div *ngIf="order.shippedDate && prescription && prescription.priority !== '5'; else prescriptionShippedDate">
+          <span>On: </span>
+          <span>{{ order.shippedDate | date: "EEE, LLL dd, yyyy" }}</span>
+        </div>
+        <ng-template #prescriptionShippedDate>
+          <div *ngIf="prescription.shippedDate">
+            <span>On: </span>
+            <span>{{ prescription.shippedDate | date: "EEE, LLL dd, yyyy" }}</span>
+          </div>
+        </ng-template>
+        <div>
+          <span>To: </span>
+          <span
+            >{{ prescription?.shippingInfo?.address1 }},
+            {{ prescription?.shippingInfo?.city }},
+            {{ prescription?.shippingInfo?.state }}
+            {{ prescription?.shippingInfo?.zip }}</span
+          >
+        </div>
+        <div *ngIf="prescription?.shippingInfo?.trackingNumber">
+          <span>Tracking: </span>
+          <a
+            target="_blank"
+            href="{{ prescription?.shippingInfo?.carrierURL }}"
+          >
+            {{ prescription?.shippingInfo?.trackingNumber }}
+          </a>
+        </div>
+      </div>
+      <div
+        class="msg-info"
+        [ngClass]="{ collapsed: !prescription.openDetails }"
+        *ngIf="prescription.header !== 'Shipped' && order.header !== 'Shipped'"
+      >
+        <span>{{ fetchMessageForPrescription(prescription) }} </span>
+      </div>
+    </div>
+    <div class="order-body" id="{{ 'Q' + prescription.prescriptionId }}">
+      <ul class="drugs-list">
+        <li class="row">
+          <div class="drug-icon col-3 col-md-2 col-lg-1">
+            <img
+              *ngIf="!prescription?.drugInfo?.drugImageURL"
+              src="{{
+                appContext.assetsHost || appContext.assetPrefix
+              }}/images/IN1827/default_image_small.jpg"
+              class="border__round"
+              alt=""
+            />
+            <img
+              *ngIf="
+                appContext.assetPrefix != '' &&
+                prescription?.drugInfo?.drugImageURL
+              "
+              src="{{ appContext.assetPrefix }}{{
+                prescription.drugInfo?.drugImageURL
+              }}"
+              class="border__round"
+              alt=""
+            />
+            <img
+              *ngIf="
+                appContext.assetPrefix == '' &&
+                prescription?.drugInfo?.drugImageURL
+              "
+              src="{{ appContext.assetsHost }}{{
+                prescription.drugInfo?.drugImageURL
+              }}"
+              class="border__round"
+              alt=""
+            />
+          </div>
+          <div
+            class="drug-info"
+            [ngClass]="{
+              col: !isRefillDue,
+              'col-9 col-md-6 col-lg-8': isRefillDue
+            }"
+          >
+            <h1 class="h1__page-title">
+              {{ prescription.drugInfo?.drugName }}
+            </h1>
+            <div class="drug-details">
+              <p>
+                Qty:
+                {{ prescription.quantity || prescription.refillInfo.quantity }}
+              </p>
+              <p class="break-line"></p>
+              <p>Rx: {{ prescription.rxNumber }}</p>
+              <p class="break-line" *ngIf="prescription.prescriber"></p>
+              <p>{{ prescription.prescriber }}</p>
+              <p
+                *ngIf="prescription.price || prescription.statusPrice?.price"
+                class="break-line"
+              ></p>
+              <p *ngIf="prescription.price || prescription.statusPrice?.price">
+                Price:
+                {{ prescription.price || prescription.statusPrice?.price }}
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4 col-lg-3" *ngIf="isRefillDue">
+            <a
+              href="{{ ROUTES.refill.absoluteRoute }}"
+              class="btn btn_primary fs-14 scheduleDeliveryBtn"
+              (click)="ScheduleDelivery(prescription.drugInfo?.drugName)"
+              >Schedule delivery</a
+            >
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

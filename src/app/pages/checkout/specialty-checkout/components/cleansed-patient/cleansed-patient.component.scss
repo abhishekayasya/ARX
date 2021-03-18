@@ -1,0 +1,61 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+
+.speciality__disclaimer {
+  margin-bottom: 3em;
+  padding-bottom: 0!important;
+  // border-top: 1px solid #cfcfcf;
+  margin-top: -3em;
+  padding-top: 3em;
+}
+
+.speciality__disclaimer .terms{
+  text-align: justify;
+  margin-bottom: 29px;
+}
+
+select:focus {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+
+.check-box .check{
+  min-width: 25px;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+  .drug-icon{
+    padding-right: 0px;
+    margin-top: 10px;
+  }
+  .check {
+    margin-top: -5px;
+  }
+
+}
+
+.drug-icon{
+  margin-top: 10px;
+}
+
+.margin_align {
+  margin-bottom: 70px;
+}
+
+.check-box label {
+  cursor: pointer;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $md-screen){ 
+  .btn_primary {
+    width: 100%;
+  }
+}
+
+.tool-tip-duenow{
+  display: inline-block;
+}

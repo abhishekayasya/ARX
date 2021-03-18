@@ -1,0 +1,171 @@
+<div class="comp-address-book container">
+
+  <div class="rx-back-link rx-bg-white rx-padding-top-20">
+
+    <div class="row">
+      <div class="col-12">
+        <arxrf-loader [show]="loader" [loaderOverlay]="loaderOverlay"></arxrf-loader>
+      </div>
+    </div>
+
+    <a href="{{backUrl}}" class="link__cta__back-arrow"><span class="icon icon__arrow-left"><svg alt="" alt=""><use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-left"></use></svg></span>back to prescription review</a>
+  </div>
+  <h2 class="rx-bg-white rx-padding-top-40 rx-l-padding-left-48 rx-xl-padding-left-64 rx-xxl-padding-left-80">{{title}}</h2>
+  <p *ngIf="type == CHECKOUT.type.HD || type == CHECKOUT.type.HDR" class="rx-bg-white rx-padding-top-16 rx-l-padding-left-48 rx-xl-padding-left-64 rx-xxl-padding-left-80">Expedited or overnight orders cannot be shipped to addresses that are APO/FPO or in a U.S. territory.</p>
+  <div class="l-form-container rx-bg-white rx-padding-top-20 rx-l-padding-left-32 rx-xl-padding-left-48 rx-xxl-padding-left-64">
+    <form class="form__on-light-bg" [formGroup]="_editAddressForm">
+      <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="form__input">
+          <span class="input__contain">
+            <input
+              class="input__focus"
+              [ngClass]="
+                {'input__error': _editAddressForm.controls.street1.invalid && (_editAddressForm.controls.street1.touched || _editAddressForm.controls.street1.dirty)
+              }"
+              formControlName="street1" 
+              id="street1"
+            />
+            <label class="input__title" for="street1">
+              <span>Address</span>
+            </label>
+          </span>
+        </div>
+        <div class="input__error-text" aria-live="assertive" role="alert"
+        *ngIf="_editAddressForm.controls.street1.invalid && (_editAddressForm.controls.street1.touched || _editAddressForm.controls.street1.dirty)">
+          <span *ngIf="_editAddressForm.controls.street1.errors.required || _editAddressForm.controls.street1.errors.whitespace"><span class="sr-only">Error </span>Address is required</span>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 rx-padding-top-20">
+        <div class="form__input">
+          <span class="input__contain">
+            <input
+              class="input__focus"
+              [ngClass]="{
+                'input__error': _editAddressForm.controls.city.invalid && (_editAddressForm.controls.city.touched || _editAddressForm.controls.city.dirty)
+              }"
+              type="text" 
+              formControlName="city" 
+              id="city" 
+              pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" 
+              required>
+            <label class="input__title" for="city">
+            <span>City</span>
+          </label>
+          </span>
+        </div>
+        <div class="input__error-text" aria-live="assertive" role="alert"
+        *ngIf="_editAddressForm.controls.city.invalid && (_editAddressForm.controls.city.touched || _editAddressForm.controls.city.dirty)">
+          <span *ngIf="_editAddressForm.controls.city.errors.required"><span class="sr-only">Error </span>City is required.</span>
+          <span *ngIf="_editAddressForm.controls.city.errors.pattern">Please enter a valid City</span>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 rx-padding-top-20">
+        <span class="select__contain form__input" [ngClass]="{
+          'input__error': _editAddressForm.controls.state.invalid && (_editAddressForm.controls.state.touched || _editAddressForm.controls.state.dirty)
+          }">
+          <label for="select-dropdown">State</label>
+          <span class="icon icon__arrow-down rx-margin-right-16">
+            <svg alt=""><use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use></svg>
+          </span>
+          <select formControlName="state" id="state">
+            <option value="" class="" selected>State</option>
+            <option *ngFor="let state of STATE_US" value="{{state.short_name}}">
+              {{state.name}}
+            </option>
+          </select>
+        </span>
+        <div class="input__error-text" aria-live="assertive" role="alert"
+        *ngIf="_editAddressForm.controls.state.invalid && (_editAddressForm.controls.state.touched || _editAddressForm.controls.state.dirty)">
+          <span *ngIf="_editAddressForm.controls.state.errors.required"><span class="sr-only">Error </span>State is required.</span>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 expiry_zip_container">
+        <div class="l-display-flex rx-padding-top-20 rx-flex-justify-content-space-btw">
+          <div class="form__input">
+            <span class="input__contain">
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': _editAddressForm.controls.zipCode.invalid && (_editAddressForm.controls.zipCode.touched || _editAddressForm.controls.zipCode.dirty)
+                }" 
+                type="text" 
+                formControlName="zipCode" 
+                id="zipCode" 
+                pattern="^[0-9]{5,5}$" 
+                [specified-input]="_editAddressForm.controls.zipCode" 
+                invalidExp="[^0-9]" 
+                maxlength="5" 
+                required>
+              <label class="input__title" for="zipCode">
+              <span>ZIP code</span>
+              </label>
+            </span>
+          </div>
+          <span class="rx-dash-lh-3 col-md-1 col-lg-1 col-xl-1">-</span>
+          <div class="form__input l-margin-none">
+            <span class="input__contain">
+              <input
+                class="input__focus" 
+                [ngClass]="{
+                  'input__error': _editAddressForm.controls.zipCodeOptional.invalid && (_editAddressForm.controls.zipCodeOptional.touched || _editAddressForm.controls.zipCodeOptional.dirty)
+                }"
+                formControlName="zipCodeOptional" 
+                id="zipCodeOptional" 
+                [specified-input]="_editAddressForm.controls.zipCodeOptional" 
+                invalidExp="[^0-9]" 
+                maxlength="4" 
+                type="text">
+              <label class="input__title" for="zipCodeOptional">(optional)</label>
+            </span>
+          </div>
+        </div>
+        <div class="input__error-text" aria-live="assertive" role="alert"
+        *ngIf="_editAddressForm.controls.zipCode.invalid && (_editAddressForm.controls.zipCode.touched || _editAddressForm.controls.zipCode.dirty)">
+          <span *ngIf="_editAddressForm.controls.zipCode.errors.required"><span class="sr-only">Error </span>Zip Code is required.</span>
+          <span *ngIf="_editAddressForm.controls.zipCode.errors.pattern">Please enter valid Zip Code</span>
+        </div>
+        <div class="input__error-text" *ngIf="_editAddressForm.controls.zipCodeOptional.invalid && (_editAddressForm.controls.zipCodeOptional.touched || _editAddressForm.controls.zipCodeOptional.dirty)">
+          <span *ngIf="_editAddressForm.controls.zipCodeOptional.invalid">Please enter valid optional Zip Code</span>
+        </div>
+      </div>
+
+      <div class="col-md-8 col-lg-6 col-xl-4 rx-padding-top-20 mb-5" *ngIf="type != CHECKOUT.type.HD && type != CHECKOUT.type.HDR">
+        <span class="select__contain form__input" [ngClass]="{
+          'input__error': _editAddressForm.controls.reasonForNewAddress.invalid && (_editAddressForm.controls.reasonForNewAddress.touched || _editAddressForm.controls.reasonForNewAddress.dirty)
+          }">
+          <label for="select-dropdown">Address Type</label>
+          <span class="icon icon__arrow-down rx-margin-right-16">
+            <svg alt=""><use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use></svg>
+          </span>
+          <select formControlName="reasonForNewAddress" id="reasonForNewAddress">
+            <option value="" class="" selected>Choose Type</option>
+            <option value="New Permanent Address">New Permanent Address</option>
+            <option value="Temporary Address">Temporary Address</option>
+            <option value="Work Address">Work Address</option>
+          </select>
+        </span>
+
+        <div class="input__error-text" aria-live="assertive" role="alert"
+        *ngIf="_editAddressForm.controls.reasonForNewAddress.invalid && (_editAddressForm.controls.reasonForNewAddress.touched || _editAddressForm.controls.reasonForNewAddress.dirty)">
+          <span *ngIf="_editAddressForm.controls.reasonForNewAddress.errors.required"><span class="sr-only">Error </span>Address type is required.</span>
+        </div>
+      </div>
+
+      <fieldset class1="rx-padding-bottom-40 rx-padding-top-16 col-md-8 col-lg-2 col-xl-2" *ngIf="type == CHECKOUT.type.HD || type == CHECKOUT.type.HDR">
+        <legend></legend>
+        <div class="check-box">
+          <input formControlName="isPreferred" id="isPreferred" type="checkbox">
+          <label for="isPreferred"><span class="check"></span><span>Save as preferred address</span></label>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+  <div class="rx-button-container rx-bg-lightgray rx-padding-top-40 rx-minus-container-padding rx-xxl-margin-left-minus-80 rx-xl-margin-left-minus-64 rx-l-margin-left-minus-48">
+    <div class="rx-width-max l-submit-button col-md-4 container rx-bg-lightgray">
+      <button [disabled]="_editAddressForm.invalid" (click)="submitAddressRequest()" role="button" class="rx-width-max btn btn_primary save-add-btn">{{buttonText}}</button>
+    </div>
+  </div>
+
+</div>
+

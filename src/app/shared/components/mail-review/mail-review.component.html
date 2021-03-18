@@ -1,0 +1,587 @@
+<section
+  class="order-info"
+  *ngIf="
+    (!checkout.loader && payload != undefined) ||
+    (checkout.loader && payload.prescriptionList != undefined)
+  "
+>
+  <div class="meta-details">
+    <div
+      class="row mb-5"
+      *ngIf="!loaderState && checkout.isAnyPrescriptionInvalid"
+    >
+      <div class="col-12 account__header-count col-lg-6">
+        <p class="input__error-text">
+          You have invaild prescription in list, to manage it, click mange
+          prescription link.
+        </p>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="row text-right mt-4">
+          <div class="col-12 col-md-6">
+            <a
+              href="{{ ROUTES.refill.absoluteRoute }}"
+              [routerLink]="ROUTES.refill.absoluteRoute"
+              class="btn btn_primary fs-14 scheduleDeliveryBtn"
+              >Manage Prescriptions</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="shipping-details col-md-6">
+        <div class="shipping-address">
+          <h2>Shipping address</h2>
+
+          <!--shpping address-->
+          <div
+            *ngIf="
+              payload.boxDetails.shippingInfo != undefined &&
+              payload.boxDetails.shippingInfo.deliveryAddr != undefined
+            "
+          >
+            <p>
+              {{ payload.boxDetails.shippingInfo.deliveryAddr.firstName }}
+              {{ payload.boxDetails.shippingInfo.deliveryAddr.lastName }}
+            </p>
+            <p
+              *ngIf="
+                payload.boxDetails.shippingInfo.deliveryAddr.streetAddr ==
+                undefined
+              "
+            >
+              {{ payload.boxDetails.shippingInfo.deliveryAddr.street1 }}
+            </p>
+            <p
+              *ngIf="
+                payload.boxDetails.shippingInfo.deliveryAddr.streetAddr !=
+                undefined
+              "
+            >
+              {{ payload.boxDetails.shippingInfo.deliveryAddr.streetAddr }}
+            </p>
+            <p>
+              {{ payload.boxDetails.shippingInfo.deliveryAddr.city }},
+              {{ payload.boxDetails.shippingInfo.deliveryAddr.state }}
+              {{ payload.boxDetails.shippingInfo.deliveryAddr.zipCode }}
+              {{ payload.boxDetails.shippingInfo.deliveryAddr.zip }}
+            </p>
+          </div>
+
+          <p
+            class="input__error-text"
+            *ngIf="
+              !payload.boxDetails.shippingInfo.deliveryAddr &&
+              !disableFormValiation
+            "
+          >
+            No shipping address found, please provide an address.
+          </p>
+          <div class="mt-3 d-none d-md-block">
+            <a
+              href="javascript:void(0);"
+              [routerLink]="[editAddressLink]"
+              [queryParams]="editAddressParams"
+              [class.disabled]="checkout.isAllPrescriptionInvalid"
+              tabindex="{{ checkout.isAllPrescriptionInvalid ? -1 : 0 }}"
+              ><strong>Edit Address</strong></a
+            >
+          </div>
+          <a
+            href="javascript:void(0);"
+            [routerLink]="[editAddressLink]"
+            [queryParams]="editAddressParams"
+            role="button"
+            class="btn_primary mt-3"
+            [class.disabled]="checkout.isAllPrescriptionInvalid"
+            tabindex="{{ checkout.isAllPrescriptionInvalid ? -1 : 0 }}"
+            ><span class="btn btn_primary d-md-none">Edit</span></a
+          >
+        </div>
+        <div class="shipping-method mt-4">
+          <h2>Shipping method</h2>
+          <div class="select-method">
+            <!--Availble shipping methods -->
+            <span
+              class="select__contain"
+              *ngIf="payload.boxDetails.shippingInfo.shippingOptions.length > 0"
+            >
+              <label for="shipping_method">Shipping Method</label>
+              <span class="icon icon__arrow-down">
+                <svg alt="">
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+
+              <select
+                [(ngModel)]="context.selectedShipping"
+                (change)="saveContext()"
+                id="shipping_method"
+              >
+                <option
+                  *ngFor="
+                    let method of payload.boxDetails.shippingInfo
+                      .shippingOptions
+                  "
+                  [ngValue]="method.value"
+                  >{{ method.value }}
+                </option>
+              </select>
+            </span>
+          </div>
+
+          <div>
+            <p class="body-copy__fourteen">{{ shippingMethod.message }}</p>
+            <p class="body-copy__fourteen">
+              Please note: some orders may require additional processing time.
+            </p>
+            <p class="body-copy__fourteen" *ngIf="shippingMethod.price">
+              Price: <span>{{ shippingMethod.price | price }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="payment-details col-md-6">
+        <h2>Payment</h2>
+        <div
+          class="mail-checkout__creditcard-exist"
+          *ngIf="!needCreditCard && !ccExpired"
+        >
+          <div class="col-md-12">
+            <div class="row">
+              <div
+                class="card_icon col-2 p-0"
+                [cc-type]="
+                  payload.boxDetails.shippingInfo.creditCard[0].creditCardType
+                "
+              ></div>
+              <div class="card_number col-3">
+                <p>
+                  {{
+                    payload.boxDetails.shippingInfo.creditCard[0]
+                      .creditCardNumber | ccnumber: "5"
+                  }}
+                </p>
+              </div>
+              <div class="card_exp col-4 col-sm-3 p-0 text-center">
+                <p>
+                  Exp.
+                  {{ payload.boxDetails.shippingInfo.creditCard[0].expDate }}
+                </p>
+              </div>
+              <div class="card_update col-3">
+                <a
+                  href="javascript:void(0)"
+                  (click)="needCreditCard = true"
+                  [class.disabled]="checkout.isAllPrescriptionInvalid"
+                  tabindex="{{ checkout.isAllPrescriptionInvalid ? -1 : 0 }}"
+                  >Update</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="input__error-text" *ngIf="ccExpired">
+          Credit card is expired, please provide credit card information.
+        </p>
+
+        <div class="col-12" *ngIf="showPayment_error">
+          <p class="input__error-text">{{ paymentMissing_error }}</p>
+        </div>
+
+        <form
+          class="form__on-light-bg"
+          *ngIf="needCreditCard || ccExpired"
+          [formGroup]="ccUpdateForm"
+        >
+          <div class="form__input">
+            <span
+              class="input__contain"
+            >
+              <arxrf-input-ccnumber
+                [showErrorState]="{
+                  input__error:
+                    (ccUpdateForm.controls.ccNumber.value.length > 15 ||
+                      ccNumberErrOnBlur) &&
+                    ccUpdateForm.controls.ccNumber.invalid &&
+                    (ccUpdateForm.controls.ccNumber.touched ||
+                      ccUpdateForm.controls.ccNumber.dirty) &&
+                    !checkout.isAllPrescriptionInvalid
+                }"
+                name="ccNumber"
+                label="Add Credit Card"
+                formControlName="ccNumber"
+                (onCCInputEvent)="ccExpired = false; ccNumberErrOnBlur = false"
+                (onCCBlurEvent)="validateCConBlur($event)"
+                (onCCChange)="updateCCType($event)"
+                [isFocus]="!checkout.isAllPrescriptionInvalid"
+                [class.disabled]="checkout.isAllPrescriptionInvalid"
+              ></arxrf-input-ccnumber>
+            </span>
+          </div>
+
+          <div
+            class="input__error-text"
+            aria-live="assertive"
+            role="alert"
+            *ngIf="
+              ccUpdateForm.controls.ccNumber.invalid &&
+              (ccUpdateForm.controls.ccNumber.touched ||
+                ccUpdateForm.controls.ccNumber.dirty)
+            "
+          >
+            <span
+              *ngIf="
+                ccUpdateForm.controls.ccNumber.errors.required &&
+                ccNumberErrOnBlur
+              "
+              ><span class="sr-only">Error </span>Credit card number is
+              required.</span
+            >
+            <span
+              *ngIf="
+                (ccUpdateForm.controls.ccNumber.value.length > 15 ||
+                  ccNumberErrOnBlur) &&
+                ccUpdateForm.controls.ccNumber.errors.validcc &&
+                !ccUpdateForm.controls.ccNumber.errors.required
+              "
+              >Please enter valid credit card number.</span
+            >
+          </div>
+
+          <div class="col-md-12 mt-3">
+            <div class="row expiry_zip_container">
+              <div class="col-6 pl-0">
+                <span
+                  class="input__contain"
+                >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        (ccUpdateForm.controls.expDate.value.length > 4 ||
+                          ccExpDateErrOnBlur) &&
+                        ccUpdateForm.controls.expDate.invalid &&
+                        (ccUpdateForm.controls.expDate.touched ||
+                          ccUpdateForm.controls.expDate.dirty)
+                    }"
+                    type="text"
+                    id="expDate"
+                    formControlName="expDate"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                    [creditCardExpiry]="ccUpdateForm.controls.expDate"
+                    (blur)="saveContext(); validateCConBlur($event)"
+                    [class.disabled]="checkout.isAllPrescriptionInvalid"
+                    (input)="ccExpired = false; ccExpDateErrOnBlur = false"
+                  />
+                  <label class="input__title" for="expDate"
+                    >Expiration Date</label
+                  >
+                </span>
+
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    ccUpdateForm.controls.expDate.invalid &&
+                    (ccUpdateForm.controls.expDate.touched ||
+                      ccUpdateForm.controls.expDate.dirty)
+                  "
+                >
+                  <span
+                    *ngIf="
+                      ccUpdateForm.controls.expDate.errors.required &&
+                      ccExpDateErrOnBlur
+                    "
+                    ><span class="sr-only">Error </span>Expiration Date is
+                    required.</span
+                  >
+                  <span
+                    *ngIf="
+                      (ccUpdateForm.controls.expDate.value.length > 4 ||
+                        ccExpDateErrOnBlur) &&
+                      ccUpdateForm.controls.expDate.errors.validDate
+                    "
+                    >Enter a valid expiration date.</span
+                  >
+                </div>
+              </div>
+              <div class="col-6 pr-0">
+                <span
+                  class="input__contain"
+                >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        (ccUpdateForm.controls.zipCode.value.length > 4 ||
+                          ccZipErrOnBlur) &&
+                        ccUpdateForm.controls.zipCode.invalid &&
+                        (ccUpdateForm.controls.zipCode.touched ||
+                          ccUpdateForm.controls.zipCode.dirty)
+                    }"
+                    type="text"
+                    id="zipCode"
+                    formControlName="zipCode"
+                    placeholder="xxxxx"
+                    maxlength="5"
+                    pattern="^[0-9]{5,5}$"
+                    [specified-input]="ccUpdateForm.controls.zipCode"
+                    invalidExp="[^0-9]"
+                    (blur)="saveContext(); validateCConBlur($event)"
+                    [class.disabled]="checkout.isAllPrescriptionInvalid"
+                    (input)="ccExpired = false; ccZipErrOnBlur = false"
+                  />
+                  <label class="input__title" for="zipCode">ZIP code</label>
+                </span>
+
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    ccUpdateForm.controls.zipCode.invalid &&
+                    (ccUpdateForm.controls.zipCode.touched ||
+                      ccUpdateForm.controls.zipCode.dirty)
+                  "
+                >
+                  <span
+                    *ngIf="
+                      ccUpdateForm.controls.zipCode.errors.required &&
+                      ccZipErrOnBlur
+                    "
+                    ><span class="sr-only">Error </span>ZIP code is
+                    required.</span
+                  >
+                  <span
+                    *ngIf="
+                      (ccUpdateForm.controls.zipCode.value.length > 4 ||
+                        ccZipErrOnBlur) &&
+                      ccUpdateForm.controls.zipCode.errors.pattern
+                    "
+                    >Enter a valid zip code.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="save-card">
+            <div class="check-box">
+              <input
+                type="checkbox"
+                id="saveAsExpress"
+                formControlName="saveAsExpress"
+                tabindex="0"
+                (change)="saveContext()"
+              />
+              <label for="saveAsExpress"
+                ><span class="check"></span
+                ><span>Save credit card as Express Pay</span></label
+              >
+            </div>
+
+            <div
+              [popper]="hdshippingTooltip"
+              [popperTrigger]="'click'"
+              [popperPlacement]="'right'"
+              [popperDelay]="300"
+              class="tool-tip"
+            >
+              <span
+                role="button"
+                class="tool-tip__trigger"
+                tabindex="0"
+                aria-describedby="tool-tip__text_shippingTooltip"
+              >
+                <span class="icon icon__question-mark">
+                  <svg alt="">
+                    <title>Help information</title>
+                    <use
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__question-mark"
+                    ></use>
+                  </svg>
+                </span>
+              </span>
+            </div>
+
+            <popper-content #hdshippingTooltip>
+              <div>
+                <p id="tool-tip__text_shippingTooltip">
+                  Store your credit card with ExpressPay for future payments.
+                </p>
+              </div>
+            </popper-content>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="presc-summary">
+    <h2>Prescriptions</h2>
+    <arxrf-loader
+      [show]="loader"
+      [message]="loaderMessage"
+      [loaderOverlay]="loaderOverlay"
+    ></arxrf-loader>
+    <ul class="drugs-list rx-prescription-list" *ngIf="!loaderState">
+      <li
+        *ngFor="let prescription of payload.prescriptionList; let i = index"
+        [ngClass]="{ removeborder: prescription.isValidRx === 'false' }"
+      >
+        <span
+          *ngIf="prescription.messages"
+          class="not-refillable-text"
+          role="alert"
+          aria-live="assertive"
+        >
+          <span>Not Refillable Online</span>
+        </span>
+        <div class="row m-0" [ngClass]= "{'rowhighlight':prescription.isValidRx==='false'}"> 
+
+          <div class="col-12 col-md-9">
+            <div class="row pt-4 pb-4">
+
+              <div class="drug-icon col-2">
+                <img *ngIf="!prescription?.drugImageURL" src="{{appContext.assetsHost || appContext.assetPrefix}}/images/IN1827/default_image_small.jpg" class="border__round" alt="" appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg">
+                <img *ngIf="appContext.assetPrefix != ''  && prescription?.drugImageURL" src="{{appContext.assetPrefix}}{{prescription?.drugImageURL}}" class="border__round" alt="{{prescription.drugName}}" appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg">
+                <img *ngIf="appContext.assetPrefix == '' && prescription?.drugImageURL" src="{{appContext.assetsHost}}{{prescription?.drugImageURL}}" class="border__round" alt="{{prescription.drugName}}" appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg">
+              </div>
+
+              <div class="drug-info col-10">
+                <h1 class="h1__page-title">{{prescription.drugName}}</h1>
+                <div class="drug-details">
+                  <p>Qty: {{prescription.qty}}</p>
+                  <p class="break-line"></p>
+                  <p>Rx: {{prescription.rxNumber}}</p>
+
+                  <p class="break-line" *ngIf="prescription.type == 'Transfer' && prescription.pharmacyName"></p>
+                  <p *ngIf="prescription.type == 'Transfer' && prescription.pharmacyName">{{prescription.pharmacyName}}</p>
+
+                  <p class="break-line" *ngIf="prescription.prescriber"></p>
+                  <p *ngIf="prescription.prescriber">Dr. {{prescription.prescriber}}</p>
+
+                  <p class="break-line" *ngIf="prescription.patientName"></p>
+                  <p *ngIf="prescription.patientName"> {{prescription.patientName}}</p>
+
+                  <div class="row" *ngIf="!isHDRefillReminder && prescription.type != 'Transfer' ">
+                    <p class="lastFill col-12">Last Fill</p>
+                    <p class="lastFillDate col-12">{{prescription.lastFillDate ? prescription.lastFillDate : "Unavailable"}}</p>
+                    <p class="price col-12" *ngIf="presAdditionalInfo[i]?.price && prescription.lastFillDate">{{presAdditionalInfo[i]?.price}}</p>
+
+                  </div>
+                  <div class="row" *ngIf="!isHDRefillReminder && prescription.type == 'Transfer' && prescription.lastFillDate">
+                    <p class="lastFill col-12">Last Fill</p>
+                    <p class="lastFillDate col-12">{{prescription.lastFillDate ? prescription.lastFillDate : "Unavailable"}}</p>
+                    <p class="price col-12" *ngIf="presAdditionalInfo[i]?.price && prescription.lastFillDate">{{presAdditionalInfo[i]?.price}}</p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="prescription.isValidRx == 'true'"
+            class="col-12 col-md-3 svgIconAlignment"
+          >
+            <div class="col container__remove-cart-item">
+              <a
+                href="javascript:void(0);"
+                (click)="
+                  removePrescription(prescription.rxNumber, prescription.id)
+                "
+                title="remove {{ prescription.drugName }}"
+              >
+                <span class="icon icon__dismiss">
+                  <svg alt="" alt="">
+                    <use
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"
+                    ></use>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <div
+            *ngIf="prescription.isValidRx == 'false'"
+            class="col-12 col-md-3 svgIconAlignment bgred"
+          >
+            <div class="col container__remove-cart-item">
+              <section class="removed-back-bg invalid-remove">
+                <span class="removed-col">Removed</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <span
+          *ngIf="prescription.messages"
+          class="input__error-text"
+          role="alert"
+          aria-live="assertive"
+        >
+          <span class="icon icon__alert icon-warn">
+            <svg>
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                class="__web-inspector-hide-shortcut__"
+              ></use>
+            </svg>
+          </span>
+          <span>{{ prescription.messages[0].message }}</span>
+        </span>
+      </li>
+    </ul>
+
+    <div class="row add-more-presc" *ngIf="!isHDRefillReminder">
+      <div class="col-12 text-right">
+        <a href="{{ ROUTES.refill.absoluteRoute }}">
+          <span class="icon icon__plus-add">
+            <svg alt="" alt="">
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__plus-add"
+              ></use>
+            </svg>
+          </span>
+          <span><strong>add more prescriptions</strong></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row copayDisclaimer" *ngIf="!isHDRefillReminder">
+    <p class="col-12">
+      *Previous copay may not reflect actual price. Please contact your
+      insurance provider for exact pricing and copay information.
+    </p>
+  </div>
+  <div class="clearfix"></div>
+</section>
+
+<div
+  class="row mt-3"
+  *ngIf="
+    (!checkout.loader && payload != undefined) ||
+    (checkout.loader && payload.prescriptionList != undefined)
+  "
+>
+  <div class="col-md-8 col-lg-9 col-12"></div>
+  <div class="col-md-4 col-lg-3 col-12 text-right">
+    <button
+      class="btn btn_transaction_primary submit_request_btn"
+      style="display: inline-block; width:100%"
+      [disabled]="checkout.isAllPrescriptionInvalid"
+      (click)="prepareMailData()"
+    >
+      {{ submitText }}
+    </button>
+  </div>
+</div>

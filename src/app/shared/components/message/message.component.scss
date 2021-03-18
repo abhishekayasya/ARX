@@ -1,0 +1,15 @@
+button:focus {
+    outline: #4D90FE solid 2px;
+    // outline-style: auto;
+  }
+
+  .btn__rounded::after{
+    position: static;
+  }
+
+  //  IE only
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .closeBtn{
+      background: none;
+    }
+ }

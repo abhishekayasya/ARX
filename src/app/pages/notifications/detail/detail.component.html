@@ -1,0 +1,52 @@
+<div class="row" *ngIf="error">
+  <div class="col-12">
+    <div class="">
+      <p class="input__error-text">{{error}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <arxrf-loader [show]="loader"></arxrf-loader>
+
+    <div class="">
+      <div class="row">
+        <div class="col-md-12">
+          <a href="javascript:void(0)" (click)="backToInbox()">
+            <strong>< Back to Inbox</strong>
+          </a>
+        </div>
+      </div>
+
+      <div class="row notifications_detail">
+        <div class="col-md-12" *ngIf="content">
+          <div class="notifications_detail-info ">
+            <p>To: {{content.to}}</p>
+            <p>From: {{content.from}}</p>
+            <p>Date: {{content.date}}</p>
+          </div>
+
+          <div class="notifications_detail-subject">
+            <p>{{content.subject}}</p>
+          </div>
+
+        </div>
+        <div class="col-md-12">
+          <div class="notifications_detail-content">
+            <p #parsedMessage></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <button class="btn btn_primary delete__action" type="button" (click)="deleteAction(content.msgId,content.microService)">
+      Delete
+    </button>
+  </div>
+</div>
+

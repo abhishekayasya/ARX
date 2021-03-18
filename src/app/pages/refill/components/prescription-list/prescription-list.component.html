@@ -1,0 +1,500 @@
+<ul class="prescriptionListContainer">
+  <li *ngFor="let presc of _refillService.prescriptionList; let i = index">
+    <div class="refill-wrapper" *ngIf="!presc.folderMoved">
+      <div class="refill-content">
+        <div class="disabled_overlay" *ngIf="presc.disabled"></div>
+
+        <div class="row set_height">
+          <div
+            [ngClass]="{
+              'col-12':
+                (_refillService.activeFolder != 'previousPres' &&
+                  !presc.refillInfo.refillable) ||
+                (_refillService.activeFolder == 'previousPres' &&
+                  presc.statusPrice &&
+                  presc.statusPrice.status &&
+                  presc.statusPrice.status.indexOf('processing') > -1),
+              'col-9 col-sm-10':
+                (_refillService.activeFolder != 'previousPres' &&
+                  presc.refillInfo.refillable) ||
+                (_refillService.activeFolder == 'previousPres' &&
+                  presc.statusPrice &&
+                  presc.statusPrice.status &&
+                  presc.statusPrice.status.indexOf('processing') == -1)
+            }"
+          >
+            <div
+              [hidden]="_refillService.activeFolder != 'previousPres'"
+              class="row"
+            >
+              <div class="col-12">
+                <p
+                  class="presStatus"
+                  *ngIf="
+                    presc.statusPrice &&
+                    presc.statusPrice.status &&
+                    presc.statusPrice.status.indexOf('processing') > -1
+                  "
+                >
+                  <span class="icon icon__check">
+                    <svg>
+                      <use
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__check"
+                      ></use>
+                    </svg>
+                  </span>
+                  {{ presc.statusPrice.status }}
+                </p>
+              </div>
+            </div>
+            <div class="row fill">
+              <div class="col-3 col-md-2 hide-contain mobileViewImgIcon">
+                  <div class="rx__prescription-figure" [ngClass]="{
+                    'previousPharmacyImage' : _refillService.activeFolder == 'previousPres'
+                  }">
+                    <figure>
+                      <a href="javascript:void(0);" [tabindex]="(presc.disabled) ? -1 : 0"  (click)="enableRxHistoryPopup(presc, 'fromDrugImage')"  attr.aria-label="{{presc.drugInfo.drugName}} image spawns a simulated dialog">
+                        <img *ngIf="!presc?.drugInfo?.drugImageURL" src="{{appContext.assetsHost || appContext.assetPrefix}}/images/IN1827/default_image_small.jpg" class="border__round" alt="" appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg">
+                        <img *ngIf="appContext.assetPrefix != '' && _refillService.activeFolder !== 'previousPres'" src="{{appContext.assetPrefix}}{{presc.drugInfo.drugImageURL}}" alt="{{presc.drugInfo.drugName}}" appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg">
+                        <img *ngIf="appContext.assetPrefix == '' && _refillService.activeFolder !== 'previousPres'" src="{{appContext.assetsHost}}{{presc.drugInfo.drugImageURL}}" alt="{{presc.drugInfo.drugName}}" appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg">
+                        <span *ngIf="_refillService.activeFolder == 'previousPres'" class="icon icon__thin icon__pill-bottle"><svg><use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__pill-bottle"></use></svg></span>
+                      </a>
+                    </figure>
+                  </div>
+                  <div class="hide-contain-text">
+                  <a href="javascript:void(0);" attr.aria-label="hide link for {{presc.drugInfo.drugName}}" class="hide__cta" (click)="hideUnhideRx(i, 'H')" [tabindex]="(presc.disabled) ? -1 : 0" *ngIf="!presc.autoRefillInfo?.autoRefillEnabled && _refillService.activeFolder == 'active'">Hide</a>
+                  <a href="javascript:void(0);" attr.aria-label="unhide {{presc.drugInfo.drugName}}" class="hide__cta" *ngIf=" !presc.autoRefillInfo?.autoRefillEnabled && _refillService.activeFolder == 'hidden'" (click)="hideUnhideRx(i, 'A')" [tabindex]="(presc.disabled) ? -1 : 0">UnHide</a>
+                </div>
+              </div>
+
+              <div class="right-pad  col-9 col-md-10">
+                <div class="rx__prescription-content row">
+                  <h3 class="col-12 mobileViewPresPage">
+                    <a
+                      href="javascript:void(0);"
+                      (click)="enableRxHistoryPopup(presc, 'fromDrugTitle')"
+                      attr.aria-label="{{
+                        presc.drugInfo.drugName
+                      }} link spawns a simulated dialog"
+                      [tabindex]="presc.disabled ? -1 : 0"
+                      >{{ presc.drugInfo.drugName }}</a
+                    >
+                  </h3>
+                  <div class="col-12">
+                    <div class="row mt-1">
+                      <small
+                        [ngClass]="{
+                          'col-md-9 col-6':
+                            _refillService.activeFolder != 'previousPres' &&
+                            !presc.refillInfo.refillable,
+                          'col-12':
+                            presc.refillInfo.refillable ||
+                            _refillService.activeFolder == 'previousPres'
+                        }"
+                        ><p>Qty {{ presc.refillInfo.quantity }}</p>
+                        <p *ngIf="presc.rxNumber">
+                          <span class="d-none d-sm-inline">|</span>
+                          <span>Rx {{ presc.rxNumber }}</span>
+                        </p>
+
+                        <p
+                          *ngIf="
+                            _refillService.activeFolder == 'previousPres' &&
+                            presc.pharmacy
+                          "
+                        >
+                          <span class="d-none d-sm-inline">|</span>
+                          <span *ngIf="presc.pharmacy">{{
+                            presc.pharmacy
+                          }}</span>
+                        </p>
+
+                        <p
+                          *ngIf="
+                            _refillService.activeFolder == 'previousPres' &&
+                            presc.prescriber &&
+                            presc.prescriptionType !== 'mail'
+                          "
+                        >
+                          <span class="d-none d-sm-inline">|</span>
+                          <span>{{ presc.prescriber }}</span>
+                        </p>
+                        <p
+                          *ngIf="
+                            _refillService.activeFolder == 'previousPres' &&
+                            presc.refillInfo.lastFillDate
+                          "
+                        >
+                          <span class="d-none d-sm-inline">|</span>
+                          <span
+                            >Last ordered
+                            {{ presc.refillInfo.lastFillDate }}</span
+                          >
+                        </p>
+                        <p
+                          *ngIf="_refillService.activeFolder != 'previousPres'"
+                        >
+                          <span class="d-none d-sm-inline">|</span>
+                          <span
+                            *ngIf="
+                              presc.autoRefillInfo?.autoRefillEnabled;
+                              else lastFilled
+                            "
+                            >Next fill
+                            {{ presc.autoRefillInfo.autoRefillDate }}</span
+                          >
+                          <ng-template #lastFilled>
+                            Last ordered {{ presc.refillInfo.lastFillDate }}
+                          </ng-template>
+                        </p>
+                        <p
+                          *ngIf="
+                            (_refillService.activeFolder == 'active' ||
+                              _refillService.activeFolder == 'hidden' ||
+                              presc.prescriptionType == 'mail') &&
+                            presc.prescriber
+                          "
+                        >
+                          <span class="d-none d-sm-inline">|</span>
+                          <span>{{ presc.prescriber }} </span>
+                        </p>
+                      </small>
+                      <p
+                        class="no_refill align-self-center p-0 col-6 col-md-3"
+                        *ngIf="
+                          _refillService.activeFolder != 'previousPres' &&
+                          !presc.refillInfo.refillable &&
+                          !presc.showStatusLink
+                        "
+                      >
+                        <span>
+                          <strong>Refill not available</strong>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="col-12"
+                    *ngIf="_refillService.activeFolder != 'previousPres'"
+                  >
+                    <a
+                      class="mt-1"
+                      href="javascript:void(0)"
+                      (click)="enableRxHistoryPopup(presc, 'fromFilterLink')"
+                    >
+                      <span *ngIf="presc.historyMoreRefills"
+                        >History & more refills</span
+                      >
+                      <span *ngIf="!presc.historyMoreRefills">History</span>
+                    </a>
+                  </div>
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="refill-qty col-sm-7">
+                        <div
+                          class="toggle-btn-wrap"
+                          *ngIf="
+                            presc.refillInfo.refillable &&
+                            presc.prescriptionType != 'specialty'
+                          "
+                        >
+                          <span
+                            class="input__error-text"
+                            *ngIf="presc.showAutoRefillError"
+                            >{{ autoRefillMessage }}</span
+                          >
+                          <span
+                            class="toggle-btn mobileViewToggleBtn"
+                            *ngIf="
+                              presc.autoRefillInfo?.autoRefillEligible ||
+                              presc.autoRefillInfo?.autoRefillEnabled
+                            "
+                          >
+                            <span class="toggle__title">
+                              <strong>Auto Refill</strong>
+                            </span>
+                            <button
+                              class="btn__toggle"
+                              role="switch"
+                              [attr.aria-pressed]="
+                                presc.autoRefillInfo.autoRefillEnabled
+                              "
+                              [ngClass]="{
+                                toggle__on:
+                                  presc.autoRefillInfo.autoRefillEnabled
+                              }"
+                              (click)="
+                                autoRefill($event, presc.viewId, i);
+                              "
+                              [tabindex]="presc.disabled ? -1 : 0"
+                              attr.aria-label="Auto Refill {{
+                                presc.drugInfo.drugName
+                              }}"
+                              toggleButton
+                            >
+                              <span></span>
+                            </button>
+                          </span>
+
+                          <div
+                            class="view-address viewAddMobileView"
+                            *ngIf="presc.autoRefillInfo.autoRefillEnabled"
+                          >
+                            <a
+                              href="javascript:void(0);"
+                              attr.aria-label="{{
+                                presc.showAddressInfo
+                                  ? 'Hide Address for ' +
+                                    presc.drugInfo.drugName
+                                  : 'View Address for ' +
+                                    presc.drugInfo.drugName
+                              }}"
+                              attr.aria-expanded="{{
+                                presc.showAddressInfo
+                                  ? presc.showAddressInfo
+                                  : false
+                              }}"
+                              (click)="openAddressInfo($event, i)"
+                              [tabindex]="presc.disabled ? -1 : 0"
+                            >
+                              <span
+                                *ngIf="
+                                  presc.showAddressInfo == undefined ||
+                                  !presc.showAddressInfo
+                                "
+                                >View address</span
+                              >
+                              <span *ngIf="presc.showAddressInfo"
+                                >Hide Address</span
+                              >
+                            </a>
+                            <div class="row">
+                              <div class="col-2">
+                                <arxrf-loader
+                                  [show]="presc.showAddressInfoLoader"
+                                  [message]="''"
+                                ></arxrf-loader>
+                              </div>
+                            </div>
+
+                            <div
+                              class="row"
+                              *ngIf="
+                                presc.additionalAutoRefillInfo !== undefined &&
+                                presc.showAddressInfo !== undefined &&
+                                presc.showAddressInfo
+                              "
+                            >
+                              <div class="col-12">
+                                <div class="address__container">
+                                  <p>
+                                    <br />
+                                    {{
+                                      presc.additionalAutoRefillInfo
+                                        .deliverySettings.shippingInfo.address
+                                        .street1
+                                    }}
+                                    <br />
+                                    {{
+                                      presc.additionalAutoRefillInfo
+                                        .deliverySettings.shippingInfo.address
+                                        .city
+                                    }},
+                                    {{
+                                      presc.additionalAutoRefillInfo
+                                        .deliverySettings.shippingInfo.address
+                                        .state
+                                    }}
+                                    <br />
+                                    {{
+                                      presc.additionalAutoRefillInfo
+                                        .deliverySettings.shippingInfo.address
+                                        .zip | slice: 0:5
+                                    }}
+                                    <br />
+                                    <a
+                                      href="javascript:void(0);"
+                                      attr.aria-label="edit link for {{
+                                        presc.drugInfo.drugName
+                                      }} spawns a simulated dialog"
+                                      (click)="editShippingAddress($event, i)"
+                                      >Edit address/ExpressPay</a
+                                    >
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="refill-left col-sm-5 mb-2"
+                        [ngClass]="{
+                          noPadding:
+                            _refillService.activeFolder == 'previousPres' &&
+                            presc.refillInfo.expiryDate
+                        }"
+                        *ngIf="
+                          _refillService.activeFolder == 'previousPres' ||
+                          (_refillService.activeFolder != 'previousPres' &&
+                            presc.refillInfo.refillable)
+                        "
+                      >
+                        <span>
+                          <strong
+                            *ngIf="
+                              presc.refillInfo.refillsLeft == 'As needed' &&
+                              !getExpiryDate(presc.refillInfo.expiryDate)
+                            "
+                            [innerHTML]="
+                              common.decodeHtml(presc.refillInfo.refillsMessage)
+                            "
+                          ></strong>
+                          <strong
+                            *ngIf="
+                              presc.refillInfo.refillsLeft != 'As needed' &&
+                              !getExpiryDate(presc.refillInfo.expiryDate)
+                            "
+                          >
+                            {{ presc.refillInfo.refillsLeft }}
+                            <span
+                              *ngIf="
+                                presc.refillInfo.refillsLeft == 0 ||
+                                presc.refillInfo.refillsLeft > 1
+                              "
+                              >refills</span
+                            >
+                            <span *ngIf="presc.refillInfo.refillsLeft == 1"
+                              >refill</span
+                            >
+                            left
+                            <span
+                              *ngIf="
+                                _refillService.activeFolder == 'previousPres' &&
+                                presc.refillInfo.expiryDate
+                              "
+                              >until {{ presc.refillInfo.expiryDate }}</span
+                            >
+                          </strong>
+                        </span>
+                        <p
+                          *ngIf="
+                            presc.refillInfo.refillsLeft == '0' ||
+                            getExpiryDate(presc.refillInfo.expiryDate)
+                          "
+                        >
+                          Select prescription to request refill
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="refill__status d-inline col-4 pl-0 float-right"
+                  *ngIf="presc.showStatusLink"
+                >
+                  <a
+                    [routerLink]="['/orderstatus']"
+                    [queryParams]="{ id: presc.prescriptionId }"
+                    (click)="viewStatusGAEvent(_refillService.activeFolder)"
+                  >
+                    <strong>View Status</strong>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col-3 col-sm-2 refill-due"
+            *ngIf="
+              (_refillService.activeFolder == 'previousPres' &&
+                presc.statusPrice &&
+                presc.statusPrice.status &&
+                presc.statusPrice.status.indexOf('processing') == -1) ||
+              (_refillService.activeFolder != 'previousPres' &&
+                !presc.showStatusLink)
+            "
+          >
+            <div
+              class=""
+              *ngIf="
+                (_refillService.activeFolder != 'previousPres' &&
+                  presc.refillInfo.refillable) ||
+                (_refillService.activeFolder == 'previousPres' &&
+                  presc.statusPrice &&
+                  presc.statusPrice.status &&
+                  presc.statusPrice.status.indexOf('processing') == -1)
+              "
+            >
+              <div
+                class="corner-flag"
+                *ngIf="
+                  _refillService.activeFolder != 'previousPres' &&
+                  presc.refillInfo.refillDue
+                "
+              ></div>
+              <fieldset>
+                <legend class="sr-only">{{ presc.drugInfo.drugName }}</legend>
+                <div class="check-box check-box__green">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="presc.checked"
+                    (change)="prescriptionSelected($event, i)"
+                    [disabled]="presc.disabled"
+                    id="check{{ i }}"
+                  />
+                  <label for="check{{ i }}">
+                    <figure class="check"></figure>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="refill-wrapper-dark" *ngIf="presc.folderMoved">
+      <p>
+        <span class="icon messageIconBlue icon__rx-refill">
+          <svg>
+            <use
+              href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__folder"
+            ></use>
+          </svg>
+        </span>
+        <span *ngIf="_refillService.activeFolder == 'hidden'"
+          >You've just moved this prescription to your Active folder.</span
+        >
+        <span *ngIf="_refillService.activeFolder == 'active'"
+          >You've just moved this prescription to your Hidden folder.</span
+        >
+        <a
+          *ngIf="_refillService.activeFolder == 'hidden'"
+          href="javascript:void(0)"
+          (click)="hideUnhideRx(i, 'H', true)"
+          (click)="fireUndoGAEvent()"
+          >Undo</a
+        >
+        <a
+          *ngIf="_refillService.activeFolder == 'active'"
+          href="javascript:void(0)"
+          (click)="hideUnhideRx(i, 'A', true)"
+          >Undo</a
+        >
+      </p>
+    </div>
+
+    <div
+      class="rx__ars-selected-msg"
+      *ngIf="presc.autoRefillInfo?.autoRefillEnabled && presc.checked"
+    >
+      <p class="input__error-text">
+        Next auto refill will be updated from
+        {{ presc.autoRefillInfo.autoRefillDate }} to
+        {{ presc.autoRefillInfo.newRefillDate }}
+      </p>
+    </div>
+  </li>
+</ul>

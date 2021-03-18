@@ -1,0 +1,15 @@
+@media screen and (max-width: 414px){
+    .select__contain{
+        margin-top: 25px;
+    }
+}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0){
+    select:focus{
+        outline-color: rgb(77, 144, 254); // #4D90FE
+        outline-offset: -2px;
+        // outline-style: auto;
+        outline-width: 5px;
+    }
+}

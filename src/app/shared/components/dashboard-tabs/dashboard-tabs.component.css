@@ -1,0 +1,23 @@
+.dashboard-header{
+  background: #fff;
+  padding-top: 10px;
+  border-bottom: 1px solid #cfcfcf;
+}
+.dashboard-header h1{
+  margin-top: 15px;
+}
+.dashboard-container{
+  background:#f7f7f7;
+  padding-top:50px;
+  padding-bottom:50px;
+}
+.dashboard-header .select__contain{
+  margin-top: 15px;
+}
+.dashboard-header .tabs{
+  border-bottom: none;
+  margin-top: 30px;
+}
+.dashboard-header .tabs li.selected{
+  pointer-events: auto;
+}

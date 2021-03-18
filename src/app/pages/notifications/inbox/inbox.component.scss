@@ -1,0 +1,54 @@
+.notifications_inbox-list {
+  border: solid 1px #cfcfcf;
+  thead {
+    // background-color: #e4e4e4;
+    color: #000;
+    font-weight: bold;
+    th {
+      vertical-align: middle;
+    }
+  }
+  tbody {
+   tr {
+     border-bottom: 1px solid #cfcfcf;
+   }
+    
+   td:first-child {
+     padding-left: 11px;
+   }
+  }
+  td {
+    padding: .4em;
+    p {
+      font-size: 1em;
+    }
+    p.unread {
+      font-weight: bold;
+    }
+  }
+
+  td.selectable {
+    color: #1a7eac;
+    cursor: pointer;
+    :hover {
+      color: rgba(120, 39, 139, 0.99);
+    }
+  }
+}
+
+.notifications__home-toolbar {
+  padding: 1em;
+  font-weight: bold;
+}
+
+.notifications__pager {
+  width: auto;
+  float: right;
+  .quantity__buttons {
+    max-width: 100%;
+  }
+}
+
+.notifications__home-inbox-label {
+  font-size: 16px;
+}

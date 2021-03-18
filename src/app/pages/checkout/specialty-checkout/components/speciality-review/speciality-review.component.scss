@@ -1,0 +1,107 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.speciality__disclaimer {
+  border-top: 1px solid #cfcfcf;
+  margin-top: 5em;
+  h2 {
+    margin-top: 2em;
+  }
+
+  .check-box {
+    margin-top: 1em;
+  }
+}
+
+:host ::ng-deep .btn {
+  width: 100%;
+}
+
+select:focus {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+.reffil-req-head{
+  padding-bottom: 25px;
+  font-size: 28px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.21;
+  letter-spacing: normal;
+  color: #404040;
+}
+
+.text-right {
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
+
+.btn_primary_submit {
+  background: #02a0c0 !important;
+  color: #ffffff !important;
+}
+.order-info.orders__Unsolicited {
+  padding-top: 3rem;
+  margin-top: 20px;
+}
+.refill-req-head{
+  text-align: center;
+  padding-bottom: 25px;
+}
+
+.pageSepBorder {
+  border-bottom: 1px solid #cfcfcf;
+  padding-bottom: 25px;
+}
+
+.alert__yellow {
+  background: #fcb44c !important;
+  color: #404040 !important;
+}
+
+.select__contain.input__error {
+  border-radius: 5px;
+}
+.heading-text{
+  font-size: 1.175rem;
+  line-height: 1.75;
+  font-weight: normal;
+  color: #404040;
+  font-family: HelveticaNeueLTW01-45Light;
+}
+.margin-bottom{
+  margin-bottom: 15px;
+}
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+  .drug-icon {
+    margin-top: 12px;
+  }
+  .presc-summary {
+    margin-top: 30px;
+  }
+  .border__round {
+    max-width: none;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: 767px){
+  .svgIconAlign {
+    align-self: center;
+  }
+}
+
+@media screen and (min-width: $sm-screen) and (max-width: $md-screen){
+  .drug-icon {
+    margin-top: 12px;
+  }
+  .drug-info {
+    padding-left: 30px;
+  }
+  .border__round {
+    max-width: none;
+  }
+}

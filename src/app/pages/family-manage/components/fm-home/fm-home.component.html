@@ -1,0 +1,625 @@
+<div class="fm__home">
+  <div class="container">
+    <div class="row mt-3 mb-3">
+      <div class="col-12">
+        <arxrf-message></arxrf-message>
+      </div>
+    </div>
+
+    <div
+      class="row fm__home-header"
+      [class.borderBtm]="manager.members ? true : false"
+    >
+      <div class="col-md-1 col-sm-12">
+        <span class="icon icon__family">
+          <svg alt="">
+            <use
+              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__family"
+            ></use>
+          </svg>
+        </span>
+      </div>
+
+      <div class="col-md-9 col-sm-12">
+        <div *ngIf="managedBy">
+          <h3>Your account is managed by {{ managedBy }}</h3>
+          <a
+            href="javascript:void(0)"
+            routerLink="{{
+              ROUTES.family_management.children.manage_access.absoluteRoute
+            }}"
+            >Manage account access</a
+          >
+        </div>
+        <h3 *ngIf="!managedBy">One account for your whole family.</h3>
+      </div>
+    </div>
+
+    <div class="row fm__home-member-list" *ngIf="manager.members">
+      <div
+        class="col-12 fm__home-member"
+        *ngFor="let member of manager.members"
+      >
+        <div class="row">
+          <div class="col-md-9 col-sm-12 member_info">
+            <p class="member_info-name">
+              {{ member.firstName }} {{ member.lastName }}
+            </p>
+            <p
+              class="mb-2 member_info-remove"
+              *ngIf="
+                userId != member.profileId &&
+                member.accountStatus != 'Invite Pending'
+              "
+            >
+              <a
+                href="javascript:void(0)"
+                (click)="initRemoveAction(member.profileId)"
+                >Remove</a
+              >
+            </p>
+            <div class="member_info_detail">
+              <ul>
+                <li>
+                  <p><strong>Type</strong> {{ member.memberType }}</p>
+                </li>
+                <li>
+                  <p><strong>Age</strong> {{ member.age }}</p>
+                </li>
+                <li>
+                  <p>
+                    <strong>Account Status</strong>
+                    <span
+                      class="{{ manager.getStatusClass(member.accountStatus) }}"
+                      >{{ member.accountStatus }}</span
+                    >
+                    <a
+                      href="javascript:void(0)"
+                      class="btn_cancel"
+                      *ngIf="member.accountStatus == 'Invite Pending'"
+                      (click)="
+                        inviteAction(
+                          'cancel',
+                          member.profileId,
+                          member.invitationInfo.invitationId,
+                          member.firstName,
+                          member.lastName
+                        )
+                      "
+                      >Cancel Invitation
+                    </a>
+                    <span
+                      *ngIf="
+                        member.accountStatus == 'Invite Pending' &&
+                        !member.invitationInfo.resendFlag &&
+                        member.memberType !== 'Head of Household (You)' &&
+                        !member.invitationInfo.proId
+                      "
+                      >| Resend invite available on
+                      {{ member.invitationInfo.resendInvitationDate | date }} at
+                      {{ member.invitationInfo.resendInvitationTime }}
+                    </span>
+
+                    <span
+                      *ngIf="
+                        member.accountStatus == 'Invite Pending' &&
+                        !member.invitationInfo.resendFlag &&
+                        member.memberType !== 'Head of Household (You)' &&
+                        member.invitationInfo.proId
+                      "
+                      >| Resend invite available on
+                      {{ member.invitationInfo.resendInvitationDate | date }} at
+                      {{ member.invitationInfo.resendInvitationTime }}
+                    </span>
+
+                    <a
+                      class="resend"
+                      *ngIf="
+                        member.accountStatus == 'Invite Pending' &&
+                        member.invitationInfo.resendFlag
+                      "
+                      (click)="
+                        inviteAction(
+                          'resend',
+                          member.profileId,
+                          member.invitationInfo.invitationId,
+                          member.firstName,
+                          member.lastName
+                        )
+                      "
+                    >
+                      <span class="color-blk">|&nbsp;</span> Resend
+                      Invitation</a
+                    >
+                  </p>
+                </li>
+                <li
+                  *ngIf="
+                    member.enroll &&
+                    member.enroll != 4 &&
+                    member.accountStatus == 'Full Access' &&
+                    !appContext.isSpsite
+                  "
+                >
+                  <p>
+                    <strong>Home Delivery Pharmacy status</strong>
+                    <span>{{
+                      manager.getHomeDeliveryStatus(member.enroll)
+                    }}</span>
+                    <a
+                      href="javascript:void(0)"
+                      (click)="editViewHdInfo(member.profileId)"
+                      *ngIf="member.enroll"
+                      >View/Edit</a
+                    >
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-12 member_settings">
+            <span
+              class="select__contain"
+              *ngIf="member.accountStatus == 'Full Access'"
+            >
+              <span class="icon icon__arrow-down">
+                <svg>
+                  <use
+                    href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+              <select (change)="accountSettingsAction($event)" style="padding: 1em;">
+                <option value="">Account Settings</option>
+                <option
+                  value="{{ ROUTES.personalInfo.absoluteRoute }}?mid={{
+                    member.profileId
+                  }}"
+                  >Personal information</option
+                >
+                <option
+                  *ngIf="member.enroll && member.enroll == 2 && !appContext.isSpsite"
+                  value="{{
+                    ROUTES.family_management.children.health_update
+                      .absoluteRoute
+                  }}?mid={{ member.profileId }}"
+                  >Health & Insurance information</option
+                >
+              </select>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="row fm__home-nomembers mt-3"
+          *ngIf="!manager.members && !manager.loader"
+        >
+          <p>
+            It's easy to manage prescriptions for your loved ones. With Family
+            Prescriptions, you can:
+          </p>
+          <ul>
+            <li>Refill prescriptions online</li>
+            <li>Set up automatic refills</li>
+            <li>Request prescription history</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row fm__home-footer">
+      <div class="col-md-4 col-sm-12 fm__home-footer-action">
+        <button
+          class="btn_primary btn addAdultBtn"
+          type="button"
+          (click)="manager.addAdultModelState = true"
+          aria-label="Add an adult (18+) spawns a simulated dialog"
+        >
+          Add an adult (18+)
+        </button>
+      </div>
+      <div class="col-md-4 col-sm-12 fm__home-footer-action">
+        <button
+          class="btn_primary btn addChildBtn"
+          type="button"
+          (click)="manager.addChildModelState = true"
+          aria-label="Add a child 17 and under spawns a simulated dialog"
+        >
+          Add a child (17 and under)
+        </button>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12 text-left">
+        <p>
+          Account status
+          <a href="javascript:void(0)" (click)="accountStateOverlayState = true"
+            >learn more</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row fm__home-homedelivery" *ngIf="manager.members && !appContext.isSpsite">
+    <div class="col-12">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <h2>Enroll in Home Delivery Pharmacy</h2>
+            <p class="mb-3">
+              Receive a 90-day supply of your medication. Note: To enroll a
+              family member, they must first be added to your account.
+              <a
+                href="javascript:void(0)"
+                (click)="homeDeliveryInfoState = true"
+                >Learn more</a
+              >.
+            </p>
+          </div>
+
+          <div class="col-md-5 col-sm-12">
+            <div class="row">
+              <div class="col-md-7 col-sm-12">
+                <span
+                  class="select__contain"
+                  [ngClass]="{ input_error: IsMemberSelected }"
+                >
+                  <label>Family Member</label>
+                  <span class="icon icon__arrow-down">
+                    <svg>
+                      <use
+                        href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                      ></use>
+                    </svg>
+                  </span>
+
+                  <select
+                    class="bg-white"
+                    (change)="updateSelectForHd($event)"
+                    [(ngModel)]="selectedForEnroll"
+                  >
+                    <option value="" class="" selected>Select Member</option>
+                    <option
+                      *ngFor="let member of isFullAccessMember"
+                      value="{{ member.profileId }}"
+                      >{{ member.firstName }} {{ member.lastName }}</option
+                    >
+                  </select>
+                </span>
+                <span
+                  [ngClass]="{ input_error_text: IsMemberSelected }"
+                  *ngIf="IsMemberSelected"
+                >
+                  Please select a family member to enroll.</span
+                >
+              </div>
+              <div class="col-md-5 col-sm-12">
+                <button
+                  class="btn btn_primary"
+                  type="button"
+                  (click)="redirectToEnroll()"
+                >
+                  Enroll
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<arxrf-modal
+  [show]="manager.removeModalState"
+  cssClasses=""
+  *ngIf="manager.removingMember != undefined"
+  (update)="manager.updateRemoveModalState($event)"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="h1__page-title">
+          Remove {{ manager.removingMember.firstName }}
+          {{ manager.removingMember.lastName }}
+        </h1>
+        <p class="mt-4">
+          <strong>
+            {{ manager.removingMember.firstName }}
+            {{ manager.removingMember.lastName }} will be removed from your
+            Family account.
+          </strong>
+        </p>
+        <p class="mt-5" *ngIf='!appContext.isSpsite'>
+          You will not be able to manage their AllianceRx Walgreens Prime or
+          Walgreens.com pharmacy features on their behalf.
+        </p>
+
+        <p class="mt-5" *ngIf='appContext.isSpsite'>
+          You will not be able to manage their AllianceRx Walgreens Prime or
+           pharmacy features on their behalf.
+        </p>
+
+        <p class="mt-4">
+          You can invite {{ manager.removingMember.firstName }}
+          {{ manager.removingMember.lastName }} again at a later time.
+        </p>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12 col-xs-12 fm__overlay-controls">
+        <button
+          class="btn btn_primary remove_model_btn btn_continue"
+          type="button"
+          (click)="continueRemoveAction()"
+        >
+          Remove
+        </button>
+        <a
+          href="javascript:void(0)"
+          class="btn_cancel"
+          (click)="cancelRemoveAction()"
+          >Cancel</a
+        >
+      </div>
+    </div>
+  </div>
+</arxrf-modal>
+
+<arxrf-modal
+  [show]="manager.addAdultModelState"
+  (update)="manager.updateAddAdultModelState($event)"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="">How to add an Adult</h1>
+
+        <div *ngIf='!appContext.isSpsite' class="alert alert__info minimal mt-3">   
+          <a class="alert__text-contain">
+            <span class="icon icon__info">
+              <svg>
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                ></use>
+              </svg>
+            </span>
+
+            <span>
+              <div id="alert-content">
+                <p>
+                  <strong
+                    >You must first add an adult to your account before
+                    registering them for home delivery pharmacy.</strong
+                  >
+                </p>
+              </div>
+            </span>
+          </a>
+        </div>
+
+        <ol class="mt-3 add-adult-steps">
+          <li>Click continue and fill out the form on the next page.</li>
+
+          <li>
+            We will send the adult an invitation to join your family
+            prescriptions account.
+          </li>
+
+          <li>
+            Once they accept your invite, you will be able to manage their
+            prescriptions.
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-xs-12 col-12 text-right">
+        <button
+          class="btn btn_primary add-adult-continue"
+          type="button"
+          (click)="redirectToAddAdult()"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</arxrf-modal>
+
+<arxrf-modal
+  [show]="manager.addChildModelState"
+  (update)="manager.updateAddChildModelState($event)"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="">How to add a Child</h1>
+
+        <div *ngIf='!appContext.isSpsite' class="alert alert__info minimal mt-3">
+          <a class="alert__text-contain">
+            <span class="icon icon__info">
+              <svg>
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                ></use>
+              </svg>
+            </span>
+
+            <span>
+              <div id="alert-content">
+                <p>
+                  <strong
+                    >You must first add a child to your account before
+                    registering them for home delivery pharmacy.</strong
+                  >
+                </p>
+              </div>
+            </span>
+          </a>
+        </div>
+
+        <ol class="mt-3 add-adult-steps">
+          <li>Click continue and fill out the form on the next page.</li>
+
+          <li *ngIf='!appContext.isSpsite'>
+            If the child already has a Walgreens.com account we’ll email them an
+            invitation to join your Family Prescriptions account.
+          </li>
+
+          <li *ngIf='appContext.isSpsite'>
+            If the child already has a an existing online account, we’ll email them an invitation to join your Family Prescriptions account
+          </li>
+
+          <li>
+            Once they accept your invite, you will be able to manage their
+            prescriptions.
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-xs-12 col-12 text-right">
+        <a
+          href="javascript:void(0)"
+          (click)="redirectToAddChild()"
+          role="button"
+          ><span class="btn btn_primary add-adult-continue">Continue</span></a
+        >
+      </div>
+    </div>
+  </div>
+</arxrf-modal>
+
+<arxrf-modal
+  [show]="homeDeliveryInfoState"
+  (update)="updateHdModelState($event)"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="">Home Delivery Pharmacy Status</h1>
+
+        <p class="mt-4">
+          The following home delivery statuses indicate where each family member
+          is during registration process:
+        </p>
+
+        <p class="mt-4">
+          <strong>Not Registered:</strong> This family member is not registered
+          for Home Delivery Pharmacy.
+        </p>
+
+        <p class="mt-3">
+          <strong>Pending Registration:</strong> This family member's insurance
+          information is being validated and may take up to 24 hours to be
+          confirmed.
+        </p>
+
+        <p class="mt-3">
+          <strong>Registered:</strong> This family member is registered and can
+          now participate in Home Delivery Pharmacy.
+        </p>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-xs-12 col-12 text-right">
+        <a
+          href="javascript:void(0)"
+          (click)="updateHdModelState(false)"
+          role="button"
+          ><span class="btn btn_primary add-adult-continue">Close</span></a
+        >
+      </div>
+    </div>
+  </div>
+</arxrf-modal>
+
+<!-- <arxrf-modal [show]="accountStatusModelState" (update)="updateACModelState($event)" *ngIf="accountStatusCheckFor">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="">Invitation Pending</h1>
+
+        <p class="mt-4">
+          {{accountStatusCheckFor.firstName}} {{accountStatusCheckFor.lastName}} has not yet accepted your invitation sent on {{accountStatusCheckFor.invitationInfo.sentDate | date}} at {{accountStatusCheckFor.invitationInfo.invitationTime}}
+        </p>
+
+        <p class="mt-4">
+          You will not have access to their account until they accept.
+        </p>
+
+        <p class="mt-3">
+          You may resend the invitation again on {{accountStatusCheckFor.invitationInfo.resendInvitationDate | date}} at {{accountStatusCheckFor.invitationInfo.resendInvitationTime}}. Invitations can be sent up to 3 times.
+        </p>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12 col-xs-12 fm__overlay-controls">
+        <button class="btn btn_primary remove_model_btn btn_continue" type="button" (click)="inviteAction('resend')" [disabled]="!accountStatusCheckFor.invitationInfo.resendFlag">Resend Invite</button>
+        <a href="javascript:void(0)" class="btn_cancel" (click)="inviteAction('cancel')">Cancel Invite</a>
+      </div>
+    </div>
+  </div>
+</arxrf-modal> -->
+
+<arxrf-modal
+  [show]="accountStateOverlayState"
+  (update)="updateAccountStatusOverlay($event)"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>Account Status</h1>
+
+        <h4 class="mt-4">
+          Invitation Pending
+        </h4>
+        <p class="mt-2">
+          Your family member has received an invitation to join your Family
+          Prescriptions section but hasn’t…
+        </p>
+
+        <h4 class="mt-4">
+          Full Access
+        </h4>
+        <p class="mt-2">
+          You have full access to the Family Prescriptions feature for this
+          family member.
+        </p>
+
+        <h4 class="mt-4">
+          Unverified Account
+        </h4>
+        <p class="mt-2">
+          Currently you do not have access to the features in Family
+          Prescriptions…
+        </p>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12 col-xs-12 fm__overlay-controls">
+        <button
+          class="btn btn_primary remove_model_btn btn_continue"
+          type="button"
+          (click)="accountStateOverlayState = false"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</arxrf-modal>

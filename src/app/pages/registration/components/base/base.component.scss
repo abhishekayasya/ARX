@@ -1,0 +1,46 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.registrationContainer{
+  margin: 0 auto;
+  max-width: 600px;
+    .reg-form{
+      padding: 1.5rem;
+    }
+}
+
+.rx__walgreens-account-check button {
+  width: 100%;
+}
+
+.reg-status-dot {
+  margin-bottom: 15px;
+}
+
+.h1__page-title.reg-base {
+  height: 68px;
+}
+
+@media screen and (max-width: $sm-screen) {
+  .reg-status-dot {
+    margin-bottom: 7px;
+  }
+  .reg_container_align {
+    padding: 0 10px;
+  }
+}
+
+.reg-sub-container {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px 0px #bfbfbf;
+  min-height: 400px;
+  @media screen and (min-width: $md-screen){
+    min-height: 600px;
+  }
+}

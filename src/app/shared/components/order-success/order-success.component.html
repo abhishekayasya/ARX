@@ -1,0 +1,398 @@
+<div class="container">
+  <arxrf-loader [show]="loaderState"></arxrf-loader>
+  <h3 *ngIf="noorder">Unable to find any submitted order.</h3>
+  <div class="orders__section">
+    <div class="row">
+      <h1 class="h1__page-title text-center col">Thank You!</h1>
+    </div>
+    <div class="row short-message">
+      <p class="text-center col-12 font-size mt-3">
+        Please review your summary details below.
+      </p>
+      <p class="text-center col-12 font-size mt-3">
+        If needed, our pharmacy care team will contact you for additional
+        information to complete your order.
+      </p>
+      <p class="text-center col-12 font-size mt-3">
+        A confirmation email has also been sent to
+        <strong>{{ _checkoutService.submitOrderPayload.emailId }}</strong>
+      </p>
+    </div>
+    <div class="row" *ngIf="homeDeliveryService.showbanner === false">
+      <div class="col-12">
+        <arxrf-message></arxrf-message>
+      </div>
+    </div>
+
+    <div class="col-12 text-center print-block" onclick="window.print();" id="printPageButton">
+      <span class="print-icon print-hand">
+        <svg alt="" width="80" height="80">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__print">
+          </use>
+        </svg>
+      </span>
+      <span class="print-text print-hand"><strong>Print</strong></span>
+    </div>
+
+    <div class="rx-review">
+      <div class="checkout-review__container" *ngFor="let order of checkoutDetails">
+        <section class="order-info smallScreen-view">
+          <div class="row hero-title">
+            <h2 class="col small-screen">
+              <span *ngIf="order.type == 'HOMEDELIVERY'">Home Delivery</span>
+              <span *ngIf="order.type == 'SPECIALTY' && order.subType == 'CLEANSED'">Specialty Prescription - Order
+                Scheduled</span>
+              <span *ngIf="
+                  order.type == 'SPECIALTY' && order.subType == 'UNSOLICITED'
+                ">Specialty Prescription - Refill Request</span>
+            </h2>
+          </div>
+
+          <div class="alert alert__warn" *ngIf="order.type == 'SPECIALTY' && order.subType == 'UNSOLICITED'">
+            <a class="alert__text-contain">
+              <span class="icon icon__warn">
+                <svg>
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert">
+                  </use>
+                </svg>
+              </span>
+
+              <span>
+                <div id="alert-content">
+                  This prescription is pending insurance processing. Once
+                  processed, we'll send you a notification to schedule delivery.
+                </div>
+              </span>
+            </a>
+          </div>
+
+          <!--speciality cleansed patient list-->
+          <div class="meta-details" *ngIf="order.type == 'SPECIALTY' && order.subType == 'CLEANSED'">
+            <div class="row">
+              <div class="col-12">
+                <div class="orders__cleansed-referral">
+                  <div class="row mt-3">
+                    <div class="shipping-details col-md-6 col-lg-4 col-sm-12">
+                      <div class="shipping-address">
+                        <h2>Shipping address</h2>
+                        <div>
+                          <p>
+                            {{
+                              order.boxDetails.shippingInfo.deliveryAddr
+                                .firstName
+                            }}
+                            {{
+                              order.boxDetails.shippingInfo.deliveryAddr
+                                .lastName
+                            }}
+                          </p>
+                          <p>
+                            {{
+                              order.boxDetails.shippingInfo.deliveryAddr.street1
+                            }}
+                          </p>
+                          <p>
+                            {{
+                              order.boxDetails.shippingInfo.deliveryAddr.city
+                            }},
+                            {{
+                              order.boxDetails.shippingInfo.deliveryAddr.state
+                            }}
+                            {{ order.boxDetails.shippingInfo.deliveryAddr.zip }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="shipping-method col-md-6 col-lg-4 col-sm-12 order-md-3 order-lg-2">
+                      <h2>Delivery date</h2>
+                      <div>
+                        <p *ngIf="
+                            order?.boxDetails?.shippingInfo?.callMeReason
+                              ?.prefDelDtNotAvailable == 'true'
+                          ">
+                          We'll contact you by the end of the next business day.
+                          Or, you can also call us directly at 888-347-3416.
+                        </p>
+                        <p *ngIf="
+                            order?.boxDetails?.shippingInfo?.callMeReason
+                              ?.prefDelDtNotAvailable == 'false'
+                          ">
+                          {{
+                            order.boxDetails.shippingInfo.deliveryAddr
+                              .selectedDate
+                          }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="payment-details col-md-6 col-lg-4 col-sm-12 order-md-2">
+                      <h2>Payment</h2>
+
+                      <div class="mail-checkout__creditcard-exist">
+                        <div class="col-md-12" *ngFor="
+                            let card of order.boxDetails.shippingInfo.creditCard
+                          ">
+                          <div class="row" *ngIf="card.paymentMethodId">
+                            <div class1="card_icon col-2" [cc-type]="card.creditCardType"></div>
+                            <div class="card_number col-3">
+                              <p>{{ card.creditCardNumber | ccnumber: "5" }}</p>
+                            </div>
+                            <div class="card-price col-3">
+                              <p *ngIf="
+                                  order.boxDetails.shippingInfo.creditCard
+                                    ?.length > 1 && card.dueNow
+                                ">
+                                ${{ card.dueNow | price }}
+                              </p>
+                              <p *ngIf="
+                                  order.boxDetails.shippingInfo.creditCard
+                                    ?.length === 1
+                                ">
+                                ${{ order.dueNow | price }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <p *ngIf="order.dueNow === '0'">Not on file</p>
+                      <!-- <p *ngIf="order.type == 'specialtyUnsolicited'">Not Required</p> -->
+                    </div>
+                  </div>
+
+                  <div class="presc-summary">
+                    <h2>Prescriptions</h2>
+                    <ul class="drugs-list">
+                      <li *ngFor="
+                          let prescription of order.prescriptionList;
+                          let i = index
+                        ">
+                        <div class="row m-0 pt-1 pb-1">
+                          <div class="m-0 col-md-12">
+                            <div class="row">
+                              <div class="drug-icon col-3 col-md-2">
+                                <img *ngIf="!prescription?.drugImageURL" src="{{
+                                    appContext.assetsHost ||
+                                      appContext.assetPrefix
+                                  }}/images/IN1827/default_image_small.jpg" class="border__round" alt=""
+                                  appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg" />
+                                <img *ngIf="
+                                    appContext.assetPrefix != '' &&
+                                    prescription?.drugImageURL
+                                  " src="{{ appContext.assetPrefix }}{{
+                                    prescription?.drugImageURL
+                                  }}" class="border__round" alt="" 
+                                  appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg" />
+                                <img *ngIf="
+                                    appContext.assetPrefix == '' &&
+                                    prescription?.drugImageURL
+                                  " src="{{ appContext.assetsHost }}{{
+                                    prescription?.drugImageURL
+                                  }}" class="border__round" alt="" 
+                                  appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"/>
+                              </div>
+                              <div class="drug-info col-9 col-md-10">
+                                <h1 class="h1__page-title">
+                                  {{ prescription.drugName }}
+                                </h1>
+                                <div class="drug-details">
+                                  <p>Qty: {{ prescription.qty }}</p>
+                                  <p class="break-line"></p>
+                                  <p>Rx: {{ prescription.rxNumber }}</p>
+                                  <p class="break-line" *ngIf="prescription.prescriber"></p>
+                                  <p>{{ prescription.prescriber }}</p>
+                                  <p class="break-line" *ngIf="prescription.patientName"></p>
+                                  <p>{{ prescription.patientName }}</p>
+
+                                  <p class="float-right">
+                                    ${{ prescription.cashPrice | price }}
+                                  </p>
+
+                                  <div *ngIf="prescription.isRequestToRemove === 'true'">
+                                    <p class="text-warning">
+                                      Your removal request has been sent and is
+                                      pending review.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--order status for mail and speciality unsolicited-->
+          <div class="meta-details" *ngIf="order.subType != 'CLEANSED'">
+            <div class="row">
+              <div class="shipping-details col-md-6 col-lg-4 col-sm-12">
+                <div class="shipping-address">
+                  <h2>Shipping address</h2>
+
+                  <!--shpping address-->
+                  <div>
+                    <p>
+                      {{ order.boxDetails.shippingInfo.deliveryAddr.firstName }}
+                      {{ order.boxDetails.shippingInfo.deliveryAddr.lastName }}
+                    </p>
+                    <p>
+                      {{ order.boxDetails.shippingInfo.deliveryAddr.street1 }}
+                    </p>
+                    <p>
+                      {{ order.boxDetails.shippingInfo.deliveryAddr.city }},
+                      {{ order.boxDetails.shippingInfo.deliveryAddr.state }}
+                      {{ order.boxDetails.shippingInfo.deliveryAddr.zip }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="shipping-method col-md-6 col-lg-4 col-sm-12 order-md-3 order-lg-2"
+                *ngIf="order.type == 'HOMEDELIVERY'">
+                <h2>Shipping method</h2>
+                <div *ngIf="shippingMethod">
+                  <p>{{ shippingMethod.value }}</p>
+                  <p class="body-copy__fourteen">
+                    {{ shippingMethod.message }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="shipping-method col-md-6 col-lg-4 col-sm-12 order-md-3 order-lg-2" *ngIf="
+                  order.type == 'SPECIALTY' && order.subType == 'UNSOLICITED'
+                ">
+                <h2>Date needed by</h2>
+                <div>
+                  <p>
+                    {{
+                      order.boxDetails.shippingInfo.deliveryAddr.selectedDate
+                    }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="payment-details col-md-6 col-lg-4 col-sm-12 order-md-2">
+                <h2>Payment</h2>
+
+                <div class="mail-checkout__creditcard-exist" *ngIf="
+                    order.type == 'HOMEDELIVERY' &&
+                    order.boxDetails.shippingInfo.creditCard
+                  ">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class1="card_icon col-2" [cc-type]="
+                          order.boxDetails.shippingInfo.creditCard[0]
+                            .creditCardType
+                        "></div>
+                      <div class="card_number col-3">
+                        <p>
+                          {{
+                            order.boxDetails.shippingInfo.creditCard[0]
+                              .creditCardNumber | ccnumber: "5"
+                          }}
+                        </p>
+                      </div>
+                      <div class1="card_exp col-3">
+                        <p>
+                          Exp.
+                          {{
+                            order.boxDetails.shippingInfo.creditCard[0].expDate
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <p *ngIf="
+                    order.type == 'SPECIALTY' && order.subType == 'UNSOLICITED'
+                  ">
+                  Not required until processed through insurance.
+                </p>
+              </div>
+            </div>
+
+            <div class="presc-summary">
+              <h2>Prescriptions</h2>
+              <ul class="drugs-list">
+                <li class="br-none" *ngFor="
+                    let prescription of order?.prescriptionList;
+                    let i = index
+                  ">
+                  <div class="row m-0 pt-1 pb-1" [ngClass]="
+                      order.type == 'HOMEDELIVERY' && checkwarning(prescription)
+                        ? 'br-war'
+                        : 'br-normal'
+                    ">
+                    <div class="m-0 col-md-12">
+                      <div class="row">
+                        <div class="drug-icon col-3 col-md-2">
+                          <img *ngIf="!prescription?.drugImageURL" src="{{
+                              appContext.assetsHost || appContext.assetPrefix
+                            }}/images/IN1827/default_image_small.jpg" class="border__round" alt="" 
+                            appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg" />
+                          <img *ngIf="
+                              appContext.assetPrefix != '' &&
+                              prescription?.drugImageURL
+                            " src="{{ appContext.assetPrefix }}{{
+                              prescription?.drugImageURL
+                            }}" class="border__round" alt="" 
+                            appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg" />
+                          <img *ngIf="
+                              appContext.assetPrefix == '' &&
+                              prescription?.drugImageURL
+                            " src="{{ appContext.assetsHost }}{{
+                              prescription?.drugImageURL
+                            }}" class="border__round" alt="" 
+                            appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg" />
+                        </div>
+                        <div class="drug-info col-9 col-md-10">
+                          <h1 class="h1__page-title">
+                            {{ prescription.drugName }}
+                          </h1>
+                          <div class="drug-details">
+                            <p>Qty: {{ prescription.qty }}</p>
+                            <p class="break-line"></p>
+                            <p>Rx: {{ prescription.rxNumber }}</p>
+                            <p class="break-line" *ngIf="prescription.prescriber"></p>
+                            <p>{{ prescription.prescriber }}</p>
+                            <p class="break-line" *ngIf="prescription.patientName"></p>
+                            <p>{{ prescription.patientName }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span *ngIf="
+                      order.type == 'HOMEDELIVERY' && checkwarning(prescription)
+                    " class="ft-clr" role="alert" aria-live="assertive">
+                    <span class="icon icon__alert icon-warn warning-icon">
+                      <svg>
+                        <use
+                          xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                          class="__web-inspector-hide-shortcut__"></use>
+                      </svg>
+                    </span>
+                    <span class="va-super">{{
+                      prescription.messages[0].message
+                    }}</span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="clearfix"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+<!-- <form autocomplete="off"> -->
+  <input type="text" [(ngModel)]="value" (change)="onChange($event)" placeholder  #placeInput  id="{{name}}" name="{{name}}" required disabled="{{disable}}" autocomplete="no-fill"/>
+  <label class="input__title" for="{{name}}" *ngIf="!hideLabel"><span>{{label}}</span></label>
+<!-- </form> -->

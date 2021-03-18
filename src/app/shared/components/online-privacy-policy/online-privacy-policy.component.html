@@ -1,0 +1,7 @@
+<a href="javascript:void(0);" class="arxterms" (click)="openTermsModal()">AllianceRx Walgreens Prime Online Privacy and Security Policy</a>
+<arxrf-modal [show]="isPrivacyPolicyModalVisible" (update)="updateTermsModal($event)" class="privacyTextContainer">
+  <h2>Online Privacy and Security Policy</h2>
+  <div class="termsModalContainer" [innerHTML]="common.decodeHtml(terms_content)">
+
+  </div>
+</arxrf-modal>

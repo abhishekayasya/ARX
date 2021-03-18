@@ -1,0 +1,219 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+
+.orders__cleansed-patient-prescription {
+  border-bottom: 1px solid #cfcfcf;
+  .h1__page-title {
+    word-wrap: break-word;
+  }
+}
+
+.orders__cleansed-patient-prescription-container:last-of-type {
+  .orders__cleansed-patient-prescription {
+    border-bottom: none;
+  }
+}
+
+p.due_amount {
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.editBtn {
+  border-radius: 5px;
+}
+
+.drug-icon {
+  margin-top: 5px;
+}
+
+.cc__listing {
+  border-top: solid 1px #cfcfcf;
+  .cc__listing-card {
+    margin: 2em 0em;
+  }
+  .card_icon {
+    padding: 0;
+    top: 5px;
+    position: relative;
+  }
+  .cc__listing-amount-input {
+    background: #f7f7f7;
+  }
+  .check-box{
+    height: auto;
+  }
+  .btn__radio{
+    min-height: 27px;
+  }
+}
+
+.patient__healthinfo {
+  border-top: 1px solid #cfcfcf;
+  margin-top: 3em;
+  padding: 3em 0em;
+
+  .patient__healthinfo-medication {
+    margin-top: 5em;
+  }
+
+  .patient__healthinfo-allergies {
+    margin-top: 5em;
+  }
+
+  .patient__healthinfo-conditions {
+    margin-top: 5em;
+  }
+}
+
+.patient__healthinfo-list {
+  li {
+    display: inline-block;
+    margin-right: 1em;
+
+    p {
+      display: inline-block;
+      vertical-align: bottom;
+    }
+
+    a {
+      display: inline-block;
+      .icon__dismiss {
+        min-height: 25px;
+        color: #000;
+      }
+    }
+  }
+}
+
+.patient__clinicalreview {
+  border-top: 1px solid #cfcfcf;
+  // margin-top: 5em;
+  padding: 3em 0em;
+
+  .btn__radio {
+    display: inline-block;
+  }
+}
+
+.speciality__disclaimer {
+  margin-bottom: 3em;
+  padding-bottom: 0!important;
+  border-top: 1px solid #cfcfcf;
+  margin-top: -3em;
+  padding-top: 3em;
+}
+.card_update{
+  .amountContainer{
+    background: #f7f7f7;
+    border-radius: 5px;
+    padding-left: 9px;
+
+    input{
+      display: inline-block;
+      padding-left: 2px;
+      width: 79%;
+    }
+  }
+}
+.estimated-price {
+  margin-top: -14px;
+  margin-bottom: 15px;
+  color: #404040;
+}
+.speciality__disclaimer .terms{
+  text-align: justify;
+  margin-bottom: 29px;
+}
+
+.isDisable{
+  background: #b1b0af;
+}
+
+select:focus {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+
+.check-box .check{
+  min-width: 25px;
+  cursor: pointer;
+}
+
+.select-method {
+  position: relative;
+}
+
+.margin_align{
+  margin-bottom: 70px;
+}
+
+.patient__clinicalreview{
+  padding-bottom: 0!important;
+  border-top: 1px solid #cfcfcf;
+  padding: 3em 0;
+}
+.drug-icon{
+  margin-top: 10px;
+}
+
+
+@media screen and (min-width: $xs-screen) and (max-width: $md-screen){
+  .btn_primary {
+    width: 100%;
+  }
+  .drug-icon {
+    margin-top: 12px;
+  }
+  .check-box {
+    min-height: 45px !important;
+    height: auto;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $lg-screen){ 
+  .cc__listing {
+    .card_icon {
+      top: 0;
+    }
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+  .drug-icon{
+    padding-right: 0px;
+  }
+
+  .drug-info{
+    padding-left: 0px;
+  }
+
+  .check {
+    margin-top: -5px;
+  }
+
+  .presc-summary {
+    padding-top: 2.5rem;
+  }
+
+  .addMed_but {
+    padding-top: 1.5rem;
+  }
+
+  .addAllergy_btn {
+    padding-top: 1.5rem;
+  }
+
+  .addHealth_btn {
+    padding-top: 1.5rem;
+  }
+}
+@media screen and (min-width: $xs-screen) and (max-width: 767px){
+  .svgIconAlign {
+    align-self: center;
+  }
+}

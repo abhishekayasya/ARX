@@ -1,0 +1,31 @@
+body {
+  color: #404040;
+  position: relative;
+  height: 100%;
+}
+
+.color__neutral {
+  @include themify($themes) {
+    background: themed("color_neutral");
+  }
+}
+
+a {
+  @include themify($themes) {
+      color: themed("accoun_home_tabs_color");
+    }
+}
+.content .title-descp,
+h1.h1__page-title,
+.card__rx .card__title,
+.ui-datepicker-header {
+  @include themify($themes) {
+    font-family: themed("h1LightFontFamily");
+  }
+}
+
+.ex__user-info {
+  @include themify($themes) {
+      color: themed("userinfo_color");
+    }
+}

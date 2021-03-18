@@ -1,0 +1,100 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.personalInfoContainer{
+  arxrf-google-places {
+    width: 100%;
+  }
+  background-color: #fff;
+  form{
+    max-width: 633px;
+  }
+  .heading{
+    font-size: 28px;
+    color: #404040;
+    font-weight: normal;
+    font-family: HelveticaNeueLTW01-45Light;
+  }
+
+  .editBtn{
+    margin: 49px 0;
+  }
+
+  .detailLabel{
+    font-size: 18px;
+    font-weight: normal;
+    margin-top: 24px;
+    margin-bottom: 5px;
+  }
+  .detailValue{
+    font-size: 16px;
+  }
+  .detailValue.address span{
+    display: block;
+  }
+  .alternateContactInfo{
+    margin-top: 21px;
+  }
+  .addNumber{
+    color: #1a7eac;
+    .icon{
+      cursor: pointer;
+    }
+
+    .btnText{
+      padding: 6px 0;
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 4px;
+    }
+  }
+
+  .personalInfoForm{
+    .alert{
+      padding-bottom: 0;
+      padding-left: 0;
+    }
+    .addNumber{
+      cursor: pointer;
+    }
+    .deleteNumBtn{
+      cursor: pointer;
+      background: #fff;
+    }
+  }
+  @media only screen
+  and (min-device-width: $xs-screen)
+  and (max-device-width: 767px) {
+    .phoneTypeContainer{
+      margin-top: 10px;
+    }
+    .zipcodeContainer{
+      .optionalZip{
+        padding-left: 0;
+        label{
+          width: 100%;
+        }
+      }
+    }
+    .cancelBtnAlign {
+      margin-right: 15px;
+    }
+  }
+
+  .remove-item{
+    width: 200%;
+    height: 200%;
+    // color: #1a7eac;
+  }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .plusIcon{
+    top:-15px;
+  }
+}
+
+

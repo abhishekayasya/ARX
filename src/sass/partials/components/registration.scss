@@ -1,0 +1,19 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+a.arxterms {
+    @include themify($themes) {
+        color: themed("registration_arx_terms");
+      }
+}
+
+.reg-container.reg-sub-section .btn__radio span {
+  font-size: 16px;
+}
+
+.desktop-width {
+  max-width: 600px;
+}

@@ -1,0 +1,668 @@
+<arxrf-loader [show]="_prescription?.history == undefined && !serviceError">
+</arxrf-loader>
+
+<arxrf-loader
+  [show]="_refillService.loaderStatus"
+  message="Loading..."
+  style="height: 200%; width: 200%"
+  [loaderOverlay]="_refillService.loaderOverlay"
+></arxrf-loader>
+
+<div class="input__error-text mx-5" *ngIf="serviceError">
+  <div class="row align-items-center">
+    <div class="col-1 pr-0">
+      <span class="icon icon__alert">
+        <svg>
+          <use
+            href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+          ></use>
+        </svg>
+      </span>
+    </div>
+    <div class="col-11 pl-0">
+      <p class="err-msg">
+        Sorry, we're unable to access your prescription history at this time.
+        Please try again later.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="rx__history-container" *ngIf="_prescription?.history != undefined">
+  <div class="row no-gutters rx-info">
+    <div class="col-md-12 fs-14">
+      <p class=""><strong>Rx: </strong>{{ _prescription.rxNumber }}</p>
+      <p class="">
+        <strong>Last fill: </strong> {{ _prescription.refillInfo.lastFillDate }}
+      </p>
+      <p>
+        <strong>Expires: </strong
+        ><span>{{ _prescription.refillInfo.expiryDate }}</span>
+      </p>
+      <p *ngIf="_prescription.prescriber">
+        <strong>Prescriber: </strong>{{ _prescription.prescriber }}
+      </p>
+      <p *ngIf="directions"><strong>Directions: </strong>{{ directions }}</p>
+
+      <p
+        *ngIf="
+          _prescription.additionalAutoRefillInfo?.shippingInfo != undefined
+        "
+      >
+        <strong>Next delivery: </strong>
+        {{
+          _prescription.additionalAutoRefillInfo?.deliverySettings.shippingInfo
+            .address.street1
+        }}
+        {{
+          _prescription.additionalAutoRefillInfo?.deliverySettings.shippingInfo
+            .address.city
+        }},
+        {{
+          _prescription.additionalAutoRefillInfo?.deliverySettings.shippingInfo
+            .address.state
+        }}
+        {{
+          _prescription.additionalAutoRefillInfo?.deliverySettings.shippingInfo
+            .address.zip
+        }}
+      </p>
+    </div>
+
+    <div class="modal__bottom-actions1 mt-4 d-md-none d-lg-none noPrint">
+      <p
+        class="p-3"
+        *ngIf="
+          (_prescription.refillInfo.refillsLeft == 0 ||
+            (_prescription.refillInfo.expiryDate | date: 'dd/MM/yyyy') <
+              (today | date: 'dd/MM/yyyy')) &&
+          _prescription.refillInfo.refillable
+        "
+      >
+        <span> Submit and we’ll call your doctor.</span>
+      </p>
+      <div class="btn__pair">
+        <span>
+          <a
+            href="javascript:void(0)"
+            role="button"
+            *ngIf="
+              _prescription.prescriptionType === 'mail' ||
+              !_prescription.showStatusLink
+            "
+            class="col-12 col-md-6 order-lg-2 btn btn_transaction_primary"
+            (click)="checkoutPrescriptions()"
+            ><span>Request refill</span></a
+          >
+          <a
+            href="javascript:void(0)"
+            *ngIf="
+              _prescription.prescriptionType === 'mail' &&
+              _prescription.autoRefillInfo.autoRefillEligible
+            "
+            class="secondary col-12 col-md-6 order-lg-1 mt-4"
+            (click)="executeEditShipCallback(_prescription.viewId)"
+            ><span class="btn_button">Edit Auto Refill</span></a
+          >
+        </span>
+
+        <a
+          href="javascript:void(0)"
+          role="button"
+          *ngIf="
+            _prescription.prescriptionType !== 'mail' &&
+            _prescription.showStatusLink
+          "
+          class="disabled"
+          tabindex="-1"
+          ><span class="btn btn__disabled">Refill not available</span></a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="row no-gutters history">
+    <div class="col-12">
+      <div class="history-error">
+        <div
+          class="input__error-text"
+          *ngIf="_prescription?.history.length == 0"
+        >
+          <p>No previous refill history found for this prescription.</p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="col-12"
+      *ngIf="
+        _prescription?.history != undefined && _prescription?.history.length > 0
+      "
+    >
+      <ul>
+        <li
+          class=""
+          *ngFor="let history of _prescription.history">
+          <div class="row ">
+            <div class="m-0 col-md-12">
+              <div class="row" *ngIf="isMobile === false">
+                <div class="col-3">
+                  <strong>{{ history.fillDate ? history.fillDate : "N/A" }}</strong>
+                </div>
+                <div class="col-3">
+                    <strong>Status</strong>
+                    <p>{{
+                      history.statusPrice?.status
+                        ? history.statusPrice?.status
+                        : "Currently Unavailable"
+                    }}</p>
+                </div>
+                <div class="col-2">
+                  <strong style="display: block;">Price</strong>
+                    <p>
+                      {{
+                        history.statusPrice?.price
+                          ? history.statusPrice?.price
+                          : "Currently Unavailable"
+                      }}
+                    </p>
+                </div>
+                <div class="col-1">
+                  <strong >Qty</strong>
+                  <p>
+                    {{
+                      history.statusPrice?.quantity
+                        ? history.statusPrice?.quantity
+                        : "N/A"
+                    }}
+                  </p>
+                </div>
+                <div class="col-2"
+                    *ngIf="_prescription.prescriptionType === 'mail'"
+                  >
+                    <strong class="sm" >Insurance</strong>
+                    <p>
+                      {{
+                        history.statusPrice?.insurance
+                          ? history.statusPrice?.insurance
+                          : "N/A"
+                      }}
+                    </p>
+                </div>
+              </div>
+              
+              <div class="row" *ngIf="isMobile">
+                  <div class="col-6">
+                    <strong>{{ history.fillDate ? history.fillDate : "N/A" }}</strong>
+                  </div>
+                  <div class="col-6">
+                    <div class="col-12">
+                        <strong>Status</strong>
+                        <p>{{
+                          history.statusPrice?.status
+                            ? history.statusPrice?.status
+                            : "Currently Unavailable"
+                        }}</p>
+                    </div>
+                    <div class="col-12">
+                      <strong style="display: block;">Price</strong>
+                        <p>
+                          {{
+                            history.statusPrice?.price
+                              ? history.statusPrice?.price
+                              : "Currently Unavailable"
+                          }}
+                        </p>
+                    </div>
+                    <div class="col-12">
+                      <strong >Qty</strong>
+                      <p>
+                        {{
+                          history.statusPrice?.quantity
+                            ? history.statusPrice?.quantity
+                            : "N/A"
+                        }}
+                      </p>
+                    </div>
+                    <div class="col-12"
+                        *ngIf="_prescription.prescriptionType === 'mail'"
+                      >
+                        <strong class="sm" >Insurance</strong>
+                        <p>
+                          {{
+                            history.statusPrice?.insurance
+                              ? history.statusPrice?.insurance
+                              : "N/A"
+                          }}
+                        </p>
+                    </div>
+                  </div>
+                  <div class="col-12" style="margin-bottom: 20px;"></div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-12 duped__container">
+      <div class="duped__item" *ngFor="let relative of duped">
+        <div class="row">
+          <div class="col-md-3">
+            <figure>
+              <img
+                *ngIf="!relative?.drugInfo?.drugImageURL"
+                src="{{
+                  appContext.assetsHost || appContext.assetPrefix
+                }}/images/IN1827/default_image_small.jpg"
+                class="border__round"
+                alt=""
+              />
+              <img
+                *ngIf="
+                  appContext.assetPrefix != '' &&
+                  relative?.drugInfo?.drugImageURL
+                "
+                src="{{ appContext.assetPrefix }}{{
+                  relative.drugInfo.drugImageURL
+                }}"
+                alt="{{ relative.drugInfo.drugName }}"
+                class="border__round"
+              />
+              <img
+                *ngIf="
+                  appContext.assetPrefix == '' &&
+                  relative?.drugInfo?.drugImageURL
+                "
+                src="{{ appContext.assetsHost }}{{
+                  relative.drugInfo.drugImageURL
+                }}"
+                alt="{{ relative.drugInfo.drugName }}"
+                class="border__round"
+              />
+            </figure>
+          </div>
+
+          <div class="col-md-9">
+            <h4>{{ relative.drugInfo.drugName }}</h4>
+            <p
+              class="p-3"
+              *ngIf="
+                relative.refillInfo.refillsLeft == 0 &&
+                relative.refillInfo.refillable
+              "
+            >
+              <span> Submit and we’ll call your doctor</span>
+            </p>
+            <div class="btn__pair">
+              <a
+                href="javascript:void(0)"
+                *ngIf="
+                  relative.prescriptionType === 'mail' &&
+                  relative.autoRefillInfo.autoRefillEligible
+                "
+                (click)="executeEditShipCallback(relative.viewId)"
+                class="secondary"
+                >Edit Auto Refill</a
+              >
+              <a
+                href="javascript:void(0)"
+                role="button"
+                *ngIf="
+                  (relative.prescriptionType === 'mail' ||
+                    !relative.showStatusLink) &&
+                  relative.refillInfo.refillable
+                "
+                (click)="checkoutPrescriptions()"
+                ><span class="btn btn_transaction_primary"
+                  >Request refill
+                </span></a
+              >
+              <a
+                href="javascript:void(0)"
+                role="button"
+                *ngIf="
+                  (relative.prescriptionType !== 'mail' &&
+                    relative.showStatusLink) ||
+                  !relative.refillInfo.refillable
+                "
+                class="disabled"
+                tabindex="-1"
+                ><span class="btn btn__disabled">Refill not available</span></a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="col-md-12 fs-14">
+              <p class=""><strong>Rx: </strong>{{ relative.rxNumber }}</p>
+              <p class="">
+                <strong>Last fill: </strong>
+                {{ relative.refillInfo.lastFillDate }}
+              </p>
+              <p>
+                <strong>Expires: </strong
+                ><span>{{ relative.refillInfo.expiryDate }}</span>
+              </p>
+              <p *ngIf="relative.prescriber">
+                <strong>Prescriber: </strong>{{ relative.prescriber }}
+              </p>
+              <p *ngIf="relative.instructions">
+                <strong>Directions: </strong>{{ relative.instructions }}
+              </p>
+
+              <div class="modal__bottom-actions1 mt-4 d-md-none d-lg-none">
+                <div class="btn__pair">
+                  <a
+                    href="javascript:void(0)"
+                    *ngIf="
+                      relative.prescriptionType === 'mail' &&
+                      relative.autoRefillInfo.autoRefillEligible
+                    "
+                    (click)="executeEditShipCallback(relative.viewId)"
+                    class="secondary"
+                    >Edit Auto Refill</a
+                  >
+                  <a
+                    href="javascript:void(0)"
+                    role="button"
+                    *ngIf="
+                      relative.prescriptionType === 'mail' ||
+                      !relative.showStatusLink
+                    "
+                    (click)="checkoutPrescriptions()"
+                    ><span class="btn btn_transaction_primary"
+                      >Request refill
+                    </span></a
+                  >
+                  <a
+                    href="javascript:void(0)"
+                    role="button"
+                    *ngIf="
+                      relative.prescriptionType !== 'mail' &&
+                      relative.showStatusLink
+                    "
+                    class="disabled"
+                    tabindex="-1"
+                    ><span class="btn btn__disabled"
+                      >Refill not available</span
+                    ></a
+                  >
+                </div>
+              </div>
+
+              <p
+                *ngIf="
+                  relative.additionalAutoRefillInfo?.deliverySettings
+                    .shippingInfo.address != undefined
+                "
+              >
+                <strong>Next delivery: </strong>
+                {{
+                  relative.additionalAutoRefillInfo?.deliverySettings
+                    .shippingInfo.address.street1
+                }}
+                {{
+                  relative.additionalAutoRefillInfo?.deliverySettings
+                    .shippingInfo.address.city
+                }},
+                {{
+                  relative.additionalAutoRefillInfo?.deliverySettings
+                    .shippingInfo.address.state
+                }}
+                {{
+                  relative.additionalAutoRefillInfo?.deliverySettings
+                    .shippingInfo.address.zip
+                }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row duped__item-history">
+          <div
+            class="col-12"
+            *ngIf="
+              relative?.fillDetails != undefined &&
+              relative?.fillDetails.length > 0
+            ">
+            <!--
+            <div class="row table" *ngFor="let history of relative.fillDetails">
+              <div class="col-4 mt-3">
+                <strong>{{
+                  history.fillDate ? history.fillDate : "N/A"
+                }}</strong>
+              </div>
+              <div class="col-8 mt-3">
+                <div class="row">
+                  <div
+                    class="col-xs-12"
+                    [ngClass]="{
+                      'col-sm-4': relative.prescriptionType !== 'mail',
+                      'col-sm-3': relative.prescriptionType === 'mail'
+                    }"
+                  >
+                    <strong style="display: block;">Status</strong>
+                    <span>{{
+                      history.statusPrice?.status
+                        ? history.statusPrice?.status
+                        : "Currently Unavailable"
+                    }}</span>
+                  </div>
+                  <div
+                    class="col-xs-12"
+                    [ngClass]="{
+                      'col-sm-4': relative.prescriptionType !== 'mail',
+                      'col-sm-3': relative.prescriptionType === 'mail'
+                    }"
+                  >
+                    <strong class="sm" style="display: block;">Price</strong>
+                    <span>
+                      {{
+                        history.statusPrice?.price
+                          ? history.statusPrice?.price
+                          : "Currently Unavailable"
+                      }}
+                    </span>
+                  </div>
+                  <div
+                    class="col-xs-12"
+                    [ngClass]="{
+                      'col-sm-4': relative.prescriptionType !== 'mail',
+                      'col-sm-3': relative.prescriptionType === 'mail'
+                    }"
+                  >
+                    <strong class="sm" style="display: block;">Qty</strong>
+                    <span>
+                      {{
+                        history.statusPrice?.quantity
+                          ? history.statusPrice?.quantity
+                          : "N/A"
+                      }}
+                    </span>
+                  </div>
+                  <div
+                    class="col-xs-12"
+                    [ngClass]="{
+                      'col-sm-4': relative.prescriptionType !== 'mail',
+                      'col-sm-3': relative.prescriptionType === 'mail'
+                    }"
+                    *ngIf="relative.prescriptionType === 'mail'"
+                  >
+                    <strong class="sm" style="display: block;"
+                      >Insurance</strong
+                    >
+                    <span>
+                      {{
+                        history.statusPrice?.insurance
+                          ? history.statusPrice?.insurance
+                          : "N/A"
+                      }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          -->          
+            <ul>
+              <li *ngFor="let history of relative.fillDetails">
+                  <div class="row">
+                      <div class="m-0 col-md-12">
+                        <div class="row" *ngIf="isMobile === false">
+                          <div class="col-3">
+                              <strong>
+                              {{
+                                  history.fillDate ? history.fillDate : "N/A"
+                              }}
+                              </strong>
+                          </div>
+                          <div class="col-3">
+                              <strong >Status</strong>
+                              <p>{{
+                                  history.statusPrice?.status
+                                  ? history.statusPrice?.status
+                                  : "Currently Unavailable"
+                              }}</p>
+                          </div>
+                          <div class="col-2">
+                              <strong style="display: block;">Price</strong>
+                              <p>
+                                  {{
+                                      history.statusPrice?.price
+                                      ? history.statusPrice?.price
+                                      : "Currently Unavailable"
+                                  }}
+                              </p>
+                          </div>
+                          <div class="col-1">
+                              <strong>Qty</strong>
+                              <p>
+                                  {{
+                                      history.statusPrice?.quantity
+                                      ? history.statusPrice?.quantity
+                                      : "N/A"
+                                  }}
+                              </p>
+                          </div>
+                          <div class="col-2"
+                          *ngIf="relative.prescriptionType === 'mail'">
+                              <strong>Insurance</strong>
+                              <p>
+                                  {{
+                                      history.statusPrice?.insurance
+                                      ? history.statusPrice?.insurance
+                                      : "N/A"
+                                  }}
+                              </p>
+                          </div>
+                        </div>
+  
+                        <div class="row" *ngIf="isMobile">
+                          <div class="col-6">
+                            <strong>{{ history.fillDate ? history.fillDate : "N/A" }}</strong>
+                          </div>
+                          <div class="col-6">
+                            <div class="col-12">
+                                <strong>Status</strong>
+                                <p>{{
+                                  history.statusPrice?.status
+                                    ? history.statusPrice?.status
+                                    : "Currently Unavailable"
+                                }}</p>
+                            </div>
+                            <div class="col-12">
+                              <strong style="display: block;">Price</strong>
+                                <p>
+                                  {{
+                                    history.statusPrice?.price
+                                      ? history.statusPrice?.price
+                                      : "Currently Unavailable"
+                                  }}
+                                </p>
+                            </div>
+                            <div class="col-12">
+                              <strong >Qty</strong>
+                              <p>
+                                {{
+                                  history.statusPrice?.quantity
+                                    ? history.statusPrice?.quantity
+                                    : "N/A"
+                                }}
+                              </p>
+                            </div>
+                            <div class="col-12"
+                                *ngIf="_prescription.prescriptionType === 'mail'"
+                              >
+                                <strong class="sm" >Insurance</strong>
+                                <p>
+                                  {{
+                                    history.statusPrice?.insurance
+                                      ? history.statusPrice?.insurance
+                                      : "N/A"
+                                  }}
+                                </p>
+                            </div>
+                          </div>
+                          <div class="col-12" style="margin-bottom: 20px;"></div>
+                        </div>
+                      </div>
+                  </div>
+              </li>
+            </ul>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="modal__bottom-actions request_refill_btn_mobile noPrint">
+        <p
+          class="p-3"
+          *ngIf="
+            _prescription.refillInfo.refillsLeft == 0 &&
+            _prescription.refillInfo.refillable &&
+            _prescription.prescriptionType === 'mail'
+          "
+        >
+          <span> Submit and we’ll call your doctor</span>
+        </p>
+        <div class="btn__pair">
+          <a
+            href="javascript:void(0)"
+            *ngIf="
+              _prescription.prescriptionType === 'mail' &&
+              _prescription.autoRefillInfo.autoRefillEligible
+            "
+            (click)="executeEditShipCallback(_prescription.viewId)"
+            class="secondary"
+            >Edit Auto Refill</a
+          >
+          <a
+            href="javascript:void(0)"
+            role="button"
+            *ngIf="
+              (_prescription.prescriptionType === 'mail' ||
+                !_prescription.showStatusLink) &&
+              _prescription.refillInfo.refillable
+            "
+            (click)="checkoutPrescriptions()"
+            ><span class="btn btn_request_refill">Request refill </span></a
+          >
+          <a
+            href="javascript:void(0)"
+            role="button"
+            *ngIf="
+              (_prescription.prescriptionType !== 'mail' &&
+                _prescription.showStatusLink) ||
+              !_prescription.refillInfo.refillable
+            "
+            class="disabled"
+            tabindex="-1"
+            ><span class="btn btn__disabled">Refill not available</span></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,578 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.transfer-hd-deli-lean-h {
+  font-size: 28px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.21;
+  letter-spacing: normal;
+  text-align: center;
+  //color: #404040;
+}
+
+.h2_title_heading {
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #f0f1f1;
+  border: 1px solid #ccc;
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  li {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.6;
+    color: #8a8a8a;
+    white-space: nowrap;
+
+    &:hover {
+      color: #595a5c;
+      outline: 0;
+      background-color: #f7f7f7;
+    }
+  }
+}
+
+.menu.show {
+  display: block;
+  width: 84%;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.menu.display {
+  width: 100%;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.add-more-presc {
+  // margin-top: 0px;
+}
+
+.actionDiv {
+  margin-top: 3%;
+  margin-right: 25.5%;
+}
+.exceed-message {
+  //margin-top: 15px;
+}
+
+.bg-white {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.cancelRxModal {
+  background: #f7f7f7 !important;
+}
+
+.btn-circle {
+  border-radius: 2.25rem;
+}
+
+.err_msg_text {
+  margin-left: 4px;
+  vertical-align: middle;
+  margin-top: 6px;
+}
+
+.error_alert_box {
+  vertical-align: middle;
+  display: flex;
+}
+
+.buttonWrapper {
+  float: right;
+  color: #01728e !important;
+}
+
+.Line {
+  width: 713px;
+  height: 1px;
+  background-color: #979797;
+  margin-top: 2.3%;
+  margin-bottom: 1.7%;
+  margin-right: 28.9%;
+}
+
+.hd-container {
+  padding: 0px;
+}
+
+.input__title {
+  -webkit-transform: translate3d(20px, 0px, 0px) scale(1);
+  transform: translate3d(20px, 0px, 0px) scale(1);
+  width: 250px;
+  height: 20px;
+  position: absolute;
+  left: 0px;
+  pointer-events: none;
+  text-transform: none;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+  color: #404040;
+}
+.hd_transfer_rx_base {
+  border-bottom: 1px solid #cfcfcf;
+  padding-bottom: 3em;
+  margin-bottom: 3em;
+}
+
+.hd-transfer-rx-form-add-another-prescription {
+  padding-top: 1.25rem;
+  margin-top: 20px;
+  background-color: #ffffff;
+
+  .dropdown-selection {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+  .main_title {
+    margin-left: 24.1%;
+    margin-right: 24%;
+    margin-top: 2.4%;
+    font-size: 28px;
+    color: #404040;
+  }
+
+  .formField {
+    margin-left: 6.4%;
+    margin-right: 6.3%;
+  }
+  .warn-icon-con {
+    display: flex;
+    flex-flow: row;
+    margin-left: 0.3%;
+    margin-top: 1.4%;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #404040;
+    margin-bottom: 2.3%;
+  }
+
+  .hd_warn_icon {
+    color: #fcb44c;
+    vertical-align: middle;
+    margin-right: 0.9%;
+    min-width: 36.8px !important;
+    min-height: 35px !important;
+  }
+
+  .rx-notes {
+    margin-top: 30px;
+  }
+
+  .rx-notes1 {
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.83;
+    letter-spacing: normal;
+    color: #404040;
+  }
+
+  .rx-notes2 {
+    font-size: 15px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.83;
+    letter-spacing: normal;
+    color: #404040;
+    padding-top: 4px;
+  }
+
+  .pres_name {
+    margin-right: 75px;
+  }
+
+  .pres_number {
+    margin-right: 75px;
+  }
+
+  .pres_number_set {
+    margin-bottom: 2.3%;
+  }
+
+  .hdTransferRxForm {
+    .hd_transfer_pharmacy_data {
+      .item {
+        padding: 1em 0em;
+      }
+      .deleteNumBtn {
+        cursor: pointer;
+        background: #fff;
+        vertical-align: middle;
+        display: flex;
+        margin-left: 30.6%;
+        margin-right: 28.9%;
+      }
+      .patientNameData {
+        //margin-top:60px
+      }
+
+      .patientNameDataDropDown {
+        //margin-top:60px
+        padding-right: 26px;
+      }
+
+      .pharmacyNameField {
+        //margin-bottom:20px;
+      }
+      .pharmacyPhoneField {
+      }
+      .rxNameField {
+        margin-bottom: 20px;
+      }
+      .rxNumberField {
+      }
+
+      margin-bottom: 25px;
+    }
+    .remove-presc {
+      color: #01728e;
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.83;
+      letter-spacing: normal;
+      text-align: right;
+      vertical-align: middle;
+      padding-left: 89px;
+      margin-bottom: 20px;
+    }
+
+    .remove-presc-div {
+      //display: contents;
+      //align-items: flex-start;
+      vertical-align: middle;
+      display: flex;
+      align-items: self-end;
+    }
+  }
+  .remove-item {
+    width: 200%;
+    height: 200%;
+  }
+
+  .add_another_rx_txt {
+    vertical-align: middle;
+    padding-left: 5px;
+    padding-top: 3px;
+  }
+
+  .line {
+    width: 90%;
+    height: 2px;
+    border: solid 1px #979797;
+  }
+
+  .line_br_div {
+    margin-top: 42px;
+  }
+
+  .continue_btn {
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px 0 rgba(207, 207, 207, 0.5);
+    background-color: #02a0c0;
+  }
+  .cancel_btn {
+    font-weight: bold;
+    line-height: 1.74;
+    letter-spacing: -0.3px;
+    text-align: center;
+    //font-size: 1.166em;
+    font-size: 19px;
+    color: #01728e !important;
+  }
+}
+
+//}
+
+/* @media only screen and (min-device-width: $xs-screen) and (max-device-width: 767px) {
+  }
+
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  }*/
+
+.desk-hide {
+  display: none !important;
+}
+.desk-show {
+  display: block !important;
+  color: #01728e;
+}
+
+.h2_title {
+  //font-size: 1.400rem;
+  font-size: 22px;
+  padding: 10px 0px 10px 0px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.23;
+  letter-spacing: normal;
+  color: #404040;
+}
+
+.pre_pharmacy_title {
+  margin-top: 2.3%;
+  margin-bottom: 1.7%;
+  font-size: 22px;
+  color: #404040;
+}
+
+.patientname_title {
+  font-size: 22px;
+  color: #404040;
+}
+
+.pres_details_title {
+  // margin-top: 3.5%;
+  margin-top: 1.7%;
+  margin-bottom: 1.7%;
+}
+
+// #app__root__section, .theme-default .color__neutral{
+//   background-color: #fff !important;
+//   background: white !important;
+// }
+
+@media only screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .hd-transfer-rx-form-add-another-prescription
+    .hdTransferRxForm
+    .remove-presc-div {
+    vertical-align: middle;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: contents;
+    -webkit-box-align: self-end;
+    -ms-flex-align: self-end;
+    align-items: self-end;
+    padding-left: 250px;
+    float: right;
+    background-color: #ffffff;
+  }
+
+  .hd-transfer-rx-form-add-another-prescription
+    .hdTransferRxForm
+    .hd_transfer_pharmacy_data
+    .patientNameDataDropDown {
+    padding-right: 0px;
+  }
+
+  .hd-transfer-rx-form-add-another-prescription .add_another_rx_txt {
+    vertical-align: middle;
+    padding-left: 7px !important;
+    padding-top: 7px !important;
+  }
+
+  .hd-transfer-rx-form-add-another-prescription[_ngcontent-c4]
+    .rx-notes2[_ngcontent-c4] {
+    font-size: 15px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.83;
+    letter-spacing: normal;
+    color: #404040;
+    padding-top: 29px !important;
+    padding-left: 9px !important;
+  }
+
+  .hd-transfer-rx-form-add-another-prescription .cancel_btn_div {
+    margin-top: 20px !important;
+    // padding-top: 20px !important;
+    text-align: center !important;
+  }
+
+  .hdTransferRxForm {
+    .hd_transfer_pharmacy_data {
+      .deleteBtnImage {
+        cursor: pointer;
+        background: #fff;
+        vertical-align: middle;
+        display: flex;
+        margin: auto !important;
+        padding-top: 1.5%;
+        padding-bottom: 1.5%;
+      }
+    }
+  }
+
+  /* USE THESE CLASSES TO HIDE CONTENT ON MOBILE */
+  .mobile-hide {
+    display: none !important;
+  }
+
+  .mobile-show {
+    display: block !important;
+  }
+
+  .menu.show {
+    display: block !important;
+    width: 101% !important;
+    height: 200px !important;
+    overflow-y: scroll !important;
+  }
+
+  .Line {
+    width: 303px !important;
+    height: 1px;
+    background-color: #979797;
+    margin-top: 2.3%;
+    margin-bottom: 1.7%;
+    margin-right: 28.9%;
+  }
+
+  .text-center {
+    text-align: left !important;
+  }
+  .add-more-presc {
+    padding-top: 3.1% !important;
+  }
+  .app-container-main.color__neutral {
+    background: #fff !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+
+  .container-fluid {
+    width: 100%;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  //remove background color on small devices
+
+  .app-container-main.color__neutral {
+    background: #fff !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  }
+
+  .actionDiv[_ngcontent-c4] {
+    margin-top: 8%;
+    margin-right: 1.5%;
+    margin-left: 1%;
+  }
+
+  .app-container-main.color__neutral {
+    background: #fff !important;
+    padding-left: 0px !important;
+  }
+
+  .no-container-mobile {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .hd-transfer-rx-form-add-another-prescription {
+    padding-top: 0rem;
+    margin-top: 0px;
+    background-color: #ffffff;
+    .formField {
+      margin-left: 0px !important;
+      margin-right: 0px !important;
+    }
+  }
+
+  .hd-transfer-rx-form-add-another-prescription .main_title {
+    margin-left: 0% !important;
+    margin-right: 0% !important;
+    margin-top: 0% !important;
+    font-size: 28px !important;
+    color: #404040 !important;
+  }
+
+  .hd-transfer-rx-form-add-another-prescription .pres_name {
+    margin-right: 0px !important;
+  }
+
+  .hd-transfer-rx-form-add-another-prescription .pres_number {
+    margin-right: 0px !important;
+  }
+
+  section.container {
+    width: 100% !important;
+  }
+
+  section.container-fluid {
+    width: 100%;
+    /* padding-right: 15px; */
+    padding-left: 0px !important;
+  }
+
+  // section#app__root__section {
+  //   padding-left: 0px !important;
+  //   padding-right: 0px !important;
+  // }
+
+  section.container {
+    width: 100%;
+    /* padding-right: 15px; */
+    /* padding-left: 15px; */
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@media screen and (min-width: $md-screen) {
+}
+
+@media screen and (min-width: $md-screen) {
+}
+
+@media screen and (min-width: $lg-screen) {
+  body.theme-default .color__neutral {
+    background: #ffffff !important;
+  }
+}
+
+@media screen and (min-width: $xl-screen) {
+}

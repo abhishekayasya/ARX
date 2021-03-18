@@ -1,0 +1,10 @@
+.comp-address-book .rx-bg-lightgray {
+    @include themify($themes) {
+        background-color: themed("edit_add_address_bgcolor");
+      }
+}
+.comp-confirm-address .rx-bg-lightgray {
+    @include themify($themes) {
+        background-color: themed("edit_add_address_bgcolor");
+      }
+}

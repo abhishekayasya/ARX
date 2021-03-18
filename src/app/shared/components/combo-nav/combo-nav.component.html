@@ -1,0 +1,37 @@
+<div class="progress-bar mb-4">
+  <ul class="dots">
+    <li (click)="navigateToStepMail()" [ngClass]="{
+      'current' : checkoutService.currentComboNavState == CHECKOUT.comboState.mail ,
+      'filled' : checkoutService.currentComboNavState == CHECKOUT.comboState.speciality || checkoutService.currentComboNavState == CHECKOUT.comboState.confirmation
+    }"></li>
+
+    <li [ngClass]="{
+      'current' : checkoutService.currentComboNavState == CHECKOUT.comboState.speciality,
+      'filled' : checkoutService.currentComboNavState == CHECKOUT.comboState.confirmation
+    }"></li>
+
+    <li [ngClass]="{
+      'current' : checkoutService.currentComboNavState == CHECKOUT.comboState.confirmation,
+      'filled' : checkoutService.currentComboNavState == CHECKOUT.comboState.confirmation
+    }"></li>
+  </ul>
+  <ul class="text">
+
+    <li [ngClass]="{
+      'current' : checkoutService.currentComboNavState == CHECKOUT.comboState.mail,
+      'filled' : checkoutService.currentComboNavState == CHECKOUT.comboState.speciality || checkoutService.currentComboNavState == CHECKOUT.comboState.confirmation
+    }" id="1">Review Home Delivery Rx</li>
+
+
+    <li id="2" [ngClass]="{
+      'current' : checkoutService.currentComboNavState == CHECKOUT.comboState.speciality,
+      'filled' : checkoutService.currentComboNavState == CHECKOUT.comboState.confirmation
+    }">Review Specialty Rx</li>
+
+
+    <li id="3" [ngClass]="{
+      'current' : checkoutService.currentComboNavState == CHECKOUT.comboState.confirmation,
+      'filled' : checkoutService.currentComboNavState == CHECKOUT.comboState.confirmation
+    }">Confirmation</li>
+  </ul>
+</div>

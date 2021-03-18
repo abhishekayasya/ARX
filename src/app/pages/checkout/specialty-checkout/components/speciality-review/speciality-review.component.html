@@ -1,0 +1,599 @@
+<section class="order-info orders__cleansed" *ngIf="cleansed != undefined">
+  <arxrf-checkout-speciality-patient
+    [cleansedPatientData]="cleansed.patient"
+    (validate)="validateCleansedData($event)"
+  ></arxrf-checkout-speciality-patient>
+  <div class="clearfix"></div>
+</section>
+
+<section
+  class="order-info orders__Unsolicited"
+  *ngIf="unsolicited != undefined"
+>
+  <h2 class="margin-bottom">Specialty Prescription - Refill Request</h2>
+
+  <!---------alert start------->
+  <div class="alert alert__yellow">
+    <a class="alert__text-contain">
+      <span class="icon icon__alert">
+        <svg>
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+          ></use>
+        </svg>
+      </span>
+
+      <span>
+        <div id="alert-content">
+          This prescription is pending insurance processing. Once processed,
+          we'll send you a notification to schedule delivery.
+        </div>
+      </span>
+    </a>
+  </div>
+  <!---------alert end------>
+
+  <div class="meta-details">
+    <div class="row">
+      <div class="shipping-details col-md-6">
+        <div class="shipping-address">
+          <h2>Shipping address</h2>
+
+          <div
+            *ngIf="
+              unsolicited.boxDetails.shippingInfo != undefined &&
+              unsolicited.boxDetails.shippingInfo.selectedAddress != undefined
+            "
+          >
+            <p>
+              {{
+                unsolicited.boxDetails.shippingInfo.selectedAddress.firstName
+              }}
+              {{ unsolicited.boxDetails.shippingInfo.selectedAddress.lastName }}
+            </p>
+            <p
+              *ngIf="
+                unsolicited.boxDetails.shippingInfo.selectedAddress
+                  .streetAddr == undefined
+              "
+            >
+              {{ unsolicited.boxDetails.shippingInfo.selectedAddress.street1 }}
+            </p>
+            <p
+              *ngIf="
+                unsolicited.boxDetails.shippingInfo.selectedAddress
+                  .streetAddr != undefined
+              "
+            >
+              {{
+                unsolicited.boxDetails.shippingInfo.selectedAddress.streetAddr
+              }}
+            </p>
+            <p>
+              {{ unsolicited.boxDetails.shippingInfo.selectedAddress.city }},
+              {{ unsolicited.boxDetails.shippingInfo.selectedAddress.state }}
+              {{ unsolicited.boxDetails.shippingInfo.selectedAddress.zip
+              }}{{
+                unsolicited.boxDetails.shippingInfo.selectedAddress.zipCode
+              }}
+            </p>
+          </div>
+
+          <div
+            class="unnsoclicited__addressform"
+            *ngIf="
+              unsolicited.boxDetails.shippingInfo.srxDeliveryAddr == undefined
+            "
+          >
+            <form
+              class="form__on-light-bg"
+              [formGroup]="unsolicitedAddressForm"
+            >
+              <div class="col-md-12 col-lg-12 mt-1">
+                <div
+                  class="form__input"
+                >
+                  <span class="input__contain">
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          unsolicitedAddressForm.controls.street1.invalid &&
+                          (unsolicitedAddressForm.controls.street1.touched ||
+                            unsolicitedAddressForm.controls.street1.dirty)
+                      }"
+                      autocomplete="off"
+                      formControlName="street1"
+                      id="street1"
+                    >
+                    <label class="input__title" for="street1">street</label>
+                  </span>
+                </div>
+                <div
+                  class="input__error-text"
+                  *ngIf="
+                    unsolicitedAddressForm.controls.street1.invalid &&
+                    (unsolicitedAddressForm.controls.street1.touched ||
+                      unsolicitedAddressForm.controls.street1.dirty)
+                  "
+                >
+                  <span
+                    *ngIf="
+                      unsolicitedAddressForm.controls.street1.errors.required || unsolicitedAddressForm.controls.street1.errors.whitespace
+                    "
+                    >Address is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-12 rx-padding-top-20 mt-1">
+                <div class="form__input">
+                  <span
+                    class="input__contain"
+                  >
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          unsolicitedAddressForm.controls.city.invalid &&
+                          (unsolicitedAddressForm.controls.city.touched ||
+                            unsolicitedAddressForm.controls.city.dirty)
+                      }"
+                      type="text"
+                      formControlName="city"
+                      id="city"
+                      pattern="^[a-zA-Z ]+(?:[\s-][a-zA-Z]+)*$"
+                      required
+                      (blur)="saveUnsolicitedContext()"
+                    />
+                    <label class="input__title" for="city">city</label>
+                  </span>
+                </div>
+                <div
+                  class="input__error-text"
+                  *ngIf="
+                    unsolicitedAddressForm.controls.city.invalid &&
+                    (unsolicitedAddressForm.controls.city.touched ||
+                      unsolicitedAddressForm.controls.city.dirty)
+                  "
+                >
+                  <span
+                    *ngIf="unsolicitedAddressForm.controls.city.errors.required"
+                    >City is required</span
+                  >
+                  <span
+                    *ngIf="unsolicitedAddressForm.controls.city.errors.pattern"
+                    >Please enter a valid City</span
+                  >
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-12 rx-padding-top-20 mt-1">
+                <span
+                  class="select__contain form__input"
+                  [ngClass]="{
+                    input__error:
+                      unsolicitedAddressForm.controls.state.invalid &&
+                      (unsolicitedAddressForm.controls.state.touched ||
+                        unsolicitedAddressForm.controls.state.dirty)
+                  }"
+                >
+                  <label for="select-dropdown">State</label>
+                  <span class="icon icon__arrow-down rx-margin-right-16">
+                    <svg alt="">
+                      <use
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                      ></use>
+                    </svg>
+                  </span>
+                  <select
+                    formControlName="state"
+                    id="state"
+                    (change)="saveUnsolicitedContext()"
+                  >
+                    <option value="" class="" selected>Choose State</option>
+                    <option
+                      *ngFor="let state of STATE_US"
+                      value="{{ state.short_name }}"
+                    >
+                      {{ state.name }}
+                    </option>
+                  </select>
+                </span>
+                <div
+                  class="input__error-text"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    unsolicitedAddressForm.controls.state.invalid &&
+                    (unsolicitedAddressForm.controls.state.touched ||
+                      unsolicitedAddressForm.controls.state.dirty)
+                  "
+                >
+                  <span
+                    *ngIf="
+                      unsolicitedAddressForm.controls.state.errors.required
+                    "
+                    ><span class="sr-only">Error </span>State is required.</span
+                  >
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-12 mt-1">
+                <div
+                  class="l-display-flex rx-padding-top-20 rx-flex-justify-content-space-btw"
+                >
+                  <div class="form__input">
+                    <span
+                      class="input__contain"
+                    >
+                      <input
+                        class="input__focus"
+                        [ngClass]="{
+                          input__error:
+                            unsolicitedAddressForm.controls.zipCode.invalid &&
+                            (unsolicitedAddressForm.controls.zipCode.touched ||
+                              unsolicitedAddressForm.controls.zipCode.dirty)
+                        }"
+                        type="text"
+                        formControlName="zipCode"
+                        id="zipCode"
+                        pattern="^[0-9]{5,5}$"
+                        [specified-input]="
+                          unsolicitedAddressForm.controls.zipCode
+                        "
+                        invalidExp="[^0-9]"
+                        maxlength="5"
+                        required
+                        (blur)="saveUnsolicitedContext()"
+                      />
+                      <label class="input__title" for="zipCode">ZIP code</label>
+                    </span>
+                  </div>
+                  <div
+                    class="input__error-text"
+                    *ngIf="
+                      unsolicitedAddressForm.controls.zipCode.invalid &&
+                      (unsolicitedAddressForm.controls.zipCode.touched ||
+                        unsolicitedAddressForm.controls.zipCode.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        unsolicitedAddressForm.controls.zipCode.errors.required
+                      "
+                      >Zip Code is required.</span
+                    >
+                    <span
+                      *ngIf="
+                        unsolicitedAddressForm.controls.zipCode.errors.pattern
+                      "
+                      >Please enter valid Zip Code</span
+                    >
+                  </div>
+
+                  <div class="form__input l-margin-none mt-1">
+                    <span
+                      class="input__contain"
+                    >
+                      <input
+                        class="input__focus"
+                        [ngClass]="{
+                          input__error:
+                            unsolicitedAddressForm.controls.zipCodeOptional
+                              .invalid &&
+                            (unsolicitedAddressForm.controls.zipCodeOptional
+                              .touched ||
+                              unsolicitedAddressForm.controls.zipCodeOptional
+                                .dirty)
+                        }"
+                        formControlName="zipCodeOptional"
+                        id="zipCodeOptional"
+                        [specified-input]="
+                          unsolicitedAddressForm.controls.zipCodeOptional
+                        "
+                        invalidExp="[^0-9]"
+                        maxlength="5"
+                        type="text"
+                        (change)="saveUnsolicitedContext()"
+                      />
+                      <label class="input__title" for="zipCodeOptional"
+                        >ZipCode (optional)</label
+                      >
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="input__error-text"
+                  *ngIf="
+                    unsolicitedAddressForm.controls.zipCodeOptional.invalid &&
+                    (unsolicitedAddressForm.controls.zipCodeOptional.touched ||
+                      unsolicitedAddressForm.controls.zipCodeOptional.dirty)
+                  "
+                >
+                  <span
+                    *ngIf="
+                      unsolicitedAddressForm.controls.zipCodeOptional.invalid
+                    "
+                    >Please enter valid optional Zip Code</span
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-12 rx-padding-top-20 mt-1">
+                <span
+                  class="select__contain form__input"
+                  [ngClass]="{
+                    input__error:
+                      unsolicitedAddressForm.controls.reasonForNewAddress
+                        .invalid &&
+                      (unsolicitedAddressForm.controls.reasonForNewAddress
+                        .touched ||
+                        unsolicitedAddressForm.controls.reasonForNewAddress
+                          .dirty)
+                  }"
+                >
+                  <label for="select-dropdown">Address Type</label>
+                  <span class="icon icon__arrow-down rx-margin-right-16">
+                    <svg alt="">
+                      <use
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                      ></use>
+                    </svg>
+                  </span>
+                  <select
+                    formControlName="reasonForNewAddress"
+                    id="reasonForNewAddress"
+                    (change)="saveUnsolicitedContext()"
+                  >
+                    <option value="" class="" selected>Choose Type</option>
+                    <option value="New Permanent Address"
+                      >New Permanent Address</option
+                    >
+                    <option value="Temporary Address">Temporary Address</option>
+                    <option value="Work Address">Work Address</option>
+                  </select>
+                </span>
+
+                <div
+                  class="input__error-text"
+                  *ngIf="
+                    unsolicitedAddressForm.controls.reasonForNewAddress
+                      .invalid &&
+                    (unsolicitedAddressForm.controls.reasonForNewAddress
+                      .touched ||
+                      unsolicitedAddressForm.controls.reasonForNewAddress.dirty)
+                  "
+                >
+                  <span
+                    *ngIf="
+                      unsolicitedAddressForm.controls.reasonForNewAddress.errors
+                        .required
+                    "
+                    >Address type is required.</span
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <a
+            href="javascript:void(0)"
+            (click)="
+              redirectToAddressBook(
+                unsolicited.subType,
+                unsolicited.scriptMedId
+              )
+            "
+            *ngIf="
+              unsolicited.boxDetails.shippingInfo.srxDeliveryAddr != undefined
+            "
+            class="mt-2"
+            ><strong>Edit Address</strong></a
+          >
+        </div>
+        <div class="shipping-method mt-4">
+          <h3>Date needed by</h3>
+
+          <div class="select-method">
+            <!--Availble shipping methods -->
+            <span
+              class="select__contain"
+              *ngIf="
+                unsolicited.boxDetails.shippingInfo.availableDates.length > 0
+              "
+            >
+              <label for="request__shippigndate"
+                >Request your delivery date.</label
+              >
+              <span class="icon icon__arrow-down">
+                <svg alt="">
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+
+              <select
+                [(ngModel)]="unsolicited.boxDetails.shippingInfo.selectedDate"
+                id="request__shippigndate"
+                (change)="saveUnsolicitedContext()"
+              >
+                <option
+                  *ngFor="
+                    let date of unsolicited.boxDetails.shippingInfo
+                      .availableDates
+                  "
+                  [ngValue]="date"
+                  >{{ date | slice: 0:10 | date: "EEE, LLL dd, yyyy" }}
+                </option>
+              </select>
+            </span>
+
+            <div
+              [popper]="unsolicitedshippingTooltip"
+              [popperTrigger]="'click'"
+              [popperPlacement]="'right'"
+              [popperDelay]="300"
+              class="tool-tip"
+            >
+              <span
+                role="button"
+                class="tool-tip__trigger"
+                tabindex="0"
+                aria-describedby="tool-tip__text_unsolicitedshippingTooltip"
+              >
+                <span class="icon icon__question-mark">
+                  <svg alt="">
+                    <title>Help information</title>
+                    <use
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__question-mark"
+                    ></use>
+                  </svg>
+                </span>
+              </span>
+            </div>
+
+            <popper-content #unsolicitedshippingTooltip>
+              <div>
+                <p id="tool-tip__text_unsolicitedshippingTooltip">
+                  Delivery is available Monday–Friday, except for refrigerated
+                  items, which can be delivered Tuesday–Friday. Your requested
+                  delivery date must be at least 3 business days from your order
+                  date.
+                </p>
+              </div>
+            </popper-content>
+          </div>
+
+          <p
+            class="input__error-text"
+            *ngIf="
+              unlockErrors &&
+              unsolicited.boxDetails.shippingInfo.selectedDate == undefined
+            "
+          >
+            Please select a delivery date to continue.
+          </p>
+        </div>
+      </div>
+
+      <div class="payment-details col-md-6">
+        <h2>Payment</h2>
+        <p>Not required until processed through insurance.</p>
+      </div>
+    </div>
+  </div>
+  <div class="presc-summary">
+    <h2>Prescriptions</h2>
+    <ul class="drugs-list">
+      <li
+        *ngFor="let prescription of unsolicited.prescriptionList; let i = index"
+      >
+        <div class="row m-0">
+          <div class="col-12 col-md-9">
+            <div class="row">
+              <div class="drug-icon col-2 col-md-2">
+                <img
+                  *ngIf="!prescription?.drugImageURL"
+                  src="{{
+                    appContext.assetsHost || appContext.assetPrefix
+                  }}/images/IN1827/default_image_small.jpg"
+                  class="border__round"
+                  alt=""
+                  appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                />
+                <img
+                  *ngIf="
+                    appContext.assetPrefix != '' && prescription?.drugImageURL
+                  "
+                  src="{{ appContext.assetPrefix }}{{
+                    prescription?.drugImageURL
+                  }}"
+                  alt="{{ prescription.drugName }}"
+                  class="border__round"
+                  appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                />
+                <img
+                  *ngIf="
+                    appContext.assetPrefix == '' && prescription?.drugImageURL
+                  "
+                  src="{{ appContext.assetsHost }}{{
+                    prescription?.drugImageURL
+                  }}"
+                  alt="{{ prescription.drugName }}"
+                  class="border__round"
+                  appImgFallback="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/default_image_small.jpg"
+                />
+              </div>
+              <div class="drug-info col-10 col-md-10">
+                <h1 class="h1__page-title">{{ prescription.drugName }}</h1>
+                <div class="drug-details">
+                  <p>Qty: {{ prescription.qty }}</p>
+                  <p class="break-line"></p>
+                  <p>Rx: {{ prescription.rxNumber }}</p>
+                  <p class="break-line"></p>
+                  <p>{{ prescription.prescriber }}</p>
+                  <p class="break-line" *ngIf="prescription.prescriber"></p>
+                  <p>{{ prescription.patientName }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="prescription.isValidRx == 'true'"
+            class="col-12 col-md-3 text-center svgIconAlign"
+          >
+            <div class="col container__remove-cart-item">
+              <a
+                href="javascript:void(0)"
+                (click)="
+                  removePrescription(prescription.rxNumber, i, prescription.id)
+                "
+              >
+                <span class="icon icon__dismiss">
+                  <svg alt="" alt="">
+                    <use
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"
+                    ></use>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="row add-more-presc">
+      <div class="col-12 text-right">
+        <a href="{{ ROUTES.refill.absoluteRoute }}">
+          <span class="icon icon__plus-add">
+            <svg alt="" alt="">
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__plus-add"
+              ></use>
+            </svg>
+          </span>
+          <span><strong>add more prescriptions</strong></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</section>
+
+<div
+  class="row mt-3"
+  *ngIf="
+    !_checkoutService.loader &&
+    (unsolicited != undefined || cleansed != undefined)
+  "
+>
+  <div class="col-md-8 col-12"></div>
+  <div class="col-md-4 col-12 text-right">
+    <button
+      class="btn btn_primary_submit mb-3"
+      (click)="submitSpecialityOrder()"
+    >
+      Submit request
+    </button>
+  </div>
+</div>

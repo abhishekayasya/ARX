@@ -1,0 +1,122 @@
+<section class="modal" [ngClass]="{
+  'checkout__drugsearch-show' : show,
+  'checkout__drugsearch-hide' : !show
+}" >
+<div class="modal__content-contain rx__checkout-drug__model">
+
+  <button role="button" class="btn btn__rounded btn__black action__close-modal" (click)="closeAction()">
+    X
+  </button>
+
+
+  <div class="modal__content " >
+    <h2>Select {{heading}}</h2>
+
+    <p class="mt-3">{{subHeading}}</p>
+
+    <p *ngIf="errorMessage" class="input__error-text">{{errorMessage}}</p>
+
+    <div class="form__on-light-bg mt-3">
+      <div class="form__input">
+        <span class="input__contain input__btn-attached">
+          <input
+            class="search__focus"
+            type="text"
+            name="{{name}}"
+            id="{{name}}"
+            #searchInput
+            [formControl]="searchQuery"
+            (keyup.enter)="getDrugs()"
+            required>
+          <label class="input__title" for="{{name}}">
+            <span>{{inputPrompt}}</span>
+            </label>
+          <button class="btn btn_primary" type="button" (click)="getDrugs()">Search</button>
+        </span>
+      </div>
+    </div>
+    <div class="dropdown" #dropdown>
+      <ul class="menu" [ngClass]="{'show': suggestions.length}">
+          <li *ngFor="let item of suggestions" (click)="selectSuggestion(item)">{{item.drugName}}</li>
+      </ul>
+    </div>
+
+    <div class="rx__checkout-drug-list-container">
+      <div class="row">
+        <div class="col-12 col-sm-6 rx__checkout-drug-list">
+          <p> <span *ngIf="result.length">{{result.length}}</span>  Result for: {{searchQuery.value}}</p>
+
+          <ul class="rx__checkout-drug-list-result">
+            <li *ngFor="let item of result; let i = index">
+              <p *ngIf="type !== 'Health Conditions' || item.subCategory; else noSubDrugs" (click)="expandSubitems($event, item, i)">
+                <span>{{item.drugName}}</span>
+                <span class="icon icon__arrow-down" [ngClass]="{'rotated': item.showSubItems}">
+                  <svg alt=""><use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use></svg>
+                </span>
+              </p>
+              <ng-template #noSubDrugs>
+                <div class="check-box">
+                  <input type="checkbox" [id]="getId(item)" [checked]="item.isChecked" (change)="changeDrugSelection($event, item, i)">
+                  <label [for]="getId(item)">
+                    <span class="check"></span>
+                    <span>{{item.drugName}}</span>
+                  </label>
+                </div>
+              </ng-template>
+
+              <ul class="sub_drugs" *ngIf="item.subCategory && item.showSubItems ">
+                  <li *ngFor="let subItem of item.subCategory;">
+                    <div class="check-box">
+                      <input type="checkbox" [id]="getId(subItem)" [checked]="subItem.isChecked" (click)="changeDrugSelection($event, subItem, i, true)">
+                      <label [for]="getId(subItem)">
+                        <span class="check"></span>
+                        <span>{{subItem.drugName}}</span>
+                      </label>
+                    </div>
+                  </li>
+              </ul>
+
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-sm-6 rx__checkout-drug-list">
+          <p>You've selected: {{selected.length}} {{heading}}</p>
+
+          <ul class="selected_list">
+            <li *ngFor="let item of selected let ti = index" class="row">
+              <div class="col-2 p-0 mt-2">
+                  <a href="javascript:void(0);" *ngIf="showDelete" (click)="removeDrug( ti, getId(item) )">
+                      <span class="icon icon__dismiss">
+                        <svg>
+                          <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__dismiss"></use>
+                        </svg>
+                      </span>
+                  </a>
+              </div>
+              <div class="col-10 p-0 drug-name">
+                <p>{{item.drugName}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row text-center text-md-right">
+        <div class="col-12 col-md-4 mt-4 order-md-2">
+            <button type="button" class="btn btn_primary submitBtn" (click)="onSubmit()">Submit</button>
+        </div>
+        <div class="col-12 col-md-8 align-self-center mt-4 order-md-1">
+          <a class="mr-3" href="javascript:void(0)" (click)="closeAction()">
+              Cancel
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="overlay action__close-modal"></div>
+</section>

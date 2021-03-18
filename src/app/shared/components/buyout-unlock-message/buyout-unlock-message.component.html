@@ -1,0 +1,41 @@
+<div class="buyout__message-container">
+  <div class="alert alert__info" *ngIf="show && !isDismissed">
+      <div class="alert__text-contain">
+        <span class="icon icon__info">
+         <svg alt=""><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"></use></svg>
+        </span>
+
+        <span class="msg-text mr-1">
+          <p id="buyout__message-medium">
+            {{buyoutMessage}}
+            <strong>
+              <a *ngIf="showPreviousPharmacyButton"
+               (click)="goToPreviousPharmacy()">click here >
+              </a>
+            </strong>
+          </p>
+          <p id="buyout__message-small">
+            {{buyoutMobileMessage}}
+            <strong>
+              <a *ngIf="showPreviousPharmacyButton"
+                 (click)="goToPreviousPharmacy()">click here >
+              </a>
+            </strong>
+          </p>
+        </span>
+
+        <button *ngIf="dismissible" class="btn btn__rounded closeBtn" (click)="dismiss()">
+          <div class="btn__dismiss" aria-label="Alert message close"></div>
+        </button>
+      </div>
+  </div>
+
+  <div class="alert linkeable_mesage buyout__dismissmessage_container" *ngIf="showDismissMessage && isDismissed">
+    <div class="alert__text-contain">
+      <span class="icon icon__info">
+         <svg alt="Close"><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"></use></svg>
+        </span>
+      <span class="buyout__dismissmessage"  [innerHTML]="buyoutDismissMessage | html"></span>
+    </div>
+  </div>
+</div>

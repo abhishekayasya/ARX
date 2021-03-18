@@ -1,0 +1,87 @@
+<arxrf-loader [show]="loading" [loaderOverlay]="true" [message]="'Please wait...'"></arxrf-loader>
+<div class="container no-container-mobile">
+  <div class="row">
+    <div class="col-md-12 justify-content-center align-items-center">
+      <div class="registrationContainer">
+
+        <div class="row">
+          <div class="arx-logo">
+            <arxrf-logo [static]="true"></arxrf-logo>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="!showFourDotProgressBar">
+          <div class="col-md-12">
+            <div class="reg-status-container">
+              <div class="dot-container" id="account-container">
+                <div class="reg-status-dot active-dot"></div>
+                <p id="dot-label-account">Account</p>
+              </div>
+              <span class="reg-status-line"
+                [ngClass]="{ 'active' : currentStep === 'address' || currentStep === 'identity' || currentStep === 'consent' || currentStep === 'hipaa' || currentStep === 'success' }"></span>
+              <div class="dot-container" id="identity-container">
+                <div class="reg-status-dot"
+                  [ngClass]="currentStep === 'address' || currentStep === 'identity' || currentStep === 'consent' || currentStep === 'hipaa' || currentStep === 'success' ? 'active-dot' : 'inactive-dot'">
+                </div>
+                <p id="dot-label-identity">Identity</p>
+              </div>
+              <span class="reg-status-line" [ngClass]="{ 'active' : currentStep === 'success'}"></span>
+              <div class="dot-container">
+                <div class="reg-status-dot" [ngClass]="currentStep === 'success' ? 'active-dot' : 'inactive-dot'"></div>
+                <p id="dot-label-confirmation">Confirmation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="showFourDotProgressBar">
+          <div class="col-md-12">
+            <div class="reg-status-container">
+              <div class="dot-container" id="account-container">
+                <div class="reg-status-dot active-dot"></div>
+                <p id="dot-label-account">Account</p>
+              </div>
+              <span class="reg-status-line"
+                [ngClass]="{ 'active' : currentStep === 'address' || currentStep === 'identity' || currentStep === 'consent' || currentStep === 'hipaa' || currentStep === 'success' }"></span>
+              <div class="dot-container" id="identity-container">
+                <div class="reg-status-dot"
+                  [ngClass]="currentStep === 'address' || currentStep === 'identity' || currentStep === 'consent' || currentStep === 'hipaa' || currentStep === 'success' ? 'active-dot' : 'inactive-dot'">
+                </div>
+                <p id="dot-label-identity">Identity</p>
+              </div>
+              <span class="reg-status-line"
+                [ngClass]="{ 'active' : currentStep === 'consent' || currentStep === 'hipaa' || currentStep === 'success'}"></span>
+              <div class="dot-container">
+                <div class="reg-status-dot"
+                  [ngClass]="currentStep === 'consent' || currentStep === 'hipaa' || currentStep === 'success' ? 'active-dot' : 'inactive-dot'">
+                </div>
+                <p id="dot-label-privacy">Privacy</p>
+              </div>
+              <span class="reg-status-line" [ngClass]="{ 'active' : currentStep === 'success'}"></span>
+              <div class="dot-container">
+                <div class="reg-status-dot" [ngClass]="currentStep === 'success' ? 'active-dot' : 'inactive-dot'"></div>
+                <p id="dot-label-confirmation">Confirmation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 pl-0 pr-0">
+            <div class="service-response-container">
+              <arxrf-message></arxrf-message>
+            </div>
+          </div>
+        </div>
+
+        <h1 class="h1__page-title text-center col-12 col-md-12 heading_align" *ngIf="loading === false" > {{pageContent.heading}}</h1>
+        <div class="row" *ngIf="loading === false">
+          <div class="container bg-white reg-form reg-sub-container">
+            <div class="row justify-content-md-center form__on-light-bg reg-sub-section reg_error_screen" [innerHTML]="pageContent.description">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

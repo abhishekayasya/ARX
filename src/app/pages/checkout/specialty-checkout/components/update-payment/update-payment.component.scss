@@ -1,0 +1,61 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+
+.rx__cc-container {
+  padding: 1em;
+  background: #fff;
+  margin-top: 1.5em;
+  margin-bottom: .5em;
+}
+
+.rx__cc-footer {
+  padding: 0px 15px;
+  button {
+    width: 30%;
+  }
+}
+
+.form__on-light-bg{
+  padding: 2em;
+}
+.billing-address{
+  margin: 1.2em 0 0.5em;
+}
+.saveAsPrefered{
+  margin-top: 0.5em;
+}
+.col-5{
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 47%;
+  flex: 0 0 47%;
+  max-width: 47%;
+}
+.zip-code{
+  margin-left: 6%;
+}
+
+select:focus, input[type=checkbox]:focus + label {
+  outline: #4D90FE solid 2px;
+  // outline-style: auto;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+  .form__on-light-bg{
+    padding: 0;
+  }
+
+  .rx__cc-footer {
+    padding: 0px 15px;  
+    button{
+      width: 100%
+    }
+  }
+}
+
+.form__input .input__title{
+  text-transform: capitalize;
+}
+
+arxrf-google-places {
+  width: 100%;
+}

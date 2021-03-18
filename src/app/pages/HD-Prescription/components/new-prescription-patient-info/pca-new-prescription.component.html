@@ -1,0 +1,1578 @@
+<div class="pca-form">
+  <div class="container new-presc-comp">
+    <div class="row">
+      <h1 class="h1__page-title text-center col title-margin">
+        {{
+          isNewPresPCA
+            ? validationMsg.pcanewHeader
+            : validationMsg.pcaTransferHeader
+        }}
+      </h1>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <arxrf-message></arxrf-message>
+      </div>
+    </div>
+
+    <form
+      [formGroup]="hdNewRxPcaForm"
+      autocomplete="off"
+      class="form__on-light-bg"
+    >
+      <div class="hdNewRxPcaForm">
+        <div class="flex-container hd_transfer_pharmacy_data">
+          <div class="row">
+            <div class="item col-md-6 col-lg-4 col-sm-12">
+              <h2 class="h2_title pre_pharmacy_title">
+                {{ validationMsg.patientInfo }}
+              </h2>
+              <fieldset>
+                <legend></legend>
+                <div class="form__input pharmacyNameField">
+                  <span
+                    class="input__contain"
+                    >
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          frm.firstName.invalid &&
+                          (frm.firstName.touched || frm.firstName.dirty)
+                      }"
+                      type="text"
+                      formControlName="firstName"
+                      id="firstName"
+                      maxlength="40"
+                      pattern="([^\s][A-z0-9\s]+)"
+                      required
+                    />
+                    <label class="input__title" for="firstName"
+                      ><span>{{ validationMsg.firstNameLabel }}</span></label
+                    >
+                  </span>
+                </div>
+
+                <div
+                  class="input__error-text error_alert_box"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    frm.firstName.invalid &&
+                    (frm.firstName.touched || frm.firstName.dirty)
+                  "
+                >
+                  <div class="icon hd_error_icon">
+                    <svg>
+                      <use
+                        _ngcontent-c3=""
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                        class="__web-inspector-hide-shortcut__"
+                      ></use>
+                    </svg>
+                  </div>
+                  <span class="err_msg_text">{{
+                    validationMsg.firstName
+                  }}</span>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend></legend>
+                <div class="form__input">
+                  <span
+                    class="input__contain"
+                  >
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          frm.phoneNumber.invalid &&
+                          (frm.phoneNumber.touched || frm.phoneNumber.dirty)
+                      }"
+                      arxrfPhoneMaskSimple
+                      type="text"
+                      autocomplete="off"
+                      maxlength="12"
+                      placeholder="___-___-____"
+                      pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                      formControlName="phoneNumber"
+                      id="phoneNumber"
+                      onpaste="return false;"
+                      required
+                    />
+                    <label class="input__title" for="phoneNumber"
+                      ><span>{{ validationMsg.phoneNumberlabel }}</span></label
+                    >
+                  </span>
+                </div>
+                <div
+                  class="input__error-text error_alert_box"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    frm.phoneNumber.invalid &&
+                    (frm.phoneNumber.touched || frm.phoneNumber.dirty)
+                  "
+                >
+                  <div class="icon hd_error_icon">
+                    <svg>
+                      <use
+                        _ngcontent-c3=""
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                        class="__web-inspector-hide-shortcut__"
+                      ></use>
+                    </svg>
+                  </div>
+                  <span class="err_msg_text">{{ validationMsg.phone }}</span>
+                </div>
+              </fieldset>
+
+              <div class="form__input date_of_birth">
+                <span
+                  class="input__contain input__remove-animation"
+                  id="refill-datePicker"
+                  >
+                  <input
+                    [ngClass]="{
+                      input__error:
+                        frm.dateOfBirth.invalid &&
+                        (frm.dateOfBirth.touched || frm.dateOfBirth.dirty)
+                    }"
+                    type="text"
+                    formControlName="dateOfBirth"
+                    date-picker
+                    id="dateOfBirth"
+                    required
+                    placeholder="MM/DD/YYYY"
+                    (keypress)="omit_special_char($event)"
+                    class="input__dates input__focus"
+                    maxlength="10"
+                  />
+                  <label class="input__title" for="dateOfBirth"
+                    ><span>{{ validationMsg.doblabel }}</span></label
+                  >
+                </span>
+              </div>
+
+              <div
+                class="input__error-text error_alert_box"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  frm.dateOfBirth.invalid &&
+                  (frm.dateOfBirth.touched || frm.dateOfBirth.dirty)
+                "
+              >
+                <div class="icon hd_error_icon">
+                  <svg>
+                    <use
+                      _ngcontent-c3=""
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                      class="__web-inspector-hide-shortcut__"
+                    ></use>
+                  </svg>
+                </div>
+                <span
+                  *ngIf="frm.dateOfBirth.errors.required"
+                  class="err_msg_text"
+                  >{{ validationMsg.dob }}</span
+                >
+                <span
+                  *ngIf="frm.dateOfBirth.errors.validDate"
+                  class="err_msg_text"
+                  >{{ validationMsg.dobValid }}</span
+                >
+              </div>
+
+              <div class="form__input">
+                <span
+                  class="input__contain"
+                >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        frm.email.invalid &&
+                        (frm.email.touched || frm.email.dirty)
+                    }"
+                    type="text"
+                    formControlName="email"
+                    id="email"
+                    pattern="{{ emailPattern }}"
+                    required
+                  />
+                  <label class="input__title" for="email"
+                    ><span>{{ validationMsg.emaillabel }}</span></label
+                  >
+                </span>
+              </div>
+              <div
+                class="input__error-text error_alert_box"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  frm.email.invalid && (frm.email.touched || frm.email.dirty)
+                "
+              >
+                <div class="icon hd_error_icon">
+                  <svg>
+                    <use
+                      _ngcontent-c3=""
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                      class="__web-inspector-hide-shortcut__"
+                    ></use>
+                  </svg>
+                </div>
+                <span *ngIf="frm.email.errors.required" class="err_msg_text">{{
+                  validationMsg.email
+                }}</span>
+                <span *ngIf="frm.email.errors.pattern" class="err_msg_text">{{
+                  validationMsg.emailValid
+                }}</span>
+              </div>
+            </div>
+
+            <div
+              class="d-none d-lg-block d-xl-block col-lg-1 col-xl-1"
+              style="height: 100%;"
+            ></div>
+
+            <div class="item col-md-6 col-lg-4 col-sm-12 ml-2">
+              <h2 class="h2_title pre_pharmacy_title">
+                {{ validationMsg.shipAddress }}
+              </h2>
+              <fieldset>
+                <legend></legend>
+
+                <div class="form__input pharmacyNameField">
+                  <span
+                    class="input__contain"
+                  >
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          frm.street.invalid &&
+                          (frm.street.touched || frm.street.dirty)
+                      }"
+                      autocomplete="off"
+                      id="street"
+                      formControlName="street"
+                    />
+                    <label class="input__title" for="street"
+                      ><span>Address</span></label
+                    >
+                  </span>
+                </div>
+                <div
+                  class="input__error-text error_alert_box"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    frm.street.invalid &&
+                    (frm.street.touched || frm.street.dirty)
+                  "
+                >
+                  <div class="icon hd_error_icon">
+                    <svg>
+                      <use
+                        _ngcontent-c3=""
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                        class="__web-inspector-hide-shortcut__"
+                      ></use>
+                    </svg>
+                  </div>
+                  <span
+                    *ngIf="frm.street.errors.required || frm.street.errors.whitespace"
+                    class="err_msg_text"
+                    >Address is Required</span
+                  >
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend></legend>
+
+                <div class="form__input pharmacyNameField">
+                  <span
+                    class="input__contain"
+                    >
+                    <input
+                      class="input__focus"
+                      [ngClass]="{
+                        input__error:
+                          frm.city.invalid && (frm.city.touched || frm.city.dirty)
+                      }"
+                      type="text"
+                      formControlName="city"
+                      id="city"
+                      maxlength="50"
+                      pattern="([^\s][A-z0-9\s]+)"
+                      required
+                    />
+                    <label class="input__title" for="city"
+                      ><span>{{ validationMsg.citylabel }}</span></label
+                    >
+                  </span>
+                </div>
+
+                <div
+                  class="input__error-text error_alert_box"
+                  aria-live="assertive"
+                  role="alert"
+                  *ngIf="
+                    frm.city.invalid && (frm.city.touched || frm.city.dirty)
+                  "
+                >
+                  <div class="icon hd_error_icon">
+                    <svg>
+                      <use
+                        _ngcontent-c3=""
+                        xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                        class="__web-inspector-hide-shortcut__"
+                      ></use>
+                    </svg>
+                  </div>
+                  <span *ngIf="frm.city.errors.required" class="err_msg_text">{{
+                    validationMsg.city
+                  }}</span>
+                </div>
+              </fieldset>
+
+              <span
+                class="select__contain mt-3"
+                [ngClass]="{
+                  input__error:
+                    frm.state.invalid && (frm.state.touched || frm.state.dirty)
+                }"
+              >
+                <label for="select-dropdown">State</label>
+                <span class="icon icon__arrow-down">
+                  <svg>
+                    <use
+                      href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                    ></use>
+                  </svg>
+                </span>
+
+                <select formControlName="state" id="state">
+                  <option value="" class="" selected>{{
+                    validationMsg.statelabel
+                  }}</option>
+                  <option
+                    *ngFor="let state of stateList"
+                    value="{{ state.short_name }}"
+                  >
+                    {{ state.name }}
+                  </option>
+                </select>
+              </span>
+
+              <div
+                class="input__error-text error_alert_box"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  frm.state.invalid && (frm.state.touched || frm.state.dirty)
+                "
+              >
+                <div class="icon hd_error_icon">
+                  <svg>
+                    <use
+                      _ngcontent-c3=""
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                      class="__web-inspector-hide-shortcut__"
+                    ></use>
+                  </svg>
+                </div>
+                <span *ngIf="frm.state.errors.required" class="err_msg_text">{{
+                  validationMsg.state
+                }}</span>
+              </div>
+
+              <div class="form__input">
+                <span
+                  class="input__contain"
+                  >
+                  <input
+                    class="input__focus"
+                    [ngClass]="{
+                      input__error:
+                        frm.zipCode.invalid &&
+                        (frm.zipCode.touched || frm.zipCode.dirty)
+                    }"
+                    type="text"
+                    formControlName="zipCode"
+                    maxlength="5"
+                    pattern="^[0-9]{5,5}$"
+                    invalidExp="[^0-9]"
+                    required
+                  />
+                  <label class="input__title" for="zipCode"
+                    ><span>{{ validationMsg.zipcodelabel }}</span></label
+                  >
+                </span>
+              </div>
+
+              <div
+                class="input__error-text error_alert_box"
+                aria-live="assertive"
+                role="alert"
+                *ngIf="
+                  frm.zipCode.invalid &&
+                  (frm.zipCode.touched || frm.zipCode.dirty)
+                "
+              >
+                <div class="icon hd_error_icon">
+                  <svg>
+                    <use
+                      _ngcontent-c3=""
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                      class="__web-inspector-hide-shortcut__"
+                    ></use>
+                  </svg>
+                </div>
+                <span
+                  *ngIf="frm.zipCode.errors.required && frm.zipCode.touched"
+                  class="err_msg_text"
+                  >{{ validationMsg.zipcodeMsg }}</span
+                >
+                <span *ngIf="frm.zipCode.errors.pattern" class="err_msg_text">{{
+                  validationMsg.zipcodeValid
+                }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Warning - Start -->
+          <div class="row">
+            <div class="showmore-con">
+              <div class="warn-icon-con ml-3">
+                <div class="icon hd_warn_icon">
+                  <svg>
+                    <use
+                      _ngcontent-c3=""
+                      xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                      class="__web-inspector-hide-shortcut__"
+                    ></use>
+                  </svg>
+                </div>
+                <div><strong>Important</strong></div>
+              </div>
+              <ul class="prescription-list screenview">
+                <li>
+                  {{ validationMsg.ImportWarn1 }}
+                </li>
+                <li>
+                  {{ validationMsg.ImportWarn2 }}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="Line"></div>
+          <!-- Warning - End -->
+
+          <!-- New Prescription - Start -->
+          <ng-container *ngIf="isNewPresPCA">
+            <div
+              id="base-form"
+              [hidden]="!ShowBaseForm"
+              *ngIf="frm.displayBaseForm.value"
+            >
+              <div class="flex-container">
+                <div class="col-md-7 col-lg-6 col-sm-11">
+                  <h2 class="h2_title">New Prescription</h2>
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input pharmacyNameField">
+                      <span
+                        class="input__contain"
+                        >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              frm.doctorName.invalid &&
+                              (frm.doctorName.touched || frm.doctorName.dirty)
+                          }"
+                          type="text"
+                          formControlName="doctorName"
+                          id="doctorName"
+                          maxlength="40"
+                          required
+                        />
+                        <label class="input__title " for="doctorName"
+                          ><span>
+                            Doctor Name
+                          </span></label
+                        >
+                      </span>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        frm.doctorName.invalid &&
+                        (frm.doctorName.touched || frm.doctorName.dirty)
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span class="err_msg_text">{{
+                        validationMsg.doctorName
+                      }}</span>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input">
+                      <span
+                        class="input__contain"
+                      >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              frm.doctorphone.invalid &&
+                              (frm.doctorphone.touched || frm.doctorphone.dirty)
+                          }"
+                          arxrfPhoneMaskSimple
+                          type="text"
+                          autocomplete="off"
+                          formControlName="doctorphone"
+                          id="doctorphone"
+                          placeholder="___-___-____"
+                          pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                          maxlength="12"
+                          onpaste="return false;"
+                          required
+                        />
+
+                        <label class="input__title " for="doctorphone"
+                          ><span>
+                            {{ validationMsg.phoneNumberlabel }}
+                          </span></label
+                        >
+                      </span>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        frm.doctorphone.invalid &&
+                        (frm.doctorphone.touched || frm.doctorphone.dirty)
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span class="err_msg_text">{{
+                        validationMsg.doctorPhone
+                      }}</span>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input">
+                      <span
+                        class="input__contain"
+                        >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              frm.drugname.invalid &&
+                              (frm.drugname.touched || frm.drugname.dirty)
+                          }"
+                          type="text"
+                          formControlName="drugname"
+                          (keyup)="getDrugs($event)"
+                          autocomplete="off"
+                          maxlength="100"
+                          id="drugname"
+                          required
+                        />
+
+                        <label class="input__title " for="drugname"
+                          ><span>{{ validationMsg.drugNameLabel }}</span></label
+                        >
+                      </span>
+                    </div>
+                    <div class="dropdown" #dropdown>
+                      <ul
+                        class="menu"
+                        [ngClass]="{
+                          display:
+                            selectedItemId === 'drugname' && suggestions.length
+                        }"
+                      >
+                        <li
+                          class="drugname"
+                          *ngFor="let item of suggestions"
+                          (click)="selectSuggestion(item, $event)"
+                        >
+                          {{ item.drugName }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        frm.drugname.invalid &&
+                        (frm.drugname.touched || frm.drugname.dirty)
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span class="err_msg_text">{{
+                        validationMsg.drugName
+                      }}</span>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input">
+                      <span
+                        class="input__contain small_input_contain"
+                        >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              frm.quantity.invalid &&
+                              (frm.quantity.touched || frm.quantity.dirty)
+                          }"
+                          type="text"
+                          formControlName="quantity"
+                          (focus)="emptySuggestions()"
+                          id="quantity"
+                          maxlength="4"
+                          invalidExp="[^0-9-]"
+                          autocomplete="off"
+                          required
+                        />
+
+                        <label class="input__title " for="quantity"
+                          ><span>{{
+                            validationMsg.drugQuantityLabel
+                          }}</span></label
+                        >
+                      </span>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        frm.quantity.invalid &&
+                        (frm.quantity.touched || frm.quantity.dirty)
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span class="err_msg_text">{{
+                        validationMsg.drugQuantity
+                      }}</span>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="remove-container" *ngIf="displayRemoveButton !== 0">
+                  <div class="remove-icon" (click)="CallRemoveAction('')">
+                    <div class="screenview">remove</div>
+                  </div>
+                </div>
+              </div>
+
+              <fieldset class="terms_Container">
+                <legend></legend>
+                <div class="check-box">
+                  <input
+                    id="check"
+                    formControlName="terms"
+                    type="checkbox"
+                    (change)="changedGenericEquivalentCheckBox($event)"
+                    tabindex="0"
+                  />
+                  <label for="check"
+                    ><span class="check"></span
+                    ><span>{{ validationMsg.generalWarnMsg }}</span></label
+                  >
+                </div>
+              </fieldset>
+              <div class="Line"></div>
+            </div>
+
+            <!---Dynamic form-->
+
+            <div
+              class="previousvalue"
+              *ngFor="
+                let control of frm.prescriptionInfo['controls'];
+                let i = index
+              "
+            >
+              <div class="flex-container">
+                <div class="col-md-7 col-lg-6 col-sm-11">
+                  <h2 class="h2_title">New Prescription</h2>
+                  <div id="priscriber_inform_{{ i }}">
+                    <div><strong>Doctor's information:</strong></div>
+                    <div>{{ getDoctorInfo(i, control).doctorName }}</div>
+                    <div>{{ getDoctorInfo(i, control).doctorphone }}</div>
+
+                    <div
+                      class="change-link"
+                      id="change_{{ i }}"
+                      (click)="changeAction(i, control.value.doctorName)"
+                    >
+                      Edit
+                    </div>
+                  </div>
+                  <div id="Change_fields_{{ i }}" style="display: none">
+                    <fieldset>
+                      <legend></legend>
+                      <div class="form__input mt-3">
+                        <span
+                          class="input__contain"
+                          >
+                          <input
+                            class="input__focus"
+                            [ngClass]="{
+                              input__error:
+                                control.controls.doctorName.invalid &&
+                                (control.controls.doctorName.touched ||
+                                  control.controls.doctorName.dirty)
+                            }"
+                            type="text"
+                            [ngModel]="
+                              control.status == 'VALID'
+                                ? control.value.doctorName
+                                : i == 0
+                                ? this.AddPrescriptionArray[i].doctorName
+                                : this.AddPrescriptionArray[0].prescriptionInfo[
+                                    i - 1
+                                  ].doctorName
+                            "
+                            [formControl]="control.controls.doctorName"
+                            id="doctorName"
+                            maxlength="40"
+                            autocomplete="off"
+                            required
+                          />
+                          <label class="input__title " for="doctorName"
+                            ><span
+                              >{{ validationMsg.doctorFirstNamelabel }}
+                            </span></label
+                          >
+                        </span>
+                      </div>
+                      <div
+                        class="input__error-text error_alert_box"
+                        aria-live="assertive"
+                        role="alert"
+                        *ngIf="
+                          control.controls.doctorName.invalid &&
+                          control.controls.doctorName.dirty
+                        "
+                      >
+                        <div class="icon hd_error_icon">
+                          <svg>
+                            <use
+                              _ngcontent-c3=""
+                              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                              class="__web-inspector-hide-shortcut__"
+                            ></use>
+                          </svg>
+                        </div>
+                        <span
+                          class="err_msg_text"
+                          *ngIf="control.controls.doctorName.errors.required"
+                          >{{ validationMsg.doctorName }}</span
+                        >
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend></legend>
+                      <div class="form__input mt-3">
+                        <span
+                          class="input__contain"
+                        >
+                          <input
+                            class="input__focus"
+                            [ngClass]="{
+                              input__error:
+                                control.controls.doctorphone.invalid &&
+                                (control.controls.doctorphone.touched ||
+                                  control.controls.doctorphone.dirty)
+                            }"
+                            arxrfPhoneMaskSimple
+                            type="text"
+                            [ngModel]="
+                              control.status == 'VALID'
+                                ? control.value.doctorphone
+                                : i == 0
+                                ? this.AddPrescriptionArray[i].doctorphone
+                                : this.AddPrescriptionArray[0].prescriptionInfo[
+                                    i - 1
+                                  ].doctorphone
+                            "
+                            [formControl]="control.controls.doctorphone"
+                            id="doctorphone"
+                            onpaste="return false;"
+                            maxlength="12"
+                            placeholder="___-___-____"
+                            pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                            required
+                            autocomplete="off"
+                          />
+
+                          <label class="input__title " for="doctorphone"
+                            ><span>{{
+                              validationMsg.doctorPhonelabel
+                            }}</span></label
+                          >
+                        </span>
+                      </div>
+                      <div
+                        class="input__error-text error_alert_box"
+                        aria-live="assertive"
+                        role="alert"
+                        *ngIf="
+                          control.controls.doctorphone.invalid &&
+                          control.controls.doctorphone.invalid &&
+                          control.controls.doctorphone.dirty
+                        "
+                      >
+                        <div class="icon hd_error_icon">
+                          <svg>
+                            <use
+                              _ngcontent-c3=""
+                              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                              class="__web-inspector-hide-shortcut__"
+                            ></use>
+                          </svg>
+                        </div>
+                        <span
+                          class="err_msg_text"
+                          *ngIf="
+                            control.controls.doctorphone.errors.required ||
+                            control.controls.doctorphone.errors.pattern
+                          "
+                          >{{ validationMsg.doctorPhone }}</span
+                        >
+                      </div>
+                    </fieldset>
+                  </div>
+
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input mt-3">
+                      <span
+                        class="input__contain"
+                      >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              control.controls.drugname.invalid &&
+                              (control.controls.drugname.touched ||
+                                control.controls.drugname.dirty)
+                          }"
+                          type="text"
+                          [formControl]="control.controls.drugname"
+                          (keyup)="getDrugs($event)"
+                          maxlength="100"
+                          id="drugname_{{ i }}"
+                          required
+                          autocomplete="off"
+                        />
+
+                        <label class="input__title " for="drugname"
+                          ><span>{{ validationMsg.drugNameLabel }}</span></label
+                        >
+                      </span>
+                    </div>
+                    <div class="dropdown" #dropdown>
+                      <ul
+                        class="menu "
+                        [ngClass]="{
+                          display:
+                            selectedItemId === 'drugname_' + i &&
+                            suggestions.length
+                        }"
+                      >
+                        <li
+                          class="drugname_{{ i }}"
+                          *ngFor="let item of suggestions"
+                          (click)="selectSuggestion(item, $event, i)"
+                        >
+                          {{ item.drugName }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        control.controls.drugname.invalid &&
+                        (control.controls.drugname.touched ||
+                          control.controls.drugname.dirty)
+                      "
+                    >
+                      <div class="err_msg_text" class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span
+                        class="err_msg_text"
+                        *ngIf="control.controls.drugname.errors.required"
+                        >{{ validationMsg.drugName }}</span
+                      >
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input mt-3">
+                      <span
+                        class="input__contain small_input_contain"
+                        >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              control.controls.quantity.invalid &&
+                              (control.controls.quantity.touched ||
+                                control.controls.quantity.dirty)
+                          }"
+                          type="text"
+                          [formControl]="control.controls.quantity"
+                          (focus)="emptySuggestions()"
+                          id="quantity"
+                          maxlength="4"
+                          invalidExp="[^0-9-]"
+                          required
+                          autocomplete="off"
+                        />
+
+                        <label class="input__title " for="quantity"
+                          ><span>{{
+                            validationMsg.drugQuantityLabel
+                          }}</span></label
+                        >
+                      </span>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        control.controls.quantity.invalid &&
+                        control.controls.quantity.dirty
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span
+                        class="err_msg_text"
+                        *ngIf="control.controls.quantity.errors.required"
+                        >{{ validationMsg.drugQuantity }}</span
+                      >
+                      <span
+                        class="err_msg_text"
+                        *ngIf="control.controls.quantity.errors.pattern"
+                        >{{ validationMsg.drugQuantityValid }}</span
+                      >
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="remove-container" *ngIf="displayRemoveButton !== 0">
+                  <div class="remove-icon" (click)="CallRemoveAction(i)">
+                    <div class="screenview">remove</div>
+                  </div>
+                </div>
+              </div>
+              <fieldset class="terms_Container">
+                <legend></legend>
+                <div class="check-box">
+                  <input
+                    id="check_{{ i }}"
+                    [formControl]="control.controls.terms"
+                    type="checkbox"
+                    (change)="changedGenericEquivalentCheckBox($event)"
+                    tabindex="0"
+                  />
+                  <label for="check_{{ i }}"
+                    ><span class="check"></span
+                    ><span>{{ validationMsg.generalWarnMsg }}</span></label
+                  >
+                </div>
+              </fieldset>
+              <div class="Line"></div>
+            </div>
+            <!-- New Prescription - END -->
+          </ng-container>
+          <!-- Transfer Prescription - Start -->
+          <ng-container *ngIf="!isNewPresPCA">
+            <div class="flex-container">
+              <div class="col-md-7 col-lg-6 col-sm-11">
+                <h2 class="h2_title mt-2">
+                  {{ validationMsg.previousPharmacyInformation }}
+                </h2>
+                <fieldset>
+                  <legend></legend>
+                  <div class="form__input pharmacyNameField">
+                    <span
+                      class="input__contain"
+                      >
+                      <input
+                        class="input__focus"
+                        [ngClass]="{
+                          input__error:
+                            frm.pharmacyName.invalid &&
+                            (frm.pharmacyName.touched || frm.pharmacyName.dirty)
+                        }"
+                        type="text"
+                        formControlName="pharmacyName"
+                        id="pharmacyName"
+                        maxlength="50"
+                        pattern="([^\s][A-z0-9\s]+)"
+                        required
+                      />
+                      <label class="input__title" for="pharmacyName"
+                        ><span>{{ validationMsg.pharmacyNameMsg }}</span></label
+                      >
+                    </span>
+                  </div>
+
+                  <div
+                    class="input__error-text error_alert_box"
+                    aria-live="assertive"
+                    role="alert"
+                    *ngIf="
+                      frm.pharmacyName.invalid &&
+                      (frm.pharmacyName.touched || frm.pharmacyName.dirty)
+                    "
+                  >
+                    <div class="icon hd_error_icon">
+                      <svg>
+                        <use
+                          _ngcontent-c3=""
+                          xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                          class="__web-inspector-hide-shortcut__"
+                        ></use>
+                      </svg>
+                    </div>
+                    <span class="err_msg_text">{{
+                      validationMsg.pharmacyNameMsg
+                    }}</span>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend></legend>
+                  <div class="form__input">
+                    <span
+                      class="input__contain"
+                    >
+                      <input
+                        class="input__focus"
+                        [ngClass]="{
+                          input__error:
+                            frm.pharmacyPhoneNumber.invalid &&
+                            (frm.pharmacyPhoneNumber.touched ||
+                              frm.pharmacyPhoneNumber.dirty)
+                        }"
+                        arxrfPhoneMaskSimple
+                        type="text"
+                        autocomplete="off"
+                        maxlength="12"
+                        placeholder="___-___-____"
+                        pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                        formControlName="pharmacyPhoneNumber"
+                        id="pharmacyPhoneNumber"
+                        onpaste="return false;"
+                        required
+                      />
+                      <label class="input__title" for="pharmacyPhoneNumber"
+                        ><span>{{
+                          validationMsg.phoneNumberlabel
+                        }}</span></label
+                      >
+                    </span>
+                  </div>
+                  <div
+                    class="input__error-text error_alert_box"
+                    aria-live="assertive"
+                    role="alert"
+                    *ngIf="
+                      frm.pharmacyPhoneNumber.invalid &&
+                      (frm.pharmacyPhoneNumber.touched ||
+                        frm.pharmacyPhoneNumber.dirty)
+                    "
+                  >
+                    <div class="icon hd_error_icon">
+                      <svg>
+                        <use
+                          _ngcontent-c3=""
+                          xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                          class="__web-inspector-hide-shortcut__"
+                        ></use>
+                      </svg>
+                    </div>
+                    <span class="err_msg_text">{{ validationMsg.phone }}</span>
+                  </div>
+                </fieldset>
+              </div>
+              <h2 class="h2_title ml-3 mt-3">Prescription Information</h2>
+              <div
+                id="base-form"
+                [hidden]="!ShowBaseForm"
+                *ngIf="!isNewPresPCA"
+              >
+                <div class="remove-container" *ngIf="displayRemoveButton !== 0">
+                  <div class="remove-icon" (click)="CallRemoveAction('')">
+                    <div class="screenview">remove</div>
+                  </div>
+                </div>
+                <div class="col-md-7 col-lg-6 col-sm-11">
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input">
+                      <span
+                        class="input__contain"
+                        >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              frm.drugname.invalid &&
+                              (frm.drugname.touched || frm.drugname.dirty)
+                          }"
+                          type="text"
+                          formControlName="drugname"
+                          (keyup)="getDrugs($event)"
+                          autocomplete="off"
+                          maxlength="100"
+                          id="drugname"
+                          required
+                        />
+
+                        <label class="input__title " for="drugname"
+                          ><span>Prescription name</span></label
+                        >
+                      </span>
+                    </div>
+                    <div class="dropdown" #dropdown>
+                      <ul
+                        class="menu"
+                        [ngClass]="{
+                          display:
+                            selectedItemId === 'drugname' && suggestions.length
+                        }"
+                      >
+                        <li
+                          class="drugname"
+                          *ngFor="let item of suggestions"
+                          (click)="selectSuggestion(item, $event, null)"
+                        >
+                          {{ item.drugName }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        frm.drugname.invalid &&
+                        (frm.drugname.touched || frm.drugname.dirty)
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span class="err_msg_text">{{
+                        validationMsg.drugName
+                      }}</span>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input pharmacyNameField">
+                      <span
+                        class="input__contain small_input_contain"
+                        >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              frm.quantity.invalid &&
+                              (frm.quantity.touched || frm.quantity.dirty)
+                          }"
+                          type="text"
+                          formControlName="quantity"
+                          (focus)="emptySuggestions()"
+                          id="quantity"
+                          maxlength="16"
+                          invalidExp="[^0-9-]"
+                          autocomplete="off"
+                        />
+
+                        <label class="input__title " for="quantity"
+                          ><span>Prescription Number (Optional)</span></label
+                        >
+                      </span>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        frm.quantity.invalid &&
+                        (frm.quantity.touched || frm.quantity.dirty)
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span class="err_msg_text">{{
+                        validationMsg.drugQuantity
+                      }}</span>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="Line"></div>
+              </div>
+            </div>
+
+            <!---Dynamic form-->
+            <div
+              class="previousvalue"
+              *ngFor="
+                let control of frm.prescriptionInfo['controls'];
+                let i = index
+              "
+            >
+              <div class="flex-container">
+                <div class="remove-container" *ngIf="displayRemoveButton !== 0">
+                  <div class="remove-icon" (click)="CallRemoveAction(i)">
+                    <div class="screenview">remove</div>
+                  </div>
+                </div>
+                <div class="col-md-7 col-lg-6 col-sm-11">
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input pharmacyNameField">
+                      <span
+                        class="input__contain"
+                      >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              control.controls.drugname.invalid &&
+                              (control.controls.drugname.touched ||
+                                control.controls.drugname.dirty)
+                          }"
+                          type="text"
+                          [formControl]="control.controls.drugname"
+                          (keyup)="getDrugs($event)"
+                          maxlength="100"
+                          id="drugname_{{ i }}"
+                          required
+                          autocomplete="off"
+                        />
+
+                        <label class="input__title " for="drugname"
+                          ><span>Prescription name</span></label
+                        >
+                      </span>
+                    </div>
+                    <div class="dropdown" #dropdown>
+                      <ul
+                        class="menu "
+                        [ngClass]="{
+                          display:
+                            selectedItemId === 'drugname_' + i &&
+                            suggestions.length
+                        }"
+                      >
+                        <li
+                          class="drugname_{{ i }}"
+                          *ngFor="let item of suggestions"
+                          (click)="selectSuggestion(item, $event, i)"
+                        >
+                          {{ item.drugName }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        control.controls.drugname.invalid &&
+                        (control.controls.drugname.touched ||
+                          control.controls.drugname.dirty)
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span
+                        class="err_msg_text"
+                        *ngIf="control.controls.drugname.errors.required"
+                        >{{ validationMsg.drugName }}</span
+                      >
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend></legend>
+                    <div class="form__input pharmacyNameField">
+                      <span
+                        class="input__contain small_input_contain"
+                      >
+                        <input
+                          class="input__focus"
+                          [ngClass]="{
+                            input__error:
+                              control.controls.quantity.invalid &&
+                              (control.controls.quantity.touched ||
+                                control.controls.quantity.dirty)
+                          }"
+                          type="text"
+                          [formControl]="control.controls.quantity"
+                          (focus)="emptySuggestions()"
+                          id="quantity"
+                          maxlength="16"
+                          invalidExp="[^0-9-]"
+                          autocomplete="off"
+                        />
+
+                        <label class="input__title " for="quantity"
+                          ><span>Prescription Number (Optional)</span></label
+                        >
+                      </span>
+                    </div>
+                    <div
+                      class="input__error-text error_alert_box"
+                      aria-live="assertive"
+                      role="alert"
+                      *ngIf="
+                        control.controls.quantity.invalid &&
+                        control.controls.quantity.invalid &&
+                        control.controls.quantity.dirty
+                      "
+                    >
+                      <div class="icon hd_error_icon">
+                        <svg>
+                          <use
+                            _ngcontent-c3=""
+                            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"
+                            class="__web-inspector-hide-shortcut__"
+                          ></use>
+                        </svg>
+                      </div>
+                      <span
+                        class="err_msg_text"
+                        *ngIf="control.controls.quantity.errors.required"
+                        >{{ validationMsg.drugQuantity }}</span
+                      >
+                      <span
+                        class="err_msg_text"
+                        *ngIf="control.controls.quantity.errors.pattern"
+                        >{{ validationMsg.drugQuantityValid }}</span
+                      >
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+
+              <div class="Line"></div>
+            </div>
+          </ng-container>
+          <!-- Transfer Prescription - End -->
+
+          <div
+            class="add-another"
+            [hidden]="ExceedLimit"
+            (click)="callAddAnother($event)"
+            [class.disabled-contenct]="!hdNewRxPcaForm.valid"
+          >
+            <div>
+              <svg alt="" alt="">
+                <use
+                  xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__plus-add"
+                ></use>
+              </svg>
+            </div>
+            <div>{{ validationMsg.addAnotherPrescription }}</div>
+          </div>
+
+          <div class="exceed-message" [hidden]="!ExceedLimit">
+            {{ validationMsg.limitOrderWarn }}
+          </div>
+
+          <div class="row noPrint flex-sm-row-reverse actionDiv btn__pair">
+            <div class="col-12 col-md-3 p-0 ">
+              <button
+                class="btn btn_primary"
+                (click)="redirectRxReview()"
+                [disabled]="!hdNewRxPcaForm.valid"
+              >
+                Submit request
+              </button>
+            </div>
+            <div
+              class="col-12 col-md-2 align-self-center text-center p-0 cancel_btn_div"
+            >
+              <a
+                class="cancel_btn secondary cancel-color"
+                (click)="CallCancelAction($event)"
+                >Cancel</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <arxrf-modal
+    [show]="showcanceloverlay"
+    cssClasses="bg-grey"
+    class="cancelRxModal-con"
+    (update)="updateRxModalstate()"
+  >
+    <div class="cancelRxModal">
+      <div class="row ">
+        <div class="col-12"></div>
+        <div class="col-12 mt-3">
+          <p>
+            {{
+              isNewPresPCA
+                ? validationMsg.cancelWarningNew
+                : validationMsg.cancelWarningTransfer
+            }}
+          </p>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <span class="btn__pair col-12">
+          <div class="col-12">
+            <div class="buttonWrapper">
+              <a
+                (click)="closecancelModal($event, 'no')"
+                class="secondary cancel-color"
+                >{{ validationMsg.warnMsg1 }}</a
+              >
+              <a role="button" (click)="closecancelModal($event, 'yes')"
+                ><span class="btn btn_primary">{{
+                  validationMsg.warnMsg2
+                }}</span></a
+              >
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </arxrf-modal>
+  <!-- Remove popup-->
+  <arxrf-modal
+    [show]="showRemoveoverlay"
+    cssClasses="bg-grey"
+    class="cancelRxModal-con"
+    (update)="updateDeleteModalstate()"
+  >
+    <div class="cancelRxModal">
+      <div class="row ">
+        <div class="col-12"></div>
+        <div class="col-12 mt-3">
+          <p>{{ validationMsg.removeWarning }}</p>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <span class="btn__pair col-12">
+          <div class="col-12">
+            <div class="buttonWrapper">
+              <a
+                (click)="closeremoveModal($event, 'no', curentindex)"
+                class="secondary cancel-color"
+                >{{ validationMsg.removeWarningMsg1 }}</a
+              >
+              <a
+                role="button"
+                (click)="closeremoveModal($event, 'yes', curentindex)"
+                ><span class="btn btn_primary">{{
+                  validationMsg.removeWarningMsg2
+                }}</span></a
+              >
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </arxrf-modal>
+</div>

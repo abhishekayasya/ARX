@@ -1,0 +1,129 @@
+<div class="order-status-progress-container five-dots mb-4" *ngIf="!!isFiveDotsProgress">
+
+  <p id="dot-label-account" class="progress_first_label">
+    <arxrf-order-status-progress-bar [progressBar]="'progressBar'" [progressStatus]="'Receive'">
+    </arxrf-order-status-progress-bar>
+  </p>
+
+  <span class="order-status-line"
+    [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack' || progress_Bar_Status === 'pack-exception' || progress_Bar_Status === 'process' || progress_Bar_Status === 'process-exception' || progress_Bar_Status === 'receive' || progress_Bar_Status === 'schedule' }"></span>
+
+  <div class="dot-container">
+    <div class="order-status-dot"
+      [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack' || progress_Bar_Status === 'pack-exception' || progress_Bar_Status === 'process-exception' || progress_Bar_Status === 'schedule' || progress_Bar_Status === 'process' }">
+
+      <span class="ic__checked activeDot"
+        [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack' || progress_Bar_Status === 'pack-exception' || progress_Bar_Status === 'schedule' || progress_Bar_Status === 'process' }"><svg
+          class="ic__checked" alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__checked">
+          </use>
+        </svg></span>
+
+      <div class="statusErrorDot activeDot" [ngClass]="{'error': progress_Bar_Status === 'process-exception'}">
+        <span class="ic__x crossSign"><svg class="crossSign" alt="">
+            <use
+              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__x">
+            </use>
+          </svg></span>
+      </div>
+      <span class="ic__medical-prescription"><svg alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__medical-prescription">
+          </use>
+        </svg></span>
+    </div>
+    <p id="dot-label">
+      <arxrf-order-status-progress-bar [progressBar]="'progressBar'" [progressStatus]="'Process'">
+      </arxrf-order-status-progress-bar>
+    </p>
+  </div>
+
+  <span class="order-status-line"
+    [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack' || progress_Bar_Status === 'pack-exception' || progress_Bar_Status === 'process' || progress_Bar_Status === 'schedule'}"></span>
+
+  <div class="dot-container">
+    <div class="order-status-dot"
+      [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack' || progress_Bar_Status === 'pack-exception' || progress_Bar_Status === 'schedule'}">
+
+      <span class="ic__checked activeDot"
+        [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack' || progress_Bar_Status === 'pack-exception' || progress_Bar_Status === 'schedule'}"><svg
+          class="ic__checked" alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__checked">
+          </use>
+        </svg></span>
+
+      <span class="ic__calendar"><svg alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__calendar">
+          </use>
+        </svg></span>
+    </div>
+    <p id="dot-label">
+      <arxrf-order-status-progress-bar [progressBar]="'progressBar'" [progressStatus]="'Schedule'">
+      </arxrf-order-status-progress-bar>
+    </p>
+  </div>
+
+  <span class="order-status-line"
+    [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack' || progress_Bar_Status === 'pack-exception' || progress_Bar_Status === 'schedule'}"></span>
+
+  <div class="dot-container">
+    <div class="order-status-dot"
+      [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack' || progress_Bar_Status === 'pack-exception'}">
+
+      <span class="ic__checked activeDot"
+        [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack'}"><svg
+          class="ic__checked" alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__checked">
+          </use>
+        </svg></span>
+
+
+      <div class="statusErrorDot activeDot" [ngClass]="{'error': progress_Bar_Status === 'pack-exception'}">
+        <span class="ic__x crossSign"><svg class="crossSign" alt="">
+            <use
+              xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__x">
+            </use>
+          </svg></span>
+      </div>
+      <span class="ic__open-box"><svg alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__open-box">
+          </use>
+        </svg></span>
+    </div>
+    <p id="dot-label">
+      <arxrf-order-status-progress-bar [progressBar]="'progressBar'" [progressStatus]="'Pack'">
+      </arxrf-order-status-progress-bar>
+    </p>
+  </div>
+
+  <span class="order-status-line"
+    [ngClass]="{'active': progress_Bar_Status === 'ship' || progress_Bar_Status === 'pack'}"></span>
+
+  <div class="dot-container">
+    <div class="order-status-dot" [ngClass]="{'active': progress_Bar_Status === 'ship'}">
+      <span class="ic__checked activeDot" [ngClass]="{'active': progress_Bar_Status === 'ship'}"><svg
+          class="ic__checked" alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__checked">
+          </use>
+        </svg></span>
+      <span class="ic__shipped"><svg alt="">
+          <use
+            xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#ic__shipped">
+          </use>
+        </svg></span>
+    </div>
+    <p id="dot-label" class="progress_last_label">
+      <arxrf-order-status-progress-bar [progressBar]="'progressBar'" [progressStatus]="'Ship'">
+      </arxrf-order-status-progress-bar>
+    </p>
+  </div>
+
+  <span class="order-status-line" [ngClass]="{'active': progress_Bar_Status === 'ship'}"></span>
+
+</div>

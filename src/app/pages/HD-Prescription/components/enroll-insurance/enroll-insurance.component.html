@@ -1,0 +1,93 @@
+<div class="container new-prescription-container bg-white">
+  <div class="row">
+      <div class="col-12">
+        <arxrf-message></arxrf-message>          
+      </div>
+    </div>
+    
+  <div class="container">
+    <div class="row">
+        <h1 class="h1__page-title text-center col">Request New Home Delivery Prescription</h1>
+    </div>
+      <div class="row">
+          <p class="mar_p">Home delivery provides a <strong><span>90-day supply of medication</span></strong>. We'll use the information below to request a 90 day supply of your medication, or the max your plan allows.</p>
+       </div>
+       <div class="row" >
+          <div class="showmore-con">
+            <div class="warn-icon-con">
+                <div class="icon hd_warn_icon">
+                    <svg><use _ngcontent-c3="" xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert" class="__web-inspector-hide-shortcut__"></use></svg>
+                </div> 
+                <div>Please <strong>do not</strong> use this form for the following</div>
+            </div>              
+
+            <ul class="prescription-list screenview">
+              <li><strong>Specialty Pharmacy – </strong> Call <span class="f-blue"><a href="tel:+1-866-823-2712" (click)="firePhoneNumberSpecialtyPharmacyGaEvent()">866-823-2712</a></span> to request a new prescription.</li>
+              <li><strong>Paper prescriptions – </strong>Ask your doctor to print, fill out and fax us the Prescription Fax Form (<span class="f-blue"><a href="{{English_pdf}}"  (click)="fireRxFaxFormEngGaEvent()"  target="_blank" rel="noopener noreferrer">English</a></span> | <span class="f-blue"><a href="{{Esponal_pdf}}" (click)="fireRxFaxFormSpanishGaEvent()"  target="_blank" rel="noopener noreferrer">Español</a></span>).</li>
+              <li><strong>Controlled substances<sup>1</sup> – </strong>  Due to federal regulations, these prescriptions cannot be requested online. Please contact your prescriber to request these prescriptions.</li>
+            </ul>
+            <div class="mobileview">
+              <ul class="prescription-list viewless" *ngIf="viewless">
+                  <li>Specialty Pharmacy</li>
+                  <li>Paper prescriptions</li>
+                  <li>Controlled substances <sup>1</sup></li>
+              </ul>
+              <ul class="prescription-list viewmore" *ngIf="!viewless">
+                <li><strong>Specialty Pharmacy – </strong> Call <span class="f-blue"><a href="tel:+1-866-823-2712" (click)="firePhoneNumberSpecialtyPharmacyGaEvent()">866-823-2712</a></span> to request a new prescription.</li>
+              <li><strong>Paper prescriptions – </strong>Ask your doctor to print, fill out and fax us the Prescription Fax Form ( <span class="f-blue"><a href="/files/live/sites/{{siteKey}}/files/pdfs/WI1008-0119_ENG.pdf" (click)="fireRxFaxFormEngGaEvent()">English</a></span> | <span class="f-blue"><a href="/files/live/sites/{{siteKey}}/files/pdfs/WI1008-0119_SPAN.pdf" (click)="fireRxFaxFormSpanishGaEvent()" target="_blank" rel="noopener noreferrer">Español</a></span>).</li>
+              <li><strong>Controlled substances<sup>1</sup> – </strong>  Due to federal regulations, these prescriptions cannot be requested online. Please contact your prescriber to request these prescriptions.</li>
+              </ul>
+              <a href="javascript:void(0);" (click)="ViewMoreaction()" id="viewMore">
+                <span *ngIf="viewless">More details</span>
+                <span *ngIf="!viewless">Less details</span>
+              </a>
+            </div>   
+            <div class="pationtname-con">
+            <div  class="singlemember" *ngIf = "!multipleMember">
+              <div><h2 class="h2_patient">Patient name:</h2></div>
+              <div>
+                  {{_userService.user.profile.basicProfile.firstName}} {{ _userService.user.profile.basicProfile.lastName}}
+              </div>                           
+            </div>
+          
+          <div   *ngIf = "multipleMember">      
+            <div class="multiplemember-con col-md-4">
+                <arxrf-refill-members  (onSelect)="updateMember($event)" [isHdPrescription]="true"></arxrf-refill-members>              
+            </div>              
+          </div>
+          
+        </div>
+        </div>
+           
+            <div class="prescription-list col" >
+              <div class="warn-icon-con home_delivery_info">
+                <div class="icon hd_info_icon">
+                    <svg><use _ngcontent-c3="" xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info" class="__web-inspector-hide-shortcut__"></use></svg>
+                </div>
+            <p class="info-text-margin">To request a new Home Delivery prescription, you must first be enrolled in Home Delivery Pharmacy. Please have your insurance and health history information ready.</p>
+            </div>
+
+
+            <div class="row bt-container flex-column-reverse flex-sm-row">
+              <div class="btn__pair ">
+                  <a  (click)="redirectToMyAccount()" class="secondary cancelbtn cancel-color">Cancel</a>
+              </div>
+              <div class="col-md-4 mb-2">
+                  <button class="btn btn_primary m-btn" (click)="redirectToEnrollInsurnace()">Add insurance</button>
+              </div>
+
+            </div>
+            <div class="row footNote">
+                <div><sup>1</sup>  Any controlled substances, which may include many prescription medications used as stimulants, pain relievers and sedatives, may not be ordered online or approved over the phone.</div>
+            </div>
+              
+          </div>    
+      </div>
+    
+    </div>
+   
+</div>
+
+
+
+

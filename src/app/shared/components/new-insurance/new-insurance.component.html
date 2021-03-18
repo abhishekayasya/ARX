@@ -1,0 +1,441 @@
+<div class="container no-container-mobile">
+  <div class="row">
+    <div class="col-md-12 justify-content-center align-items-center">
+      <div class="messages_container mt-3">
+        <arxrf-message></arxrf-message>
+      </div>
+
+      <div class="new-insurance_container">
+        <arxrf-loader
+          [show]="loadingStatus"
+          [loaderOverlay]="loadingOverlay"
+        ></arxrf-loader>
+        <div class="col-12 p-5 insuranceContainer">
+          <h1 class="h1__page-title text-center">
+            {{ personName }}'s
+            <span *ngIf="!insuranceInforStatus; else changeHeading"
+              >Insurance
+            </span>
+            <ng-template #changeHeading>Health</ng-template> Information
+
+            <p *ngIf="!insuranceInforStatus && !isCheckoutFlow">Step 1 of 3</p>
+            <p *ngIf="insuranceInforStatus && !isCheckoutFlow">Step 2 of 3</p>
+          </h1>
+
+          <div class="alert alert__info minimal p-0" *ngIf="reviewInsurance">
+            <!-- review message section -->
+            <a class="alert__text-contain">
+              <span class="icon icon__info">
+                <svg>
+                  <use
+                    xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+                  ></use>
+                </svg>
+              </span>
+
+              <span class="text-left">
+                <p class="sr-only">INFO! {{ reviewInsuranceMessage }}</p>
+                <p aria-hidden="true" class="alert-content mx-2" tabindex="0">
+                  {{ reviewInsuranceMessage }}
+                </p>
+              </span>
+            </a>
+          </div>
+
+          <form
+            [formGroup]="insuranceInformationForm"
+            class="form__on-light-bg mt-3"
+            *ngIf="!insuranceInforStatus && !reviewInsurance"
+          >
+            <div class="form__input">
+              <span
+                class="input__contain"
+              >
+                <input
+                  class="input__focus"
+                  [ngClass]="{
+                    input__error:
+                      insuranceInformationForm.controls.planName.invalid &&
+                      (insuranceInformationForm.controls.planName.touched ||
+                        insuranceInformationForm.controls.planName.dirty)
+                  }"
+                  type="text"
+                  formControlName="planName"
+                  id="planName"
+                  maxlength="60"
+                  pattern="^[0-9a-zA-Z ]*$"
+                />
+                <label class="input__title" for="planName"
+                  ><span>Insurance Plan Name</span></label
+                >
+              </span>
+            </div>
+
+            <div
+              class="input__error-text"
+              aria-live="assertive"
+              role="alert"
+              *ngIf="
+                insuranceInformationForm.controls.planName.invalid &&
+                (insuranceInformationForm.controls.planName.touched ||
+                  insuranceInformationForm.controls.planName.dirty)
+              "
+            >
+              <span
+                *ngIf="
+                  insuranceInformationForm.controls.planName.errors.required
+                "
+                ><span class="sr-only">Error </span>Insurance Plan Name is
+                required.</span
+              >
+              <span
+                *ngIf="
+                  insuranceInformationForm.controls.planName.errors.pattern
+                "
+                >Please enter valid Insurance Plan Name</span
+              >
+            </div>
+
+            <div class="form__input">
+              <span
+                class="input__contain"
+              >
+                <input
+                  class="input__focus"
+                  [ngClass]="{
+                    input__error:
+                      insuranceInformationForm.controls.memberNumber.invalid &&
+                      (insuranceInformationForm.controls.memberNumber.touched ||
+                        insuranceInformationForm.controls.memberNumber.dirty)
+                  }"
+                  type="text"
+                  formControlName="memberNumber"
+                  id="memberNumber"
+                  pattern="^[0-9a-zA-Z]*$"
+                  maxlength="40"
+                />
+                <label class="input__title" for="memberNumber"
+                  ><span>Member Number</span></label
+                >
+              </span>
+            </div>
+
+            <div
+              class="input__error-text"
+              aria-live="assertive"
+              role="alert"
+              *ngIf="
+                insuranceInformationForm.controls.memberNumber.invalid &&
+                (insuranceInformationForm.controls.memberNumber.touched ||
+                  insuranceInformationForm.controls.memberNumber.dirty)
+              "
+            >
+              <span
+                *ngIf="
+                  insuranceInformationForm.controls.memberNumber.errors.required
+                "
+                ><span class="sr-only">Error </span>Member Number is
+                required.</span
+              >
+              <span
+                *ngIf="
+                  insuranceInformationForm.controls.memberNumber.errors.pattern
+                "
+                >Please enter valid Member Number</span
+              >
+            </div>
+
+            <div class="form__input">
+              <span
+                class="input__contain"
+              >
+                <input
+                  class="input__focus"
+                  [ngClass]="{
+                    input__error:
+                      insuranceInformationForm.controls.groupNumber.invalid &&
+                      (insuranceInformationForm.controls.groupNumber.touched ||
+                        insuranceInformationForm.controls.groupNumber.dirty)
+                  }"
+                  type="text"
+                  formControlName="groupNumber"
+                  id="groupNumber"
+                  pattern="^[0-9a-zA-Z]*$"
+                  maxlength="16"
+                />
+                <label class="input__title" for="groupNumber"
+                  ><span>Rx Group Number</span></label
+                >
+              </span>
+            </div>
+
+            <div
+              class="input__error-text"
+              *ngIf="
+                insuranceInformationForm.controls.groupNumber.invalid &&
+                (insuranceInformationForm.controls.groupNumber.touched ||
+                  insuranceInformationForm.controls.groupNumber.dirty)
+              "
+            >
+              <span
+                *ngIf="
+                  insuranceInformationForm.controls.groupNumber.errors.pattern
+                "
+                >Please enter valid Rx group number</span
+              >
+            </div>
+
+            <div class="form__input">
+              <span
+                class="input__contain"
+              >
+                <input
+                  class="input__focus"
+                  [ngClass]="{
+                    input__error:
+                      insuranceInformationForm.controls.cardholderName.invalid &&
+                      (insuranceInformationForm.controls.cardholderName.touched ||
+                        insuranceInformationForm.controls.cardholderName.dirty)
+                  }"
+                  type="text"
+                  formControlName="cardholderName"
+                  id="cardholderName"
+                  pattern="^[-a-zA-Z]+(\s+[a-zA-Z]+)*$"
+                  required
+                />
+                <label class="input__title" for="cardholderName"
+                  ><span>Primary Cardholder Name</span></label
+                >
+              </span>
+            </div>
+
+            <div
+              class="input__error-text"
+              aria-live="assertive"
+              role="alert"
+              *ngIf="
+                insuranceInformationForm.controls.cardholderName.invalid &&
+                (insuranceInformationForm.controls.cardholderName.touched ||
+                  insuranceInformationForm.controls.cardholderName.dirty)
+              "
+            >
+              <span
+                *ngIf="
+                  insuranceInformationForm.controls.cardholderName.errors
+                    .required
+                "
+                ><span class="sr-only">Error </span>Primary Cardholder Name is
+                required.</span
+              >
+              <span
+                *ngIf="
+                  insuranceInformationForm.controls.cardholderName.errors
+                    .pattern
+                "
+                >Please enter valid Primary Cardholder Name</span
+              >
+            </div>
+            <div class="form__input">
+              <span
+                class="input__contain input__remove-animation"
+                id="refill-datePicker"
+              >
+                <input
+                  class="input__focus"
+                  type="text"
+                  formControlName="cardholderDOB"
+                  id="cardholderDOB"
+                  date-picker
+                  required
+                  maxlength="10"
+                  class="input__dates"
+                  placeholder="MM/DD/YYYY"
+                />
+                <label class="input__title" for="cardholderDOB"
+                  ><span>Primary Cardholder's Date of Birth</span></label
+                >
+              </span>
+            </div>
+            <div
+              class="input__error-text"
+              aria-live="assertive"
+              role="alert"
+              *ngIf="
+                insuranceInformationForm.controls.cardholderDOB.invalid &&
+                (insuranceInformationForm.controls.cardholderDOB.touched ||
+                  insuranceInformationForm.controls.cardholderDOB.dirty)
+              "
+            >
+              <span
+                *ngIf="
+                  insuranceInformationForm.controls.cardholderDOB.errors
+                    .required
+                "
+                ><span class="sr-only">Error </span>Primary Cardholder's Date of
+                Birth is required.</span
+              >
+              <span
+                *ngIf="
+                  insuranceInformationForm.controls.cardholderDOB.errors
+                    .validDate
+                "
+                >Please enter valid date.</span
+              >
+            </div>
+
+            <div class="mt-5 text-right" *ngIf="!insuranceInforStatus">
+              <button class="btn btn_primary mb-2" (click)="continueAction()">
+                Continue
+              </button>
+            </div>
+          </form>
+
+          <!-- review insurance section -->
+          <div class="inssurance_data" *ngIf="reviewInsurance">
+            <div class="item">
+              <h4>Insurance plan name</h4>
+              <p>
+                {{
+                  _insuranceService.insuranceInfo.msEnrollInsuranceBeanForm
+                    .msInsProvider | titlecase
+                }}
+              </p>
+            </div>
+
+            <div class="item">
+              <h4>Member number</h4>
+              <p>
+                {{
+                  _insuranceService.insuranceInfo.msEnrollInsuranceBeanForm
+                    .msInsChId | titlecase
+                }}
+              </p>
+            </div>
+
+            <div class="item">
+              <h4>Rx Group number</h4>
+              <p>
+                {{
+                  _insuranceService.insuranceInfo.msEnrollInsuranceBeanForm
+                    .msInsGroupNbr | titlecase
+                }}
+              </p>
+            </div>
+
+            <div class="item">
+              <h4>Primary cardholder name</h4>
+              <p>
+                {{
+                  _insuranceService.insuranceInfo.msEnrollInsuranceBeanForm
+                    .msInsCardholderName | titlecase
+                }}
+              </p>
+            </div>
+
+            <div class="item">
+              <h4>Primary cardholder date of birth</h4>
+              <p>
+                {{
+                  _insuranceService.insuranceInfo.msEnrollInsuranceBeanForm
+                    .msInsCardholderBirthMonth
+                }}/{{
+                  _insuranceService.insuranceInfo.msEnrollInsuranceBeanForm
+                    .msInsCardholderBirthDay
+                }}/{{
+                  _insuranceService.insuranceInfo.msEnrollInsuranceBeanForm
+                    .msInsCardholderBirthYear
+                }}
+              </p>
+            </div>
+
+            <div class="btn__pair row mt-4">
+              <div class="col-12 col-md-6 text-center text-md-left">
+                <a
+                  href="javascript:void(0)"
+                  class="secondary"
+                  (click)="editAction()"
+                  >Edit</a
+                >
+              </div>
+              <div class="col-12 col-md-6 mt-4 mt-md-0 text-center">
+                <button
+                  class="btn btn_primary"
+                  (click)="continueReviewInsurance()"
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- review insurance section ends here -->
+
+          <div
+            class="allergy__healthCondition__container mt-3"
+            *ngIf="insuranceInforStatus && !reviewInsurance"
+          >
+            <div class="healthconditions__container pt-3">
+              <h3>Medical Conditions</h3>
+              <ul class="insurance__hc_list">
+                <fieldset aria-labelledby="medCond">
+                  <legend id="medCond">Medical Conditions:</legend>
+                  <li *ngFor="let hc of hcList">
+                    <div class="check-box">
+                      <input
+                        id="{{ hc.key }}"
+                        type="checkbox"
+                        [checked]="HealthConditionListMap.has(hc.key)"
+                        value="{{ hc.key }}"
+                        (change)="onHcItemClick($event, hc.key)"
+                      />
+                      <label for="{{ hc.key }}"
+                        ><span class="check"></span
+                        ><span>{{ hc.text }}</span></label
+                      >
+                    </div>
+                  </li>
+                </fieldset>
+              </ul>
+
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="allergy__container pt-3">
+              <h3>Allergies</h3>
+              <ul class="insurance__hc_list">
+                <fieldset aria-labelledby="selectAllergies">
+                  <legend id="selectAllergies">Allergies:</legend>
+                  <li *ngFor="let allergy of aList">
+                    <div class="check-box">
+                      <input
+                        id="{{ allergy.key }}"
+                        type="checkbox"
+                        [checked]="AllergyListMap.has(allergy.key)"
+                        value="{{ allergy.key }}"
+                        (change)="onAllergyItemClick($event, allergy.key)"
+                      />
+                      <label for="{{ allergy.key }}"
+                        ><span class="check"></span
+                        ><span>{{ allergy.text }}</span></label
+                      >
+                    </div>
+                  </li>
+                </fieldset>
+              </ul>
+
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="mt-5 text-right">
+              <button
+                class="btn btn_primary"
+                (click)="submitInsuranceAndHealthData()"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

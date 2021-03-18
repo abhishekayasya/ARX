@@ -1,0 +1,36 @@
+.userNameEmail{
+  text-transform: none;
+}
+
+.loginContainer{
+  margin: 0 auto;
+  max-width: 555px;
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 737px){
+  .reg-form form{
+    padding: 0;
+  }
+  .btnBlock{
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.max__content {
+  padding-left: 4em;
+  padding-right: 4em;
+}
+
+.account__locked {
+  h1{
+    font-size: 23px;
+  }
+}
+
+.bg-white {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

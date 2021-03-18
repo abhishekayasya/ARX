@@ -1,0 +1,113 @@
+/* top navigation */
+.nav-bar-container {
+  @include themify($themes) {
+    background: themed("header_nav_bg");
+
+    @media only screen and (max-width: $md-screen) {
+      background: themed("header_nav_mobile_bg");
+    }
+  }
+}
+
+ul.main_menu li a {
+  @include themify($themes) {
+    color: themed("header_nav_link_color");
+
+    @media only screen and (max-width: $md-screen) {
+      color: themed("header_nav_link_mobile_color");
+    }
+  }
+  .wag-second-level-menu {
+    li {
+      @include themify($themes) {
+        color: themed("header_nav_link_color");
+      }
+    }
+  }
+}
+
+ul.main_menu li a {
+  &:focus,
+  &:hover {
+    @include themify($themes) {
+      color: themed("header_nav_link_hover");
+      background: themed("header_sub_nav_bg");
+    }
+  }
+}
+
+ul.main_menu li ul {
+  @include themify($themes) {
+    background: themed("header_sub_nav_bg");
+  }
+}
+
+ul.main_menu li:hover a {
+  @include themify($themes) {
+    background: themed("header_sub_nav_bg");
+    color: themed("header_nav_link_hover");
+  }
+}
+
+ul.main_menu li ul li a {
+  @include themify($themes) {
+    color: themed("header_sub_nav_link_color");
+  }
+}
+
+.lean-header {
+  @include themify($themes) {
+    background: themed("lean-header-bg");
+    color: themed("lean-header-link");
+  }
+}
+
+.lean-header-link {
+  @include themify($themes) {
+    color: themed("lean-header-link");
+
+    &:hover {
+      color: themed("lean-header-link");
+    }
+  }
+}
+
+.hamberg {
+  @include themify($themes) {
+    color: themed("hamburger_color");
+    font-size: themed("hamburger_font_size");
+  }
+}
+
+.hamberg::before,
+.hamberg span::before {
+  @include themify($themes) {
+    background: themed("hamburger_color");
+  }
+}
+
+ul.main_menu ul.wag-second-level-menu li a {
+  @media screen and (min-width: 320px) and (max-width: 766px) {
+    @include themify($themes) {
+      color: themed("header_nav_link_mobile_color");
+    }
+    .wag-second-level-menu li:hover {
+      background: #ecf5fa !important;
+    }
+    .accordin-main span:hover {
+      background: #ecf5fa !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .theme-light ul.main_menu li ul li a {
+    background: #78278b !important;
+    color: #f8f9fa;
+  }
+
+  .accordin-main span:hover {
+    background: #ecf5fa !important;
+    color: #01728e !important;
+  }
+}

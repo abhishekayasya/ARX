@@ -1,0 +1,147 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.tool-tip-custom {
+  top: 8px;
+  right: -40px;
+}
+.input-overflow {
+  overflow: inherit;
+}
+
+.hide_cursor {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn__radio span {
+  font-size: 1rem;
+}
+
+.form__input .input__title span {
+  text-transform: capitalize;
+}
+
+.terms .check-box {
+  align-items: flex-start;
+}
+
+.check-box .termsAndConditions {
+  margin-top: -5px !important;
+  font-size: 16px;
+  font-family: 'open_sansregular';
+}
+
+.check-box.terms {
+  height: auto;
+  padding-top: 3px;
+}
+.terms .check-box {
+  height: auto;
+}
+
+.onlinePrivacyPolicy {
+  padding-left: 40px;
+  padding-top: 23px;
+  margin-bottom: 46px;
+}
+
+.modal__bottom-actions.modal_btns_alignment {
+    justify-content: flex-start;
+  }
+  
+  .createNewAccLink {
+    align-self: center;
+    margin-left: 1rem;
+  }
+  
+  .possible_overlay_heading {
+    font-size: 22px;
+  }
+  
+  .possible_overlay_heading + p {
+    font-size: 16px !important;
+    line-height: 24px !important;
+    width: 625px;
+  }
+  
+  .regContinueBtn {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+.reg-sub-container {
+  padding: 24px;
+  margin-bottom: 40px;
+  box-shadow: 0px 2px 4px 0px #bfbfbf;
+}
+
+.sendToLogin {
+  margin-left: 15px;
+}
+
+.errorMsg {
+  margin-top: -19px;
+  margin-bottom: 36px;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen) {
+  .reg-sub-section  {
+    padding-bottom: 13px;
+  }
+  .createNewAccLink {
+    width: 100%;
+    text-align: center;
+    margin: 30px 0px 0px 0px;
+    align-items: center;
+    }
+    .possible_overlay_heading + p {
+      width: auto;
+    }
+    .onlinePrivacyPolicy {
+      padding-top: 7px;
+      margin-bottom: 40px;
+    }
+    .reg-sub-container {
+      margin-bottom: 54px;
+    }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $md-screen) {
+  .reg_Pass {
+    width: calc(100% - 40px);
+  }
+  .phoneTypeContainer {
+    margin-top: 1.5rem;
+  }
+  .modal__content-contain {
+    width: 57%;
+  }
+}
+
+@media screen and (min-width: $sm-screen) and (max-width: $md-screen) {
+  .reg-sub-container {
+    padding: 24px 48px;
+  }
+}
+
+@media screen and (min-width: $md-screen) {
+  .reg-sub-section {
+    padding: 0 86px;
+    margin: 20px 0 27px 0;
+  }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .setWidthIE {
+    text-align: justify;
+    width: 100%;
+  }
+}

@@ -1,0 +1,54 @@
+<div class="p-3 regAnotherCode  col-12 col-sm-6 text-sm-left">
+    <a href="javascript:void(0)" (click)="requestPreviousPage()"><strong>< Back</strong> </a>
+</div>
+<div class="row">
+  <div class="col-md-12 bg-white forget-password-form">
+    <form [formGroup]="submitSecurityCodeForm" class="form__on-light-bg">
+      <h1 class="h1__page-title text-center icon__code__sent">
+        <span class="icon icon__check color__green">
+          <svg>
+            <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__check"></use>
+          </svg>
+        </span>
+        Code sent</h1>
+      <arxrf-loader [show]="showLoader" message="Loading..."></arxrf-loader>
+      <p class="mt-4 mb-3 codeMsgFontSize" *ngIf="emailMessageText">
+          If your account is valid, a security code has been sent to your email. Please allow two minutes for your code to arrive. {{ emailResponseMessage }}            
+       </p>
+      <p class="mt-4 mb-3 codeMsgFontSize" *ngIf="phoneMessageText">
+          If your account is valid, a security code was sent via text to your phone ending in {{ phoneLastFourDigit }}. Please allow two minutes for your code to arrive. {{ phoneResponseMessage }}
+      </p>      
+      <div class="input__contain">
+        <input
+          class="input__focus"
+          [ngClass]="{
+            'input__error': submitSecurityCodeForm.controls.code.invalid && (submitSecurityCodeForm.controls.code.touched || submitSecurityCodeForm.controls.code.dirty)
+          }"
+          type="text" 
+          formControlName="code" 
+          id="code" 
+          (keyup)=onchangeCode($event) 
+          [specified-input]="submitSecurityCodeForm.controls.code" 
+          pattern="^[0-9]{6,6}$" 
+          invalidExp="[^0-9]" 
+          maxlength="6">
+        <label class="input__title" for="code"><span>Enter your security code</span></label>
+      </div>
+      <div class="input__error-text" *ngIf="submitSecurityCodeForm.controls.code.invalid && (submitSecurityCodeForm.controls.code.touched || submitSecurityCodeForm.controls.code.dirty)">
+        <span *ngIf="submitSecurityCodeForm.controls.code.errors.required">Security Code is required.</span>
+        <span *ngIf="submitSecurityCodeForm.controls.code.errors.pattern">Please enter a valid security code.</span>
+      </div>
+      <span class="input__error-text">{{securityCodeCheckMessage}}</span>
+      <div class="mt-5 row flex-sm-row-reverse">
+          
+          <div class=" col-12 col-sm-6 text-sm-right">
+            <!-- [disabled]="submitSecurityCodeForm.invalid" attribute removed from continue button -->
+            <button class="btn btn_primary mb-3 continueBtn" [ngClass] = "{'btn__disabled' : continueButtonHighlights}" (click)="submitSecurtiyCode();">Continue</button>
+          </div>  
+          <div class="p-3 regAnotherCode  col-12 col-sm-6 text-sm-right">
+              <a href="javascript:void(0)" (click)="requestAnotherCode()">Request New code</a>
+          </div>        
+        </div>
+    </form>
+  </div>
+</div>

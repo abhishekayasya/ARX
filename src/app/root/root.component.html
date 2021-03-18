@@ -1,0 +1,65 @@
+<section class="container-fluid app-container-main color__neutral" [ngStyle]="getStyle()" id="app__root__section" role="main">
+
+  <div class="row">
+  <div class="inactive__message-container" id="arxMainContent" *ngIf="showRootMessage">
+      <div class="col-12">
+        <div class="inactive__message">
+          <span class="icon icon__alert">
+            <svg>
+              <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__alert"></use>
+            </svg>
+          </span>
+          <p class="">
+            Your session has been idle 13 minutes. Please <a href="javascript:void(0)" (click)="hardResetIdleTimer()">click here</a> to continue your session.
+          </p>
+        </div>
+      </div>
+  </div>
+  </div>
+
+  <div class="rx__root-loader-container" *ngIf="appContext.rootLoaderState">
+    <arxrf-loader [show]="appContext.rootLoaderState" [message]="'Please wait...'"></arxrf-loader>
+  </div>
+
+  <arxrf-modal [show]="appContext.showGatewayError | async" cssClasses="" class="cancelRxModal-con" [allowClose]="false">
+    <div class="row">
+      <div class="arx-logo">
+        <arxrf-logo></arxrf-logo>
+      </div>
+    </div>
+
+    <!-- Updates Progress Container -->
+    <div class="container">
+      <div class="row">
+          <div class="col-12 text-center updates-container">
+
+              <h1 class="title">We're sorry.<br>
+                Our server encountered a temporary error when trying to process your request.
+              </h1>
+                  <div class="error-desc"><h3 class="sub-title">Try refreshing the page.</h3>
+                      <span><img src="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/icon-rotate.svg" alt="Refresh" role="img"></span>
+                  <p class="updates-info">Please contact us if this problem persists.</p></div>
+
+              <hr>
+          </div>
+      </div>
+    </div>
+    <!-- Updates Progress Container -->
+
+
+  <!-- Need Help Container -->
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center help-container">
+              <h2>Need help?</h2>
+              <p><span><span>Specialty Pharmacy:</span> 855-244-2555</span> <span
+                      class="tiltt">|</span> <span *ngIf="!appContext.isSpsite"><span>Home Delivery Pharmacy:</span> 877-787-3047</span></p>
+          </div>
+      </div>
+  </div>
+  <!-- Need Help Container -->
+
+</arxrf-modal>
+
+  <router-outlet></router-outlet>
+</section>

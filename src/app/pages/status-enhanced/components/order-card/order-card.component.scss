@@ -1,0 +1,21 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+
+
+.order-card {
+    min-height:auto;
+    padding: 24px 10px;
+    @media screen and (min-width: $md-screen) {
+        padding: 24px;
+    }
+}
+.order-card-conatiner {
+    @media screen and (min-width: $md-screen) and (max-width: 1023px) {
+        width: 520px;
+        margin: auto;
+    }
+}

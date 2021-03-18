@@ -1,0 +1,31 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+@media screen and (max-width: 480px) {
+    .member_dropdown {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .member_dropdown {
+        margin-left: 7px;
+    }
+}
+
+@media screen and (min-width: $md-screen) {
+    .member_dropdown {
+        display: inline-flex;
+    }
+    .select__contain.family_member_dropdown {
+        min-width: 327px;
+    }
+    .family_member_label {
+        align-items: center;
+        display: flex;
+    }
+}

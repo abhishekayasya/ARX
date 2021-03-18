@@ -1,0 +1,65 @@
+nav .btn__back span:before {
+    background: url("../images/icons/icon__arrow-left.svg") no-repeat center;
+}
+
+.nav__top .dropdown__title:before, .nav__top .mega-dropdown__title:before,
+  .nav__top .side-dropdown__title:before, .nav__top .mobile-more__arrow:before,
+  .nav__bottom .dropdown__title:before, .nav__bottom .mega-dropdown__title:before,
+  .nav__bottom .side-dropdown__title:before, .nav__bottom .mobile-more__arrow:before {
+    background: url("../images/icons/icon__arrow-right-blue.svg") no-repeat center;
+  }
+
+  .link__cta:after {
+    background: url("../images/icons/icon__arrow-right-blue.svg");
+  }
+
+  .link__cta-white:after {
+    background: url("../images/icons/icon__arrow-right-white.svg");
+  }
+
+  .accordion .toggle:after {
+    background: url("../images/icons/arrow-down.svg") no-repeat center;
+  } 
+
+ 
+
+
+
+  .check-box .check:after {
+    background: url("../images/icons/icon__check-v2-white.svg") no-repeat center;
+    background-size: 40px;
+  }
+
+  .alert .btn__rounded:after {
+    background: url("../images/icons/icon__dismiss-v2-white.svg") rgba(40, 40, 40, 0.7) !important;
+  }
+
+  .ui-datepicker-prev:before {
+    background-image: url("../images/icons/icon__arrow-left-blue.svg");
+  }
+
+  .ui-datepicker-next:before {
+    background-image: url("../images/icons/icon__arrow-right-blue.svg");
+  }
+
+  .ui-datepicker .ui-datepicker-close {
+    background-image: url("../images/icons/icon__dismiss-v2.svg");
+  }
+
+  .input__date-picker:before {
+    background-image: url("../images/icons/icon__calendar-blue.svg");
+    background-size: 140%;
+  }
+
+  .nav__bread-crumbs a:after {
+    background-image: url("../images/icons/icon__arrow-right.svg") !important;
+  }
+
+  .nav__bread-crumbs-white a:after {
+    background-image: url("../images/icons/icon__arrow-right-white.svg");
+  }
+
+  .menu__mobile:after {
+    background: url("../images/icons/arrow-down.png") no-repeat center;
+    background-size: 15px;
+  }

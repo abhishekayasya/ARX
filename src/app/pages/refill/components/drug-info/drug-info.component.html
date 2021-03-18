@@ -1,0 +1,33 @@
+
+<arxrf-loader [show]="drugInfo == undefined && !serviceError"></arxrf-loader>
+
+<div class="input__error-text" *ngIf="serviceError"><p>{{errorMessage}}</p></div>
+<div class="rx__druginfo-container" *ngIf="drugInfo != undefined">
+  <div class="row">
+    <div class="col-12 rx__druginfo-commonUses">
+      <p><strong>Common Uses</strong> {{drugInfo.commonUses}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="modal__bottom-actions row">
+        <div class="col-12">
+          <p *ngIf="wantMoreInfo">You will be redirected to walgreens website. Do you wish to continue?</p>
+          <div *ngIf="wantMoreInfo">
+            <div class="row confirmationButtons">
+              <div class="col-sm-6 col-xl-12">
+                <button class="btn btn_primary col-12" (click)="actionNo()">No</button>
+              </div>
+              <div class="col-sm-6 col-xl-12">
+                <button class="btn btn_primary col-12" (click)="actionYes()">Yes</button>
+              </div>
+            </div>
+          </div>
+
+
+          <button *ngIf="!wantMoreInfo && !_appContext.isSpsite" class="btn btn_primary col-12" (click)="enableOptions()">View full drug details </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

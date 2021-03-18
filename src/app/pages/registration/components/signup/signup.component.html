@@ -1,0 +1,551 @@
+<div class="col-md-12 text-center noPrint reg-base sub_heading_align mb-4 mb-md-5" [innerHTML]="reg_login_content"></div>
+<form [formGroup]="signUpForm" autocomplete="off" [ngClass]="{'d-none': _registrationService.showCircularLoader | async}">
+  <fieldset>
+    <div class="bg-white reg-form reg-sub-container">
+      <div class="form__on-light-bg reg-sub-section">
+        <legend class="sr-only">Sign up AllianceRx Walgreens Prime account</legend>
+        <div *ngIf="liteRegFlag">
+          <span class="input__contain">
+            <input
+              type="text"
+              formControlName="firstName"
+              id="firstName"
+              (keypress)="getrxStatus()"
+              class="hide_cursor"
+            />
+            <label class="reg-form-label" for="firstName"
+              ><span>First Name</span></label
+            >
+          </span>
+        </div>
+        <div class="form__input mt-0" *ngIf="!liteRegFlag">
+          <label class="reg-form-label" for="firstName"
+            ><span>First Name</span></label
+          >
+          <span
+            class="input__contain"
+          >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                firstNameBlurred && signupCtl.firstName.invalid
+              }"
+              type="text"
+              formControlName="firstName"
+              id="firstName"
+              maxlength="20"
+              required
+              (blur)="blurField('firstName')"
+              autocomplete="no-fill"
+            />
+          </span>
+        </div>
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="firstNameBlurred && signupCtl.firstName.invalid"
+        >
+          <span *ngIf="signupCtl.firstName.errors.required"
+            ><span class="sr-only">Error </span>Please enter your first name.</span
+          >
+          <span *ngIf="signupCtl.firstName.errors.pattern || signupCtl.firstName.errors.whitespace"
+            >Please enter your first name only with letters.</span
+          >
+        </div>
+        <div class="form__input" *ngIf="liteRegFlag">
+          <label class="reg-form-label" for="lastName"
+            ><span>Last Name</span></label
+          >
+          <span class="input__contain">
+            <input
+              type="text"
+              formControlName="lastName"
+              id="lastName"
+              (keypress)="getrxStatus()"
+              class="hide_cursor"
+            />
+          </span>
+        </div>
+
+        <div class="form__input" *ngIf="!liteRegFlag">
+          <label class="reg-form-label" for="lastName"
+            ><span>Last Name</span></label
+          >
+          <span
+            class="input__contain"
+          >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                lastNameBlurred && signupCtl.lastName.invalid
+              }"
+              type="text"
+              formControlName="lastName"
+              id="lastName"
+              maxlength="20"
+              required
+              (blur)="blurField('lastName')"
+              autocomplete="no-fill"
+            />
+          </span>
+        </div>
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="lastNameBlurred && signupCtl.lastName.invalid"
+        >
+          <span *ngIf="signupCtl.lastName.errors.required"
+            ><span class="sr-only">Error </span>Please enter your last name.</span
+          >
+          <span *ngIf="signupCtl.lastName.errors.pattern || signupCtl.lastName.errors.whitespace"
+            >Please enter your last name only with letters.</span
+          >
+        </div>
+
+        <div class="form__input" *ngIf="liteRegFlag">
+          <label class="reg-form-label" for="login"
+            ><span><strong>Email</strong></span></label
+          >
+          <span
+            class="input__contain"
+            [ngClass]="{
+              input__error:
+              signupCtl.login.invalid && signupCtl.login.touched && signupCtl.login.dirty
+            }"
+          >
+            <input
+              type="text"
+              formControlName="login"
+              id="{{'login:' + randomNumber}}"
+              (keypress)="getrxStatus()"
+              class="hide_cursor"
+            />
+          </span>
+        </div>
+
+        <div class="form__input" *ngIf="!liteRegFlag">
+          <label class="reg-form-label" for="login"><span>Email</span></label>
+          <span
+            class="input__contain"
+          >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                duplicateAccountMsg || (loginBlurred && signupCtl.login.invalid)
+              }"
+              type="text"
+              formControlName="login"
+              id="{{'login:' + randomNumber}}"
+              (blur)="checkEmail($event)"
+              (focus)="showTooltip('login')"
+              (keydown)="resetPreviousErrorMsg()"
+              required
+              autocomplete="no-fill"
+            />
+            <div *ngIf="loginTooltip && !loginBlurred" class="tooltip_container">
+              <div class="tooltip_triangle"></div>
+              <div class="tooltip_content">
+                Use the "jane@abc.com" format
+              </div>
+            </div>
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="duplicateAccountMsg || (loginBlurred && signupCtl.login.invalid)"
+        >
+          <span *ngIf="signupCtl.login.errors && signupCtl.login.errors.required"
+            >Please enter your email address.</span
+          >
+          <span *ngIf="signupCtl.login.errors && signupCtl.login.errors.pattern && !duplicateAccountMsg"
+            >Please enter valid email.</span
+          >
+          <span *ngIf="duplicateAccountMsg" class="input__error-text">
+            This email is associated with an existing Walgreens.com account. Please <a reg_login_content class='font-weight-bold' href='/login'>Sign In</a> or use another email address.
+          </span>
+        </div>
+
+        <div class="form__input reg_Pass" *ngIf="liteRegFlag">
+          <label class="reg-form-label" for="password"><span>Password</span></label>
+          <div
+            class="input__contain input-overflow"
+            [ngClass]="{
+              input__error:
+              passwordCheckMessage || (signupCtl.password.invalid && passwordBlurred)
+            }"
+          >
+            <input
+              type="password"
+              maxlength="30"
+              formControlName="password"
+              id="{{'password:' + randomNumber}}"
+              (keypress)="getrxStatus()"
+              class="hide_cursor"
+              (blur)="checkPassword($event)"
+              autocomplete="no-fill"
+            />
+          </div>
+        </div>
+
+        <div class="form__input" *ngIf="!liteRegFlag">
+          <label class="reg-form-label" for="password"><span>Password</span></label>
+          <span
+            name="showpassword"
+            class="input__contain"
+          >
+            <input
+              [ngClass]="{
+                input__error:
+                passwordCheckMessage || (signupCtl.password.invalid && passwordBlurred)
+              }"
+              class="input__focus"
+              maxlength="30"
+              type="{{ inputType }}"
+              formControlName="password"
+              id="{{'password:' + randomNumber}}"
+              (blur)="checkPassword($event)"
+              (focus)="toggleCaps(true)"
+              required
+            >
+            <div *ngIf="passwordTooltip && !passwordBlurred" class="tooltip_container">
+              <div class="tooltip_triangle"></div>
+              <div class="tooltip_content">
+                <ul
+                class="list__disc position-relative"
+                id="tool-tip__text_password"
+                >
+                  <li>Be at least 8 characters</li>
+                  <li>Have at least one letter</li>
+                  <li>Have at least one number</li>
+                  <li>Not be the same as your account name</li>
+                  <li>Not be a common password</li>
+                </ul>
+              </div>
+            </div>
+            <svg
+              *ngIf="inputType === 'text'"
+              class="input-icon open-eyeball"
+              (click)="checkboxFlag()"
+            >
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/input_icons.svg#eyeball-text"
+              ></use>
+            </svg>
+            <svg
+              (click)="checkboxFlag()"
+              *ngIf="inputType === 'password'"
+              class="input-icon"
+            >
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/input_icons.svg#eyeball-password"
+              ></use>
+            </svg>
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="passwordCheckMessage || (passwordBlurred && signupCtl.password.invalid)"
+        >
+          <span *ngIf="signupCtl.password.invalid && !passwordCheckMessage">Please enter your password.</span>
+          <span class="input__error-text">{{ passwordCheckMessage }}</span>
+        </div>
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+        >
+          <span
+            showCapsMessage
+            *ngIf="!passwordCheckMessage && passwordInFocus"
+          >
+              Caps Lock is on.
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white reg-form reg-sub-container">
+      <div class="form__on-light-bg reg-sub-section">
+        <div class="form__input date_of_birth">
+          <label class="reg-form-label" for="dateOfBirth"
+            ><span>Date of Birth</span></label
+          >
+          <span
+            class="input__contain refill-datePicker"
+          >
+            <input
+              class="input__dates input__focus"
+              [ngClass]="{
+                input__error: dobBlurred && showDobCheckMessage
+              }"
+              type="text"
+              formControlName="dateOfBirth"
+              id="dateOfBirth"
+              required
+              placeholder="MM/DD/YYYY"
+              date-picker
+              maxlength="10"
+              (blur)="checkDOB('dateOfBirth')"
+              (focus)="showTooltip('dateOfBirth')"
+            />
+            <div *ngIf="dobTooltip && !dobBlurred" class="tooltip_container">
+              <div class="tooltip_triangle"></div>
+              <div class="tooltip_content">
+                Use the mm/dd/yyyy "month/day/year" format
+              </div>
+            </div>
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="
+          dobBlurred && showDobCheckMessage
+          "
+        >
+          {{ dobCheckMessage }}
+        </div>
+
+        <div class="form__input">
+          <label class="reg-form-label" for="phoneNumber"
+            ><span>Phone</span></label
+          >
+          <span
+            class="input__contain"
+          >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                phoneNumberBlurred && signupCtl.phoneNumber.invalid
+              }"
+              maxlength="15"
+              arxrfPhoneMask
+              onpaste="return false;"
+              [specified-input]="signupCtl.phoneNumber"
+              formControlName="phoneNumber"
+              id="phoneNumber"
+              required
+              [preValue]="signUpForm.value.phoneNumber"
+              [phoneControl]="signupCtl.phoneNumber"
+              (blur)="blurField('phoneNumber')"
+              (focus)="showTooltip('phoneNumber')"
+              autocomplete="no-fill"
+            />
+            <div *ngIf="phoneNumberTooltip && !phoneNumberBlurred" class="tooltip_container">
+              <div class="tooltip_triangle"></div>
+              <div class="tooltip_content">
+                Use the 10-digit "(999) 999-9999" format
+              </div>
+            </div>
+          </span>
+        </div>
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="phoneNumberBlurred && signupCtl.phoneNumber.invalid"
+        >
+        <span *ngIf="signupCtl.phoneNumber.errors.required">
+          Please enter valid Phone Number.
+        </span>
+        <span *ngIf="(signupCtl.phoneNumber.value === '(___) ___-____') || signupCtl.phoneNumber.errors.pattern">
+          Please enter a valid 10-digit phone number.
+        </span>
+        </div>
+
+        <div
+          [ngClass]="{'phone-type-block': isLikelyDesktop,
+          'phone-type-block-mobile': !isLikelyDesktop}"
+        >
+          <label class="reg-form-label">Phone Type</label>
+          <div
+            id="phoneTypeHolder"
+            [ngClass]="{'phone-type-container': isLikelyDesktop,
+              'phone-type-container-mobile': !isLikelyDesktop}"
+          >
+            <button
+              *ngFor="let type of PHONE_TYPES; index as indexOfElement"
+              class="phone-type-button"
+              value="'{{type}}"
+              (click)="updatePhoneType($event)"
+              [ngClass]="{
+                selected:
+                selectedPhoneType === type,
+                middle_button:
+                indexOfElement === 1
+              }"
+              >{{type}}
+            </button>
+          </div>
+        </div>
+        <div *ngIf="isLikelyDesktop" class="tooltip_container_phone_type">
+          <div class="tooltip_triangle"></div>
+          <div class="tooltip_content">
+            Use the phone number above to determine the phone type
+          </div>
+        </div>
+                
+        <!-- SECURITY QUESTION CUSTOM INPUT START -->
+        <arxrf-custom-select
+          [label]="'Security Question'"
+          [controlName]="'securityQuestionCode'"
+          [items]="questions"
+          [value]="signUpForm.value.securityQuestionCode"
+          [placeholder]="'Choose your security question'"
+          [required]="true"
+          [disabled]="false"
+          [tooltipText]="'Select a question for an added layer of security'"
+          [isBlurred]="securityQuestionBlurred"
+          [showTooltip]="securityQuestionTooltip && isLikelyDesktop"
+          [requiredMessage]="'Please select your security question.'"
+          (selectedItem)="updateSelectValue($event)"
+          (blur)="blurField('securityQuestion')"
+          (focus)="showTooltip('securityQuestion')"
+        ></arxrf-custom-select>
+        
+        
+        <!-- SECURITY QUESTION CUSTOM INPUT END -->
+        <div class="form__input">
+          <label class="reg-form-label" for="securityQuestionAnswer"
+              ><span>Security Answer</span></label
+            >
+          <span
+            class="input__contain"
+          >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                (securityAnswerBlurred && signupCtl.securityQuestionAnswer.invalid)
+                && (
+                  signupCtl.securityQuestionAnswer.errors.required
+                  || signupCtl.securityQuestionAnswer.errors.pattern
+                  || signupCtl.securityQuestionAnswer.errors.whitespace
+                )
+              }"
+              type="text"
+              formControlName="securityQuestionAnswer"
+              id="securityQuestionAnswer"
+              required
+              (blur)="blurField('securityQuestionAnswer')"
+              (focus)="showTooltip('securityQuestionAnswer')"
+            />
+            <div *ngIf="securityQuestionAnswerTooltip && !securityAnswerBlurred" class="tooltip_container">
+              <div class="tooltip_triangle"></div>
+              <div class="tooltip_content">
+                Enter an answer that is not easily guessed or researched
+              </div>
+            </div>
+          </span>
+        </div>
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="securityAnswerBlurred && signupCtl.securityQuestionAnswer.invalid"
+        >
+          <span *ngIf="signupCtl.securityQuestionAnswer.errors.required"
+            >Please answer your security question.</span
+          >
+          <span *ngIf="signupCtl.securityQuestionAnswer.errors.pattern || signupCtl.securityQuestionAnswer.errors.whitespace"
+            >Invalid Security Question Answer.</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white reg-form reg-sub-container">
+      <div class="form__on-light-bg reg-sub-section">
+        <div class="check-box terms">
+          <fieldset class="setWidthIE">
+            <legend></legend>
+            <div class="check-box">
+              <input
+                class="input__focus"
+                type="checkbox"
+                formControlName="declaration"
+                (change)="declarationReadAndAgreeToPolicy($event)"
+                id="terms"
+              />
+              <label for="terms"
+                ><figure class="check"></figure>
+                <span class="sr-only"
+                  >I have read and agree to the AllianceRx Walgreens Prime Terms Of
+                  Use</span
+                >
+              </label>
+              <span class="termsAndConditions"
+                >By checking this box, I agree to AllianceRx Walgreens Prime
+                <arxrf-tcpa-comm-policy></arxrf-tcpa-comm-policy> which includes the use of automatic calls and text.
+
+
+              </span>
+            </div>
+            <div class="terms onlinePrivacyPolicy">
+              <span class="termsAndConditions"
+                >I have read and agree to the
+                <arxrf-terms-of-use></arxrf-terms-of-use>
+                and acknowledge that my online credentials will grant account access on alliancerxwp.com and walgreens.com websites.
+                 By continuing, I also agree to 
+                <arxrf-online-privacy-policy></arxrf-online-privacy-policy>
+                and <arxrf-hipaa-policy></arxrf-hipaa-policy></span
+              >
+            </div>
+          </fieldset>
+        </div>
+        <div
+          class="input__error-text errorMsg"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="showDeclarationError"
+        >
+          You must accept the TCPA Communication Policy before continuing.
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button
+            class="btn"
+            (click)="submitDetails(false)"
+            [disabled]="!canSubmit()"
+            [ngClass]="{
+              btn_primary: canSubmit(),
+              btn__neutral: !canSubmit()
+            }"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<arxrf-modal [show]="wpExist" (update)="wpExist = false;" class="termsTextContainer">
+  <h2 class="possible_overlay_heading">Possible existing account</h2>
+  <p>Based on the information you’ve entered, you may already have a Walgreens.com account using a different email
+    address.</p>
+  <div class="modal__bottom-actions modal_btns_alignment">
+    <div class="row modal_width">
+      <button class="btn btn_primary sendToLogin" (click)="sendToLogin()">
+        Yes, use existing account
+      </button>
+      <strong class="createNewAccLink"><a href="javascript:void(0);" (click)="submitDetails(true)">
+          No, create new account
+        </a></strong>
+    </div>
+  </div>
+</arxrf-modal>

@@ -1,0 +1,677 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="module__heading">Manage Access</div>
+    </div>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+  <div class="row fm_access-content" *ngIf="!guestFormState">
+    <div class="col-12">
+      <div *ngIf='!appContext.isSpsite' class="alert alert__info minimal">
+        <a class="alert__text-contain">
+          <span class="icon icon__info">
+            <svg>
+              <use
+                xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__info"
+              ></use>
+            </svg>
+          </span>
+
+          <span>
+            <div id="alert-content">
+              <p>
+                <strong
+                  >Changes to your account will also update your information on
+                  Walgreens.com</strong
+                >
+              </p>
+            </div>
+          </span>
+        </a>
+      </div>
+
+      <p *ngIf='!appContext.isSpsite' class="mt-3">
+        The individuals listed have authorized access to your Walgreens account
+        information.
+      </p>
+      <p class="mt-4">
+        Select "Turn off access" to deactivate a family members account listing.
+        When complete,
+        <a
+          href="javascript:Void(0)"
+          [routerLink]="ROUTES.family_management.absoluteRoute"
+          class="f-blue"
+          >Click here</a
+        >
+        to return to previous screen.
+      </p>
+    </div>
+  </div>
+
+  <div class="row fm_access-content" *ngIf="guestFormState">
+    <div class="col-12">
+      <p class="mt-3">
+        To view and manage Family prescriptions, including access to your
+        pharmacy records,
+        <a href="javascript:void(0)" (click)="redirectToLogin()">sign in</a>
+        with your AllianceRx Walgreens Prime or your Walgreens.com account.
+      </p>
+      <p class="mt-4">Don't have one? Enter your personal information</p>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <form
+        class="form__on-light-bg"
+        [formGroup]="personalInfoForm"
+        *ngIf="!additionalState"
+      >
+        <!--first name-->
+        <div class="form__input">
+          <span
+            class="input__contain"
+          >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                  personalInfoForm.controls.firstName.invalid &&
+                  (personalInfoForm.controls.firstName.touched ||
+                    personalInfoForm.controls.firstName.dirty)
+              }"
+              type="text"
+              formControlName="firstName"
+              id="firstName"
+              maxlength="20"
+              pattern="^[-a-zA-Z]+(\s+[a-zA-Z]+)*$"
+              required
+            />
+            <label class="input__title" for="firstName"
+              ><span>First Name</span></label
+            >
+          </span>
+        </div>
+        <div
+          class="input__error-text"
+          *ngIf="
+            personalInfoForm.controls.firstName.invalid &&
+            (personalInfoForm.controls.firstName.touched ||
+              personalInfoForm.controls.firstName.dirty)
+          "
+        >
+          <span *ngIf="personalInfoForm.controls.firstName.errors.required"
+            >First Name is required.</span
+          >
+          <span *ngIf="personalInfoForm.controls.firstName.errors.pattern"
+            >Please enter valid First Name</span
+          >
+        </div>
+        <!--first name-->
+
+        <!--last name-->
+        <div class="form__input">
+          <span
+            class="input__contain"
+            >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                  personalInfoForm.controls.lastName.invalid &&
+                  (personalInfoForm.controls.lastName.touched ||
+                    personalInfoForm.controls.lastName.dirty)
+              }"
+              type="text"
+              formControlName="lastName"
+              id="lastName"
+              maxlength="20"
+              pattern="^[-a-zA-Z]+(\s+[a-zA-Z]+)*$"
+              required
+            />
+            <label class="input__title" for="lastName"
+              ><span>Last Name</span></label
+            >
+          </span>
+        </div>
+        <div
+          class="input__error-text"
+          *ngIf="
+            personalInfoForm.controls.lastName.invalid &&
+            (personalInfoForm.controls.lastName.touched ||
+              personalInfoForm.controls.lastName.dirty)
+          "
+        >
+          <span *ngIf="personalInfoForm.controls.lastName.errors.required"
+            >Last Name is required.</span
+          >
+          <span *ngIf="personalInfoForm.controls.lastName.errors.pattern"
+            >Please enter valid Last Name</span
+          >
+        </div>
+        <!--last name-->
+
+        <!--date of birth-->
+        <div class="form__input">
+          <span
+            class="input__contain input__remove-animation"
+            id="refill-datePicker"
+            >
+            <input
+              [ngClass]="{
+                input__error:
+                  personalInfoForm.controls.dateOfBirth.invalid &&
+                  (personalInfoForm.controls.dateOfBirth.touched ||
+                    personalInfoForm.controls.dateOfBirth.dirty)
+              }"
+              type="text"
+              formControlName="dateOfBirth"
+              date-picker
+              id="dateOfBirth"
+              required
+              placeholder="MM/DD/YYYY"
+              class="input__dates input__focus"
+              maxlength="10"
+            />
+            <label class="input__title" for="dateOfBirth"
+              ><span>Date of Birth</span></label
+            >
+            <!--tooltip -->
+            <div
+              [popper]="dobformatTooltip"
+              [popperTrigger]="'hover'"
+              [popperPlacement]="'right'"
+              [popperDelay]="300"
+              class="tool-tip tool-tip-custom"
+            >
+              <span
+                role="button"
+                class="tool-tip__trigger"
+                tabindex="0"
+                aria-describedby="tool-tip__text_date"
+              >
+                <span class="icon icon__question-mark">
+                  <svg alt="">
+                    <title>Help information</title>
+                    <use
+                      href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__question-mark"
+                    ></use>
+                  </svg>
+                </span>
+              </span>
+            </div>
+
+            <popper-content #dobformatTooltip>
+              <div>
+                <p id="tool-tip__text_date">Format of date : [mm/dd/yyyy]</p>
+              </div>
+            </popper-content>
+            <!--tooltip -->
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          *ngIf="
+            personalInfoForm.controls.dateOfBirth.invalid &&
+            (personalInfoForm.controls.dateOfBirth.touched ||
+              personalInfoForm.controls.dateOfBirth.dirty)
+          "
+        >
+          <span *ngIf="personalInfoForm.controls.dateOfBirth.errors.required"
+            >Date of Birth is required.</span
+          >
+          <span *ngIf="personalInfoForm.controls.dateOfBirth.errors.validDate"
+            >Please enter valid date.</span
+          >
+        </div>
+        <!--date of birth-->
+
+        <div class="row mt-4">
+          <!--phone number-->
+          <div class="col-sm">
+            <div class="form__input">
+              <span
+                class="input__contain"
+                >
+                <input
+                  class="input__focus"
+                  [ngClass]="{
+                    input__error:
+                      personalInfoForm.controls.number.invalid &&
+                      (personalInfoForm.controls.number.touched ||
+                        personalInfoForm.controls.number.dirty)
+                  }"
+                  type="text"
+                  maxlength="10"
+                  [specified-input]="personalInfoForm.controls.number"
+                  invalidExp="[^0-9]"
+                  formControlName="number"
+                  id="phoneNumber"
+                  pattern="^[0-9]{10,10}$"
+                  required
+                />
+                <label class="input__title" for="phoneNumber"
+                  ><span>Phone</span></label
+                >
+              </span>
+            </div>
+            <div
+              class="input__error-text"
+              *ngIf="
+                personalInfoForm.controls.number.invalid &&
+                (personalInfoForm.controls.number.touched ||
+                  personalInfoForm.controls.number.dirty)
+              "
+            >
+              <span *ngIf="personalInfoForm.controls.number.errors.required"
+                >Phone Number is required.</span
+              >
+              <span *ngIf="personalInfoForm.controls.number.errors.pattern"
+                >Please enter valid Phone Number</span
+              >
+            </div>
+          </div>
+          <!--phone number-->
+
+          <!--phone type-->
+          <div class="col-sm phoneTypeContainer">
+            <span
+              class="select__contain"
+              [ngClass]="{
+                input__error:
+                  personalInfoForm.controls.phoneType.invalid &&
+                  (personalInfoForm.controls.phoneType.touched ||
+                    personalInfoForm.controls.phoneType.dirty)
+              }"
+            >
+              <span class="icon icon__arrow-down">
+                <svg>
+                  <use
+                    href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+              <label for="phoneType">Phone Type</label>
+              <select
+                formControlName="phoneType"
+                id="phoneType"
+                aria-label="Sort by drop-down list, press SPACE BAR to open available options in the list, page will reload"
+              >
+                <option value="{{ type }}" *ngFor="let type of PHONE_TYPES">
+                  {{ type }}
+                </option>
+              </select>
+            </span>
+            <div
+              class="input__error-text"
+              *ngIf="
+                personalInfoForm.controls.phoneType.invalid &&
+                (personalInfoForm.controls.phoneType.touched ||
+                  personalInfoForm.controls.phoneType.dirty)
+              "
+            >
+              <span *ngIf="personalInfoForm.controls.phoneType.errors.required"
+                >Phone Type is required.</span
+              >
+            </div>
+          </div>
+          <!--phone type-->
+        </div>
+      </form>
+
+      <form
+        class="form__on-light-bg"
+        [formGroup]="additionalInfoForm"
+        *ngIf="additionalState"
+      >
+        <!--street-->
+        <div class="form__input">
+          <span
+            class="input__contain"
+            >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                  additionalInfoForm.controls.street1.invalid &&
+                  (additionalInfoForm.controls.street1.touched ||
+                    additionalInfoForm.controls.street1.dirty)
+              }"
+              formControlName="street1"
+              id="street1"
+            />
+            <label class="input__title" for="aptSuite"
+              ><span>Address</span></label
+            >
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          *ngIf="
+            additionalInfoForm.controls.street1.invalid &&
+            (additionalInfoForm.controls.street1.touched ||
+              additionalInfoForm.controls.street1.dirty)
+          "
+        >
+          <span *ngIf="additionalInfoForm.controls.street1.errors.required || additionalInfoForm.controls.street1.errors.whitespace"
+            >Address is required.</span
+          >
+        </div>
+        <!--street-->
+
+        <!--suite/other-->
+        <div class="form__input">
+          <span
+            class="input__contain"
+            >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                  additionalInfoForm.controls.aptSuite.invalid &&
+                  (additionalInfoForm.controls.aptSuite.touched ||
+                    additionalInfoForm.controls.aptSuite.dirty)
+              }"
+              type="text"
+              formControlName="aptSuite"
+              id="aptSuite"
+              required="false"
+            />
+            <label class="input__title" for="aptSuite"
+              ><span>Apt/Suite/Other</span></label
+            >
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          *ngIf="
+            additionalInfoForm.controls.aptSuite.invalid &&
+            (additionalInfoForm.controls.aptSuite.touched ||
+              additionalInfoForm.controls.aptSuite.dirty)
+          "
+        >
+          <span *ngIf="additionalInfoForm.controls.aptSuite.errors.pattern"
+            >Please enter valid Apt/Suite/Other.</span
+          >
+        </div>
+        <!--suite/other-->
+
+        <!--city-->
+        <div class="form__input">
+          <span
+            class="input__contain"
+            >
+            <input
+              class="input__focus"
+              [ngClass]="{
+                input__error:
+                  additionalInfoForm.controls.city.invalid &&
+                  (additionalInfoForm.controls.city.touched ||
+                    additionalInfoForm.controls.city.dirty)
+              }"
+              type="text"
+              formControlName="city"
+              id="city"
+              pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+              required
+            />
+            <label class="input__title" for="city"><span>City</span></label>
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          *ngIf="
+            additionalInfoForm.controls.city.invalid &&
+            (additionalInfoForm.controls.city.touched ||
+              additionalInfoForm.controls.city.dirty)
+          "
+        >
+          <span *ngIf="additionalInfoForm.controls.city.errors.required"
+            >City is required.</span
+          >
+          <span *ngIf="additionalInfoForm.controls.city.errors.pattern"
+            >Please enter a valid City.</span
+          >
+        </div>
+        <!--city-->
+
+        <div class="row">
+          <div class="col">
+            <span
+              class="select__contain mt-3"
+              [ngClass]="{
+                input__error:
+                  additionalInfoForm.controls.state.invalid &&
+                  (additionalInfoForm.controls.state.touched ||
+                    additionalInfoForm.controls.state.dirty)
+              }"
+            >
+              <span class="icon icon__arrow-down">
+                <svg>
+                  <use
+                    href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                  ></use>
+                </svg>
+              </span>
+              <label for="state">State</label>
+              <select formControlName="state" id="state">
+                <option value="" class="" selected>Choose State</option>
+                <option
+                  *ngFor="let state of STATE_US"
+                  value="{{ state.short_name }}"
+                >
+                  {{ state.name }}
+                </option>
+              </select>
+            </span>
+            <div
+              class="input__error-text"
+              *ngIf="
+                additionalInfoForm.controls.state.invalid &&
+                (additionalInfoForm.controls.state.touched ||
+                  additionalInfoForm.controls.state.dirty)
+              "
+            >
+              <span>State is required.</span>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form__input mt-3">
+              <span
+                class="input__contain"
+                >
+                <input
+                  class="input__focus"
+                  [ngClass]="{
+                    input__error:
+                      additionalInfoForm.controls.zipCode.invalid &&
+                      (additionalInfoForm.controls.zipCode.touched ||
+                        additionalInfoForm.controls.zipCode.dirty)
+                  }"
+                  type="text"
+                  maxlength="5"
+                  [specified-input]="additionalInfoForm.controls.zipCode"
+                  invalidExp="[^0-9]"
+                  formControlName="zipCode"
+                  id="zipCode"
+                  pattern="^[0-9]{5,5}$"
+                  required
+                />
+                <label class="input__title" for="zipCode"
+                  ><span>Zip Code</span></label
+                >
+              </span>
+            </div>
+
+            <div
+              class="input__error-text"
+              *ngIf="
+                additionalInfoForm.controls.zipCode.invalid &&
+                (additionalInfoForm.controls.zipCode.touched ||
+                  additionalInfoForm.controls.zipCode.dirty)
+              "
+            >
+              <span *ngIf="additionalInfoForm.controls.zipCode.errors.required"
+                >Zip Code is required.</span
+              >
+              <span *ngIf="additionalInfoForm.controls.zipCode.errors.pattern"
+                >Please enter valid Zip Code.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <span
+          class="select__contain mt-3"
+          [ngClass]="{
+            input__error:
+              additionalInfoForm.controls.gender.invalid &&
+              (additionalInfoForm.controls.gender.touched ||
+                additionalInfoForm.controls.gender.dirty)
+          }"
+        >
+          <label for="gender">Gender</label>
+          <span class="icon icon__arrow-down">
+            <svg>
+              <use
+                href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+              ></use>
+            </svg>
+          </span>
+          <select formControlName="gender" id="gender">
+            <option value="" class="" selected>Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </span>
+        <div
+          class="input__error-text"
+          *ngIf="
+            additionalInfoForm.controls.gender.invalid &&
+            (additionalInfoForm.controls.gender.touched ||
+              additionalInfoForm.controls.gender.dirty)
+          "
+        >
+          <span>Gender is required.</span>
+        </div>
+      </form>
+
+      <div class="row mt-4">
+        <div class="col-12 text-right">
+          <button
+            type="button"
+            class="btn btn_primary"
+            (click)="searchForAdmin()"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row fm_access-list" *ngIf="manager.admins && !guestFormState">
+    <div class="col-12">
+      <div class="row fm_access-item" *ngFor="let admin of manager.admins">
+        <div class="col-md-8">
+          <p class="fm_access-item-name">
+            {{ admin.firstName }} {{ admin.lastName }}
+          </p>
+          <ul class="mt-2">
+            <li>
+              <p>
+                <strong>Added</strong> <span>{{ admin.accountAddedDate }}</span>
+              </p>
+              <p>
+                <strong>Expires</strong>
+                <span>{{
+                  admin.accountExpirationDate
+                    ? admin.accountExpirationDate
+                    : "Not Available"
+                }}</span>
+              </p>
+              <p><strong>Account Status</strong> <span>Full Access</span></p>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <button
+            class="btn btn_primary"
+            type="button"
+            (click)="enableRemoveConfirm(admin.id)"
+          >
+            Turn off access
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12" *ngIf="state_noMember">
+          <p>No member has access to your account</p>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="!manager.loggedIn">
+        <div class="col-12 text-right">
+          <button
+            type="button"
+            class="btn_primary btn mt-4"
+            (click)="guestFormState = true; additionalState = false"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<arxrf-modal
+  [show]="enableRemoveAccessConfirm"
+  (update)="updateAccessConfirmState($event)"
+  *ngIf="adminToRemove"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="">Turn off access</h1>
+
+        <p class="mt-5">
+          {{ adminToRemove.firstName }} {{ adminToRemove.lastName }} will no
+          longer have access to your health and prescription information.
+        </p>
+        <p class="mt-1">
+          {{ adminToRemove.firstName }} {{ adminToRemove.lastName }} can send
+          you another invitation to join Family Prescriptions.
+        </p>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12 col-xs-12 fm__overlay-controls">
+        <button
+          class="btn btn_primary btn_continue remove_access_model_btn"
+          type="button"
+          (click)="continueToRemove()"
+        >
+          Confirm
+        </button>
+        <a
+          href="javascript:void(0)"
+          class="btn_cancel"
+          (click)="updateAccessConfirmState(false)"
+          >Cancel</a
+        >
+      </div>
+    </div>
+  </div>
+</arxrf-modal>

@@ -1,0 +1,22 @@
+<span class="select__contain">
+  <label for="familyMember" >{{inputTitle}}</label>
+  <span class="icon icon__arrow-down">
+    <svg><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use></svg>
+   </span>
+  <select (change)="memberChange()" [(ngModel)]="currentMember" id="familyMember">
+    <option [value]="userService.user.id">{{userService.user.profile.basicProfile.firstName}} {{userService.user.profile.basicProfile.lastName}}</option>
+    <option *ngFor="let member of members"
+            [value]="member.profileId">
+              {{member.firstName}} {{member.lastName}}
+    </option>
+    <option value="addMember" *ngIf="!isPrescriptionFlow()">Add/manage family</option>
+  </select>
+</span>
+
+
+
+
+  
+
+
+

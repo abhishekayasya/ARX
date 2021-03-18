@@ -1,0 +1,66 @@
+<div class="accordian-container row">
+  <div class="accordian-row col-12 col-lg-{{12 / column}}" [ngClass]="{'selected': activeAccordian === item}"
+    *ngFor="let accordianitem of accordianItems$ | async">
+    <div class="accordian-item" *ngFor="let item of accordianitem">
+      <div class="accordian-body" *ngIf="direction==='up'">
+        <ng-container *ngIf="item && item.isActive">
+          <ng-container *ngTemplateOutlet="item.bodyComponent.bodyContent">
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="accordian-head">
+        <ng-container *ngIf="item.headComponent">
+          <ng-container *ngTemplateOutlet="item.headComponent.bodyContent">
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="accordian-body" *ngIf="direction==='middle'">
+        <ng-container *ngIf="item && item.isActive">
+          <ng-container *ngTemplateOutlet="item.bodyComponent.bodyContent">
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="accordian-toggle">
+        <a *ngIf="!toggleButton; else isToggleButtonActive;" (click)="selectAccordian(item)">
+          <ng-container *ngIf="item.toggleBoxComponent.bodyContent">
+            <ng-container *ngTemplateOutlet="item.toggleBoxComponent.bodyContent">
+            </ng-container>
+          </ng-container>
+        </a>
+        <ng-template #isToggleButtonActive>
+          <a *ngIf="item.isActive; else isToggleBodyActive;" (click)="selectAccordian(item)">
+            <ng-container *ngIf="item.toggleOffComponent.bodyContent">
+              <ng-container *ngTemplateOutlet="item.toggleOffComponent.bodyContent">
+              </ng-container>
+            </ng-container>
+          </a>
+
+          <ng-template #isToggleBodyActive>
+            <a (click)="selectAccordian(item)">
+              <ng-container *ngIf="item.toggleOnComponent.bodyContent">
+                <ng-container *ngTemplateOutlet="item.toggleOnComponent.bodyContent">
+                </ng-container>
+              </ng-container>
+            </a>
+          </ng-template>
+
+          <ng-container *ngIf="item.toggleBoxComponent.bodyContent">
+            <ng-container *ngTemplateOutlet="item.toggleBoxComponent.bodyContent">
+            </ng-container>
+          </ng-container>
+
+        </ng-template>
+      </div>
+
+      <div class="accordian-body" *ngIf="direction==='down'">
+        <ng-container *ngIf="item && item.isActive">
+          <ng-container *ngTemplateOutlet="item.bodyComponent.bodyContent">
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

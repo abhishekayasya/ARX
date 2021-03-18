@@ -1,0 +1,65 @@
+<div class="row dashboard-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-4 offset-md-8">
+        <div class="rx__members-container">
+          <arxrf-refill-members
+            (onSelect)="updateMember($event)"
+          ></arxrf-refill-members>
+        </div>
+      </div>
+    </div>
+
+    <arxrf-dashboard-tabs
+      [activeTabId]="ROUTES.status.route"
+      (refillclick)="CallRefillAction()"
+    ></arxrf-dashboard-tabs>
+  </div>
+</div>
+
+<div class="container mt-5 pb-3 mobileView">
+  <arxrf-loader [show]="loadingState" [message]="'Loading.....'"></arxrf-loader>
+
+  <div *ngIf="refillDueList">
+    <arxrf-order-tile
+      *ngFor="let order of refillDueList"
+      [order]="order"
+    ></arxrf-order-tile>
+  </div>
+  <div *ngIf="orders && !isOrderStatusServieError">
+    <arxrf-order-tile
+      *ngFor="let order of sortedOrder"
+      [order]="order"
+    ></arxrf-order-tile>
+  </div>
+  <div *ngIf="orders && !isOrderStatusServieError">
+    <arxrf-order-tile
+      *ngFor="let order of shippedOrder | orderBy: '-shippedDate'"
+      [order]="order"
+    ></arxrf-order-tile>
+  </div> 
+  <arxrf-message></arxrf-message>
+  <div class="row">
+    <div class="col-12 statusDisclaimer">
+      <div>
+        <h2>Don’t see your recent order?</h2>
+        <p>
+          Processing orders may take up to one business day to appear. If you
+          still don’t see a status for a recent order, please contact us:
+        </p>
+        <div class="contactDetails">
+          <p>
+            Specialty Pharmacy:
+            <a href="tel:855-244-2555" (click)="SpecialtyToll()"
+              >855-244-2555</a
+            >
+          </p>
+          <p *ngIf='!appContext.isSpsite' >
+            Home Delivery Pharmacy:
+            <a href="tel:877-787-3047" (click)="HomeToll()">877-787-3047</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

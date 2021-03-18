@@ -1,0 +1,274 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.contact-info-wrapper {
+  padding-top: 40px;
+  padding-bottom: 100px;
+  padding-left: 215px;
+  background-color: #fff;
+  width: 100%;
+  margin-bottom: -84px;
+  .contact-info-container {
+    width: 570px;
+    margin: 0;
+    padding: 0;
+    form.ng-invalid fieldset.mt-3 .btn__radio {
+      margin-bottom: 20px;
+    }
+    .contact-info-title {
+      width: 100%;
+      margin-bottom: 40px;
+      h1 {
+        font-size: 28px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.21;
+        letter-spacing: normal;
+        color: #404040;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 18px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.83;
+        letter-spacing: normal;
+        color: #404040;
+      }
+    }
+    .contact-info-describe-role {
+      width: 100%;
+      // margin-bottom: 20px;
+      h2 {
+        font-size: 22px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.36;
+        letter-spacing: normal;
+        color: #404040;
+      }
+    }
+    .btn-container {
+      width: 100%;
+      margin-top: 20px;
+      p {
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: normal;
+        color: #404040;
+      }
+    }
+    .contact-none-of-these {
+      width: 100%;
+      margin-bottom: 40px;
+      p {
+        font-size: 18px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.83;
+        letter-spacing: normal;
+        color: #404040;
+        span {
+          font-family: Helvetica Neue LT W01_85 Heavy;
+          font-size: 18px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.22;
+          letter-spacing: normal;
+          color: #01728e;
+          font-weight: bold;
+        }
+        a {
+          vertical-align: middle;
+        }
+        .arrow-img {
+          width: 34px;
+          vertical-align: middle;
+          margin-left: -10px;
+        }
+      }
+    }
+
+    .contact-info-form-container {
+      .input__error-text {
+        .hd_error_icon {
+          // min-width: 25px;
+          // top:-20px;
+          vertical-align: middle;
+          float: left;
+          padding-top: 7px;
+          padding-left: 10px;
+        }
+        .err-text-align {
+          // top: 0px;
+          // position: relative;
+          vertical-align: middle;
+          // float: left;
+          padding-top: 7px;
+          padding-left: 10px;
+        }
+      }
+      .input__text-area {
+        border-radius: 5px;
+        border: solid 1px #e4e4e4;
+        background-color: #fbfaf9;
+        font-family: HelveticaNeueLTW01-45Light;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        label {
+          font-size: 15px;
+          font-family: HelveticaNeueLTW01-45Light;
+        }
+        .character-count {
+          font-size: 15px;
+          font-family: HelveticaNeueLTW01-45Light;
+          padding-left: 20px;
+        }
+      }
+      .character-count {
+        font-size: 14px;
+        font-family: HelveticaNeueLTW01-45Light;
+        padding-left: 20px;
+        top: -50px;
+        position: relative;
+        color: #404040;
+      }
+      .textarea-box {
+        padding: 10px 20px;
+        min-height: 150px;
+        font-family: HelveticaNeueLTW01-45Light;
+        font-size: 15px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #404040;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .contact-info-Last-name {
+    margin-top: 20px !important;
+  }
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $md-screen) {
+  .contact-info-wrapper {
+    padding-top: 40px;
+    padding-bottom: 100px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .contact-info-container {
+      width: 100%;
+      .contact-info-describe-role {
+        .radio-fullwidth {
+          width: 280px;
+        }
+      }
+      .contact-none-of-these {
+        p {
+          width: 100%;
+          span {
+            width: 100%;
+            float: left;
+          }
+        }
+      }
+      .contact-info-form-container {
+        .contact-info-Last-name {
+          margin-top: 0px;
+        }
+
+        .btn-container {
+          .contact-btn {
+            margin-top: 0px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: $md-screen) and (max-width: $lg-screen) {
+  .contact-info-wrapper {
+    padding-top: 40px;
+    padding-bottom: 100px;
+    padding-left: 70px;
+    background-color: #fff;
+    width: 100%;
+    .contact-info-container {
+      width: 570px;
+
+      .contact-none-of-these {
+        p {
+          width: 100%;
+          span {
+            width: 100%;
+          }
+        }
+      }
+
+      .contact-info-form-container {
+        .contact-info-Last-name {
+          margin-top: 0px;
+        }
+
+        .btn-container {
+          .contact-btn {
+            margin-top: 0px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.input-error-test {
+  color: #e31837 !important;
+}
+
+.contact-none-of-these {
+  p {
+    a {
+      vertical-align: middle;
+    }
+  }
+}
+
+input:-ms-input-placeholder:focus {
+  color: transparent;
+}
+textarea:-ms-input-placeholder:focus {
+  color: transparent;
+}
+
+.input__contain input:valid + .input__title,
+.input__contain input:focus + .input__title {
+}
+.input__contain input:valid :-ms-input-placeholder,
+.input__contain input:focus :-ms-input-placeholder {
+  font-family: "HelveticaNeueLTW01-75bold";
+  margin: 0;
+}
+
+.theme-default .input__error-text {
+  float: left;
+  width: 100%;
+  margin-bottom: 20px;
+}

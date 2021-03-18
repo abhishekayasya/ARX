@@ -1,0 +1,263 @@
+<div class="container-box">
+  <arxrf-loader
+    [show]="showLoader"
+    message="Loading..."
+    [loaderOverlay]="!showLoader"
+  ></arxrf-loader>
+  <div class="row">
+    <div class="message-wrapper">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+  <div class="container">
+    <div *ngIf="!showLoader && currentIntervention">
+      <div class="row" *ngIf="formQuestion">
+        <div class="col-md-12 mt-5 mb-2 py-5">
+          <h2 class="Clinical-review-for">
+            Medication review for {{ currentIntervention.name }}
+          </h2>
+        </div>
+        <form
+          [formGroup]="InterventionForm"
+          (ngSubmit)="onClickNext(this.InterventionForm.value)"
+          class="col-12 col-sm-10 col-md-8 offset-0 offset-sm-1 offset-md-2 bg-white py-5 px-1 px-sm-5"
+        >
+          <div formArrayName="InterventionFromArray">
+            <div
+              *ngFor="
+                let item of this.InterventionForm.get('InterventionFromArray')
+                  .controls;
+                let i = index
+              "
+            >
+              <div
+                class="py-4"
+                *ngIf="
+                  !formQuestion[i]['@nil'] &&
+                  formQuestion[i].QuestionText !== 'SKIP'
+                "
+              >
+                <div [formGroupName]="i">
+                  <div>
+                    <h4
+                      class="heading"
+                      [innerHTML]="formQuestion[i].QuestionText"
+                    ></h4>
+                  </div>
+
+                  <div class="py-4" *ngIf="false">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Doloribus aspernatur obcaecati unde quaerat. In,
+                      laudantium voluptatum possimus ducimus ullam, incidunt cum
+                      mollitia, delectus quod quam ab sunt nobis fuga quidem?
+                    </p>
+                  </div>
+
+                  <div
+                    class="my-4"
+                    *ngIf="formQuestion[i].ControlType == 'combobox'"
+                  >
+                    <span class="select__contain mt-3">
+                      <span class="icon icon__arrow-down">
+                        <svg>
+                          <use
+                            href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"
+                          ></use>
+                        </svg>
+                      </span>
+                      <select
+                        id="combobox+{{ i }}"
+                        (change)="
+                          selectOption(formQuestion[i], $event.target.value)
+                        "
+                        [required]="true"
+                        formControlName="question"
+                        arxrfDropdownDirective
+                      >
+                        <option
+                          *ngFor="
+                            let c_item of formQuestion[i].AllowableAnswers
+                              .AnswerType
+                          "
+                          value="{{ c_item.Answer }}"
+                        >
+                          {{ c_item.AnswerDisplayText }}
+                        </option>
+                      </select>
+                      <label for="combobox+{{ i }}">Select</label>
+                    </span>
+                  </div>
+
+                  <!-- TODO: Work remaining on checkbox -->
+                  <div
+                    *ngIf="
+                      formQuestion[i].ControlType == 'checkboxlist' ||
+                      formQuestion[i].ControlType == 'checkboxlist'
+                    "
+                  >
+                    <div formArrayName="question">
+                      <div
+                        class="check-box checkBox"
+                        *ngFor="
+                          let c_item of this.InterventionForm.get(
+                            'InterventionFromArray'
+                          ).controls[i].get('question').controls;
+                          let j = index
+                        "
+                      >
+                        <input
+                          type="checkbox"
+                          [checked]="
+                            this.checkedItems.hasOwnProperty(
+                              formQuestion[i].AllowableAnswers.AnswerType[j]
+                                .AnswerDisplayText +
+                                '|' +
+                                formQuestion[i].QuestionId
+                            )
+                          "
+                          (change)="
+                            updateCheckedOptions(
+                              $event,
+                              formQuestion[i].AllowableAnswers.AnswerType[j]
+                                .AnswerDisplayText,
+                              formQuestion[i].AllowableAnswers.AnswerType[j]
+                                .Answer,
+                              formQuestion[i].QuestionId
+                            )
+                          "
+                          [formControlName]="j"
+                          aria-label="Option"
+                        />
+                        <label for="question">
+                          <figure class="check"></figure>
+                        </label>
+                        <span class="checkBox-label">{{
+                          stripUnderscore(formQuestion[i].AllowableAnswers.AnswerType[j]
+                            .AnswerDisplayText)
+                        }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    id="radio+{{ i }}"
+                    class="row"
+                    *ngIf="formQuestion[i].ControlType == 'radio'"
+                  >
+                    <div
+                      class="btn__radio col-12 my-1"
+                      *ngFor="
+                        let c_item of formQuestion[i].AllowableAnswers
+                          .AnswerType
+                      "
+                    >
+                      <input
+                        type="radio"
+                        formControlName="question"
+                        value="{{ c_item.Answer }}"
+                      />
+                      <label>
+                        <span class="radio"></span>
+                        <span>{{ c_item.AnswerDisplayText }}</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div
+                    class="form__input"
+                    *ngIf="formQuestion[i].ControlType == 'textbox'"
+                  >
+                    <span class="input__text-area">
+                      <textarea
+                        id="notes"
+                        formControlName="question"
+                        [maxlength]="4000"
+                        (keypress)="omit_special_char($event)"
+                        (input)="
+                          this.onTextAreaChange(
+                            formQuestion[i].QuestionId,
+                            $event.target.value
+                          )
+                        "
+                        onkeyup="this.value = this.value.replace(/[`^]/g, '')"
+                        class="textarea-box"
+                        value="{{ c_item }}"
+                        placeholder=""
+                      ></textarea>
+                    </span>
+                  </div>
+
+                  <div class="py-4" *ngIf="false">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Doloribus aspernatur obcaecati unde quaerat. In,
+                      laudantium voluptatum possimus ducimus ullam, incidunt cum
+                      mollitia, delectus quod quam ab sunt nobis fuga quidem?
+                    </p>
+                  </div>
+
+                  <div *ngIf="false">
+                    <h4 class="heading">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Quia commodi architecto non consequuntur nihil dolor
+                      itaque doloremque ut consequatur dolorum totam optio
+                      fugiat molestias, animi, nisi, ad aut modi ex.
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 float-none float-sm-right">
+            <button
+              type="submit"
+              class="btn step_btn"
+              [ngClass]="
+                this.InterventionForm.invalid || isdisableNext
+                  ? 'btn__disabled'
+                  : 'btn_primary'
+              "
+              [disabled]="this.InterventionForm.invalid"
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="backdrop" [ngStyle]="{ display: display }"></div>
+
+    <!-- modal -->
+    <div [ngStyle]="{ display: display }">
+      <!-- modal-dialog -->
+      <div class="modal-dialog errordialog" role="document">
+        <!-- modal-content -->
+        <div class="modal-content">
+          <!-- modal-header -->
+          <div class="modal-header">
+            <div class="model-title">
+              {{ error_title }}
+            </div>
+          </div>
+
+          <!-- modal-body -->
+          <div class="modal-body">
+            {{ errorMessage }}
+          </div>
+
+          <!-- modal-footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="theme-default btn_primary btn continuebtn"
+              (click)="closeModalDialog()"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

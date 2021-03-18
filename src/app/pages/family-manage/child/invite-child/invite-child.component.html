@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="module__heading">Add a Child</div>
+    </div>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+  <form class="form__on-light-bg" [formGroup]="childInviteForm">
+    <div class="child-details">
+      <div>
+        <p class="detailValue">{{userName}}</p>
+        <p class="detailValue">Since your child is between 13 and 17 years old and has a Walgreens pharmacy account, you’ll need to send them an invitation
+          to join your Family Prescriptions. Invitations are required for security.</p>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="form__input">
+          <span class="input__contain">
+            <input
+              class="input__focus"
+              [ngClass]="{
+                'input__error': childInviteForm.controls.email.invalid && (childInviteForm.controls.email.touched || childInviteForm.controls.email.dirty)
+              }"
+              type="text" 
+              formControlName="email" 
+              id="email" 
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" 
+              required/>
+            <label class="input__title" for="email">
+              <span>Child's email address</span>
+            </label>
+          </span>
+          </div>
+          <div class="input__error-text" *ngIf="childInviteForm.controls.email.invalid && (childInviteForm.controls.email.touched || childInviteForm.controls.email.dirty)">
+            <span *ngIf="childInviteForm.controls.email.errors.required">Please enter email address.</span>
+            <span *ngIf="childInviteForm.controls.email.errors.pattern">Please enter valid email</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="invitation-details">
+      <p>
+        <strong class="detailLabel">Your invitation will look like this: </strong>
+      </p>
+      <div>
+        <p class="detailLabel">Subject:</p>
+        <p class="detailValue">{{childInviteForm.controls.subject.value}}</p>
+      </div>
+
+      <div>
+        <p class="detailLabel">Message: </p>
+        <p class="detailValue">{{childInviteForm.controls.invitationMsg.value}}</p>
+      </div>
+
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <h3>Additional Message: </h3>
+        <div class="form__input">
+          <span class="input__contain">
+            <input
+              class="input__focus"
+              [ngClass]="{
+                'input__error': childInviteForm.controls.additionalMsg.invalid && (childInviteForm.controls.additionalMsg.touched || childInviteForm.controls.additionalMsg.dirty)
+              }" 
+              type="text" 
+              formControlName="additionalMsg" 
+              id="additionalMsg"/>
+            <label class="input__title" for="email">
+              <span>Type your message here (optional)</span>
+            </label>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="row no-gutters btn-section mt-4">
+    <span class="btn__pair">
+      <a href="{{routes.family_management.absoluteRoute}}" class="secondary">Cancel</a>
+      <a href="javascript:void(0);" role="button" (click)="sendInvite()">
+        <span class="btn btn_primary">Continue</span>
+      </a>
+    </span>
+  </div>
+
+
+
+</div>

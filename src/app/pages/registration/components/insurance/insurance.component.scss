@@ -1,0 +1,37 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.insurance__hc_list li {
+  float: left;
+  min-width: 50%;
+  padding: 1%;
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 737px){
+  .insuranceContainer{
+    padding: 1rem !important;
+
+    form{
+      padding: 0;
+    }
+  }
+
+}
+
+.form__input .input__title span {
+  text-transform: capitalize;
+}
+
+.insurance__hc_list fieldset legend {
+  display: none;
+}
+
+input[type=checkbox]:focus+label, select:focus  {
+  outline: #4D90FE solid 2px;
+  outline-style: auto;
+}

@@ -1,0 +1,65 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+.accoun__header {
+  background: #fff;
+  padding-top: 1em;
+  h1{
+    font-size: 24px;
+    font-family: HelveticaNeueLTW01-45Light;
+  }
+  .account__header-count {
+    p:first-child {
+      font-size: 1.4em;
+    }
+    p:last-child {
+      font-size: 2.6em;
+      font-family: HelveticaNeueLTW01-45Light;
+
+      @media only screen
+      and (min-device-width: $xs-screen)
+      and (max-device-width: $sm-screen) {
+          font-size: 1.2rem;
+      }
+      @media only screen
+      and (min-device-width: $sm-screen)
+      and (max-device-width: $md-screen) {
+        font-size: 1.8rem;
+      }
+
+    }
+  }
+
+  .refillPresBtn, .checkStatusBtn{
+    width: 100%;
+  }
+  
+  .checkStatusBtn{
+    @media only screen
+    and (min-device-width: $xs-screen)
+    and (max-device-width: $sm-screen) {
+      margin-top: 10px;
+    }
+  }
+
+}
+
+.msg-text p strong a {
+  display: inline;
+  overflow: unset;
+}
+
+.closeBtn{
+  background-color: transparent;
+}
+
+/*IE alignment issue*/
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .closeBtn { margin-top: -20px; }
+  .icon .icon__arrow-down {display: none;}
+}
+
+

@@ -1,0 +1,5 @@
+.notifications_inbox-list thead{
+    @include themify($themes) {
+        background-color: themed("notification_inbox_thead_bg");
+    }
+}

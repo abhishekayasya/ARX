@@ -1,0 +1,40 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.mailSentMsg{
+  font-size: 16px;
+  span{
+    font-weight: bold;
+  }
+}
+
+.icon__info {
+  vertical-align: -5px;
+}
+
+.signInbtn {
+  width: 170px;
+  z-index: 9;
+}
+
+.retrieve-username-form {
+  padding: 3em;
+    border-radius: 5px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+@media only screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+  .btn_primary {
+    width: 100%;
+  }
+  .forgotPassLink {
+    padding-top: 12px;
+  }
+  .retrieve-username-form {
+    padding: 2em;
+  }
+}

@@ -1,0 +1,651 @@
+<h1 class="h1__page-title text-center reg-base" *ngIf="!registrationService.verificationSelected">
+  {{headingMessage}}
+</h1>
+
+<div *ngIf="!registrationService.verificationSelected">
+    <p class="subHeading text-center">{{subHeadingMessage}}</p>
+</div>
+
+
+<form [formGroup]="addressForm" 
+  class="form__on-light-bg" 
+  [ngClass]="{'d-none': registrationService.showCircularLoader | async}"
+  *ngIf="!registrationService.verificationSelected && showAddressSection" 
+  autocomplete="no-fill"
+>
+  <!-- section to prefill personal information  (firstname, lastname, email and date of birth)-->
+  <div class="bg-white reg-form reg-sub-container mt-4" *ngIf="(isUpgrading || isSSO)">
+    <div class="form__on-light-bg reg-sub-section">
+      <div class="rx__upgrade-prefill" *ngIf="prefilling">
+
+        <div class="rx__upgrade-prefill-item"
+          *ngIf="(isUpgrading || isSSO) && registrationService.signupDataCache.firstName">
+          <label class="rx__upgrade-prefill-title">
+            <span>First Name</span>
+          </label>
+          <p class="rx__upgrade-prefill-value">{{registrationService.signupDataCache.firstName}}</p>
+        </div>
+
+        <div class="rx__upgrade-prefill-item"
+          *ngIf="(isUpgrading || isSSO) && registrationService.signupDataCache.lastName">
+          <label class="rx__upgrade-prefill-title">
+            <span>Last Name</span>
+          </label>
+          <p class="rx__upgrade-prefill-value">{{registrationService.signupDataCache.lastName}}</p>
+        </div>
+
+        <div class="rx__upgrade-prefill-item" *ngIf="registrationService.signupDataCache.login">
+          <label class="rx__upgrade-prefill-title">
+            <span>Email</span>
+          </label>
+          <p class="rx__upgrade-prefill-value">{{registrationService.signupDataCache.login}}</p>
+        </div>
+
+        <div class="rx__upgrade-prefill-item"
+          *ngIf="registrationService.signupDataCache.dateOfBirth">
+          <label class="rx__upgrade-prefill-title">
+            <span>Date Of Birth</span>
+          </label>
+          <p class="rx__upgrade-prefill-value">{{registrationService.signupDataCache.dateOfBirth}}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <fieldset>
+    <legend class="sr-only">{{headingMessage}}</legend>
+
+    <!-- second container for upgrading/sso process -->
+    <div class="bg-white reg-form reg-sub-container mt-5" *ngIf="(isUpgrading || isSSO)">
+      <div class="form__on-light-bg reg-sub-section">
+        <div class="mt-3" *ngIf="isSSO && !isUpgrading">
+          <label class="reg-form-label" for="login"><span>Email</span></label>
+          <div class="input__contain">
+            <input
+              [ngClass]="{
+                'input__error': duplicateAccountMsg || (loginBlurred && addressForm.controls.login.invalid)
+              }"
+              class="input__focus"
+              type="text" 
+              formControlName="login" 
+              id="{{'login:' + randomNumber}}" 
+              pattern="\S+@\S+[\.]\S+" 
+              (blur)="checkEmail($event)"
+              (focus)="showTooltip('login')" 
+              autocomplete="no-fill"
+            />
+            <div *ngIf="loginTooltip && !loginBlurred" class="tooltip_container">
+              <div class="tooltip_triangle"></div>
+              <div class="tooltip_content">
+                Use the "jane@abc.com" format
+              </div>
+            </div>
+          </div>
+          <div class="input__error-text" aria-live="assertive" role="alert"
+            *ngIf="(duplicateAccountMsg && loginBlurred) || (loginBlurred && addressForm.controls.login.invalid)">
+            <span *ngIf="addressForm.controls.login.errors && addressForm.controls.login.errors.required"
+            >Please enter your email address.</span>
+            <span *ngIf="addressForm.controls.login.errors && addressForm.controls.login.errors.pattern && !duplicateAccountMsg"
+            >Please enter valid email.</span>
+            <span *ngIf="duplicateAccountMsg" class="input__error-text">
+              This email is associated with an existing Walgreens.com account. Please <a reg_login_content class='font-weight-bold' href='/login'>Sign In</a> or use another email address.
+             </span>
+          </div>
+        </div>
+        <div class="password-container mt-4" *ngIf="isSSO && !this.isUpgrading">
+          <label class="reg-form-label" for="password"><span>Password</span></label>
+          <div class="form__input">
+            <div class="input__contain input-overflow">
+              <input 
+                [ngClass]="{
+                  input__error: passwordCheckMessage || (addressForm.controls.password.invalid && passwordBlurred)
+                }"
+                class="input__focus"
+                type="{{inputType}}" 
+                formControlName="password" 
+                id="{{'password:' + randomNumber}}" 
+                (blur)="checkPassword($event)"
+                (focus)="toggleCaps(true)"
+                required
+              />
+              <div *ngIf="passwordTooltip && !passwordBlurred" class="tooltip_container">
+                <div class="tooltip_triangle"></div>
+                <div class="tooltip_content">
+                  <ul
+                  class="list__disc position-relative"
+                  id="tool-tip__text_password"
+                  >
+                    <li>Be at least 8 characters</li>
+                    <li>Have at least one letter</li>
+                    <li>Have at least one number</li>
+                    <li>Not be the same as your account name</li>
+                    <li>Not be a common password</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="input__error-text"
+            aria-live="assertive"
+            role="alert"
+            *ngIf="passwordCheckMessage || (passwordBlurred && addressForm.controls.password.invalid)"
+          >
+            <span *ngIf="addressForm.controls.password.invalid && !passwordCheckMessage">Please enter your password.</span>
+            <span class="input__error-text">{{ passwordCheckMessage }}</span>
+          </div>
+          <div
+            class="input__error-text"
+            aria-live="assertive"
+            role="alert"
+          >
+            <span
+              showCapsMessage
+              *ngIf="!passwordCheckMessage && passwordInFocus"
+            >
+                Caps Lock is on.
+            </span>
+          </div>
+    
+          <fieldset>
+            <legend></legend>
+            <div class="check-box">
+              <input type="checkbox" name="showpassword" (change)="checkboxFlag($event)">
+              <label for="showpassword">
+                <figure class="check"></figure><span>Show password</span>
+              </label>
+    
+            </div>
+          </fieldset>
+        </div>
+
+        <!--DOB start-->
+        <!-- Displaying date of birth field only if not present in cached sigup data in localstore -->
+        <div class="form__input date_of_birth" *ngIf="!registrationService.signupDataCache.dateOfBirth" >
+          <label class="reg-form-label" for="dateOfBirth">
+            <span>Date of Birth</span>
+          </label>
+
+          <span class="input__contain refill-datePicker">
+            <input 
+              [ngClass]="{
+                input__error: dobBlurred && showDobCheckMessage
+              }"
+              type="text"
+              formControlName="dateOfBirth"
+              class="input__dates input__focus"
+              id="dateOfBirth"
+              required
+              date-picker
+              placeholder="MM/DD/YYYY"
+              maxlength="10"
+              (blur)="checkDOB('dateOfBirth')"
+              (focus)="showTooltip('dateOfBirth')"
+              autocomplete="no-fill"
+            />
+            <div *ngIf="dobTooltip && !dobBlurred" class="tooltip_container">
+              <div class="tooltip_triangle"></div>
+              <div class="tooltip_content">
+                Use the mm/dd/yyyy "month/day/year" format
+              </div>
+            </div>
+          </span>
+        </div>
+
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="
+          dobBlurred && showDobCheckMessage
+          "
+        >
+          {{ dobCheckMessage }}
+        </div>
+
+        <!--DOB end-->
+
+
+        <!-- Phone number field start -->
+        <div class="form__input mt-4">
+          <label class="reg-form-label" for="phoneNumber"
+            ><span>Phone</span>
+          </label>
+
+          <span
+            class="input__contain"
+          >
+            <input
+              [ngClass]="{
+                input__error: phoneNumberBlurred && addressForm.controls.phoneNumber.invalid
+              }"
+              class="input__focus"
+              maxlength="15"
+              arxrfPhoneMask
+              onpaste="return false;"
+              [specified-input]="addressForm.controls.phoneNumber"
+              formControlName="phoneNumber"
+              id="phoneNumber"
+              required
+              [preValue]="addressForm.value.phoneNumber"
+              [phoneControl]="addressForm.controls.phoneNumber"
+              autocomplete="no-fill"
+              (blur)="blurField('phoneNumber')"
+              (focus)="showTooltip('phoneNumber')"
+            />
+            <div *ngIf="phoneNumberTooltip && !phoneNumberBlurred" class="tooltip_container">
+              <div class="tooltip_triangle"></div>
+              <div class="tooltip_content">
+                Use the 10-digit "(999) 999-9999" format
+              </div>
+            </div>
+          </span>
+        </div>
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="addressForm.controls.phoneNumber.touched && addressForm.controls.phoneNumber.invalid">
+          <span *ngIf="addressForm.controls.phoneNumber.errors.required"
+            >Please enter valid Phone Number.</span
+          >
+          <span *ngIf="(addressForm.controls.phoneNumber.value === '(___) ___-____') || addressForm.controls.phoneNumber.errors.pattern">
+            Please enter a valid 10-digit phone number.
+          </span>
+        </div>
+        <!-- Phone number field end -->
+
+        <!-- Phone type section start  -->
+        <div
+          [ngClass]="{'phone-type-block': isLikelyDesktop,
+          'phone-type-block-mobile': !isLikelyDesktop}"
+        >
+          <label class="reg-form-label">Phone Type</label>
+          <div
+            id="phoneTypeHolder"
+            [ngClass]="{'phone-type-container': isLikelyDesktop,
+            'phone-type-container-mobile': !isLikelyDesktop}"
+          >
+            <button
+              *ngFor="let type of PHONE_TYPES; index as indexOfElement"
+              class="phone-type-button"
+              value="'{{type}}"
+              (click)="updatePhoneType($event)"
+              [ngClass]="{
+                selected:
+                selectedPhoneType === type,
+                middle_button:
+                indexOfElement === 1
+              }"
+              >{{type}}
+            </button>
+          </div>
+        </div>
+        <div *ngIf="isLikelyDesktop" class="tooltip_container_phone_type">
+          <div class="tooltip_triangle"></div>
+          <div class="tooltip_content">
+            Use the phone number above to determine the phone type
+          </div>
+        </div>
+        <!-- Phone type section end  -->
+
+      </div>
+    </div>
+
+
+    <div class="bg-white reg-form reg-sub-container verifyIdentity mt-4" [ngClass]="{'rx__upgrade-prefill': addressform_disabled }">
+
+      <div class="form__on-light-bg reg-sub-section">
+
+        <!-- INPUT Address START -->
+        <div [ngClass]="!addressform_disabled?'form__input':'rx__upgrade-prefill-item'">
+          <label [ngClass]="!addressform_disabled?'reg-form-label':'rx__upgrade-prefill-item'" for="street"><span>Address</span></label>
+          <span class="input__contain" *ngIf="!addressform_disabled">
+            <input
+              class="input__focus"
+              [ngClass]="{
+                'input__error': addressBlurred && addressForm.controls.street1.invalid
+              }"
+              type="text" 
+              formControlName="street1" 
+              id="street1" 
+              (blur)="blurField('street1')" 
+              autocomplete="no-fill"
+            />
+          </span>
+
+          <p class="rx__upgrade-prefill-value" *ngIf="addressform_disabled">{{addressForm.value.street1}}</p>
+        </div>
+
+        <div class="input__error-text" aria-live="assertive" role="alert"
+          *ngIf="addressBlurred && addressForm.controls.street1.invalid">
+          <span *ngIf="addressForm.controls.street1.errors.required || addressForm.controls.street1.errors.pattern || addressForm.controls.street1.errors.whitespace"><span class="sr-only">Error </span>
+            Please enter a vaild street address.
+          </span>
+        </div>
+        <!-- INPUT Address END -->
+
+        <!-- INPUT Apt/Suite/Other START -->
+
+        <div [ngClass]="!addressform_disabled?'form__input':'rx__upgrade-prefill-item'">
+          <label [ngClass]="!addressform_disabled?'reg-form-label':'rx__upgrade-prefill-item'" for="aptSuite"><span>Apt/Suite/Other</span></label>
+          <span class="input__contain" *ngIf="!addressform_disabled">
+            <input
+              class="input__focus"
+              [ngClass]="{
+                'input__error': aptSuiteOtherBlurred && addressForm.controls.aptSuite.invalid
+              }"
+              type="text" 
+              formControlName="aptSuite" 
+              id="aptSuite" 
+              (blur)="blurField('aptSuite')" 
+              autocomplete="no-fill"
+            />
+          </span>
+          <p class="rx__upgrade-prefill-value" *ngIf="addressform_disabled">{{addressForm.value.aptSuite}}</p>
+        </div>
+
+        <div class="input__error-text" aria-live="assertive" role="alert"
+          *ngIf="aptSuiteOtherBlurred && addressForm.controls.aptSuite.invalid">
+          <span *ngIf="addressForm.controls.aptSuite.errors.pattern || addressForm.controls.aptSuite.errors.whitespace">Please enter valid Apt/Suite/Other.</span>
+        </div>
+        <!-- INPUT Apt/Suite/Other END -->
+
+        <!-- INPUT City Start -->
+        <div [ngClass]="!addressform_disabled?'form__input':'rx__upgrade-prefill-item'">
+          <label [ngClass]="!addressform_disabled?'reg-form-label':'rx__upgrade-prefill-item'" for="city"><span>City</span></label>
+          <span class="input__contain" *ngIf="!addressform_disabled">
+            <input 
+              type="text" 
+              formControlName="city" 
+              id="city" 
+              (blur)="blurField('city')" 
+              autocomplete="no-fill"
+              class="input__focus"
+              [ngClass]="{
+                'input__error': cityBlurred && addressForm.controls.city.invalid
+              }"
+            />
+          </span>
+          <p class="rx__upgrade-prefill-value" *ngIf="addressform_disabled">{{addressForm.value.city}}</p>
+        </div>
+
+        <div class="input__error-text" aria-live="assertive" role="alert"
+          *ngIf="cityBlurred && addressForm.controls.city.invalid">
+          <span *ngIf="addressForm.controls.city.errors.required || addressForm.controls.city.errors.pattern"><span class="sr-only">Error </span>Please enter a vaild city.</span>
+        </div>
+        <!-- INPUT City END -->
+
+        <!-- STATE CUSTOM INPUT START -->
+        <arxrf-custom-select
+          *ngIf="!addressform_disabled"
+          [label]="'State'"
+          [controlName]="'state'"
+          [items]="STATE_US"
+          [value]="addressForm.value.state"
+          [placeholder]="'Choose State'"
+          [required]="true"
+          [disabled]="addressform_disabled"
+          [isBlurred]="stateBlurred"
+          [requiredMessage]="'Please select a state.'"
+
+          (selectedItem)="updateStateValue($event)"
+        ></arxrf-custom-select>
+        
+        <div class="rx__upgrade-prefill-item" *ngIf="addressform_disabled">
+          <label class="rx__upgrade-prefill-item" for="city"><span>State</span></label>
+          <p class="rx__upgrade-prefill-value">{{addressForm.value.state}}</p>
+        </div>
+        <!-- STATE CUSTOM INPUT END -->
+
+        <!-- INPUT ZipCode Start -->
+        <div [ngClass]="!addressform_disabled?'form__input':'rx__upgrade-prefill-item'">
+          <label [ngClass]="!addressform_disabled?'reg-form-label':'rx__upgrade-prefill-item'" for="zipCode"><span>Zip Code</span></label>
+          <span class="input__contain" *ngIf="!addressform_disabled">
+            <input 
+              type="text" 
+              maxlength="5" 
+              [specified-input]="addressForm.controls.zipCode" 
+              invalidExp="[^0-9]"
+              formControlName="zipCode" 
+              id="zipCode" 
+              (blur)="blurField('zipCode')" 
+              autocomplete="no-fill"
+              class="input__focus"
+              [ngClass]="{
+                'input__error': zipBlurred && addressForm.controls.zipCode.invalid
+              }"
+            />
+          </span>
+          <p class="rx__upgrade-prefill-value" *ngIf="addressform_disabled">{{addressForm.value.zipCode}}</p>
+        </div>
+
+        <div class="input__error-text" aria-live="assertive" role="alert"
+          *ngIf="zipBlurred && addressForm.controls.zipCode.invalid">
+          <span *ngIf="addressForm.controls.zipCode.errors.required || addressForm.controls.zipCode.errors.pattern"><span class="sr-only">Error </span>Please enter valid 5-digit zip code (e.g. 60601).</span>
+        </div>
+        <!-- INPUT ZipCode END -->
+
+        <!-- INPUT Gender Selector START -->
+        <arxrf-custom-select
+          *ngIf="!addressform_disabled"
+          [label]="'Gender'"
+          [controlName]="'gender'"
+          [items]="GENDER"
+          [value]="addressForm.value.gender"
+          [placeholder]="'Select'"
+          [required]="true"
+          [disabled]="addressform_disabled"
+          [isBlurred]="genderBlurred"
+          [requiredMessage]="'Please select your gender.'"
+          (selectedItem)="updateGenderValue($event)"
+        ></arxrf-custom-select>
+        
+        <div class="rx__upgrade-prefill-item" *ngIf="addressform_disabled">
+          <label class="rx__upgrade-prefill-item" for="city"><span>Gender</span></label>
+          <p class="rx__upgrade-prefill-value">{{addressForm.value.gender}}</p>
+        </div>
+        <!-- INPUT Gender Selector END -->
+
+         <!-- SECURITY QUESTION CUSTOM INPUT START -->
+         <div class="form__input mt-4" *ngIf="(isUpgrading || isSSO) && useSecurityQuestions">
+          <arxrf-custom-select
+              [label]="'Security Question'"
+              [controlName]="'securityQuestionCode'"
+              [items]="questions"
+              [value]="addressForm.value.securityQuestionCode"
+              [placeholder]="'Choose your security question'"
+              [required]="true"
+              [disabled]="false"
+              [tooltipText]="'Select a question for an added layer of security'"
+              [isBlurred]="securityQuestionBlurred"
+              [showTooltip]="securityQuestionTooltip && isLikelyDesktop"
+              [requiredMessage]="'Please select your security question.'"
+              (selectedItem)="updateSecurityQuestionValue($event)"
+              (blur)="blurField('securityQuestion')"
+              (focus)="showTooltip('securityQuestion')"
+          ></arxrf-custom-select>
+        </div>
+        <!-- SECURITY QUESTION CUSTOM INPUT END -->
+
+
+        <!-- Security answer dropdown start -->
+        <div class="form__input" *ngIf="(isUpgrading || isSSO) && useSecurityQuestions">
+          <label class="reg-form-label" for="securityQuestionAnswer"
+              ><span>Security Answer</span></label
+            >
+          <span
+            class="input__contain"
+          >
+            <input
+              type="text"
+              formControlName="securityQuestionAnswer"
+              id="securityQuestionAnswer"
+              required
+              pattern="^[a-zA-Z0-9-_()&\/\\]+(\s+[a-zA-Z0-9-_()&\/\\]+)*$"
+              (blur)="blurField('securityQuestionAnswer')"
+              (focus)="showTooltip('securityQuestionAnswer')"
+              [ngClass]="{
+                input__error:
+                (securityAnswerBlurred && addressForm.controls.securityQuestionAnswer.invalid)
+                && (
+                  addressForm.controls.securityQuestionAnswer.errors.required
+                  || addressForm.controls.securityQuestionAnswer.errors.pattern
+                  || addressForm.controls.securityQuestionAnswer.errors.whitespace
+                )
+              }"
+              class="input__focus"
+            />
+            <div *ngIf="securityQuestionAnswerTooltip && !securityAnswerBlurred" class="tooltip_container">
+              <div class="tooltip_triangle"></div>
+              <div class="tooltip_content">
+                Enter an answer that is not easily guessed or researched
+              </div>
+            </div>
+          </span>
+        </div>
+        <div
+          class="input__error-text"
+          aria-live="assertive"
+          role="alert"
+          *ngIf="securityAnswerBlurred && addressForm.controls.securityQuestionAnswer.invalid"
+        >
+          <span *ngIf="addressForm.controls.securityQuestionAnswer.errors.required"
+            >Please answer your security question.</span
+          >
+          <span *ngIf="addressForm.controls.securityQuestionAnswer.errors.pattern || addressForm.controls.securityQuestionAnswer.errors.whitespace"
+            >Invalid Security Question Answer.</span
+          >
+        </div>
+        <!-- Security answer dropdown end -->
+  
+        <div class="form__on-light-bg margin_padding_align"  *ngIf="!SubmitSuccess && !(isSSO || isUpgrading)">
+          <div class="mt-5 text-right d-flex align-items-center">
+            <p class="ensure-text">Please ensure your address is accurate before continuing</p>
+            <button class="btn"
+              [disabled]="!addressForm.valid"
+              [ngClass]="{
+                btn_primary: addressForm.valid,
+                btn__neutral: !addressForm.valid
+              }"
+              (click)="submitAdditionalDetails()">Continue</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert_success_spacing" *ngIf="SubmitSuccess">
+        <div class="alert alert-success border-0 text-dark">
+          <p class="text-center alert-text w-100 m-0">
+          <strong class="success_message">Your current address was submitted successfully.</strong> 
+          <br />
+            Please continue below
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bg-white reg-form reg-sub-container mt-5" *ngIf="!SubmitSuccess && (isUpgrading || isSSO)">
+      <div class="form__on-light-bg reg-sub-section">
+
+        <div class="check-box terms">
+          <fieldset class="setWidthIE">
+            <legend></legend>
+            <div class="check-box">
+              <input
+                type="checkbox"
+                formControlName="disclaimerStatus"
+                (change)="declarationReadAndAgreeToPolicy($event)"
+                id="terms"
+              />
+              <label for="terms"
+                ><figure class="check"></figure>
+                <span class="sr-only"
+                  >I have read and agree to the AllianceRx Walgreens Prime Terms Of
+                  Use</span
+                >
+              </label>
+              <span class="termsAndConditions"
+                >By checking this box, I agree to AllianceRx Walgreens Prime
+                <arxrf-tcpa-comm-policy></arxrf-tcpa-comm-policy> which includes the use of automatic calls and text.
+
+
+              </span>
+            </div>
+            <div class="terms onlinePrivacyPolicy">
+              <span class="termsAndConditions"
+                >I have read and agree to the
+                <arxrf-terms-of-use></arxrf-terms-of-use>
+                and acknowledge that my online credentials will grant account access on alliancerxwp.com and walgreens.com websites.
+                 By continuing, I also agree to 
+                <arxrf-online-privacy-policy></arxrf-online-privacy-policy>
+                and <arxrf-hipaa-policy></arxrf-hipaa-policy></span
+              >
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="input__error-text errorMsg"
+            aria-live="assertive"
+            role="alert"
+            *ngIf="showDeclarationError">
+            You must accept the TCPA Communication Policy before continuing.
+        </div>
+
+        <div class="text-right">
+          <button class="btn"
+              [disabled]="!canSubmit()"
+                [ngClass]="{
+                  btn_primary: canSubmit(),
+                  btn__neutral: !canSubmit()
+                }"
+                *ngIf="isUpgrading"
+                (click)="submitAdditionalDetails()">Continue</button>
+          <button class="btn"
+              [disabled]="!canSubmit()"
+                [ngClass]="{
+                  btn_primary: canSubmit(),
+                  btn__neutral: !canSubmit()
+                }"
+                *ngIf="isSSO"
+                (click)="submitAdditionalDetails()">Continue</button>
+        </div>
+
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+
+<arxrf-modal [show]="provideOption" cssClasses="bg-white" (update)="hideOption($event)" [allowClose]="false">
+  <h2 class="possible_overlay_heading">Possible existing account</h2>
+  <p>Based on the information you’ve entered, you may already have a Walgreens.com account using a different email
+    address.</p>
+  <div class="modal__bottom-actions modal_btns_alignment">
+    <div class="row modal_width">
+      <button class="btn btn_primary sendToLogin" (click)="sendToLogin()">
+        Yes, use existing account
+      </button>
+      <strong class="createNewAccLink"><a href="javascript:void(0);" (click)="submitAdditionalDetails()">
+          No, create new account
+        </a></strong>
+    </div>
+  </div>
+</arxrf-modal>
+
+<arxrf-modal [show]="upgradeCancelModel" cssClasses="bg-white" (update)="hideUpgradeCancelModel($event)">
+  <p>Are you sure you want to cancel? You won’t be able to refill prescriptions without completing registration.</p>
+
+  <div class="modal__bottom-actions">
+
+    <div class="col text-right">
+      <a href="javascript:void(0)" class="mr-2" (click)="hideUpgradeCancelModel(false)">Cancel</a>
+      <button class="btn btn_primary" (click)="cancelUpgradeProcess()">Continue</button>
+    </div>
+  </div>
+</arxrf-modal>
+
+<div #signupIdentity>
+  <arxrf-signup-idnetity *ngIf="showIdentitySignUp"></arxrf-signup-idnetity>
+</div>

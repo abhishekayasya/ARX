@@ -1,0 +1,171 @@
+<arxrf-loader [show]="showLoader" loaderOverlay="true"></arxrf-loader>
+
+<div class="row">
+  <div class="col-12">
+    <arxrf-message></arxrf-message>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="verify-identity">
+
+      <div class="row">
+        <h1 class="col-md-12 h1__page-title">Verify your identity</h1>
+      </div>
+      <div class="select-verification">
+        <div class="row no-gutters">
+          <p class="sub-title">For security purposes, please verify your identity using one of the methods below:</p>
+          <!----------- tooltip start------------>
+         <div [popper]="verifyidentityTooltip"
+         [popperTrigger]="'hover'"
+         [popperPlacement]="'right'"
+         [popperDelay]="300" class="tool-tip">
+        <span role= "button" class="tool-tip__trigger" tabindex="0" aria-describedby="tool-tip__text_verifyidentityTooltip">
+          <span class="icon icon__question-mark">
+            <svg alt=""> <title>Help information</title> <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__question-mark"></use></svg>
+          </span>
+        </span>
+    </div>
+    <popper-content #verifyidentityTooltip>
+      <div>
+        <p id="tool-tip__text_verifyidentityTooltip">The security of your information is of the highest importance to us. This added security feature may periodically ask you to verify your identity.</p>
+      </div>
+    </popper-content>     
+<!----------- tooltip end------------>
+        </div>
+        <div class="row mt-4 no-gutters">
+      <span class="select__contain col-md-6 col-xs-12 col-sm-12">
+        <label for="select-dropdown">Verification method</label>
+        <span class="icon icon__arrow-down">
+          <svg alt="">
+            <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use>
+          </svg>
+        </span>
+        <select id="select-dropdown" (change)="changeMethod($event)" aria-label="Sort by drop-down list, press SPACE BAR to open available options in the list, page will reload">
+          <option>Select verification method</option>
+          <option value="code">Code (Text or Email)</option>
+          <option value="question">Security Question</option>
+        </select>
+      </span>
+        </div>
+      </div>
+      <div *ngIf="method === 'code' && username && userPhone">
+        <div class="first-step row">
+          <div class="col-md-12 col-xs-12 col-sm-12">
+            <h4>Step 1</h4>
+          </div>
+          <div class="col-md-12 col-xs-12 col-sm-12">
+            <p>Select one of the following to receive your code:</p>
+          </div>
+          <div class="col-md-12 col-xs-12 col-sm-12">
+            <fieldset class="mt-3">
+              <legend></legend>
+              <div class="btn__radio">
+                <input id="radio-1" name="otpMethod" value="email" type="radio" [(ngModel)]="otpMethod" tabindex="0">
+                <label for="radio-1">
+                  <span class="radio"></span>
+                  <span>{{username}}</span>
+                </label>
+              </div>
+            </fieldset>
+            <fieldset class="mt-3">
+              <legend></legend>
+              <div class="btn__radio">
+                <input id="radio-2" name="otpMethod" value="phone" type="radio" [(ngModel)]="otpMethod" tabindex="0">
+                <label for="radio-1">
+                  <span class="radio"></span>
+                  <span>{{userPhone}}</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-12 col-xs-12 col-sm-12">
+            <button class="btn btn_primary mt-4 col-md-3 col-xs-12 col-sm-12" [disabled]="disableSendCode" (click)="sendCode()">Send code</button>
+            <span class="col-md-3 col-xs-12 col-sm-12 mt-4 tick-text" *ngIf="first_attempt || second_attempt">
+              <span class="icon icon__check color__green">
+                <svg>
+                  <use xlink:href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__check"></use>
+                </svg>
+              </span>
+              <span *ngIf="first_attempt && !second_attempt">Code sent</span>
+              <span *ngIf="second_attempt">A new verification code has been sent. </span>
+            </span>
+          </div>
+        </div>
+        <div class="second-step row">
+          <div class="col-md-12 col-xs-12 col-sm-12">
+            <h4>Step 2</h4>
+          </div>
+          <div class="col-md-12 col-xs-12 col-sm-12">
+            <div class="row">
+              <div class="col-md-6 col-xs-12 col-sm-12 input-code">
+                <div class="form__input">
+                  <span class="input__contain">
+                    <input
+                      class="input__focus"
+                      [ngClass]="{'input__error': wrongCodeEntered || codeEntered == '' }" 
+                      type="text" 
+                      [(ngModel)]="codeEntered" 
+                      maxlength="6" 
+                      (keypress)="omit_special_char($event)" 
+                      #code="ngModel">
+                    <label class="input__title">
+                      <span>Enter your verification code</span>
+                    </label>
+                  </span>
+                  <span *ngIf="wrongCodeEntered" class="input__error-text" [innerHTML]="wrongCodeEnteredMessage"></span>
+                  <span *ngIf="codeEntered == '' && !wrongCodeEntered" class="input__error-text">Verification Code is required. </span>
+                </div>
+              </div>
+              <div class="col-md-3 col-xs-12 col-sm-12">
+                <button class="btn btn_primary col-md-4 col-xs-12 col-sm-12" [disabled]="first_attempt || !codeEntered || disableSubmit" (click)="submitCode()">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="method === 'question' && securityQuestion">
+        <section class="questions">
+          <div class="row">
+            <h3 class="col-md-12 col-xs-12 col-sm-12 mt-3">Security question</h3>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-md-6 col-xs-12 col-sm-12">
+              <h4>Security question</h4>
+              <p *ngIf="securityQuestion.question != undefined || securityQuestion.question != null; else showSecuritySingleQuestion">{{securityQuestion.question}}</p>
+              <ng-template #showSecuritySingleQuestion>
+                <p>{{securityQuestion}}</p>
+              </ng-template>                          
+            </div>                       
+          </div>
+        </section>
+        <section class="answer">
+          <div class="row">
+            <h3 class="col-md-12 col-xs-12 col-sm-12">Security answer</h3>
+          </div>
+          <div class="row">
+            <div class="form__input col-md-6 col-xs-12 col-sm-12">
+        <span class="input__contain">
+          <input
+            class="input__focus"
+            [ngClass]="{'input__error': wrongSecurityAnswer }"
+            type="text" 
+            [(ngModel)]="securityAnswer">
+          <label class="input__title">
+            <span>Enter your answer</span>
+          </label>
+        </span>
+            </div>
+          </div>
+        </section>
+
+        <div class="row no-gutters btn-section">
+          <button class="btn btn_primary mt-4 col-md-3 col-xs-12 col-sm-12" (click)="submitAnswer()" [disabled]="!securityAnswer">Submit</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

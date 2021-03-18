@@ -1,0 +1,164 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
+.rx-address-book {
+  margin-top: 2em;
+
+  .l-display-flex {
+    display: flex;
+  }
+  .rx-flex-justify-content-space-btw {
+    justify-content: space-between;
+  }
+  .l-vertically-align-flex {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: -0.025rem;
+    margin-left: 0.625rem;
+  }
+  .rx-max-width {
+    width: 100%;
+  }
+  .rx-header-container {
+    h2 {
+      margin: 3.125rem 0;
+    }
+    .rx-add-more-address-Button {
+      margin-bottom: 2.5rem;
+      color: #1a7eac;
+    }
+    @media only screen and (min-width: 576px) {
+      h2,
+      .rx-add-more-address-Button {
+        margin: 0;
+      }
+      display: flex;
+      justify-content: space-between;
+      margin: 3.125rem 0 1.875rem;
+    }
+  }
+  .rx-option-container {
+    background: #fff;
+    .rx-add-more-address-Button {
+      color: #01728E;
+    }
+    .rx-address-option {
+      padding: 1rem 1.225rem;
+      margin-bottom: 1rem;
+      background-color: #f3f4f4;
+      &:last-child{
+        margin-bottom: 2.5rem;
+      }
+      .radio {
+        margin-right: 2.5rem;
+        padding: 10px;
+      }
+      label a {
+        display: block;
+        margin-top: 0.5rem;
+        z-index: 10000;
+      }
+      label {
+        max-width: 100%;
+        span {
+          max-width: 83%;
+          p {
+            word-wrap: break-word;
+          }
+        }
+      }
+    }
+  }
+  .rx-btn-select-address {
+    margin: 1.25rem 0 0 0;
+    button {
+      width: 100%;
+      @media only screen and (min-width: 768px) {
+        width: 226px;
+        float: right;
+      }
+      @media only screen and (min-width: 1200px) {
+        width: 370px;
+      }
+    }
+  }
+  @media only screen and (min-width: 576px) {
+    .rx-header-container,.rx-address-book-option{
+      padding: 0 2.25rem;;
+    }
+    .rx-btn-select-address {
+      padding: 0 1.313rem;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    & {
+      overflow: hidden;
+    }
+    .rx-header-container,.rx-address-book-option{
+      padding: 0 4rem;
+    }
+    .rx-header-container {
+      margin: 2.5rem 0 3.125rem;
+    }
+    .rx-btn-select-address {
+      padding: 0;
+      margin: 1.25rem -0.938rem 0 -0.938rem;
+    }
+  }
+  @media only screen and (min-width: 1200px) {
+    .rx-header-container {
+      margin: 3.75rem 0 2.5rem;
+    }
+    .rx-option-container {
+
+      .loader__container {
+        width: 100%;
+      }
+
+      .rx-options {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .rx-address-option {
+        width: 48%;
+        margin-bottom:1.875rem;
+        float: left;
+        &:last-of-type {
+          margin-bottom: 1.875rem;
+        }
+        &:nth-of-type(even) {
+          float: right;
+        }
+      }
+    }
+  }
+}
+
+.rx-back-link {
+  a {
+    line-height: 0.7;
+    span {
+      min-width: 10px;
+      min-height: 6px;
+      margin-right: 4px;
+    }
+  }
+}
+
+.select_address_btn {
+  margin-top: 30px;
+  margin-bottom: 130px;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+  .select_address_btn {
+    margin-top: 10px;
+    margin-bottom: 50px;
+  }
+}

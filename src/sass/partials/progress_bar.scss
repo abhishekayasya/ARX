@@ -1,0 +1,24 @@
+.progress-bar ul.dots li.filled:before{
+    @include themify($themes) {
+        background: themed("progress_bar_bg");
+        border-color: themed("progress_bar_bg");
+    }
+}
+
+.progress-bar ul.dots li.filled:after{
+    @include themify($themes) {
+        background-color: themed("progress_bar_bg");
+    }
+}
+
+.progress-bar ul.dots li.current:before{
+    @include themify($themes) {
+        box-shadow: inset 0 0 0 5px themed("progress_bar_bg");
+    }
+}
+
+.progress-bar .text li.current{
+    @include themify($themes) {
+        color: themed("progress_bar_text_color");
+    }
+}

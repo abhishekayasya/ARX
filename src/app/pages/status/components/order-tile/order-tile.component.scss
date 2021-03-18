@@ -1,0 +1,222 @@
+$xs-screen: 320px;
+$sm-screen: 480px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+.order-tile {
+    margin-bottom: 40px;
+    .order-info {
+        margin-bottom: 15px !important;
+        @media screen and (min-width: $md-screen) {
+            position: relative;
+        }
+        .order-id {
+            color: #404040;
+            line-height: 33px;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .order-date {
+            margin-top: 14px;
+            font-size: 16px;
+            @media screen and (min-width: $md-screen) {
+                margin-top: 0;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
+            span:first-child {
+                font-weight: bold;
+            }
+        }
+    }
+    .order-panel {
+        .order-header {
+            color: #fff;
+            padding: 24px 20px;
+            border-radius: 8px 8px 0 0;
+            &.action-needed {
+                background: #b00000;
+            }
+            &.delayed {
+                background: #a06b28;
+            }
+            &.in-progress {
+                background: #007b31;
+            }
+            &.ready-for-pickup {
+                background: #01728E;
+            }
+            &.shipped {
+                background: #1a7eac;
+            }
+            &.scheduled-for-delivery {
+                background: #01728E;
+            }
+            &.picked-up {
+                background: #01728E;
+            }
+            @media screen and (min-width: $xl-screen) {
+                display: flex;
+                justify-content: space-between;
+            }
+            .shipping-info {
+                margin-top: 30px;
+                @media screen and (min-width: $lg-screen) {
+                    display: flex;
+                    justify-content: space-between;
+                }
+                @media screen and (min-width: $xl-screen) {
+                    margin: 0;
+                    display: flex !important;
+                    justify-content: space-between;
+                    flex-basis: 80%;
+                }
+                >div {
+                    padding: 2px 0;
+                    display: block;
+                    @media screen and (min-width: $lg-screen) {
+                        display: inline-block;
+                    }
+                }
+                span:first-child {
+                    font-size: 18px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                }
+            }
+            .msg-info {
+                margin-top: 30px;
+                @media screen and (min-width: $xl-screen) {
+                    margin: 0;
+                    display: block !important;
+                    flex-basis: 60%;
+                    text-align: right;
+                }
+            }
+            .status {
+                position: relative;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .status-text {
+                vertical-align: top;
+            }
+            a {
+                color: #fff;
+                font-weight: normal;
+            }
+        }
+        .order-body {
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+            .drugs-list {
+                list-style-type: none;
+                li {
+                    padding: 20px 16px;
+                    .drug-info {
+                        .h1__page-title {
+                            margin: 0.7rem 0 1rem;
+                            @media screen and (min-width: $lg-screen) {
+                                margin: 0;
+                            }
+                        }
+                        div:last-child {
+                            p {
+                                margin: 0;
+                            }
+                        }
+                        .drug-details {
+                            p {
+                                @media screen and (min-width: $md-screen) {
+                                    display: inline-block;
+                                }
+                            }
+                            .break-line {
+                                display: none;
+                                height: 16px;
+                                margin: 0 0.4rem !important;
+                                border-left: 1px solid #404040;
+                                @media screen and (min-width: $md-screen) {
+                                    display: inline-block;
+                                }
+                                @media screen and (min-width: $lg-screen) {
+                                    margin: 0 1rem !important;
+                                }
+                                @media screen and (min-width: $xl-screen) {
+                                    margin: 0 1.4rem !important;
+                                }
+                            }
+                        }
+                    }
+                    .drug-icon img {
+                        height: 75px;
+                        width: 75px;
+                    }
+                    a.btn_primary:hover {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.caret {
+    @media screen and (min-width: $xl-screen) {
+        display: none;
+    }
+    &::after {
+        content: "▼";
+        text-align: center;
+        pointer-events: none;
+    }
+}
+
+.collapsed {
+    display: none !important;
+}
+
+.top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: $sm-screen){
+    .h1__page-title {
+      font-size: 22px;
+    }
+
+    .order-tile .order-panel .order-body .drugs-list li .drug-icon img {
+        width: 40px;
+        height: 40px;
+    }
+    .drug-info {
+        margin-top: -12px;
+        padding-left: 0;
+    }
+    .btn_primary {
+        width: 100%;
+    }
+  }
+
+  @media screen and (min-width: $md-screen) {
+    .h1__page-title {
+        margin-top: 0px !important;
+    }
+}
+
+.border__round {
+    max-width: none;
+}
+
+@media screen and (min-width: $xs-screen) and (max-width: 767px) and (orientation: landscape) {
+    .scheduleDeliveryBtn {
+      width: 100%;
+    }
+    .drug-icon {
+        margin-top: 12px;
+    }
+}
+

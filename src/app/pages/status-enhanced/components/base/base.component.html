@@ -1,0 +1,75 @@
+<div class="container bg-white min-vh-100">
+  <div class="row">
+    <div class="col-12">
+      <button
+        class="btn btn_primary"
+        type="button"
+        (click)="toggleMockMode()"
+      >
+        Turn mock mode {{mockModeEnabled ===  true ? 'off' : 'on'}}
+      </button>
+      <h1>Order Status</h1>
+    </div>
+
+    <div class="col-12 col-md-6 pt-5 member_dropdown" *ngIf="mockData && mockData.familyMembers">
+      <!-- <span class="family_member_label">
+        <h5 class="pb-2 pb-md-0">Family Member:</h5>
+      </span>
+      <span class="select__contain family_member_dropdown ml-md-4">
+        <label for="familyMember">Family Member</label>
+        <span class="icon icon__arrow-down">
+          <svg>
+            <use
+              href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down">
+            </use>
+          </svg>
+        </span>
+        <select (change)="memberChange($event)" [(ngModel)]="familyMembers.currentMember" id="familyMember">
+          <option [value]="member.profileId" *ngFor="let member of mockData.familyMembers">{{member.name}}</option>
+        </select>
+
+      </span> -->
+      
+      <arxrf-custom-select
+        class="w-100"
+        label="Family Members"
+        [controlName]="'familyMember'"
+        [items]="familyMembers"
+        [value]="currentPatient.profileId"
+        [placeholder]="'Select family member'"
+        (selectedItem)="memberChange($event)"
+      ></arxrf-custom-select>
+    </div>
+
+    <div class="col-12 my-5">
+      <arxrf-tabs>
+        <arxrf-tab-item>
+          <arxrf-tab-label>All</arxrf-tab-label>
+          <arxrf-tab-body>
+
+            <arxrf-order-card *ngIf="ordersDisplayed" [orders]="ordersDisplayed"></arxrf-order-card>
+            
+          </arxrf-tab-body>
+        </arxrf-tab-item>
+        <arxrf-tab-item>
+          <arxrf-tab-label>In Progress</arxrf-tab-label>
+          <arxrf-tab-body>
+            <h1>Section 2</h1>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente dolor assumenda eius facilis inventore
+            itaque
+            sunt.
+          </arxrf-tab-body>
+        </arxrf-tab-item>
+        <arxrf-tab-item>
+          <arxrf-tab-label>Shipped</arxrf-tab-label>
+          <arxrf-tab-body>
+            <h1>Section 3</h1>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente dolor assumenda eius facilis inventore
+            itaque
+            sunt.
+          </arxrf-tab-body>
+        </arxrf-tab-item>
+      </arxrf-tabs>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="pt-3 container col-md-12">
+
+    <div class="col-12 pt-4" *ngIf="!isInvalidId && !invalidUser && false">
+      <h1 class="h1__page-title text-center">Let's review your Home delivery prescriptions.</h1>
+    </div>
+   
+    <div class="row">
+      <div class="col-12 hd-container p-0 mr-0 ml-0">
+        <div class="rx-review">
+          <arxrf-loader [show]="loader" [message]="loaderMessage" [loaderOverlay]=""></arxrf-loader>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  
+      
+    <div class="row" *ngIf="isInvalidId && !loader && !invalidUser">
+      <div class="col-12">
+        <h4>To check the status of your order or to refill another prescription, select one of the following:</h4>
+        <br/>
+        <p><a href="{{routes.status.absoluteRoute}}">Prescription Status</a> </p>
+        <p><a href="{{routes.refill.absoluteRoute}}">Refill Prescriptions</a> </p>
+      </div>
+    </div>
+  
+    <div class="row mt-3" *ngIf="invalidUser && !loader">
+      <div class="col-12">
+        <h2>You are signed in as {{userService.user.headerInfo.profileInfo.emailId}}</h2>
+        <p class="mt-4">Sign out and sign in to continue.</p>
+        <a href="javascript:void(0)" (click)="logoutAction()" class="btn btn_primary mt-4">Sign Out</a>
+      </div>
+    </div>
+  
+  </div>
+  

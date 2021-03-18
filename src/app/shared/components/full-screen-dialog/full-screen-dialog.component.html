@@ -1,0 +1,14 @@
+<div class="fullScreenDialog" #dialogRoot *ngIf="isOpened">
+  <div class="header">
+    <button (click)="close()">
+      <span class="icon icon__arrow-left"><svg alt="" alt=""><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-left"></use></svg></span>
+      <span>Back</span>
+    </button>
+  </div>
+  <div class="body">
+    <ng-content select="dialog-content"></ng-content>
+  </div>
+  <div class="footer row">
+    <a href="javascript:void(0)" (click)="sortFilterOnSmallScreen()" role="button" class="col"><span class="btn btn_primary">Apply</span></a>
+  </div>
+</div>

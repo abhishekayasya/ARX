@@ -1,0 +1,164 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="module__heading">Add an Adult</div>
+    </div>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <div class="col-12">
+      <arxrf-message></arxrf-message>
+    </div>
+  </div>
+
+  <div class="row fm__add-adult mt-3">
+    <div class="col-12">
+      <p>We need a little more info to add this person to your account.</p>
+    </div>
+  </div>
+
+  <div class="row mt-4 fm__add-adult-form">
+    <div class="col-md-6 mt-4">
+      <div class="fm__add-adult-info">
+        <form class="form__on-light-bg" [formGroup]="additionalInfoForm">
+
+          <!--street-->
+          <div class="form__input">
+            <span class="input__contain" >
+               <input 
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': additionalInfoForm.controls.street1.invalid && (additionalInfoForm.controls.street1.touched || additionalInfoForm.controls.street1.dirty)
+                }"
+                formControlName="street1" 
+                id="street1"
+              />
+              <label class="input__title" for="street2"><span>Address</span></label>
+            </span>
+          </div>
+
+          <div class="input__error-text" *ngIf="additionalInfoForm.controls.street1.invalid && (additionalInfoForm.controls.street1.touched || additionalInfoForm.controls.street1.dirty)">
+            <span *ngIf="additionalInfoForm.controls.street1.errors.required || additionalInfoForm.controls.street1.errors.whitespace">Address is required.</span>
+          </div>
+          <!--street-->
+
+          <!--suite/other-->
+          <div class="form__input">
+            <span class="input__contain">
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': additionalInfoForm.controls.aptSuite.invalid && (additionalInfoForm.controls.aptSuite.touched || additionalInfoForm.controls.aptSuite.dirty)
+                }" 
+                type="text" 
+                formControlName="aptSuite" 
+                id="aptSuite" 
+                required="false"/>
+              <label class="input__title" for="aptSuite"><span>Apt/Suite/Other</span></label>
+            </span>
+          </div>
+
+          <div class="input__error-text" *ngIf="additionalInfoForm.controls.aptSuite.invalid && (additionalInfoForm.controls.aptSuite.touched || additionalInfoForm.controls.aptSuite.dirty)">
+            <span *ngIf="additionalInfoForm.controls.aptSuite.errors.pattern">Please enter valid Apt/Suite/Other.</span>
+          </div>
+          <!--suite/other-->
+
+          <!--city-->
+          <div class="form__input">
+            <span class="input__contain">
+              <input
+                class="input__focus"
+                [ngClass]="{
+                  'input__error': additionalInfoForm.controls.city.invalid && (additionalInfoForm.controls.city.touched || additionalInfoForm.controls.city.dirty)
+                }"
+                type="text" 
+                formControlName="city" 
+                id="city" 
+                pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" 
+                required/>
+              <label class="input__title" for="city"><span>City</span></label>
+            </span>
+          </div>
+
+          <div class="input__error-text" *ngIf="additionalInfoForm.controls.city.invalid && (additionalInfoForm.controls.city.touched || additionalInfoForm.controls.city.dirty)">
+            <span *ngIf="additionalInfoForm.controls.city.errors.required">City is required.</span>
+            <span *ngIf="additionalInfoForm.controls.city.errors.pattern">Please enter a valid City.</span>
+          </div>
+          <!--city-->
+
+          <div class="row">
+            <div class="col-md-6">
+              <span class="select__contain mt-3" [ngClass]="{
+              'input__error': additionalInfoForm.controls.state.invalid && (additionalInfoForm.controls.state.touched || additionalInfoForm.controls.state.dirty)
+              }">
+              <span class="icon icon__arrow-down">
+                <svg><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use></svg>
+               </span>
+              <label for="state">State</label>
+              <select formControlName="state" id="state">
+                <option value="" class="" selected>Choose State</option>
+                <option *ngFor="let state of STATE_US" value="{{state.short_name}}">
+                {{state.name}}
+              </option>
+              </select>
+              </span>
+              <div class="input__error-text" *ngIf="additionalInfoForm.controls.state.invalid && (additionalInfoForm.controls.state.touched || additionalInfoForm.controls.state.dirty)">
+                <span>State is required.</span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form__input mt-3">
+                <span class="input__contain">
+                  <input 
+                    class="input__focus"
+                    [ngClass]="{
+                      'input__error': additionalInfoForm.controls.zipCode.invalid && (additionalInfoForm.controls.zipCode.touched || additionalInfoForm.controls.zipCode.dirty)
+                    }"
+                    type="text" 
+                    maxlength="5" 
+                    [specified-input]="additionalInfoForm.controls.zipCode" 
+                    invalidExp="[^0-9]" 
+                    formControlName="zipCode" 
+                    id="zipCode" 
+                    pattern="^[0-9]{5,5}$" 
+                    required/>
+                  <label class="input__title" for="zipCode"><span>Zip Code</span></label>
+                </span>
+              </div>
+
+              <div class="input__error-text" *ngIf="additionalInfoForm.controls.zipCode.invalid && (additionalInfoForm.controls.zipCode.touched || additionalInfoForm.controls.zipCode.dirty)">
+                <span *ngIf="additionalInfoForm.controls.zipCode.errors.required">Zip Code is required.</span>
+                <span *ngIf="additionalInfoForm.controls.zipCode.errors.pattern">Please enter valid Zip Code.</span>
+              </div>
+            </div>
+          </div>
+
+          <span class="select__contain mt-3" [ngClass]="{
+                'input__error': additionalInfoForm.controls.gender.invalid && (additionalInfoForm.controls.gender.touched || additionalInfoForm.controls.gender.dirty)
+              }">
+            <label for="gender">Gender</label>
+             <span class="icon icon__arrow-down">
+              <svg><use href="/modules/alliancerx-www-components/javascript/angular/refillHub/assets/images/icons/symbol-defs.svg#icon__arrow-down"></use></svg>
+             </span>
+            <select formControlName="gender" id="gender">
+              <option value="" class="" selected>Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </span>
+          <div class="input__error-text" *ngIf="additionalInfoForm.controls.gender.invalid && (additionalInfoForm.controls.gender.touched || additionalInfoForm.controls.gender.dirty)">
+            <span>Gender is required.</span>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div class="col-12 mt-5">
+      <button class="btn btn_primary" type="button" (click)="submitDataToSearch()">Search</button>
+    </div>
+  </div>
+
+</div>
